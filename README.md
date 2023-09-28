@@ -1,6 +1,7 @@
 # NoteSet - my own app for tracking fitness results
 
-## Important: This is the same app as noteset_archive, I just switched from T3 to Next.js template and wanted a clean start with App Router and RSC.
+**Important: This is the same app as noteset_archive, I just switched from T3 to Next.js
+template and wanted a clean start with App Router and RSC.**
 
 Making this app with an idea to use it in the gym instead of a notebook. Still WIP, plan
 to finish it soon. Developing with intent to only use the app on a mobile device, so
