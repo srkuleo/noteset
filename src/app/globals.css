@@ -4,6 +4,21 @@
 
 @layer base {
   body {
-    @apply scroll-smooth bg-slate-200 dark:bg-slate-900;
+    @apply scroll-smooth bg-gradient-to-tr from-white via-slate-200 to-slate-300 dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 text-slate-600 dark:text-white bg-fixed;
+  }
+}
+
+@layer utilities {
+  .placeholder-italic::placeholder {
+    font-style: italic;
+  }
+  .center {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+  }
+  .text-balance {
+    text-wrap: balance;
   }
 }
