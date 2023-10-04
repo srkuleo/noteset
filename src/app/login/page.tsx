@@ -3,7 +3,7 @@ import { OAuth } from "@/components/oauth";
 import { Separator } from "@/components/separator";
 import Link from "next/link";
 
-export default async function LoginPage() {
+export default function LoginPage() {
   return (
     <div className="px-12 pt-32">
       <p className="mb-8 text-lg font-bold italic text-slate-500 dark:text-slate-300/90">
