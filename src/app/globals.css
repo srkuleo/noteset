@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply scroll-smooth bg-gradient-to-tr from-white via-slate-200 to-slate-300 dark:from-slate-800 dark:via-slate-900 dark:to-slate-950 text-slate-600 dark:text-white bg-fixed;
+    @apply scroll-smooth bg-gradient-to-tr from-white to-slate-300 bg-fixed text-slate-600 dark:from-slate-800/90 dark:to-slate-950 dark:text-white;
   }
 }
 
@@ -20,5 +20,11 @@
   }
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .input-field {
+    @apply placeholder-italic rounded-xl p-3 text-sm text-slate-600 placeholder-slate-600 shadow-md outline-none transition-all duration-200 ease-out focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 bg-slate-50 dark:bg-slate-700 dark:text-slate-50 dark:placeholder-slate-300/90 dark:focus:placeholder-slate-500;
   }
 }
