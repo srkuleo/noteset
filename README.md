@@ -11,15 +11,13 @@ priority.
 
 ## Future updates and plans:
 
-- _Change the layout for oAuth buttons on both sign in and sign up page._
-- _Migrate from pages to app folder structure, where needed._
-- _Set up fetching and db mutation with server actions and RSC._
+- _Migrate logged in page._
+- _Set up next auth and form actions with server actions._
+- _Set up fetching and db mutation with server actions._
 
-- _Make new add and edit forms (figure out a way to make modal behave differently on
-  animating, using radix ui dialog), add events to buttons (editbar, empty page) and add,
-  remove modals._
+- _Make new add and edit modal forms using radix ui and server actions for adding a new workout and editing existing one. Add warning modal for removing workout and confirming one before pushing a new or edited workout to db. Add toast notifications using sonner._
+- _Set a limit on description input field to no longer than 85ch._
 
 - _Figure out a way to swipe card with touch._
 - _Make start button a link component that leads to new page with workout details._
 - _Add an active workout page, with proper structure based on database model._
-- _Set a limit on description input field to no longer than 85ch._
