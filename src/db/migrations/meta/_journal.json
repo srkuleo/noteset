@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1696435045948,
+      "tag": "0000_wide_molly_hayes",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1696445137195,
+      "tag": "0001_productive_guardsmen",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1696446807949,
+      "tag": "0002_tan_wind_dancer",
+      "breakpoints": true
+    }
+  ]
+}
