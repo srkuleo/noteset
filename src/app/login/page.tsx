@@ -37,13 +37,13 @@ export default function LoginPage() {
             type="checkbox"
             id="remember-me"
             name="remember-me"
-            className="h-4 w-4 accent-green-500 dark:accent-green-600"
+            className="h-5 w-5 accent-green-500 dark:accent-green-600"
           />
           <label
             htmlFor="remember-me"
             className="text-xs text-slate-600 dark:text-slate-300"
           >
-            Remember me
+            Stay logged in
           </label>
         </div>
         <SubmitFormBtn>Login</SubmitFormBtn>
