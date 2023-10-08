@@ -168,7 +168,7 @@ export const AppleSvg = (
     aria-hidden="true"
   >
     <g
-      fill="#94a3b8"
+      fill="#f8fafc"
       fillRule="nonzero"
       stroke="none"
       strokeWidth="1"
