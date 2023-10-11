@@ -1,4 +1,3 @@
-import { SubmitFormBtn } from "@/components/form-button";
 import { OAuth } from "@/components/oauth";
 import { Separator } from "@/components/separator";
 import Link from "next/link";
@@ -46,7 +45,13 @@ export default function LoginPage() {
             Stay logged in
           </label>
         </div>
-        <SubmitFormBtn>Login</SubmitFormBtn>
+        <Link
+          href="/profile"
+          type="submit"
+          className="mb-4 rounded-3xl bg-green-500 p-3 text-center font-semibold text-slate-50 shadow-md dark:bg-green-700 dark:ring-2 dark:ring-inset dark:ring-green-500"
+        >
+          Login
+        </Link>
       </form>
 
       <div className="space-y-2 pb-4 text-xs text-slate-500 dark:text-slate-300/90">
