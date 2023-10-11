@@ -1,4 +1,3 @@
-import { SubmitFormBtn } from "@/components/form-button";
 import { OAuth } from "@/components/oauth";
 import { Separator } from "@/components/separator";
 import Link from "next/link";
@@ -49,7 +48,12 @@ export default function SignUpPage() {
           className="input-field"
         />
         <div className="mb-4"></div>
-        <SubmitFormBtn>Sign up</SubmitFormBtn>
+        <button
+          type="submit"
+          className="mb-4 rounded-3xl bg-green-500 p-3 text-center font-semibold text-slate-50 shadow-md dark:bg-green-700 dark:ring-2 dark:ring-inset dark:ring-green-500"
+        >
+          Sign up
+        </button>
       </form>
 
       <p className="pb-4 text-xs text-slate-500 dark:text-slate-300/90">
