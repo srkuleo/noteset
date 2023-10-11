@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/navbar";
+import { HeaderBar } from "@/components/headerbar";
 
 export default function LoginLayout({
   children,
@@ -7,7 +7,7 @@ export default function LoginLayout({
 }) {
   return (
     <main>
-      <Navbar />
+      <HeaderBar />
       {children}
     </main>
   );
