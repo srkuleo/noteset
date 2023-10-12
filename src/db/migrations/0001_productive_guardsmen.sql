@@ -1,1 +1,0 @@
-ALTER TABLE `workouts` RENAME COLUMN `name` TO `title`;

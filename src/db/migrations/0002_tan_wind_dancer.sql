@@ -1,1 +1,0 @@
-ALTER TABLE `users` MODIFY COLUMN `email` varchar(50) NOT NULL;
