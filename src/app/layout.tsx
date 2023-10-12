@@ -4,12 +4,16 @@ import { Providers } from "../components/providers";
 
 export const metadata: Metadata = {
   title: "Noteset",
-  description: "Workout tracking app"
+  description: "Workout tracking app",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body>
         <Providers>{children}</Providers>
       </body>
