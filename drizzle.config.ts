@@ -9,6 +9,7 @@ export default {
   out: "./src/db/migrations",
   driver: "mysql2",
   dbCredentials: {
-    connectionString: process.env.DB_URL,
+    connectionString: process.env.DATABASE_URL,
   },
+  breakpoints: true,
 } satisfies Config;
