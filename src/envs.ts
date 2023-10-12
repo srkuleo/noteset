@@ -1,9 +1,10 @@
 import { z } from "zod";
 
 const envVariablesSchema = z.object({
-  DB_USERNAME: z.string(),
-  DB_PASSWORD: z.string(),
-  DB_URL: z.string().url(),
+  DATABASE_URL: z.string().url(),
+  NEXTAUTH_SECRET: z.string(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
 });
 
 envVariablesSchema.parse(process.env);
