@@ -8,7 +8,7 @@ Making this app with an idea to use it in the gym instead of a notebook. Still W
 
 - _Set up next auth and mock profile in db to compare auth to, figure out data model for db. Change route name from "profile" to dynamic route containing user's username. Make nested routes inside dynamic route folder, with options to go to profile page and workout logs page._
 - _Set up form actions and db mutation with server actions._
-- _Figure out how to set clicked button in navbar to different color, would state be preserved between different routes._
+- _Using usePathname from next/navigation set a button for path you are navigated to to a different color._
 
 - _Make new add and edit modal forms using radix ui and server actions for adding a new workout and editing existing one. Add warning modal for removing workout and confirming one before pushing a new or edited workout to db. Add toast notifications using sonner._
 - _Set a limit on description input field to no longer than 85ch._
