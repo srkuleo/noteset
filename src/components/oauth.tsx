@@ -1,14 +1,22 @@
-import { AppleSvg, GoogleSvg } from "./svgs";
+"use client";
 
-export const OAuth = () => {
+import { signIn } from "next-auth/react";
+import { GoogleSvg } from "./svgs";
+
+export const GoogleAuth = () => {
+  function GoogleLogin() {
+    signIn("google");
+  }
+
   return (
-    <div className="mb-4 flex justify-between">
-      <button className="flex items-center gap-2 rounded-xl bg-slate-50 px-12 py-2 text-xs shadow-sm ring-1 ring-slate-300 dark:bg-slate-200 dark:ring-0">
-        {GoogleSvg}
-      </button>
-      <button className="flex items-center gap-2 rounded-xl bg-slate-950 px-12 py-2 text-xs shadow-sm dark:bg-slate-500">
-        {AppleSvg}
-      </button>
-    </div>
+    <button
+      onClick={GoogleLogin}
+      className="mb-4 flex w-full items-center justify-center gap-4 rounded-xl bg-slate-50 py-2 shadow-md ring-1 ring-slate-300 dark:bg-slate-200 dark:ring-0"
+    >
+      {GoogleSvg}
+      <p className="text-sm font-semibold italic text-slate-600">
+        Continue with Google
+      </p>
+    </button>
   );
 };
