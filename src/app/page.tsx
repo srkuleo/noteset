@@ -1,5 +1,5 @@
-import { ModeButton } from "@/components/client-buttons";
-import { GitHubButton } from "@/components/server-buttons";
+import { ModeButton } from "@/components/ClientButtons";
+import { GitHubButton } from "@/components/ServerButtons";
 import Link from "next/link";
 
 export default function Home() {
@@ -25,10 +25,10 @@ export default function Home() {
           Login
         </Link>
         <Link
-          href="/sign-up"
+          href="/register"
           className="rounded-3xl bg-gradient-to-r from-green-500 to-green-600 px-6 py-2 text-slate-50 shadow-md dark:from-green-600 dark:to-green-700"
         >
-          Sign Up
+          Register
         </Link>
       </div>
     </main>

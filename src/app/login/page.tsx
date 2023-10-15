@@ -1,7 +1,7 @@
-import { LoginForm } from "@/components/login-form";
-import { GoogleAuth } from "@/components/oauth";
-import { Separator } from "@/components/separator";
-import { LoginLinks } from "@/components/login-links";
+import { GoogleAuth } from "@/components/GoogleAuth";
+import { Separator } from "@/components/Separator";
+import { LoginForm } from "@/components/LoginForm";
+import { LoginLinks } from "@/components/LoginLinks";
 
 export default function LoginPage() {
   return (

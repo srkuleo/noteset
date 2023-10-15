@@ -1,4 +1,4 @@
-import { HeaderBar } from "@/components/headerbar";
+import { HeaderBar } from "@/components/HeaderBar";
 
 export default function LoginLayout({
   children,
