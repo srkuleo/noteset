@@ -38,6 +38,9 @@ export const workouts = mysqlTable(
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 100 }),
     description: text("description"),
+    workoutComment: varchar("workout_comment", { length: 255 }).default(
+      "Add comment...",
+    ),
     exercises: json("exercises"),
     doneAt: date("done_at"),
     timeElapsed: time("time_elapsed"),
