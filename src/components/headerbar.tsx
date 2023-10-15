@@ -21,7 +21,7 @@ const Label = () => {
     <Link href="/">
       <p className="text-2xl font-bold text-slate-50 dark:text-green-400">
         Note
-        <span className="font-semibold text-slate-200 dark:text-slate-400">
+        <span className="font-semibold text-slate-300 dark:text-slate-50">
           Set
         </span>
       </p>
