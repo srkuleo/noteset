@@ -25,7 +25,7 @@ export const ModeButton = () => {
       {resolvedTheme === "dark" ? (
         <LightModeIcon className="h-7 w-7 text-slate-50" />
       ) : (
-        <DarkModeIcon className="h-7 w-7 text-slate-600" />
+        <DarkModeIcon className="h-7 w-7 text-slate-300" />
       )}
     </button>
   );
