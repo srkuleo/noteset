@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { DarkModeIcon, LightModeIcon } from "./svgs";
+import { DarkModeIcon, LightModeIcon } from "./Svgs";
 
 //Buttons that require any kind of client side action (hooks, libs based on custom hooks - state, effect, context)
 
@@ -23,9 +23,9 @@ export const ModeButton = () => {
   return (
     <button onClick={toggleMode}>
       {resolvedTheme === "dark" ? (
-        <LightModeIcon className='h-7 w-7 text-slate-50' />
+        <LightModeIcon className="h-7 w-7 text-slate-50" />
       ) : (
-        <DarkModeIcon className='h-7 w-7 text-slate-600' />
+        <DarkModeIcon className="h-7 w-7 text-slate-600" />
       )}
     </button>
   );

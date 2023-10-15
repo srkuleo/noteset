@@ -13,9 +13,9 @@ export const LoginLinks = () => {
         </Link>
       </p>
       <p>
-        New to Noteset? Sign up{" "}
+        New to Noteset? Register{" "}
         <Link
-          href="/sign-up"
+          href="/register"
           className="border-b border-green-500 text-sm font-semibold text-green-500"
         >
           here.

@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { GoogleSvg } from "./svgs";
+import { GoogleSvg } from "./Svgs";
 
 export const GoogleAuth = () => {
   function GoogleLogin() {

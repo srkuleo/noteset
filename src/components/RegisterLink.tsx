@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export const SignUpLink = () => {
+export const RegisterLink = () => {
   return (
     <p className="pb-4 text-xs text-slate-500 dark:text-slate-300/90">
       Already have an account? Login{" "}
