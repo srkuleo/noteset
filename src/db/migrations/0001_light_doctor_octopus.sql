@@ -1,0 +1,1 @@
+ALTER TABLE `workouts` ADD `workout_comment` varchar(255) DEFAULT 'Add comment...';
