@@ -4,7 +4,7 @@ export const GitHubButton = () => {
   return (
     <a href='https://github.com/Srkuleo/noteset_' target='_blank' rel='noreferrer'>
       <svg
-        className='h-7 w-7 text-slate-600 dark:text-slate-50'
+        className='h-7 w-7 text-slate-300 dark:text-slate-50'
         aria-hidden='true'
         version='1.1'
         viewBox='0 0 16 16'
