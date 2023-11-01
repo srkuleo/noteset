@@ -7,35 +7,36 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "drizzle-kit generate:mysql",
-    "db:push": "drizzle-kit push:mysql"
+    "db:migrate": "drizzle-kit generate:mysql",
+    "db:push": "drizzle-kit push:mysql",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^0.3.3",
+    "@auth/drizzle-adapter": "^0.3.5",
     "@planetscale/database": "^1.11.0",
     "bcrypt": "^5.1.1",
     "drizzle-orm": "^0.28.6",
-    "next": "^13.5.4",
-    "next-auth": "^4.23.2",
+    "next": "^14.0.1",
+    "next-auth": "^4.24.4",
     "next-themes": "^0.2.1",
     "react": "latest",
     "react-dom": "latest",
-    "zod": "^3.22.3"
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
     "autoprefixer": "latest",
     "drizzle-kit": "^0.19.13",
     "eslint": "latest",
     "eslint-config-next": "latest",
-    "mysql2": "^3.6.1",
+    "mysql2": "^3.6.2",
     "postcss": "latest",
     "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.5",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "tailwindcss": "latest",
     "typescript": "latest"
   }
