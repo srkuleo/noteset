@@ -14,8 +14,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${nunito.className} antialiased`}>
+    <html
+      lang="en"
+      className={`${nunito.className} antialiased`}
+      suppressHydrationWarning
+    >
+      <body>
         <Providers>{children}</Providers>
       </body>
     </html>
