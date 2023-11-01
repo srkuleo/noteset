@@ -1,6 +1,7 @@
-import "./globals.css";
+import "@/styles/global.css";
 import type { Metadata } from "next";
 import { Providers } from "../components/Providers";
+import { nunito } from "@/styles/fonts";
 
 export const metadata: Metadata = {
   title: "Noteset",
@@ -14,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body>
+      <body className={`${nunito.className} antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>
