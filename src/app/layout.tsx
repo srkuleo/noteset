@@ -1,7 +1,7 @@
-import "@/styles/global.css";
+import { nunito } from "../styles/fonts";
+import "../styles/global.css";
 import type { Metadata } from "next";
-import { Providers } from "../components/Providers";
-import { nunito } from "@/styles/fonts";
+import { Providers } from "../context/Providers";
 
 export const metadata: Metadata = {
   title: "Noteset",
