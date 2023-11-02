@@ -1,7 +1,7 @@
 import { HeaderBar } from "@/components/HeaderBar";
 import { Navbar } from "@/components/Navbar";
 
-export default function UserNavLayout({
+export default function UserPageLayout({
   children,
 }: {
   children: React.ReactNode;

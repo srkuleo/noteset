@@ -2,7 +2,7 @@ import { LandingPageButton } from "@/components/ServerButtons";
 import { ThemeButton } from "@/components/ClientButtons";
 import { GitHubButton } from "@/components/ServerButtons";
 
-export default function LandingLayout({
+export default function LandingPageLayout({
   children,
 }: {
   children: React.ReactNode;
