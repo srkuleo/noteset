@@ -8,6 +8,7 @@ export const RegisterForm = () => {
         placeholder="Username"
         required
         autoFocus
+        autoComplete="username"
         className="input-field"
       />
       <input
@@ -16,6 +17,7 @@ export const RegisterForm = () => {
         id="email"
         placeholder="Email"
         required
+        autoComplete="email"
         className="input-field"
       />
       <input
@@ -28,9 +30,10 @@ export const RegisterForm = () => {
       />
       <input
         type="password"
-        name="cpassword"
-        id="cpassowrd"
+        name="c-password"
+        id="c-passowrd"
         placeholder="Confirm password"
+        autoComplete="new-password"
         required
         className="input-field"
       />
