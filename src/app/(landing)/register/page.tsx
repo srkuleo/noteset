@@ -1,4 +1,4 @@
-import { GoogleAuth } from "@/components/GoogleAuth";
+import { GoogleAuthButton } from "@/components/ClientButtons";
 import { Separator } from "@/components/Separator";
 import { RegisterForm } from "@/components/RegisterForm";
 import { RegisterLink } from "@/components/RegisterLink";
@@ -6,7 +6,7 @@ import { RegisterLink } from "@/components/RegisterLink";
 export default function RegisterPage() {
   return (
     <div className="px-12 pt-40">
-      <GoogleAuth />
+      <GoogleAuthButton />
       <Separator />
       <RegisterForm />
       <RegisterLink />
