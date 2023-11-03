@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { DarkModeIcon, LightModeIcon } from "./Icons";
+import { DarkModeIcon, GoogleSvg, LightModeIcon } from "./Icons";
 
 //Buttons that require any kind of client side action (hooks, libraries based on custom hooks)
 
@@ -28,6 +28,17 @@ export const ThemeButton = () => {
   return (
     <button onClick={toggleMode}>
       {resolvedTheme === "dark" ? LightModeIcon : DarkModeIcon}
+    </button>
+  );
+};
+
+export const GoogleAuthButton = () => {
+  return (
+    <button className="mb-4 flex w-full items-center justify-center gap-4 rounded-xl bg-slate-50 py-2 shadow-md ring-1 ring-slate-300 dark:bg-slate-200 dark:ring-0">
+      {GoogleSvg}
+      <p className="text-sm font-semibold italic text-slate-600">
+        Continue with Google
+      </p>
     </button>
   );
 };
