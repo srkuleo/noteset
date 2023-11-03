@@ -1,5 +1,4 @@
-import { HeaderBar } from "@/components/HeaderBar";
-import { Navbar } from "@/components/Navbar";
+import { UserPageHeader } from "@/components/UserPageHeader";
 
 export default function UserPageLayout({
   children,
@@ -8,8 +7,7 @@ export default function UserPageLayout({
 }) {
   return (
     <main className="flex h-screen flex-col p-4">
-      <HeaderBar />
-      <Navbar />
+      <UserPageHeader />
       {children}
     </main>
   );
