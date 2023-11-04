@@ -45,23 +45,20 @@ export const GoogleAuthButton = () => {
 
 export const LinkButtons = () => {
   const path = usePathname();
+  const highlight = <div className="mt-[2px] h-[1px] w-5 bg-white" />;
 
   return (
     <>
       {links.map((link) => (
         <Link
           key={link.href}
-          className={`flex grow flex-col items-center justify-center rounded-xl p-2 shadow-md ${
-            link.href === path
-              ? "bg-green-500 text-white dark:bg-green-700"
-              : "bg-white dark:bg-slate-800"
-          }`}
           href={link.href}
+          className={`flex grow flex-col items-center justify-center rounded-xl p-2 shadow-md ${
+            link.href === path ? "active-page" : "idle-page"
+          }`}
         >
           {link.icon}
-          {link.href === path && (
-            <div className="mt-[2px] h-[1px] w-5 bg-white" />
-          )}
+          {link.href === path && highlight}
         </Link>
       ))}
     </>
