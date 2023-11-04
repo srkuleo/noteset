@@ -14,7 +14,7 @@ export const LandingPageButton = () => {
 export const GitHubButton = () => {
   return (
     <a
-      href="https://github.com/Srkuleo/noteset_"
+      href="https://github.com/srkuleo/noteset"
       target="_blank"
       rel="noreferrer"
     >
