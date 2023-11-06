@@ -1,4 +1,4 @@
-import { UserPageHeader } from "@/components/UserPageHeader";
+import { UserPageHeader } from "@/components/user/UserPageHeader";
 
 export default function UserPageLayout({
   children,

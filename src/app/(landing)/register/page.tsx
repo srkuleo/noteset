@@ -1,7 +1,7 @@
-import { GoogleAuthButton } from "@/components/ClientButtons";
-import { Separator } from "@/components/Separator";
-import { RegisterForm } from "@/components/RegisterForm";
-import { RegisterLink } from "@/components/RegisterLink";
+import { GoogleAuthButton } from "@/components/login/GoogleAuthButton";
+import { Separator } from "@/components/login/Separator";
+import { RegisterForm } from "@/components/register/RegisterForm";
+import { RegisterLink } from "@/components/register/RegisterLink";
 
 export default function RegisterPage() {
   return (

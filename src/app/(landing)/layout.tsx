@@ -1,6 +1,6 @@
-import { LandingPageButton } from "@/components/ServerButtons";
-import { ThemeButton } from "@/components/ClientButtons";
-import { GitHubButton } from "@/components/ServerButtons";
+import { LandingPageButton } from "@/components/global/LandingPageButton";
+import { ThemeButton } from "@/components/global/ThemeButton"; 
+import { GitHubButton } from "@/components/global/GitHubButton";
 
 export default function LandingPageLayout({
   children,

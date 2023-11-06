@@ -1,7 +1,7 @@
-import { GoogleAuthButton } from "@/components/ClientButtons";
-import { Separator } from "@/components/Separator";
-import { LoginForm } from "@/components/LoginForm";
-import { LoginLinks } from "@/components/LoginLinks";
+import { GoogleAuthButton } from "@/components/login/GoogleAuthButton";
+import { Separator } from "@/components/login/Separator";
+import { LoginForm } from "@/components/login/LoginForm";
+import { LoginLinks } from "@/components/login/LoginLinks";
 
 export default function LoginPage() {
   return (
