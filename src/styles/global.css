@@ -4,7 +4,7 @@
 
 @layer base {
   main {
-    @apply scroll-smooth bg-gradient-to-tr from-white to-slate-300 text-slate-500 dark:from-slate-800 dark:to-slate-950 dark:text-white;
+    @apply scroll-smooth bg-gradient-to-tr from-slate-50 to-slate-300 text-slate-500 dark:from-slate-800 dark:to-slate-950 dark:text-white;
   }
 }
 
