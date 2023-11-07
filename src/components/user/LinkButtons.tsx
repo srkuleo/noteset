@@ -16,7 +16,7 @@ const links: Links = [
 ];
 
 const highlightPath = (
-  <div className="absolute bottom-[6px] h-[1px] w-5 bg-white" />
+  <div className="absolute bottom-[5px] h-[1px] w-5 bg-white" />
 );
 
 export const LinkButtons = () => {
