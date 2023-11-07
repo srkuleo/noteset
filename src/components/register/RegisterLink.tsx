@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const RegisterLink = () => {
   return (
-    <p className="pb-4 text-xs text-slate-500 dark:text-slate-300/90">
+    <p className="pb-4 text-xs">
       Already have an account? Login{" "}
       <Link
         href="/login"

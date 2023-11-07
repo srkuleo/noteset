@@ -29,7 +29,7 @@ export const LoginForm = () => {
         />
         <label
           htmlFor="remember-me"
-          className="text-xs text-slate-600 dark:text-slate-300"
+          className="text-xs"
         >
           Stay logged in
         </label>

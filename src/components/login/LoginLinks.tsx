@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const LoginLinks = () => {
   return (
-    <div className="space-y-2 pb-4 text-xs text-slate-500 dark:text-slate-300/90">
+    <div className="space-y-2 pb-4 text-xs">
       <p>
         Forgot your{" "}
         <Link
