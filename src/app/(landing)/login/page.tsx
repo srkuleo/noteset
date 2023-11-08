@@ -1,3 +1,4 @@
+import { PageWrapper } from "@/components/login/PageWrapper";
 import { GoogleAuthButton } from "@/components/login/GoogleAuthButton";
 import { Separator } from "@/components/login/Separator";
 import { LoginForm } from "@/components/login/LoginForm";
@@ -5,11 +6,11 @@ import { LoginLinks } from "@/components/login/LoginLinks";
 
 export default function LoginPage() {
   return (
-    <div className="px-12 pt-48">
+    <PageWrapper>
       <GoogleAuthButton />
       <Separator />
       <LoginForm />
       <LoginLinks />
-    </div>
+    </PageWrapper>
   );
 }
