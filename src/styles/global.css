@@ -4,15 +4,11 @@
 
 @layer base {
   main {
-    @apply scroll-smooth bg-gradient-to-tr from-slate-50 to-slate-300 text-slate-500 dark:from-slate-800 dark:to-slate-950 dark:text-white;
+    @apply scroll-smooth bg-gradient-to-t from-slate-50 to-slate-300 text-slate-500 dark:from-slate-800 dark:to-slate-950 dark:text-white;
   }
 }
 
 @layer utilities {
-  .placeholder-italic::placeholder {
-    font-style: italic;
-  }
-
   .center {
     position: absolute;
     transform: translate(-50%, -50%);
@@ -27,11 +23,11 @@
 
 @layer components {
   .input-field {
-    @apply placeholder-italic rounded-xl bg-slate-50 p-3 text-sm text-slate-600 placeholder-slate-600 shadow-md outline-none transition-all duration-200 ease-out focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:text-slate-50 dark:placeholder-slate-300/90 dark:focus:placeholder-slate-500;
+    @apply rounded-xl bg-white px-4 py-3 text-lg leading-none placeholder-slate-600 shadow-md outline-none transition-all duration-200 ease-out placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-800 placeholder:text-sm dark:placeholder-slate-400 dark:focus:placeholder-slate-600;
   }
 
   .active-page {
-    @apply bg-green-500 text-white dark:bg-green-700;
+    @apply bg-green-500 text-white dark:bg-green-600;
   }
 
   .idle-page {
