@@ -1,12 +1,6 @@
 import { nunito } from "../styles/fonts";
 import "../styles/global.css";
-import type { Metadata } from "next";
 import { Providers } from "../context/Providers";
-
-export const metadata: Metadata = {
-  title: "Noteset",
-  description: "Workout tracking app",
-};
 
 export default function RootLayout({
   children,
