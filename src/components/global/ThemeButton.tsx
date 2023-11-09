@@ -26,6 +26,6 @@ export const ThemeButton = () => {
   }
 
   return (
-    <div className="h-6 w-6 rounded-full bg-slate-500/50 dark:bg-slate-800" />
+    <div className="h-6 w-6 rounded-full bg-slate-500/30 dark:bg-slate-700/60" />
   );
 };
