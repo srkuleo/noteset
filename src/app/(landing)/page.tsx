@@ -8,7 +8,8 @@ export default function LandingPage() {
           Note<span className="font-semibold italic text-slate-500">Set</span>
         </h1>
         <h2 className="font-semibold text-slate-400 dark:text-slate-500">
-          Application aimed to replace conventional use of a notebook in a gym.
+          Minimalistic, eye pleasing, passion project aimed to replace a notebook
+          in a gym. Personalized to suit my needs.
         </h2>
       </div>
 
