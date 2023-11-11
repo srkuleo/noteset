@@ -1,4 +1,4 @@
-export const DarkModeIcon = () => {
+export const MoonIcon = () => {
   return (
     <svg
       className="h-7 w-7"
@@ -16,7 +16,7 @@ export const DarkModeIcon = () => {
   );
 };
 
-export const LightModeIcon = () => {
+export const SunIcon = () => {
   return (
     <svg
       className="h-7 w-7"
