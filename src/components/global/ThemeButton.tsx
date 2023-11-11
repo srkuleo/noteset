@@ -1,31 +1,31 @@
 "use client";
 
-import { LightModeIcon, DarkModeIcon } from "@/icons/theme";
+import { SunIcon, MoonIcon } from "@/icons/theme";
 import { useTheme } from "next-themes";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const ThemeButton = () => {
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
     console.log("ThemeButton mounted.");
-    setMounted(true);
+    setIsMounted(true);
   }, []);
 
-  function toggleMode() {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  function switchTheme() {
+    setTheme(resolvedTheme === "light" ? "dark" : "light");
   }
 
-  if (mounted) {
+  if (isMounted) {
     return (
-      <button onClick={toggleMode}>
-        {resolvedTheme === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+      <button onClick={switchTheme}>
+        {resolvedTheme === "light" ? <MoonIcon /> : <SunIcon />}
       </button>
     );
   }
 
   return (
-    <div className="h-6 w-6 rounded-full bg-slate-500/30 dark:bg-slate-700/60" />
+    <div className="h-6 w-6 rounded-full bg-slate-500/40 dark:bg-slate-700/30" />
   );
 };
