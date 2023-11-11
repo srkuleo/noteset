@@ -8,8 +8,7 @@ export default function LandingPage() {
           Note<span className="font-semibold italic text-slate-500">Set</span>
         </h1>
         <h2 className="font-semibold text-slate-400 dark:text-slate-500">
-          Minimalistic, eye pleasing, passion project aimed to replace a notebook
-          in a gym. Personalized to suit my needs.
+          Personalized workout tracking PWA, aimed to replace conventional use of a notebook in a gym. Made by someone who used to bring one to the gym. 
         </h2>
       </div>
 
