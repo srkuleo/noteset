@@ -41,7 +41,7 @@ export const workouts = mysqlTable(
     workoutComment: varchar("workout_comment", { length: 255 }).default(
       "Add comment...",
     ),
-    exercises: json("exercises"),
+    exercises: json("exercises").default({}),
     doneAt: date("done_at"),
     timeElapsed: time("time_elapsed"),
     userId: bigint("user_id", { mode: "bigint" }),
