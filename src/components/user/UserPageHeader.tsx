@@ -1,4 +1,4 @@
-import { Logo } from "@/icons/logo";
+import { Logo } from "../../icons/logo";
 import { GitHubButton } from "../global/GitHubButton";
 import { ThemeButton } from "../global/ThemeButton";
 import { LinkButtons } from "./LinkButtons";

@@ -1,6 +1,6 @@
 "use client";
 
-import { GoogleIcon } from "@/icons/google";
+import { GoogleIcon } from "../../icons/google";
 
 export const GoogleAuthButton = () => {
   return (
