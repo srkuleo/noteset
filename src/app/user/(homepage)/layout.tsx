@@ -1,10 +1,4 @@
-import { UserPageHeader } from "@/components/user/UserPageHeader";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Noteset - profile",
-  description: "Workout tracking app",
-};
+import { UserPageHeader } from "../../../components/user/UserPageHeader";
 
 export default function UserPageLayout({
   children,
