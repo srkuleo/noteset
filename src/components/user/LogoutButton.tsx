@@ -1,4 +1,4 @@
-import { LogoutIcon } from "@/icons/user/logout";
+import { LogoutIcon } from "../../icons/user/logout";
 import Link from "next/link";
 
 export const LogoutButton = () => {
