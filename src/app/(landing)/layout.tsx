@@ -1,10 +1,4 @@
-import { LandingPageHeader } from "@/components/global/LandingPageHeader";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Noteset - login",
-  description: "Workout tracking app",
-};
+import { LandingPageHeader } from "../../components/global/LandingPageHeader";
 
 export default function LandingPageLayout({
   children,
