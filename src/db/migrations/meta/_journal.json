@@ -15,6 +15,13 @@
       "when": 1697404432988,
       "tag": "0001_light_doctor_octopus",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1699986888047,
+      "tag": "0002_abnormal_galactus",
+      "breakpoints": true
     }
   ]
 }
