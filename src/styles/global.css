@@ -3,8 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  body {
+    @apply scroll-smooth bg-gradient-to-t from-slate-50 to-slate-300 bg-fixed dark:from-slate-800 dark:to-slate-950;
+  }
+
   main {
-    @apply scroll-smooth bg-gradient-to-t from-slate-50 to-slate-300 text-slate-500 dark:from-slate-800 dark:to-slate-950 dark:text-white;
+    @apply text-slate-500 dark:text-white;
   }
 }
 
