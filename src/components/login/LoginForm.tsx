@@ -6,9 +6,6 @@ export const LoginForm = () => {
         name="email"
         id="email"
         placeholder="Email"
-        autoFocus
-        autoComplete="email"
-        required
         className="input-field"
       />
       <input
@@ -16,24 +13,8 @@ export const LoginForm = () => {
         name="password"
         id="password"
         placeholder="Password"
-        autoComplete="current-password"
-        required
         className="input-field"
       />
-      <div className="flex items-center gap-2 py-4">
-        <input
-          type="checkbox"
-          id="remember-me"
-          name="remember-me"
-          className="h-5 w-5 accent-green-500 dark:accent-green-600"
-        />
-        <label
-          htmlFor="remember-me"
-          className="text-xs"
-        >
-          Stay logged in
-        </label>
-      </div>
       <button
         type="submit"
         className="mb-4 rounded-3xl bg-green-500 p-3 text-center font-semibold text-slate-50 shadow-md transition active:scale-95 dark:bg-green-700 dark:ring-2 dark:ring-inset dark:ring-green-500"
