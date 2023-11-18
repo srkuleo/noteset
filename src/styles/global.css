@@ -8,13 +8,13 @@
   }
 
   main {
-    @apply bg-gradient-to-t from-slate-300 via-slate-50 to-slate-300 text-slate-500 dark:from-slate-950 dark:via-slate-800 dark:to-slate-950 dark:text-white;
+    @apply bg-gradient-to-t from-slate-300 from-5% via-slate-50 to-slate-300 to-95% text-slate-500 dark:from-slate-950 dark:via-slate-800 dark:to-slate-950 dark:text-white;
   }
 }
 
 @layer components {
   .input-field {
-    @apply rounded-xl bg-white px-4 py-3 leading-none placeholder-slate-600 shadow-md outline-none transition-all duration-200 ease-out placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-800 dark:placeholder-slate-400 dark:focus:placeholder-slate-600;
+    @apply rounded-xl bg-white px-4 py-3 leading-none placeholder-slate-500 shadow-md outline-none transition-all duration-200 ease-out placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:placeholder-slate-400 dark:focus:placeholder-slate-600 dark:shadow-slate-900;
   }
 
   .active-page {
