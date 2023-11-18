@@ -4,11 +4,11 @@
 
 @layer base {
   body {
-    @apply scroll-smooth bg-slate-300 dark:bg-slate-950;
+    @apply scroll-smooth bg-slate-300 dark:bg-slate-900;
   }
 
   main {
-    @apply bg-gradient-to-t from-slate-300 from-0% via-slate-50 via-15% to-slate-300 to-100% text-slate-500 dark:from-slate-950 dark:via-slate-800 dark:to-slate-950 dark:text-white;
+    @apply bg-gradient-to-t from-slate-300 from-0% via-slate-50 via-15% to-slate-300 to-100% text-slate-500 dark:from-slate-900 dark:via-slate-800 dark:to-slate-950 dark:text-white;
   }
 }
 
