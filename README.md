@@ -6,9 +6,7 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Abstract register/login button, bg color in notch, username auth instead of email._
-
-- _Set up next auth and mock user profile in db to compare auth to, figure out data model for db. Change route name from "user" to dynamic route containing user's username. Construct user's homepage based on db workouts schema._
+- _Set up next auth (with username or email) and mock user profile in db to compare auth to, figure out data model for db. Change route name from "user" to dynamic route containing user's username. Construct user's homepage based on db workouts schema._
 
 - _Add edit button and conditionally rendered start button when workout is selected._
 
