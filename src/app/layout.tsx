@@ -2,6 +2,7 @@ import { nunito } from "../styles/fonts";
 import "../styles/global.css";
 import { Providers } from "../context/Providers";
 import type { Metadata } from "next";
+import Head from "next/head";
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +26,24 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Head>
+            <meta
+              name="theme-color"
+              media="(prefers-color-scheme: light)"
+              content="#cbd5e1"
+              key="light"
+            />
+            <meta
+              name="theme-color"
+              media="(prefers-color-scheme: dark)"
+              content="#020617"
+              key="dark"
+            />
+          </Head>
+
+          {children}
+        </Providers>
       </body>
     </html>
   );
