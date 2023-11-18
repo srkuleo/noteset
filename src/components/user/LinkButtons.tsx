@@ -10,7 +10,7 @@ export type Links = {
 }[];
 
 const links: Links = [
-  { href: "/user", icon: HomeIcon },
+  { href: "/user/home", icon: HomeIcon },
   { href: "/user/profile", icon: ProfileIcon },
   { href: "/user/logs", icon: LogsIcon },
 ];
