@@ -8,17 +8,6 @@ export default function UserHomePage() {
   return (
     <div className="grow px-4">
       <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
-      <p>This is user`s Home page.</p>
     </div>
   );
 }
