@@ -6,7 +6,7 @@ export default function UserPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex h-screen flex-col gap-4 px-4 pb-8 pt-4">
+    <main className="flex min-h-screen flex-col pb-8">
       <UserPageHeader />
       {children}
     </main>
