@@ -13,8 +13,12 @@
 }
 
 @layer components {
+  .navbar-blur {
+    @apply bg-slate-300 bg-opacity-40 backdrop-blur-md dark:bg-slate-950 dark:bg-opacity-80;
+  }
+
   .input-field {
-    @apply rounded-xl bg-white px-4 py-3 leading-none placeholder-slate-500 shadow-md outline-none transition-all duration-200 ease-out placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:placeholder-slate-400 dark:focus:placeholder-slate-600 dark:shadow-slate-900;
+    @apply rounded-xl bg-white px-4 py-3 leading-none placeholder-slate-500 shadow-md outline-none transition-all duration-200 ease-out placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:placeholder-slate-400 dark:shadow-slate-900 dark:focus:placeholder-slate-600;
   }
 
   .active-page {
