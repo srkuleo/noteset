@@ -29,7 +29,7 @@ export const LandingPageHeader = () => {
 
   return (
     <div className={`sticky top-0 px-4 ${isScrolled && "navbar-blur"}`}>
-      <div className="flex justify-between border-b border-slate-400/60 py-2 dark:border-slate-700">
+      <div className="flex justify-between border-b border-slate-400/60 py-2 dark:border-slate-800">
         <LandingPageButton />
         <div className="flex items-center gap-4">
           <ThemeButton />
