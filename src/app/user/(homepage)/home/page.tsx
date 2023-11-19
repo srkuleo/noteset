@@ -6,7 +6,18 @@ export const metadata: Metadata = {
 
 export default function UserHomePage() {
   return (
-    <div className="grow pb-4 pt-2">
+    <div className="grow px-4">
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
+      <p>This is user`s Home page.</p>
       <p>This is user`s Home page.</p>
     </div>
   );
