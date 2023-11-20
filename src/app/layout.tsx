@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
+  manifest: "/site.webmanifest"
 };
 
 export default function RootLayout({

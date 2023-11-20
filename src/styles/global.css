@@ -4,6 +4,7 @@
 
 @layer base {
   body {
+    -webkit-tap-highlight-color: transparent;
     @apply scroll-smooth bg-slate-300 dark:bg-slate-950;
   }
 
