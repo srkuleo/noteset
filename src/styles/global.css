@@ -19,7 +19,7 @@
   }
 
   .input-field {
-    @apply rounded-xl bg-white px-4 py-3 leading-none placeholder-slate-500 caret-green-500 shadow-md outline-none ring-1 ring-slate-300 transition-all duration-200 ease-out placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:placeholder-slate-400 dark:caret-green-400 dark:shadow-slate-900 dark:ring-slate-600 dark:focus:placeholder-slate-600 focus:dark:ring-green-600;
+    @apply rounded-xl bg-white px-4 py-3 leading-none placeholder-slate-500 caret-green-500 shadow-md outline-none ring-1 ring-slate-300 transition-all duration-200 ease-out placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:placeholder-slate-400 dark:caret-green-600 dark:shadow-slate-900 dark:ring-slate-600 dark:focus:placeholder-slate-600 focus:dark:ring-green-600;
   }
 
   .active-page {
