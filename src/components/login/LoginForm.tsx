@@ -1,6 +1,6 @@
 export const LoginForm = () => {
   return (
-    <form action="" className="flex flex-col gap-4">
+    <form action="" className="flex flex-col gap-3">
       <input
         type="email"
         name="email"
