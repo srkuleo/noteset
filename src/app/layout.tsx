@@ -36,6 +36,16 @@ export const metadata: Metadata = {
         media:
           "(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
       },
+      {
+        url: "/apple-splash-1290-2796.jpeg",
+        media:
+          "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+      {
+        url: "/apple-splash-dark-1290-2796.jpg",
+        media:
+          "(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
     ],
   },
 };
