@@ -1,6 +1,6 @@
 export const RegisterForm = () => {
   return (
-    <form action="" className="flex flex-col gap-4">
+    <form action="" className="flex flex-col gap-3">
       <input
         type="text"
         name="username"
@@ -10,22 +10,22 @@ export const RegisterForm = () => {
       />
       <input
         type="email"
-        name="email"
-        id="email"
+        name="create-email"
+        id="create-email"
         placeholder="Email"
         className="input-field"
       />
       <input
         type="password"
-        name="password"
-        id="password"
+        name="create-password"
+        id="create-password"
         placeholder="Password"
         className="input-field"
       />
       <input
         type="password"
-        name="c-password"
-        id="c-passowrd"
+        name="confirm-password"
+        id="confirm-passowrd"
         placeholder="Confirm password"
         className="input-field"
       />
