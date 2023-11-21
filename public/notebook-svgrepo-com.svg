@@ -1,0 +1,16 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+
+<svg width="256px" height="256px" viewBox="-1.44 -1.44 26.88 26.88"     fill="#475569" xmlns="http://www.w3.org/2000/svg" transform="rotate(45)" stroke="#000000" stroke-width="0.6">
+
+<g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0.35999999999999943,0.35999999999999943), scale(0.97)">
+
+<path transform="translate(-1.44, -1.44), scale(1.6799999999999997)" fill="#64748b" d="M9.166.33a2.25 2.25 0 00-2.332 0l-5.25 3.182A2.25 2.25 0 00.5 5.436v5.128a2.25 2.25 0 001.084 1.924l5.25 3.182a2.25 2.25 0 002.332 0l5.25-3.182a2.25 2.25 0 001.084-1.924V5.436a2.25 2.25 0 00-1.084-1.924L9.166.33z" strokewidth="0"/>
+
+</g>
+
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="" stroke-width="1.7280000000000002"/>
+
+<g id="SVGRepo_iconCarrier"> <rect x="6" y="4" width="13" height="17" rx="2" stroke="#22c55e"/> <path d="M15 10V8" stroke="#22c55e" stroke-linecap="round"/> <path d="M4 9H8" stroke="#22c55e" stroke-linecap="round"/> <path d="M4 13H8" stroke="#22c55e" stroke-linecap="round"/> <path d="M4 17H8" stroke="#22c55e" stroke-linecap="round"/> </g>
+
+</svg>
