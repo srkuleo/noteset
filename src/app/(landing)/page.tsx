@@ -2,13 +2,15 @@ import Link from "next/link";
 
 export default function LandingPage() {
   return (
-    <div className="flex grow flex-col justify-center">
+    <div className="mt-8 flex grow flex-col justify-center">
       <div className="mb-16 pl-4">
         <h1 className="mb-8 pl-4 text-5xl font-extrabold text-green-500 dark:text-green-600">
           Note<span className="font-semibold italic text-slate-500">Set</span>
         </h1>
         <h2 className="font-semibold text-slate-400 dark:text-slate-500">
-          Personalized workout tracking PWA, aimed to replace conventional use of a notebook in a gym. Made by someone who used to bring one to the gym. 
+          Personalized workout tracking PWA, aimed to replace conventional use
+          of a notebook in a gym. Made by someone who used to bring one to the
+          gym.
         </h2>
       </div>
 
