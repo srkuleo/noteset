@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { manrope } from "../../styles/fonts";
 
 export default function LandingPage() {
   return (
@@ -7,7 +8,9 @@ export default function LandingPage() {
         <h1 className="bg-gradient-to-r from-green-400 to-violet-600 bg-clip-text pl-2 text-6xl font-extrabold text-transparent dark:from-green-500 dark:to-violet-600">
           Note<span className="font-bold">Set</span>
         </h1>
-        <h2 className="font-semibold dark:text-slate-400">
+        <h2
+          className={`${manrope.className} font-semibold dark:text-slate-400`}
+        >
           Personalized workout tracking PWA, aimed to replace conventional use
           of a notebook in a gym. Made by someone who used to bring one to the
           gym.
