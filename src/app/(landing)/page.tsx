@@ -4,8 +4,8 @@ export default function LandingPage() {
   return (
     <div className="flex grow flex-col justify-center px-4 pb-8 pt-20">
       <div className="space-y-8 pb-16 pl-4">
-        <h1 className="pl-2 text-5xl font-extrabold text-green-500 dark:text-green-600">
-          Note<span className="font-semibold italic text-slate-500">Set</span>
+        <h1 className="bg-gradient-to-r from-green-400 to-violet-600 bg-clip-text pl-2 text-6xl font-extrabold text-transparent dark:from-green-500 dark:to-violet-600">
+          Note<span className="font-bold">Set</span>
         </h1>
         <h2 className="font-semibold dark:text-slate-400">
           Personalized workout tracking PWA, aimed to replace conventional use
@@ -17,7 +17,7 @@ export default function LandingPage() {
       <div className="flex flex-col items-center justify-center gap-2 text-center">
         <Link
           href="/login"
-          className="w-[120px] rounded-2xl bg-gradient-to-r from-white to-slate-50 py-2 font-semibold text-slate-600 shadow-md ring-1 ring-inset ring-slate-400/80 transition active:scale-95"
+          className="w-[120px] rounded-2xl bg-violet-500/90 py-2 font-semibold text-white shadow-md transition active:scale-95"
         >
           Login
         </Link>
@@ -26,7 +26,7 @@ export default function LandingPage() {
         </p>
         <Link
           href="/register"
-          className="w-[120px] rounded-2xl bg-gradient-to-r from-green-500 to-green-600 py-2 text-white shadow-md transition active:scale-95 dark:from-green-600 dark:to-green-700"
+          className="w-[120px] rounded-2xl bg-green-500 py-2 font-semibold text-white shadow-md transition active:scale-95 dark:bg-green-600"
         >
           Register
         </Link>
