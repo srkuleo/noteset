@@ -21,6 +21,21 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
+  openGraph: {
+    title: "Noteset",
+    description: "A minimalistic workout tracking PWA",
+    url: "https://noteset.vercel.app/",
+    siteName: "Noteset",
+    images: [
+      {
+        url: "/noteset-og-image.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
   manifest: "/site.webmanifest",
   appleWebApp: {
     statusBarStyle: "black-translucent",
