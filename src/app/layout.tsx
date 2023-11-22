@@ -21,6 +21,15 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/shortcut-icon.png",
+    apple: "apple-icon.png",
+    other: {
+      rel: "apple-touch-icon-precomposed",
+      url: "/apple-icon.png",
+    },
+  },
   openGraph: {
     title: "Noteset",
     description: "A minimalistic workout tracking PWA",
