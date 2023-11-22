@@ -29,7 +29,7 @@ export const RegisterForm = () => {
         placeholder="Confirm password"
         className="input-field"
       />
-      <button className="my-4 rounded-3xl bg-green-500 p-3 text-center font-semibold text-slate-50 shadow-md transition active:scale-95 dark:bg-green-700 dark:shadow-slate-950">
+      <button className="mb-7 mt-4 rounded-3xl bg-green-500 p-3 text-center font-semibold text-white shadow-md transition active:scale-95 dark:bg-green-600">
         Register
       </button>
     </form>

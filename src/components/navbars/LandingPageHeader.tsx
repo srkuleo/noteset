@@ -1,4 +1,5 @@
-import { LandingPageButton } from "./LandingPageButton";
+import Link from "next/link";
+import { Logo } from "../../icons/navbars/logo";
 import { ThemeButton } from "./ThemeButton";
 import { GitHubButton } from "./GitHubButton";
 
@@ -13,5 +14,13 @@ export const LandingPageHeader = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const LandingPageButton = () => {
+  return (
+    <Link href="/">
+      <Logo />
+    </Link>
   );
 };
