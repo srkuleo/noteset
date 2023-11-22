@@ -1,6 +1,3 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import { Logo } from "../../icons/logo";
 import { GitHubButton } from "../global/GitHubButton";
 import { ThemeButton } from "../global/ThemeButton";
@@ -8,35 +5,12 @@ import { LinkButtons } from "./LinkButtons";
 import { LogoutButton } from "./LogoutButton";
 
 export const UserPageHeader = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      if (window.scrollY > 0 && isScrolled !== true) {
-        console.log(window.scrollY);
-        setIsScrolled(true);
-      }
-      if (window.scrollY <= 0) {
-        setIsScrolled(false);
-      }
-    }
-
-    window.addEventListener("load", handleScroll);
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("load", handleScroll);
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isScrolled]);
-
   return (
-    <div
-      className={`sticky top-0 space-y-4 px-4 py-4 ${
-        isScrolled && "navbar-blur"
-      }`}
-    >
-      <HeaderBar />
-      <Navbar />
+    <div className="fixed inset-x-0 bg-slate-300/50 pt-safe-top backdrop-blur-sm dark:bg-slate-950/50">
+      <div className="space-y-4 px-4 pt-4 py-2">
+        <HeaderBar />
+        <Navbar />
+      </div>
     </div>
   );
 };
