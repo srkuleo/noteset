@@ -1,6 +1,6 @@
 "use client";
 
-import { HomeIcon, ProfileIcon, LogsIcon } from "../../icons/user/link-icons";
+import { HomeIcon, ProfileIcon, LogsIcon } from "../../icons/user/links";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
