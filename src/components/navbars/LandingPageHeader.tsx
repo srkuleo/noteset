@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Logo } from "../../icons/navbars/logo";
+import { Logo } from "@/icons/navbars/logo";
 import { ThemeButton } from "./ThemeButton";
 import { GitHubButton } from "./GitHubButton";
 
 export const LandingPageHeader = () => {
   return (
-    <div className="fixed w-full bg-slate-300/80 px-4 pt-safe-top backdrop-blur-sm dark:bg-slate-950/90">
-      <div className="flex justify-between border-b border-slate-400/60 pb-2 pt-3 dark:border-slate-800">
+    <div className="fixed w-full border-b border-slate-400/50 bg-slate-300/80 px-4 pt-safe-top backdrop-blur-sm dark:border-slate-800 dark:bg-slate-950/80">
+      <div className="flex justify-between py-2">
         <LandingPageButton />
         <div className="flex items-center gap-4">
           <ThemeButton />
