@@ -1,7 +1,7 @@
-import "../styles/global.css";
+import "@/styles/global.css";
 import type { Metadata, Viewport } from "next";
-import { nunito } from "../styles/fonts";
-import { Providers } from "../context/Providers";
+import { nunito } from "@/styles/fonts";
+import { Providers } from "@/context/Providers";
 
 export const viewport: Viewport = {
   userScalable: false,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Noteset",
+    title: "Noteset - workout app",
     description: "A minimalistic workout tracking PWA",
     url: "https://noteset.vercel.app/",
     siteName: "Noteset",

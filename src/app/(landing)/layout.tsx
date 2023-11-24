@@ -1,4 +1,4 @@
-import { LandingPageHeader } from "../../components/navbars/LandingPageHeader"; 
+import { LandingPageHeader } from "@/components/navbars/LandingPageHeader";
 
 export default function LandingPageLayout({
   children,
