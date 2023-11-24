@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1697134705669,
-      "tag": "0000_round_ultimatum",
+      "when": 1700789478849,
+      "tag": "0000_smiling_vector",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "5",
-      "when": 1697404432988,
-      "tag": "0001_light_doctor_octopus",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1699986888047,
-      "tag": "0002_abnormal_galactus",
+      "when": 1700789686400,
+      "tag": "0001_stormy_scrambler",
       "breakpoints": true
     }
   ]
