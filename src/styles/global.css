@@ -9,13 +9,13 @@
   }
 
   main {
-    @apply bg-gradient-to-t from-slate-300 via-slate-100 to-slate-300 to-85% text-slate-500 dark:from-slate-950 dark:via-slate-800/60 dark:to-slate-950 dark:text-white;
+    @apply bg-gradient-to-t from-slate-300 via-slate-100 to-slate-300 to-85% text-slate-500 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white;
   }
 }
 
 @layer components {
   .input-field {
-    @apply rounded-xl bg-white px-4 py-3 leading-none caret-green-500 shadow-md outline-none ring-1 ring-slate-300 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-700 dark:placeholder-slate-400 dark:caret-green-500 dark:ring-slate-600 dark:focus:placeholder-slate-500 focus:dark:ring-green-500;
+    @apply rounded-xl bg-white px-4 py-3 leading-none caret-green-500 shadow-md outline-none ring-1 ring-slate-300 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-800/50 dark:placeholder-slate-100 dark:caret-green-500 dark:ring-slate-700 dark:focus:placeholder-slate-500 focus:dark:ring-green-500;
   }
 
   .active-page {
