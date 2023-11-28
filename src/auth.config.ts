@@ -3,6 +3,10 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "./db";
 
 export const authConfig = {
+  secret: process.env.AUTH_SECRET,
+  session: {
+    strategy: "database"
+  },
   adapter: DrizzleAdapter(db),
   pages: {
     signIn: "/login",
