@@ -10,9 +10,9 @@ export const GoogleAuthButton = () => {
       }}
       className="flex"
     >
-      <button className="flex grow items-center justify-center gap-4 rounded-xl bg-white py-2.5 text-sm shadow-md ring-1 ring-slate-400/50 transition active:scale-95 dark:shadow-slate-950 dark:ring-0">
+      <button className="flex grow items-center justify-center gap-4 rounded-xl bg-white py-3 text-sm shadow-md ring-1 ring-slate-400/60 transition active:scale-95 dark:ring-slate-700 ring-inset dark:bg-transparent">
         <GoogleIcon />
-        <p className="font-semibold italic dark:text-slate-500">
+        <p className="font-semibold italic">
           Continue with Google
         </p>
       </button>
