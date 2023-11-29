@@ -31,7 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "autoprefixer": "latest",
-    "drizzle-kit": "^0.20.4",
+    "drizzle-kit": "^0.20.6",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "mysql2": "^3.6.3",
