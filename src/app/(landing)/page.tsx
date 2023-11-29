@@ -1,15 +1,7 @@
 import Link from "next/link";
 import { manrope } from "@/styles/fonts";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 
-export default async function LandingPage() {
-  const session = await auth();
-
-  if (session?.user) {
-    redirect("/user/home");
-  }
-
+export default  function LandingPage() {
   return (
     <div className="pt-18 flex grow flex-col justify-center px-4 pb-8">
       <div className="space-y-8 pb-16 pl-4">
