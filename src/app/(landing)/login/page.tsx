@@ -1,5 +1,5 @@
 import { PageWrapper } from "@/components/auth/PageWrapper";
-import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
+import { OAuthProviders } from "@/components/auth/OAuthProviders";
 import { Separator } from "@/components/auth/Separator";
 import { LoginForm } from "@/components/auth/login/LoginForm";
 import { LoginLinks } from "@/components/auth/login/LoginLinks";
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <PageWrapper>
-      <GoogleAuthButton />
+      <OAuthProviders />
       <Separator />
       <LoginForm />
       <LoginLinks />
