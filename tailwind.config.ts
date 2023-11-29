@@ -16,6 +16,7 @@ const config: Config = {
         "safe-bottom": "env(safe-area-inset-bottom)",
         "safe-left": "env(safe-area-inset-left)",
         "safe-right": "env(safe-area-inset-right)",
+        18: "4.5rem",
       },
     },
   },
