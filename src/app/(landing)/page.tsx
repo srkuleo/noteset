@@ -1,7 +1,15 @@
 import Link from "next/link";
 import { manrope } from "@/styles/fonts";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const session = await auth();
+
+  if (session?.user) {
+    redirect("/user/home");
+  }
+
   return (
     <div className="pt-18 flex grow flex-col justify-center px-4 pb-8">
       <div className="space-y-8 pb-16 pl-4">
@@ -19,7 +27,7 @@ export default function LandingPage() {
 
       <div className="flex flex-col items-center justify-center gap-2 text-center">
         <Link
-          href="/login"
+          href="/api/auth/signin"
           className="w-[120px] rounded-2xl bg-violet-500/90 py-2 font-semibold text-white shadow-md transition active:scale-95"
         >
           Login
