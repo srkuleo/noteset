@@ -1,5 +1,5 @@
-import { Logo } from "../../icons/navbars/logo";
-import { GitHubButton } from "../navbars/GitHubButton";
+import { Logo } from "@/icons/navbars/logo"; 
+import { GitHubButton } from "../navbars/GitHubButton"; 
 import { ThemeButton } from "../navbars/ThemeButton";
 import { LinkButtons } from "./LinkButtons";
 import { LogoutButton } from "./LogoutButton";
