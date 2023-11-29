@@ -1,7 +1,9 @@
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
-import Credentials from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google";
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "./db";
+import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 
 export const {
   auth,
@@ -10,11 +12,13 @@ export const {
   handlers: { GET, POST },
 } = NextAuth({
   ...authConfig,
+  adapter: DrizzleAdapter(db),
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    GitHub,
+    Google({
+      allowDangerousEmailAccountLinking: true,
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
     }),
-    Credentials({}),
   ],
 });
