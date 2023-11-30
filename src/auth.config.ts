@@ -9,18 +9,19 @@ export const authConfig = {
   },
   secret: process.env.AUTH_SECRET,
   callbacks: {
+    
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = Boolean(auth?.user);
       const isOnUserPage = nextUrl.pathname.startsWith("/user");
       
       if (isOnUserPage) {
         if (isLoggedIn) return true;
-        // Redirect unauthenticated users to signin page
 
+        // Redirect unauthenticated users to signin page
         return Response.redirect(new URL("/api/auth/signin", nextUrl));
       } else if (isLoggedIn) {
-        //Redirect authenticated users to user's home page
 
+        //Redirect authenticated users to user's home page
         return Response.redirect(new URL("/user/home", nextUrl));
       }
       return true;
