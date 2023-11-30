@@ -14,8 +14,12 @@ export default async function UserHomePage() {
   });
 
   return (
-    <div className="grow px-4 pt-40">
-      <p>Welcome {user?.username} to your Homepage.</p>
+    <div className="mx-4 mb-8 mt-40 grow bg-slate-500">
+      {user?.username ? (
+        <p>Welcome {user.username} to your Homepage.</p>
+      ) : (
+        <p>Welcome {user?.name} to your Homepage.</p>
+      )}
     </div>
   );
 }
