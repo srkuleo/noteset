@@ -6,8 +6,8 @@ export const metadata: Metadata = {
 
 export default function UserLogsPage() {
   return (
-    <div className="grow px-4 pt-40 text-center">
-      <p>This is user`s Profile page.</p>
+    <div className="flex grow flex-col items-center px-4 pb-8 pt-48 text-lg font-semibold">
+      <p>Profile page</p>
     </div>
   );
 }
