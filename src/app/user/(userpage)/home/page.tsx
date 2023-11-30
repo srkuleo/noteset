@@ -14,7 +14,7 @@ export default async function UserHomePage() {
   });
 
   return (
-    <div className="mx-4 mb-8 mt-40 grow bg-slate-500">
+    <div className="flex grow flex-col items-center px-4 pb-8 pt-48 text-lg font-semibold">
       {user?.username ? (
         <p>Welcome {user.username} to your Homepage.</p>
       ) : (
