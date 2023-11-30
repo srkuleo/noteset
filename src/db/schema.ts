@@ -14,7 +14,7 @@ import {
 } from "drizzle-orm/mysql-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
-export const users = mysqlTable("users", {
+export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
   name: varchar("name", { length: 255 }),
   username: varchar("username", { length: 30 }).unique(),
@@ -60,7 +60,7 @@ export const workoutsRelations = relations(workouts, ({ one }) => ({
 }));
 
 export const accounts = mysqlTable(
-  "accounts",
+  "account",
   {
     userId: varchar("userId", { length: 255 }).notNull(),
     type: varchar("type", { length: 255 })
@@ -90,7 +90,7 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
   }),
 }));
 
-export const sessions = mysqlTable("sessions", {
+export const sessions = mysqlTable("session", {
   sessionToken: varchar("sessionToken", { length: 255 }).notNull().primaryKey(),
   userId: varchar("userId", { length: 255 }).notNull(),
   expires: timestamp("expires", { mode: "date" }).notNull(),
@@ -104,7 +104,7 @@ export const sessionsRelations = relations(sessions, ({ one }) => ({
 }));
 
 export const verificationTokens = mysqlTable(
-  "verificationTokens",
+  "verificationToken",
   {
     identifier: varchar("identifier", { length: 255 }).notNull(),
     token: varchar("token", { length: 255 }).notNull(),
