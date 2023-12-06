@@ -1,4 +1,4 @@
-import { GitHubIcon } from "@/icons/auth/github";
+import { GitHubIcon } from "@/icons/navbars/github";
 
 export const GitHubButton = () => {
   return (
@@ -7,7 +7,7 @@ export const GitHubButton = () => {
       target="_blank"
       rel="noreferrer"
     >
-      <GitHubIcon className="h-7 w-7" />
+      <GitHubIcon />
     </a>
   );
 };
