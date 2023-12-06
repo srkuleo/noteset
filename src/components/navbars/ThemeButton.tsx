@@ -1,6 +1,6 @@
 "use client";
 
-import { SunIcon, MoonIcon } from "../../icons/navbars/theme";
+import { MoonIcon, SunIcon } from "@/icons/navbars/theme";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
