@@ -1,10 +1,9 @@
-import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
+import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
+import type { NextRequest } from "next/server";
 
-export default NextAuth(authConfig).auth;
-
+export default function middleware(req: NextRequest) {
+  return withAuth(req);
+}
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|site|shortcut-icon.png).*)",
-  ],
+  matcher: ["/user/:path*"],
 };
