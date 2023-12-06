@@ -1,1 +1,0 @@
-ALTER TABLE `workout` MODIFY COLUMN `user_id` varchar(255);
