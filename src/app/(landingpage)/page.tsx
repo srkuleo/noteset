@@ -3,8 +3,15 @@ import {
   LoginLink,
   RegisterLink,
 } from "@kinde-oss/kinde-auth-nextjs/components";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const { isAuthenticated } = getKindeServerSession();
+  const isLoggedIn = await isAuthenticated();
+
+  if (isLoggedIn) redirect("/user/home");
+
   return (
     <div className="flex grow flex-col justify-center px-4 pb-8 pt-18">
       <div className="space-y-8 pb-16 pl-4">
