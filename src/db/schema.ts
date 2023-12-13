@@ -12,7 +12,7 @@ export const workouts = mysqlTable(
   {
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 100 }),
-    description: text("description"),
+    description: text("description").default("Add description..."),
     userId: varchar("user_id", { length: 255 }).notNull(),
     doneAt: date("done_at"),
     timeElapsed: text("time_elapsed"),
@@ -20,6 +20,7 @@ export const workouts = mysqlTable(
   (table) => {
     return {
       userIdIndex: index("user_id_index").on(table.userId),
+      titleIndex: index("title_index").on(table.title),
     };
   },
 );
