@@ -10,14 +10,10 @@ export default async function LandingPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  console.log({ user });
   if (user?.given_name) {
     const username = user.given_name.toLowerCase();
     redirect(`/${username}`);
-  } else if (user?.family_name) {
-    const lastname = user.family_name.toLowerCase();
-    redirect(`/${lastname}`);
-  }
+  } 
 
   return (
     <div className="flex grow flex-col justify-center px-4 pb-8 pt-18">
