@@ -2,9 +2,10 @@ import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
 export default function middleware(req: NextRequest) {
+  console.log(req.url);
   if (
     req.url === "http://localhost:3000/" ||
-    req.url === "https://noteset.vercel.app"
+    req.url === "https://noteset.vercel.app/"
   ) {
     return NextResponse.redirect(new URL("/landing", req.url));
   } else {
@@ -13,6 +14,6 @@ export default function middleware(req: NextRequest) {
 }
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|site|shortcut-icon|landing).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|site|shortcut-icon|landing|noteset-og-image).*)",
   ],
 };
