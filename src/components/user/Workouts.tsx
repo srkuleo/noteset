@@ -16,7 +16,7 @@ export const Workouts = async ({
   workouts: Workout[];
 }) => {
   return (
-    <div className="flex grow flex-col gap-2 px-6 pb-8 pt-48">
+    <div className="flex grow flex-col gap-2 px-6 pb-8 mt-24 pt-28">
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold">Your current workouts</h1>
         <Link
