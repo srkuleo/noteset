@@ -8,6 +8,27 @@
       "when": 1701877842175,
       "tag": "0000_chubby_mattie_franklin",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1701989421623,
+      "tag": "0001_greedy_queen_noir",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1702484935777,
+      "tag": "0002_swift_captain_america",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1702485476649,
+      "tag": "0003_sweet_hedge_knight",
+      "breakpoints": true
     }
   ]
 }
