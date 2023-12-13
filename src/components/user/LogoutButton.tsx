@@ -1,4 +1,4 @@
-import { LogoutIcon } from "../../icons/user/logout";
+import { LogoutIcon } from "@/icons/user/logout";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 
 export const LogoutButton = () => {
