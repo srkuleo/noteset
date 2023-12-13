@@ -12,11 +12,11 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@kinde-oss/kinde-auth-nextjs": "^2.0.11",
+    "@kinde-oss/kinde-auth-nextjs": "^2.0.13",
     "@planetscale/database": "^1.11.0",
     "drizzle-orm": "^0.29.1",
     "framer-motion": "^10.16.14",
-    "next": "^14.0.3",
+    "next": "^14.0.4",
     "next-themes": "^0.2.1",
     "react": "latest",
     "react-dom": "latest",
