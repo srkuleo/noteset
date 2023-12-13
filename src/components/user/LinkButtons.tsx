@@ -4,23 +4,18 @@ import { HomeIcon, ProfileIcon, LogsIcon } from "../../icons/user/links";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export type Links = {
+type Link = {
   href: string;
   icon: JSX.Element;
-}[];
+};
 
-const links: Links = [
-  { href: "/user/home", icon: HomeIcon },
-  { href: "/user/profile", icon: ProfileIcon },
-  { href: "/user/logs", icon: LogsIcon },
-];
-
-const highlightPath = (
-  <div className="absolute bottom-[5px] h-[1px] w-5 bg-white" />
-);
-
-export const LinkButtons = () => {
+export const LinkButtons = ({ username }: { username: string }) => {
   const path = usePathname();
+  const links: Link[] = [
+    { href: `/${username}`, icon: HomeIcon },
+    { href: `/${username}/profile`, icon: ProfileIcon },
+    { href: `/${username}/logs`, icon: LogsIcon },
+  ];
 
   return (
     <>
@@ -39,3 +34,7 @@ export const LinkButtons = () => {
     </>
   );
 };
+
+const highlightPath = (
+  <div className="absolute bottom-[5px] h-[1px] w-5 bg-white" />
+);
