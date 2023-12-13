@@ -16,15 +16,6 @@ export const metadata: Metadata = {
   description:
     "Landing page for a minimalistic workout tracking PWA",
   metadataBase: new URL("https://noteset.vercel.app/"),
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/shortcut-icon.png",
-    apple: "apple-icon.png",
-    other: {
-      rel: "apple-touch-icon-precomposed",
-      url: "/apple-icon.png",
-    },
-  },
   openGraph: {
     title: "Noteset - workout app",
     description: "Landing page for a minimalistic workout tracking PWA",
