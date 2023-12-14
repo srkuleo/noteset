@@ -1,3 +1,5 @@
+"use client"
+
 import { PreviewIcon } from "@/icons/user/preview";
 import { AddIcon, EditIcon, DeleteIcon } from "@/icons/user/modify";
 import Link from "next/link";
@@ -8,7 +10,7 @@ type Workout = {
   description: string | null;
 };
 
-export const Workouts = async ({
+export const Workouts = ({
   username,
   workouts,
 }: {
