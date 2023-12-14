@@ -4,10 +4,10 @@ export const metadata: Metadata = {
   title: "Profile",
 };
 
-export default function UserLogsPage() {
+export default function ProfilePage() {
   return (
-    <div className="flex grow flex-col items-center px-4 pb-8 pt-48 text-lg font-semibold">
-      <p>Profile page</p>
-    </div>
+    <>
+      <p className="text-center text-lg font-semibold">Profile page</p>
+    </>
   );
 }
