@@ -2,7 +2,6 @@ import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 
 export default function middleware(req: NextRequest) {
-  console.log(req.url);
   if (
     req.url === "http://localhost:3000/" ||
     req.url === "https://noteset.vercel.app/"
