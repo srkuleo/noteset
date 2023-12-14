@@ -10,7 +10,7 @@ export default function UserPagesLayout({
   return (
     <main className="flex min-h-screen flex-col">
       <UserPageHeader username={params.username} />
-      <div className="flex flex-col px-6 pb-4 pt-48">{children}</div>
+      <div className="flex flex-col px-6 pb-4 pt-[188px]">{children}</div>
     </main>
   );
 }

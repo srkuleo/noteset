@@ -32,7 +32,7 @@ export const Workouts = ({
         <div className="flex gap-2">
           <Link
             href={`/${username}/create`}
-            className="rounded-xl bg-white p-2 shadow-sm active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-inset dark:ring-slate-700"
+            className="rounded-xl bg-white p-2 shadow-sm active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
           >
             {AddIcon}
           </Link>
