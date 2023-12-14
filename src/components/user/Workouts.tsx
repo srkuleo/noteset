@@ -1,8 +1,14 @@
-"use client"
+"use client";
 
 import { PreviewIcon } from "@/icons/user/preview";
-import { AddIcon, EditIcon, DeleteIcon } from "@/icons/user/modify";
+import {
+  AddIcon,
+  EditIcon,
+  EditWorkoutIcon,
+  DeleteIcon,
+} from "@/icons/user/modify";
 import Link from "next/link";
+import { useState } from "react";
 
 type Workout = {
   id: number;
@@ -17,49 +23,60 @@ export const Workouts = ({
   username: string;
   workouts: Workout[];
 }) => {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <>
       <div className="flex items-center justify-between pb-2">
         <h1 className="text-xl font-bold">Your current workouts</h1>
-        <Link
-          className="rounded-lg bg-white p-2 shadow-sm active:scale-95 dark:bg-slate-800"
-          href={`/${username}/create`}
-        >
-          {AddIcon}
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            href={`/${username}/create`}
+            className="rounded-xl bg-white p-2 shadow-sm active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-inset dark:ring-slate-700"
+          >
+            {AddIcon}
+          </Link>
+          <button
+            onClick={() => setIsEditing(!isEditing)}
+            className="rounded-xl bg-green-500 p-2 text-white shadow-sm active:scale-95 dark:bg-green-600"
+          >
+            {EditIcon}
+          </button>
+        </div>
       </div>
       {workouts.map((workout) => (
-        <div
-          key={workout.id}
-          className="mb-4 flex w-full flex-col gap-4 rounded-xl bg-white/90 p-3 shadow-sm dark:bg-slate-800/90"
-        >
-          <div className="space-y-1 border-b border-slate-200 pb-4 pl-1 dark:border-slate-700">
-            <p className="font-bold dark:text-slate-300">{workout.title}</p>
-            <p className="text-sm italic text-slate-400/70 dark:text-slate-500">
-              {workout.description}
-            </p>
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-2">
-              <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 dark:ring-slate-500">
+        <div key={workout.id} className="flex items-center gap-2 pb-4">
+          <div className="flex w-full flex-col gap-2 rounded-xl bg-white/90 p-3 shadow-md dark:bg-slate-800/90">
+            <div className="space-y-1 border-b border-green-200 px-1 pb-2 dark:border-green-700/60">
+              <p className="text-lg font-bold dark:text-slate-300">
+                {workout.title}
+              </p>
+              <p className="text-xs italic text-slate-400/80">
+                {workout.description}
+              </p>
+            </div>
+            <div className="flex gap-2 py-2 pl-1">
+              <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 dark:ring-slate-600 dark:shadow-slate-900">
                 {PreviewIcon}
               </button>
               <button className="rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md dark:from-violet-500 dark:to-violet-600">
                 Start
               </button>
             </div>
-            <div className="flex gap-2">
+          </div>
+          {isEditing && (
+            <div className="flex flex-col gap-4">
               <Link
                 href={`/${username}/edit/${workout.title?.toLowerCase()}`}
-                className="flex items-center rounded-full bg-green-300 px-2 active:scale-95 dark:bg-green-600"
+                className="rounded-full bg-green-500 p-2 text-white active:scale-95 dark:bg-green-600"
               >
-                {EditIcon}
+                {EditWorkoutIcon}
               </Link>
-              <button className="rounded-full bg-red-500/90 px-2 text-white active:scale-95 dark:bg-red-600">
+              <button className="rounded-full bg-red-500/90 p-2 px-2 text-white active:scale-95 dark:bg-red-600">
                 {DeleteIcon}
               </button>
             </div>
-          </div>
+          )}
         </div>
       ))}
     </>
