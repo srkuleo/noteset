@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export const EmptyPage = ({ username }: { username: string }) => {
   return (
-    <div className="flex flex-col justify-center grow items-center gap-8 px-4">
-      <div className=" text-slate-400/60 dark:text-slate-700/80">
+    <div className="flex flex-col justify-center grow items-center gap-8 px-4 pt-44">
+      <div className="text-slate-400/60 dark:text-slate-700/80">
         {EmptyIcon}
       </div>
       <div className="space-y-2 text-center">
