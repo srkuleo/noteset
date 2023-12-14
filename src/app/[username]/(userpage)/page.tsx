@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Home",
 };
 
-export default async function UserHomePage({
+export default async function HomePage({
   params,
 }: {
   params: { username: string };
