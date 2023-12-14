@@ -6,7 +6,7 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Make workout component client side, add warning modal to confirm removing workout and confirming modal to inform user before pushing a new or edited workout to db. Add confirmation pages that confirm workout has been added or edited with revalidation and redirect to users homepage._
+- _Add warning modal to confirm removing workout and confirming modal to inform user before pushing a new or edited workout to db. Add confirmation pages that confirm workout has been added or edited with revalidation and redirect to users homepage._
 
 - _Figure out data model for db._
 
