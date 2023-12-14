@@ -1,6 +1,6 @@
 import { UserPageHeader } from "@/components/user/UserPageHeader";
 
-export default function UserPageLayout({
+export default function UserPagesLayout({
   children,
   params,
 }: {
