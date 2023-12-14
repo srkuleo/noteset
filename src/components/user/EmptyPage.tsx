@@ -3,13 +3,13 @@ import Link from "next/link";
 
 export const EmptyPage = ({ username }: { username: string }) => {
   return (
-    <div className="flex flex-col justify-center grow items-center gap-8 px-4 pt-28">
+    <div className="flex grow flex-col items-center justify-center gap-8 px-4 pt-28">
       <div className="text-slate-400/60 dark:text-slate-700/80">
         {EmptyIcon}
       </div>
       <div className="space-y-2 text-center">
         <h2 className="text-xl font-semibold dark:text-slate-300">
-          Seems like you don&apos;t have any workouts available
+          Seems like you don&apos;t have any available workouts
         </h2>
         <p className="text-sm text-slate-400 dark:text-slate-500">
           Go to create page and create your first workout
