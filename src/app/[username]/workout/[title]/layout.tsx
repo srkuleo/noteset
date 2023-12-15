@@ -10,6 +10,8 @@ export default function WorkoutPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex h-screen flex-col px-4 pb-8 pt-4">{children}</main>
+    <main className="flex min-h-screen flex-col">
+     {children}
+    </main>
   );
 }
