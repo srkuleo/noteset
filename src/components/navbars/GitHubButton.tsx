@@ -7,7 +7,7 @@ export const GitHubButton = () => {
       target="_blank"
       rel="noreferrer"
     >
-      <GitHubIcon />
+      {GitHubIcon}
     </a>
   );
 };

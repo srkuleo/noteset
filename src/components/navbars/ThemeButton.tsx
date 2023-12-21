@@ -20,7 +20,7 @@ export const ThemeButton = () => {
   if (isMounted) {
     return (
       <button onClick={switchTheme}>
-        {resolvedTheme === "light" ? <MoonIcon /> : <SunIcon />}
+        {resolvedTheme === "light" ? MoonIcon : SunIcon}
       </button>
     );
   }
