@@ -11,6 +11,7 @@ export default function middleware(req: NextRequest) {
     return withAuth(req);
   }
 }
+
 export const config = {
   matcher: [
     "/((?!api|_next/static|_next/image|favicon.ico|site|shortcut-icon|landing|noteset-og-image|apple|manifest).*)",
