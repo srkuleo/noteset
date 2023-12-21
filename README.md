@@ -6,6 +6,8 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
+-_Try to redirect from landing page if logged in via middleware._
+
 - _Metadata icon and notch setting for android pwa, change the angle of the icon, try hiding scrollbar with tailwind and make main tag a client wrapper to apply sliding animation with fm._
 
 - _Add warning modal to confirm removing workout, preview modal to show preview of the workout, confirming modal to inform user before pushing a new or edited workout to db. Add confirmation component that renders if certain message is returned from server action, confirming that workout has been added or edited with revalidation and redirect to users homepage. Finish error page UI._
