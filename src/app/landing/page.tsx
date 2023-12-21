@@ -10,10 +10,14 @@ export default async function LandingPage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  if (user?.given_name) {
-    const username = user.given_name.toLowerCase();
-    redirect(`/${username}`);
-  } 
+  if (user) {
+    if (user.given_name) {
+      const username = user.given_name.toLowerCase();
+      redirect(`/${username}`);
+    } else {
+      throw new Error("Google Auth doesn't provide given_name needed for redirecting to user page.")
+    }
+  }
 
   return (
     <div className="flex grow flex-col justify-center px-4 pb-8 pt-18">
