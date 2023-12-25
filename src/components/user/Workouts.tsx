@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { manrope } from "@/styles/fonts";
 
 type Workout = {
   id: number;
@@ -29,7 +30,9 @@ export const Workouts = ({
   return (
     <>
       <div className="flex items-center justify-between pb-2">
-        <h1 className="text-xl font-bold">Your current workouts</h1>
+        <h1 className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}>
+          Your current workouts
+        </h1>
         <div className="flex gap-2">
           <Link
             href={`/${username}/create`}
@@ -47,12 +50,12 @@ export const Workouts = ({
       </div>
       {workouts.map((workout) => (
         <div key={workout.id} className="flex items-center gap-2 pb-4">
-          <div className="flex w-full flex-col gap-2 rounded-xl bg-white/90 p-3 shadow-md dark:bg-slate-800/90">
-            <div className="space-y-1 border-b border-green-200 px-1 pb-2 dark:border-green-700/60">
+          <div className="flex w-full flex-col gap-2 rounded-xl bg-white/90 py-3 pl-3 pr-6 shadow-md dark:bg-slate-800/90">
+            <div className="space-y-1 border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
               <p className="text-lg font-bold dark:text-slate-300">
                 {workout.title}
               </p>
-              <p className="text-xs italic text-slate-400/80">
+              <p className="text-balance text-xs italic text-slate-400/80">
                 {workout.description}
               </p>
             </div>
@@ -62,7 +65,7 @@ export const Workouts = ({
               </button>
               <Link
                 href={`/${username}/workout/${workout.title?.toLowerCase()}`}
-                className="rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md dark:from-violet-500 dark:to-violet-600"
+                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
               >
                 Start
               </Link>
