@@ -6,9 +6,9 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Add warning modal to confirm removing workout, preview modal to show preview of the workout, confirming modal to inform user before pushing a new or edited workout to db. Add confirmation page that renders if searchParam.successful is set to true and redirected to via server action, confirming that workout has been added or edited with revalidation and redirect to users homepage. Finish error page UI._
+- _Add warning modal to confirm removing workout, preview modal to show preview of the workout, confirming modal to inform user before pushing a new or edited workout to db. Add confirmation page that renders if searchParam.successful is set to true and redirected to via server action, confirming that workout has been added or edited with revalidation and redirect to users homepage._
 
-- _Change kinde schema and add status column to workouts table._
+- _Add status column to workouts table._
 
 - _Figure out data model for db._
 
