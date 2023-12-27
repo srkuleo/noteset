@@ -12,7 +12,11 @@ export default async function HomePage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-  const workouts = await getUserWorkouts(user!.id);
+  if (!user) {
+    throw new Error("You are not logged in.");
+  }
+
+  const workouts = await getUserWorkouts(user.id);
 
   if (workouts.length < 1) {
     return <EmptyPage />;

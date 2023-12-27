@@ -61,7 +61,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
               </button>
               <Link
                 href={`/workout/${workout.title?.toLowerCase()}`}
-                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md transition dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md transition dark:from-violet-500pap dark:to-violet-600 ${manrope.className}`}
               >
                 Start
               </Link>
