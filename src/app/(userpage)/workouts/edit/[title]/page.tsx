@@ -1,32 +1,37 @@
 import { getWorkoutByTitle } from "@/db/query";
 import { notFound } from "next/navigation";
 import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumb";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit",
+};
 
 export default async function EditWorkoutPage({
   params,
 }: {
-  params: { username: string; title: string };
+  params: { title: string };
 }) {
   const convertedTitleParam = decodeURI(params.title);
   const workout = await getWorkoutByTitle(convertedTitleParam);
 
   if (!workout) notFound();
 
-  const breadcrumbsArr: Breadcrumb[] = [
+  const breadcrumbs: Breadcrumb[] = [
     {
-      label: params.username,
-      href: `/${params.username}`,
+      label: "workouts",
+      href: "/workouts",
     },
     {
       label: convertedTitleParam,
-      href: `/${params.username}/edit/${params.title}`,
+      href: `/workouts/edit/${params.title}`,
       active: true,
     },
   ];
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={breadcrumbsArr} />
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       This is the Edit page for {workout.title} workout
     </>
   );

@@ -1,35 +1,27 @@
 import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumb";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { manrope } from "@/styles/fonts";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
-export default async function EditWorkoutPage({
-  params,
-}: {
-  params: { username: string };
-}) {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
-  if ((user && user.given_name?.toLowerCase()) !== params.username) notFound();
-
-  const breadcrumbsArr: Breadcrumb[] = [
+export default function CreateWorkoutPage() {
+  const breadcrumbs: Breadcrumb[] = [
     {
-      label: params.username,
-      href: `/${params.username}`,
+      label: "workouts",
+      href: "/workouts",
     },
     {
       label: "create",
-      href: `/${params.username}/create`,
+      href: "/workouts/create",
       active: true,
     },
   ];
 
   return (
     <>
-      <Breadcrumbs breadcrumbs={breadcrumbsArr} />
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       <div className="rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
-        <p className="pb-6 text-lg font-semibold">Create a new workout</p>
+        <p className={`pb-6 text-lg font-semibold ${manrope.className}`}>
+          Create a new workout
+        </p>
         <form action="" className="space-y-4">
           <label className="flex flex-col gap-1">
             <span className="pl-1 text-sm font-semibold uppercase text-slate-400 dark:text-slate-300">
@@ -53,15 +45,15 @@ export default async function EditWorkoutPage({
               className="input-field"
             />
           </label>
-          <div className="flex justify-end gap-4 pt-4">
+          <div className="flex justify-end gap-2 pt-4 items-center">
             <Link
-              href={`/${params.username}`}
-              className="rounded-lg bg-slate-50 px-3 py-2 text-slate-600 ring-1 ring-inset ring-slate-300 active:scale-95"
+              href="/workouts"
+              className="rounded-lg px-3 py-1.5 text-sm font-semibold text-slate-500 active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
             >
               Cancel
             </Link>
-            <button className="rounded-lg bg-green-500 px-3 py-2 text-white active:scale-95 dark:bg-green-600">
-              Create workout
+            <button className="rounded-lg bg-green-500 px-4 py-1.5 font-semibold text-white shadow-sm active:scale-95 dark:bg-green-600">
+              Create
             </button>
           </div>
         </form>

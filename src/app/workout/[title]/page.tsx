@@ -6,7 +6,7 @@ import { ThemeButton } from "@/components/navbars/ThemeButton";
 export default async function WorkoutPage({
   params,
 }: {
-  params: { username: string; title: string };
+  params: { title: string };
 }) {
   const convertedTitleParam = decodeURI(params.title);
   const workout = await getWorkoutByTitle(convertedTitleParam);
@@ -32,10 +32,10 @@ export default async function WorkoutPage({
           <p>{workout.description}</p>
         </div>
         <Link
-          href={`/${params.username}`}
-          className="rounded-xl bg-violet-500 py-2 px-3 text-white dark:bg-violet-600"
+          href="/workouts"
+          className="rounded-xl bg-violet-500 px-3 py-2 text-white dark:bg-violet-600"
         >
-          Go back to Home page
+          Return to Homepage
         </Link>
       </div>
     </>
