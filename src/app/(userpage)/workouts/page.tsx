@@ -11,12 +11,9 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const userId = user?.id as string;
 
-  if (!user) {
-    throw new Error("You are not logged in.");
-  }
-
-  const workouts = await getUserWorkouts(user.id);
+  const workouts = await getUserWorkouts(userId);
 
   if (workouts.length < 1) {
     return <EmptyPage />;
