@@ -48,7 +48,7 @@ export default function CreateWorkoutPage() {
           <div className="flex justify-end gap-2 pt-4 items-center">
             <Link
               href="/workouts"
-              className="rounded-lg px-3 py-1.5 text-sm font-semibold text-slate-500 active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
+              className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
             >
               Cancel
             </Link>
