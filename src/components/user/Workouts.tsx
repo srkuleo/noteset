@@ -18,24 +18,20 @@ type Workout = {
   description: string | null;
 };
 
-export const Workouts = ({
-  username,
-  workouts,
-}: {
-  username: string;
-  workouts: Workout[];
-}) => {
+export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
       <div className="flex items-center justify-between pb-2">
-        <h1 className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}>
+        <h1
+          className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}
+        >
           Your current workouts
         </h1>
         <div className="flex gap-2">
           <Link
-            href={`/${username}/create`}
+            href="/workouts/create"
             className="rounded-xl bg-white p-2 shadow-sm active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
           >
             {AddIcon}
@@ -64,8 +60,8 @@ export const Workouts = ({
                 {PreviewIcon}
               </button>
               <Link
-                href={`/${username}/workout/${workout.title?.toLowerCase()}`}
-                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                href={`/workout/${workout.title?.toLowerCase()}`}
+                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-3 py-1 text-white shadow-md transition dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
               >
                 Start
               </Link>
@@ -88,7 +84,7 @@ export const Workouts = ({
                 }}
               >
                 <Link
-                  href={`/${username}/edit/${workout.title?.toLowerCase()}`}
+                  href={`/workouts/edit/${workout.title?.toLowerCase()}`}
                   className="overflow-hidden rounded-full bg-green-500 p-2 text-white active:scale-95 dark:bg-green-600"
                 >
                   {EditWorkoutIcon}
