@@ -4,7 +4,7 @@ import { ThemeButton } from "../navbars/ThemeButton";
 import { LinkButtons } from "./LinkButtons";
 import { LogoutButton } from "./LogoutButton";
 
-export const UserPageHeader = ({ username }: { username: string }) => {
+export const UserPageHeader = () => {
   return (
     <div className="fixed w-full bg-slate-300/50 pt-safe-top backdrop-blur-xl dark:bg-slate-950/50">
       <div className="space-y-4 px-4 pb-3 pt-2">
@@ -17,7 +17,7 @@ export const UserPageHeader = ({ username }: { username: string }) => {
         </div>
 
         <div className="flex gap-2">
-          <LinkButtons username={username} />
+          <LinkButtons/>
           <LogoutButton />
         </div>
       </div>
