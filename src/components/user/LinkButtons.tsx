@@ -1,21 +1,21 @@
 "use client";
 
-import { HomeIcon, ProfileIcon, LogsIcon } from "../../icons/user/links";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { HomeIcon, ProfileIcon, LogsIcon } from "@/icons/user/links";
 
 type Link = {
   href: string;
   icon: JSX.Element;
 };
+const links: Link[] = [
+  { href: "/workouts", icon: HomeIcon },
+  { href: "/profile", icon: ProfileIcon },
+  { href: "/logs", icon: LogsIcon },
+];
 
-export const LinkButtons = ({ username }: { username: string }) => {
+export const LinkButtons = () => {
   const path = usePathname();
-  const links: Link[] = [
-    { href: `/${username}`, icon: HomeIcon },
-    { href: `/${username}/profile`, icon: ProfileIcon },
-    { href: `/${username}/logs`, icon: LogsIcon },
-  ];
 
   return (
     <>
@@ -28,13 +28,11 @@ export const LinkButtons = ({ username }: { username: string }) => {
           }`}
         >
           {link.icon}
-          {link.href === path && highlightPath}
+          {link.href === path && (
+            <div className="absolute bottom-1.5 h-[1px] w-5 bg-white" />
+          )}
         </Link>
       ))}
     </>
   );
 };
-
-const highlightPath = (
-  <div className="absolute bottom-[5px] h-[1px] w-5 bg-white" />
-);
