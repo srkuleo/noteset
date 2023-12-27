@@ -19,7 +19,7 @@ export default function NotFound() {
           </p>
         </div>
         <Link
-          href="/landing"
+          href="/"
           className="rounded-xl bg-violet-500 px-3 py-2 font-semibold text-white shadow-sm dark:bg-violet-600"
         >
           Go back
