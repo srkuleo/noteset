@@ -32,13 +32,13 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
         <div className="flex gap-2">
           <Link
             href="/workouts/create"
-            className="rounded-xl bg-white p-2 shadow-sm active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
+            className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
           >
             {AddIcon}
           </Link>
           <button
             onClick={() => setIsEditing(!isEditing)}
-            className="rounded-xl bg-green-500 p-2 text-white shadow-sm active:scale-95 dark:bg-green-600"
+            className="rounded-xl bg-green-500 p-2 text-white shadow-sm transition active:scale-95 dark:bg-green-600"
           >
             {EditIcon}
           </button>
@@ -56,12 +56,12 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
               </p>
             </div>
             <div className="flex gap-2 py-2 pl-1">
-              <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 dark:shadow-slate-900 dark:ring-slate-600">
+              <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
                 {PreviewIcon}
               </button>
               <Link
                 href={`/workout/${workout.title?.toLowerCase()}`}
-                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
               >
                 Start
               </Link>
@@ -85,11 +85,11 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
               >
                 <Link
                   href={`/workouts/edit/${workout.title?.toLowerCase()}`}
-                  className="overflow-hidden rounded-full bg-green-500 p-2 text-white active:scale-95 dark:bg-green-600"
+                  className="overflow-hidden rounded-full bg-green-500 p-2 text-white transition active:scale-95 dark:bg-green-600"
                 >
                   {EditWorkoutIcon}
                 </Link>
-                <button className="overflow-hidden rounded-full bg-red-500/90 p-2 px-2 text-white active:scale-95 dark:bg-red-600">
+                <button className="overflow-hidden rounded-full bg-red-500/90 p-2 px-2 text-white transition  active:scale-95 dark:bg-red-600">
                   {DeleteIcon}
                 </button>
               </motion.div>
