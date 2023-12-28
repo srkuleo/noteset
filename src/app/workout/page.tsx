@@ -1,15 +1,18 @@
-import { getWorkoutByTitle } from "@/db/query";
+import { getWorkoutById } from "@/db/query";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ThemeButton } from "@/components/navbars/ThemeButton";
 
 export default async function WorkoutPage({
-  params,
+  searchParams,
 }: {
-  params: { title: string };
+  searchParams: { id: string };
 }) {
-  const convertedTitleParam = decodeURI(params.title);
-  const workout = await getWorkoutByTitle(convertedTitleParam);
+  const coercedId = Number(searchParams.id);
+  if (typeof coercedId === "number") {
+    console.log("its is number");
+  }
+  const workout = await getWorkoutById(coercedId);
 
   if (!workout) notFound();
 
