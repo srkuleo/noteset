@@ -56,7 +56,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
                 {PreviewIcon}
               </button>
               <Link
-                href={`/workout/${workout.title?.toLowerCase()}`}
+                href={`/workout?id=${workout.id}`}
                 className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
               >
                 Start
