@@ -3,7 +3,7 @@
 import { unstable_noStore as noStore } from "next/cache";
 import { db } from ".";
 import { workouts } from "./schema";
-import { eq } from "drizzle-orm/mysql-core/expressions";
+import { and, eq } from "drizzle-orm/mysql-core/expressions";
 
 export async function getUserWorkouts(id: string) {
   noStore();
@@ -16,7 +16,7 @@ export async function getUserWorkouts(id: string) {
         description: workouts.description,
       })
       .from(workouts)
-      .where(eq(workouts.userId, id));
+      .where(and(eq(workouts.userId, id), eq(workouts.status, "current")));
 
     console.log("Workouts fetched.");
 
