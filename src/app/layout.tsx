@@ -30,21 +30,6 @@ export const metadata: Metadata = {
       url: "/apple-icon.png",
     },
   },
-  openGraph: {
-    title: "Noteset - workout app",
-    description: "A minimalistic workout tracking PWA",
-    url: "https://noteset.vercel.app/",
-    siteName: "Noteset",
-    images: [
-      {
-        url: "/noteset-og-image.png",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
   manifest: "/site.webmanifest",
   appleWebApp: {
     statusBarStyle: "black-translucent",
