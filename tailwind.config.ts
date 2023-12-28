@@ -8,9 +8,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      fontSize: {
-        icon: ["0.625rem", "1.125rem"],
-      },
       spacing: {
         "safe-top": "env(safe-area-inset-top)",
         "safe-bottom": "env(safe-area-inset-bottom)",
