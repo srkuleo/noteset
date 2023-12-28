@@ -33,7 +33,7 @@ export const EditButtons = ({ workout }: { workout: Workout }) => {
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 dark:bg-slate-950/80" />
-          <Drawer.Content className="fixed inset-x-0 bottom-0 flex flex-col items-center rounded-t-lg bg-white px-4 pb-safe-bottom pt-2 dark:bg-slate-800">
+          <Drawer.Content className="fixed inset-x-0 bottom-0 z-10 flex flex-col items-center rounded-t-lg bg-white px-4 pt-2 dark:bg-slate-800">
             <div className="h-1 w-12 rounded-full bg-slate-200 dark:bg-slate-500" />
             <div className="flex w-full items-center justify-between py-4">
               <h1 className="font-semibold">Remove {workout.title}</h1>
