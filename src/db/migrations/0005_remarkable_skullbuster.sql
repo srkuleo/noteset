@@ -1,0 +1,1 @@
+CREATE INDEX `status_index` ON `workouts` (`status`);
