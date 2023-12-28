@@ -27,7 +27,7 @@ export const EditButtons = ({ workout }: { workout: Workout }) => {
       >
         {EditWorkoutIcon}
       </Link>
-      <Drawer.Root shouldScaleBackground>
+      <Drawer.Root>
         <Drawer.Trigger className="overflow-hidden rounded-full bg-red-500/90 p-2 px-2 text-white transition  active:scale-95 dark:bg-red-600">
           {DeleteIcon}
         </Drawer.Trigger>
