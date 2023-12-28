@@ -1,6 +1,6 @@
 import { getWorkoutById } from "@/db/query";
 import { notFound } from "next/navigation";
-import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumb";
+import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumbs";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

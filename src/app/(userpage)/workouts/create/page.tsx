@@ -1,4 +1,4 @@
-import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumb";
+import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumbs";
 import { manrope } from "@/styles/fonts";
 import { createWorkout } from "@/util/actions";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
