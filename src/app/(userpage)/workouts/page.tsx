@@ -19,5 +19,5 @@ export default async function HomePage() {
     return <EmptyPage />;
   }
 
-  return <Workouts workouts={workouts} userId={userId} />;
+  return <Workouts workouts={workouts} />;
 }
