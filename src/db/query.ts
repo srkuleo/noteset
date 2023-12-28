@@ -27,11 +27,11 @@ export async function getUserWorkouts(id: string) {
   }
 }
 
-export async function getWorkoutByTitle(title: string) {
+export async function getWorkoutById(id: number) {
   noStore();
 
   const workout = await db.query.workouts.findFirst({
-    where: eq(workouts.title, title),
+    where: eq(workouts.id, id),
   });
 
   workout
