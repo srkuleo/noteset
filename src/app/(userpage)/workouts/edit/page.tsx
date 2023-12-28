@@ -1,4 +1,4 @@
-import { getWorkoutByTitle } from "@/db/query";
+import { getWorkoutById } from "@/db/query";
 import { notFound } from "next/navigation";
 import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumb";
 import type { Metadata } from "next";
@@ -8,12 +8,12 @@ export const metadata: Metadata = {
 };
 
 export default async function EditWorkoutPage({
-  params,
+  searchParams,
 }: {
-  params: { title: string };
+  searchParams: { id: string };
 }) {
-  const convertedTitleParam = decodeURI(params.title);
-  const workout = await getWorkoutByTitle(convertedTitleParam);
+  const coercedId = Number(searchParams.id);
+  const workout = await getWorkoutById(coercedId);
 
   if (!workout) notFound();
 
@@ -23,8 +23,8 @@ export default async function EditWorkoutPage({
       href: "/workouts",
     },
     {
-      label: convertedTitleParam,
-      href: `/workouts/edit/${params.title}`,
+      label: workout.title,
+      href: `/workouts/edit?id=${searchParams.id}`,
       active: true,
     },
   ];
