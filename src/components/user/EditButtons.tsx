@@ -33,14 +33,15 @@ export const EditButtons = ({ workout }: { workout: Workout }) => {
         </Drawer.Trigger>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 dark:bg-slate-950/80" />
-          <Drawer.Content className="fixed inset-x-0 bottom-0 flex flex-col items-center rounded-t-lg bg-white py-3 dark:bg-slate-800">
-            <div className="h-[5px] w-24 rounded-full bg-slate-200 dark:bg-slate-300" />
-            <div className="w-full border-b border-slate-100 px-4 pb-2 dark:border-slate-700/90">
+          <Drawer.Content className="fixed inset-x-0 bottom-0 flex flex-col items-center rounded-t-lg bg-white px-4 pb-safe-bottom pt-2 dark:bg-slate-800">
+            <div className="h-1 w-12 rounded-full bg-slate-200 dark:bg-slate-500" />
+            <div className="flex w-full items-center justify-between py-4">
+              <h1 className="font-semibold">Remove {workout.title}</h1>
               <Drawer.Close className="text-sm text-slate-500 dark:text-slate-300">
                 Cancel
               </Drawer.Close>
             </div>
-            <div className="flex flex-col items-center px-4 pb-4 pt-7">
+            <div className="flex flex-col items-center gap-8 pt-6 pb-10">
               <div className="rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +58,7 @@ export const EditButtons = ({ workout }: { workout: Workout }) => {
                   />
                 </svg>
               </div>
-              <div className="space-y-2 px-2 pb-6 pt-4 text-center">
+              <div className="space-y-2 px-2 text-center">
                 <p className="text-lg font-semibold">
                   Do you want to continue?
                 </p>
