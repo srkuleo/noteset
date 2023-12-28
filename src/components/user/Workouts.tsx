@@ -14,13 +14,7 @@ export type Workout = {
   description: string;
 };
 
-export const Workouts = ({
-  workouts,
-  userId,
-}: {
-  workouts: Workout[];
-  userId: string;
-}) => {
+export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -33,7 +27,7 @@ export const Workouts = ({
         </h1>
         <div className="flex gap-2">
           <Link
-            href={`/workouts/create?userId=${userId}`}
+            href="/workouts/create"
             className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
           >
             {AddIcon}
