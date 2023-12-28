@@ -22,7 +22,7 @@ export const EditButtons = ({ workout }: { workout: Workout }) => {
       }}
     >
       <Link
-        href={`/workouts/edit/${workout.title?.toLowerCase()}`}
+        href={`/workouts/edit?id=${workout.id}`}
         className="overflow-hidden rounded-full bg-green-500 p-2 text-white transition active:scale-95 dark:bg-green-600"
       >
         {EditWorkoutIcon}
@@ -41,7 +41,7 @@ export const EditButtons = ({ workout }: { workout: Workout }) => {
                 Cancel
               </Drawer.Close>
             </div>
-            <div className="flex flex-col items-center gap-8 pt-6 pb-10">
+            <div className="flex flex-col items-center gap-8 pb-10 pt-6">
               <div className="rounded-full bg-red-100 p-2 text-red-600 dark:bg-red-200">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
