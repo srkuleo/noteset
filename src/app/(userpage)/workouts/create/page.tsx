@@ -1,16 +1,14 @@
 import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumb";
 import { manrope } from "@/styles/fonts";
 import { createWorkout } from "@/util/actions";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Link from "next/link";
 
-export default async function CreateWorkoutPage() {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
-
-  const userId = user?.id as string;
-
-  const createWorkoutWithId = createWorkout.bind(null, userId);
+export default async function CreateWorkoutPage({
+  searchParams,
+}: {
+  searchParams: { userId: string };
+}) {
+  const createWorkoutWithId = createWorkout.bind(null, searchParams.userId);
 
   const breadcrumbs: Breadcrumb[] = [
     {
