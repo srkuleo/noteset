@@ -1,24 +1,26 @@
 "use client";
 
 import { PreviewIcon } from "@/icons/user/preview";
-import {
-  AddIcon,
-  EditIcon,
-  EditWorkoutIcon,
-  DeleteIcon,
-} from "@/icons/user/modify";
+import { AddIcon, EditIcon } from "@/icons/user/modify";
 import Link from "next/link";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import { manrope } from "@/styles/fonts";
+import { EditButtons } from "./EditButtons";
 
-type Workout = {
+export type Workout = {
   id: number;
-  title: string | null;
-  description: string | null;
+  title: string;
+  description: string;
 };
 
-export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
+export const Workouts = ({
+  workouts,
+  userId,
+}: {
+  workouts: Workout[];
+  userId: string;
+}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   return (
@@ -31,7 +33,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
         </h1>
         <div className="flex gap-2">
           <Link
-            href="/workouts/create"
+            href={`/workouts/create?userId=${userId}`}
             className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
           >
             {AddIcon}
@@ -68,32 +70,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             </div>
           </div>
           <AnimatePresence>
-            {isEditing && (
-              <motion.div
-                className="flex flex-col gap-4"
-                initial={{ opacity: 0, width: 0 }}
-                animate={{
-                  opacity: 1,
-                  width: "auto",
-                  transition: { duration: 0.25, ease: "easeOut" },
-                }}
-                exit={{
-                  opacity: 0,
-                  width: 0,
-                  transition: { duration: 0.15, ease: "easeIn" },
-                }}
-              >
-                <Link
-                  href={`/workouts/edit/${workout.title?.toLowerCase()}`}
-                  className="overflow-hidden rounded-full bg-green-500 p-2 text-white transition active:scale-95 dark:bg-green-600"
-                >
-                  {EditWorkoutIcon}
-                </Link>
-                <button className="overflow-hidden rounded-full bg-red-500/90 p-2 px-2 text-white transition  active:scale-95 dark:bg-red-600">
-                  {DeleteIcon}
-                </button>
-              </motion.div>
-            )}
+            {isEditing && <EditButtons workout={workout} />}
           </AnimatePresence>
         </div>
       ))}
