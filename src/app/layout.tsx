@@ -67,10 +67,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.className} antialiased`}
+      className={`${nunito.className} overscroll-y-none antialiased`}
       suppressHydrationWarning
     >
-      <body>
+      <body className="scroll-smooth bg-slate-300 dark:bg-slate-950">
         <Providers>{children}</Providers>
       </body>
     </html>
