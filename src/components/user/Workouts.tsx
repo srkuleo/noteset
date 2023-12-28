@@ -1,12 +1,12 @@
 "use client";
 
 import { PreviewIcon } from "@/icons/user/preview";
-import { AddIcon, EditIcon } from "@/icons/user/modify";
+import { AddWorkoutIcon, EditIcon } from "@/icons/user/modify";
 import Link from "next/link";
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { manrope } from "@/styles/fonts";
-import { EditButtons } from "./EditButtons";
+import { EditWorkoutButton } from "./EditWorkoutButton";
+import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
 
 export type Workout = {
   id: number;
@@ -30,7 +30,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             href="/workouts/create"
             className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
           >
-            {AddIcon}
+            {AddWorkoutIcon}
           </Link>
           <button
             onClick={() => setIsEditing(!isEditing)}
@@ -41,31 +41,34 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
         </div>
       </div>
       {workouts.map((workout) => (
-        <div key={workout.id} className="flex items-center gap-2 pb-4">
-          <div className="flex w-full flex-col gap-2 rounded-xl bg-white/90 py-3 pl-3 pr-6 shadow-md dark:bg-slate-800/90">
-            <div className="space-y-1 border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
-              <p className="text-lg font-bold dark:text-slate-300">
-                {workout.title}
-              </p>
-              <p className="text-balance text-xs italic text-slate-400/80">
-                {workout.description}
-              </p>
+        <div key={workout.id} className="flex items-center pb-4">
+          <div className="flex w-full flex-col gap-2 rounded-xl bg-white/90 px-3 py-3 shadow-md dark:bg-slate-800/90">
+            <div className="flex items-center justify-between border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
+              <div className="space-y-1">
+                <p className="text-lg font-bold dark:text-slate-300">
+                  {workout.title}
+                </p>
+                <p className="text-balance text-xs italic text-slate-400/80">
+                  {workout.description}
+                </p>
+              </div>
+              <EditWorkoutButton isEditing={isEditing} workout={workout} />
             </div>
-            <div className="flex gap-2 py-2 pl-1">
-              <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
-                {PreviewIcon}
-              </button>
-              <Link
-                href={`/workout?id=${workout.id}`}
-                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
-              >
-                Start
-              </Link>
+            <div className="flex justify-between py-2 px-1">
+              <div className="flex gap-2">
+                <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
+                  {PreviewIcon}
+                </button>
+                <Link
+                  href={`/workout?id=${workout.id}`}
+                  className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                >
+                  Start
+                </Link>
+              </div>
+              <RemoveWorkoutButton isEditing={isEditing} workout={workout} />
             </div>
           </div>
-          <AnimatePresence>
-            {isEditing && <EditButtons workout={workout} />}
-          </AnimatePresence>
         </div>
       ))}
     </>
