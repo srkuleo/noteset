@@ -30,13 +30,16 @@ export async function getUserWorkouts(id: string) {
 export async function getWorkoutById(id: number) {
   noStore();
 
-  const workout = await db.query.workouts.findFirst({
-    where: eq(workouts.id, id),
-  });
+  try {
+    const workout = await db.query.workouts.findFirst({
+      where: eq(workouts.id, id),
+    });
 
-  workout
-    ? console.log("Workout retrived.")
-    : console.log("Workout not retrived.");
+    console.log("Workout retrived.");
 
-  return workout;
+    return workout;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("Failed to retrive selected workout.");
+  }
 }
