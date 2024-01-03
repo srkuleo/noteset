@@ -10,9 +10,7 @@ export default async function LandingPage() {
   const { isAuthenticated } = getKindeServerSession();
   const isLoggedIn = await isAuthenticated();
 
-  if (isLoggedIn) {
-    redirect("/workouts");
-  }
+  isLoggedIn && redirect("/workouts");
 
   return (
     <div className="flex grow flex-col justify-center px-4 pb-8 pt-18">
