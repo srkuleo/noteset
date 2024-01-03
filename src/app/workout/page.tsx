@@ -9,9 +9,6 @@ export default async function WorkoutPage({
   searchParams: { id: string };
 }) {
   const coercedId = Number(searchParams.id);
-  if (typeof coercedId === "number") {
-    console.log("its is number");
-  }
   const workout = await getWorkoutById(coercedId);
 
   if (!workout) notFound();
