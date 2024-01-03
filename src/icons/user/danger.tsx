@@ -1,3 +1,5 @@
+"use client"
+
 export const DangerIcon = () => {
   return (
     <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
