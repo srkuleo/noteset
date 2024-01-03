@@ -55,11 +55,11 @@ export const RemoveWorkoutButton = ({
       {openRemoveModal && (
         <>
           <div
-            className="fixed inset-0 bg-slate-900/40 dark:bg-slate-900/60"
+            className="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70"
             onClick={() => setOpenRemoveModal(false)}
           />
           <div className="fixed inset-x-0 bottom-4 space-y-4 px-4 py-4">
-            <div className="flex flex-col items-center gap-3 rounded-lg bg-white/90 pt-3 backdrop-blur-md dark:bg-slate-700/90">
+            <div className="flex flex-col items-center gap-3 rounded-[10px] bg-white/90 pt-3 backdrop-blur-md dark:bg-slate-700/75">
               <DangerIcon />
 
               <div className="px-1">
@@ -69,15 +69,18 @@ export const RemoveWorkoutButton = ({
                 </p>
               </div>
               <button
-                onClick={() => removeWorkout(workout.id)}
-                className={`w-full rounded-b-lg border-t border-slate-400/40 p-3 text-lg font-semibold text-red-500 active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90 ${manrope.className}`}
+                onClick={() => {
+                  removeWorkout(workout.id);
+                  setOpenRemoveModal(false);
+                }}
+                className={`w-full rounded-b-[10px] border-t border-slate-400/40 p-3 text-lg font-semibold text-red-500 active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90 ${manrope.className}`}
               >
                 Remove {workout.title}
               </button>
             </div>
             <button
               onClick={() => setOpenRemoveModal(false)}
-              className="w-full rounded-lg bg-white p-3 text-lg font-bold text-violet-500 active:bg-slate-200 dark:bg-slate-700/95 dark:text-violet-400 active:dark:bg-slate-600/90"
+              className="w-full rounded-[10px] bg-white p-3 text-xl font-bold text-violet-500 active:bg-slate-200 dark:bg-slate-700/95 dark:text-violet-400 active:dark:bg-slate-600/90"
             >
               Cancel
             </button>
