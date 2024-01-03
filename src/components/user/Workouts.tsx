@@ -54,7 +54,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
               </div>
               <EditWorkoutButton isEditing={isEditing} workout={workout} />
             </div>
-            <div className="flex justify-between py-2 px-1">
+            <div className="flex justify-between px-1 py-2">
               <div className="flex gap-2">
                 <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
                   {PreviewIcon}
