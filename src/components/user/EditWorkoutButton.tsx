@@ -22,8 +22,8 @@ export const EditWorkoutButton = ({
           }}
           exit={{
             opacity: 0,
-            y: -8,
-            transition: { duration: 0.1, ease: "easeIn" },
+            y: -12,
+            transition: { duration: 0.14, ease: "easeIn" },
           }}
         >
           <Link
