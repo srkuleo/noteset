@@ -1,5 +1,5 @@
 import { LandingPageHeader } from "@/components/navbars/LandingPageHeader";
-import { SadIcon } from "@/icons/user/error";
+import { SadIcon } from "@/icons/user/warning";
 import Link from "next/link";
 
 export default function NotFound() {

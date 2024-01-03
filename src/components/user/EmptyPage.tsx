@@ -1,4 +1,4 @@
-import { EmptyIcon } from "@/icons/user/error";
+import { EmptyIcon } from "@/icons/user/warning";
 import Link from "next/link";
 
 export const EmptyPage = () => {

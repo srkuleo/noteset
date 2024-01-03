@@ -1,7 +1,7 @@
-"use client"; // Error components must be Client Components
+"use client";
 
 import { LandingPageHeader } from "@/components/navbars/LandingPageHeader";
-import { SadIcon } from "@/icons/user/error";
+import { SadIcon } from "@/icons/user/warning";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -13,7 +13,6 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
