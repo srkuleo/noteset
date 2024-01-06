@@ -32,7 +32,7 @@ export default async function CreateWorkoutPage() {
         </p>
         <form action={createWorkoutWithId} className="space-y-4">
           <label className="flex flex-col gap-1">
-            <span className="pl-1 text-sm font-semibold uppercase text-slate-400 dark:text-slate-300">
+            <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
               Title
             </span>
             <input
@@ -43,7 +43,7 @@ export default async function CreateWorkoutPage() {
             />
           </label>
           <label className="flex flex-col gap-1">
-            <span className="pl-1 text-sm font-semibold uppercase text-slate-400 dark:text-slate-300">
+            <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
               Description
             </span>
             <input
@@ -56,7 +56,7 @@ export default async function CreateWorkoutPage() {
           <div className="flex items-center justify-end gap-2 pt-4">
             <Link
               href="/workouts"
-              className="rounded-lg px-3 py-2 text-sm font-semibold text-slate-500 active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
+              className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
             >
               Cancel
             </Link>
