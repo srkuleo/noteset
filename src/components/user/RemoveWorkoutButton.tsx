@@ -9,10 +9,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { RemoveWorkoutIcon } from "@/icons/user/modify";
 
 export const RemoveWorkoutButton = ({
+  editMode,
   workout,
-  isEditing,
 }: {
-  isEditing: boolean;
+  editMode: boolean;
   workout: Workout;
 }) => {
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
@@ -28,22 +28,22 @@ export const RemoveWorkoutButton = ({
   return (
     <>
       <AnimatePresence>
-        {isEditing && (
+        {editMode && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: "100%" }}
             animate={{
               opacity: 1,
               y: 0,
-              transition: { duration: 0.2, ease: "easeOut" },
+              transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
             }}
             exit={{
               opacity: 0,
-              y: -12,
-              transition: { duration: 0.14, ease: "easeIn" },
+              y: "100%",
+              transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
             }}
           >
             <button
-              className="text-red-500 transition  active:scale-95 dark:text-red-400"
+              className="text-red-500 transition active:scale-95 dark:text-red-400"
               onClick={() => setOpenRemoveModal(true)}
             >
               {RemoveWorkoutIcon}
@@ -59,28 +59,36 @@ export const RemoveWorkoutButton = ({
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
-                transition: { duration: 0.3, ease: "easeOut" },
+                transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
               }}
               exit={{
                 opacity: 0,
-                transition: { delay: 0.1, duration: 0.2, ease: "easeIn" },
+                transition: {
+                  delay: 0.1,
+                  duration: 0.3,
+                  ease: [0.36, 0.66, 0.04, 1],
+                },
               }}
-              className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70"
+              className="backdrop-blur-xs fixed inset-0 z-10 bg-slate-900/40 dark:bg-slate-950/70"
               onClick={() => setOpenRemoveModal(false)}
             />
             <motion.div
-              initial={{ y: 240 }}
+              initial={{ y: "100%" }}
               animate={{
                 y: 0,
-                transition: { duration: 0.3, ease: "easeOut" },
+                transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
               }}
               exit={{
-                y: 240,
-                transition: { delay: 0.1, duration: 0.2, ease: "easeIn" },
+                y: "100%",
+                transition: {
+                  delay: 0.1,
+                  duration: 0.3,
+                  ease: [0.36, 0.66, 0.04, 1],
+                },
               }}
-              className="fixed inset-x-0 bottom-4 space-y-4 px-4 py-4"
+              className="fixed inset-x-0 bottom-4 z-10 space-y-4 px-4 py-4"
             >
-              <div className="flex flex-col items-center gap-3 rounded-[10px] bg-white/90 pt-5 dark:bg-slate-700/85">
+              <div className="flex flex-col items-center gap-3 rounded-[10px] bg-slate-50/95 pt-5 dark:bg-slate-700/90">
                 <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
                   {DangerIcon}
                 </div>
@@ -102,7 +110,7 @@ export const RemoveWorkoutButton = ({
               </div>
               <button
                 onClick={() => setOpenRemoveModal(false)}
-                className="w-full rounded-[10px] bg-white p-3 text-xl font-bold text-violet-500 active:bg-slate-200 dark:bg-slate-700/95 dark:text-violet-400 active:dark:bg-slate-600/90"
+                className="w-full rounded-[10px] bg-white p-3 text-xl font-bold text-violet-500 active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
               >
                 Cancel
               </button>
