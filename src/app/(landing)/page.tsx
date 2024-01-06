@@ -13,7 +13,7 @@ export default async function LandingPage() {
   isLoggedIn && redirect("/workouts");
 
   return (
-    <div className="flex grow flex-col justify-center px-4 pb-8 pt-18">
+    <div className="flex grow flex-col justify-center px-4 pb-8">
       <div className="space-y-8 pb-16 pl-4">
         <h1 className="w-fit bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pl-2 text-6xl font-extrabold text-transparent dark:from-green-500 dark:to-violet-600">
           Note<span className="font-bold">Set</span>
