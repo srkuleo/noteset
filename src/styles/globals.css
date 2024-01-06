@@ -12,17 +12,6 @@
   }
 }
 
-@layer utilities {
-  .backdrop-blur-xs {
-    --tw-backdrop-blur: blur(2px);
-    backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness)
-      var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale)
-      var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert)
-      var(--tw-backdrop-opacity) var(--tw-backdrop-saturate)
-      var(--tw-backdrop-sepia);
-  }
-}
-
 @layer components {
   .input-field {
     @apply rounded-xl bg-slate-50 px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 shadow-sm outline-none ring-1 ring-slate-200 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-900/40 dark:placeholder-slate-500 dark:caret-green-600 dark:ring-slate-700 dark:focus:placeholder-slate-600 focus:dark:ring-green-600;
@@ -34,5 +23,41 @@
 
   .idle-page {
     @apply bg-white dark:bg-slate-800;
+  }
+}
+
+@keyframes overlay-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlay-hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes content-show {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes content-hide {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
   }
 }
