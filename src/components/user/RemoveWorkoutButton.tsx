@@ -63,7 +63,7 @@ export const RemoveWorkoutButton = ({
               }}
               exit={{
                 opacity: 0,
-                transition: { delay: 0.15, duration: 0.2, ease: "easeIn" },
+                transition: { delay: 0.1, duration: 0.2, ease: "easeIn" },
               }}
               className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70"
               onClick={() => setOpenRemoveModal(false)}
@@ -76,7 +76,7 @@ export const RemoveWorkoutButton = ({
               }}
               exit={{
                 y: 240,
-                transition: { delay: 0.15, duration: 0.2, ease: "easeIn" },
+                transition: { delay: 0.1, duration: 0.2, ease: "easeIn" },
               }}
               className="fixed inset-x-0 bottom-4 space-y-4 px-4 py-4"
             >
