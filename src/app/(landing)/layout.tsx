@@ -6,8 +6,11 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col overscroll-none">
       <LandingPageHeader />
+      <div className="pt bg-red-500">
+        <p>Important!</p>
+      </div>
       {children}
     </main>
   );
