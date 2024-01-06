@@ -6,7 +6,7 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Add preview modal to show preview of the workout. Add confirmation page that renders if searchParam.successful is set to true and redirected to via server action, confirming that workout has been added or edited with revalidation and redirect to users homepage._
+- _Try Vaul instead of Radix and finish Ui inside preview dialog. Add confirmation page that renders if searchParam.successful is set to true and redirected to via server action, confirming that workout has been added or edited with revalidation and redirect to users homepage._
 
 - _Handle and display zod parse errors inside create and edit form._
 
