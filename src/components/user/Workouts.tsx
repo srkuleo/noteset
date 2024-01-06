@@ -6,7 +6,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { manrope } from "@/styles/fonts";
 import { EditWorkoutButton } from "./EditWorkoutButton";
-import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
+// import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
+import { AltRemoveModal } from "./AltRemoveModal";
 
 export type Workout = {
   id: number;
@@ -15,34 +16,21 @@ export type Workout = {
 };
 
 export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
+  function toggleEditMode() {
+    setEditMode(!editMode);
+  }
 
   return (
     <>
-      <div className="flex items-center justify-between pb-2">
-        <h1
-          className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}
-        >
-          Your current workouts
-        </h1>
-        <div className="flex gap-2">
-          <Link
-            href="/workouts/create"
-            className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
+      <EditSection toggleEditMode={toggleEditMode} />
+      <div className="space-y-4">
+        {workouts.map((workout) => (
+          <div
+            key={workout.id}
+            className="flex w-full flex-col gap-2 rounded-xl bg-white px-3 py-3 shadow-md dark:bg-slate-800/90"
           >
-            {AddWorkoutIcon}
-          </Link>
-          <button
-            onClick={() => setIsEditing(!isEditing)}
-            className="rounded-xl bg-green-500 p-2 text-white shadow-sm transition active:scale-95 dark:bg-green-600"
-          >
-            {EditIcon}
-          </button>
-        </div>
-      </div>
-      {workouts.map((workout) => (
-        <div key={workout.id} className="flex items-center pb-4">
-          <div className="flex w-full flex-col gap-2 rounded-xl bg-white/90 px-3 py-3 shadow-md dark:bg-slate-800/90">
             <div className="flex items-center justify-between border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
               <div className="space-y-1">
                 <p className="text-lg font-bold dark:text-slate-300">
@@ -52,7 +40,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
                   {workout.description}
                 </p>
               </div>
-              <EditWorkoutButton isEditing={isEditing} workout={workout} />
+              <EditWorkoutButton editMode={editMode} workout={workout} />
             </div>
             <div className="flex justify-between px-1 py-2">
               <div className="flex gap-2">
@@ -66,11 +54,38 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
                   Start
                 </Link>
               </div>
-              <RemoveWorkoutButton isEditing={isEditing} workout={workout} />
+              {/* <RemoveWorkoutButton editMode={editMode} workout={workout} /> */}
+              <AltRemoveModal editMode={editMode} workout={workout} />
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </>
+  );
+};
+
+const EditSection = ({ toggleEditMode }: { toggleEditMode: () => void }) => {
+  return (
+    <div className="flex items-center justify-between pb-4">
+      <h1
+        className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}
+      >
+        Your current workouts
+      </h1>
+      <div className="flex gap-2">
+        <Link
+          href="/workouts/create"
+          className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
+        >
+          {AddWorkoutIcon}
+        </Link>
+        <button
+          onClick={toggleEditMode}
+          className="rounded-xl bg-green-500 p-2 text-white shadow-sm transition active:scale-95 dark:bg-green-600"
+        >
+          {EditIcon}
+        </button>
+      </div>
+    </div>
   );
 };
