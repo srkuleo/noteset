@@ -4,26 +4,26 @@ import Link from "next/link";
 import type { Workout } from "./Workouts";
 
 export const EditWorkoutButton = ({
-  isEditing,
+  editMode,
   workout,
 }: {
-  isEditing: boolean;
+  editMode: boolean;
   workout: Workout;
 }) => {
   return (
     <AnimatePresence>
-      {isEditing && (
+      {editMode && (
         <motion.div
-          initial={{ opacity: 0, y: -12 }}
+          initial={{ opacity: 0, y: "-100%" }}
           animate={{
             opacity: 1,
             y: 0,
-            transition: { duration: 0.2, ease: "easeOut" },
+            transition: { duration: 0.4, ease: [0.36, 0.66, 0.04, 1] },
           }}
           exit={{
             opacity: 0,
-            y: -12,
-            transition: { duration: 0.14, ease: "easeIn" },
+            y: "-100%",
+            transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
           }}
         >
           <Link
