@@ -10,14 +10,14 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="backdrop-blur-xs data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70" />
+        <Dialog.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/70" />
 
-        <Dialog.Content className="data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show rounded-t-modal fixed inset-0 mt-20 bg-white p-4 dark:bg-slate-800">
+        <Dialog.Content className="fixed inset-0 mt-32 rounded-t-modal bg-white p-4 data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show dark:bg-slate-800">
           <div className="flex items-center justify-between">
             <p className="text-lg font-bold">
               Current workout: {workout.title}
             </p>
-            <Dialog.Close className="font-bold text-violet-500 focus:outline-none dark:text-violet-400">
+            <Dialog.Close className="font-extrabold text-violet-500 focus:outline-none dark:text-violet-400">
               Done
             </Dialog.Close>
           </div>
