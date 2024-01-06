@@ -1,13 +1,12 @@
 "use client";
 
-import { PreviewIcon } from "@/icons/user/preview";
-import { AddWorkoutIcon, EditIcon } from "@/icons/user/modify";
 import Link from "next/link";
-import { useState } from "react";
 import { manrope } from "@/styles/fonts";
+import { useState } from "react";
+import { EditSection } from "./EditSection";
+import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 import { EditWorkoutButton } from "./EditWorkoutButton";
-// import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
-import { AltRemoveModal } from "./AltRemoveModal";
+import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
 
 export type Workout = {
   id: number;
@@ -44,9 +43,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             </div>
             <div className="flex justify-between px-1 py-2">
               <div className="flex gap-2">
-                <button className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
-                  {PreviewIcon}
-                </button>
+                <PreviewWorkoutButton workout={workout} />
                 <Link
                   href={`/workout?id=${workout.id}`}
                   className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
@@ -54,38 +51,11 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
                   Start
                 </Link>
               </div>
-              {/* <RemoveWorkoutButton editMode={editMode} workout={workout} /> */}
-              <AltRemoveModal editMode={editMode} workout={workout} />
+              <RemoveWorkoutButton editMode={editMode} workout={workout} />
             </div>
           </div>
         ))}
       </div>
     </>
-  );
-};
-
-const EditSection = ({ toggleEditMode }: { toggleEditMode: () => void }) => {
-  return (
-    <div className="flex items-center justify-between pb-4">
-      <h1
-        className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}
-      >
-        Your current workouts
-      </h1>
-      <div className="flex gap-2">
-        <Link
-          href="/workouts/create"
-          className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
-        >
-          {AddWorkoutIcon}
-        </Link>
-        <button
-          onClick={toggleEditMode}
-          className="rounded-xl bg-green-500 p-2 text-white shadow-sm transition active:scale-95 dark:bg-green-600"
-        >
-          {EditIcon}
-        </button>
-      </div>
-    </div>
   );
 };
