@@ -10,6 +10,9 @@ const config: Config = {
   prefix: "",
   theme: {
     extend: {
+      borderRadius: {
+        modal: "10px",
+      },
       backdropBlur: {
         xs: "2px",
       },
