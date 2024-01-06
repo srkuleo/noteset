@@ -1,4 +1,4 @@
-import "@/styles/global.css";
+import "@/styles/globals.css";
 import type { Metadata, Viewport } from "next";
 import { nunito } from "@/styles/fonts";
 import { Providers } from "@/context/Providers";
