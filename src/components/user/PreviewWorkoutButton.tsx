@@ -12,7 +12,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/70" />
 
-        <Dialog.Content className="fixed inset-0 mt-36 rounded-t-modal bg-white pt-safe-top  data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show dark:bg-slate-800">
+        <Dialog.Content className="fixed inset-0 mt-32 rounded-t-modal bg-white data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show dark:bg-slate-800">
           <div className="flex items-center justify-between p-4">
             <p className="text-lg font-bold">
               Current workout: {workout.title}
