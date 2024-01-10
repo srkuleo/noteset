@@ -2,10 +2,11 @@
 
 import { db } from "@/db";
 import { workouts } from "@/db/schema";
-import { eq } from "drizzle-orm/mysql-core/expressions";
+import { and, eq } from "drizzle-orm/mysql-core/expressions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { WorkoutAlreadyExistsError } from "./exceptions";
 
 const WorkoutSchema = z.object({
   id: z.number(),
@@ -23,17 +24,15 @@ const WorkoutSchema = z.object({
   timeElapsed: z.string(),
 });
 
-export async function removeWorkout(id: number) {
+export async function removeWorkout(workoutId: number) {
   try {
-    await db.delete(workouts).where(eq(workouts.id, id));
+    await db.delete(workouts).where(eq(workouts.id, workoutId));
   } catch (err) {
-    console.error(err);
     throw new Error("Database error: Workout could not be deleted.");
   }
 
-  revalidatePath("/workouts");
-  console.log({ message: "Workout deleted!" });
-  return { message: "Workout deleted!" };
+  console.log("Workout deleted!");
+  revalidatePath("/workouts?action=deleted");
 }
 
 const CreateWorkout = WorkoutSchema.omit({
@@ -51,14 +50,29 @@ export async function createWorkout(userId: string, formData: FormData) {
   });
 
   try {
+    const existingWorkout = await db.query.workouts.findFirst({
+      where: and(eq(workouts.title, title), eq(workouts.userId, userId)),
+    });
+
+    if (existingWorkout) {
+      throw new WorkoutAlreadyExistsError(
+        `Workout with ${title} tile already exists.`,
+      );
+    }
+
     await db
       .insert(workouts)
       .values({ userId: userId, title: title, description: description });
   } catch (error) {
-    console.error(error);
-    throw new Error("Database error: Failed to create new workout.");
+    if (error instanceof WorkoutAlreadyExistsError) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Database Error: Workout could not be created.");
+    }
   }
 
+  console.log(`${title} workout created!`);
+
   revalidatePath("/workouts");
-  redirect("/workouts");
+  redirect("/workouts?action=created");
 }
