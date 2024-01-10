@@ -4,7 +4,6 @@ export default function UserPagesLayout({
   children,
 }: {
   children: React.ReactNode;
-  params: { username: string };
 }) {
   return (
     <main className="flex min-h-screen flex-col">
