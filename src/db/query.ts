@@ -5,7 +5,7 @@ import { db } from ".";
 import { workouts } from "./schema";
 import { and, eq } from "drizzle-orm/mysql-core/expressions";
 
-export async function getUserWorkouts(id: string) {
+export async function getUserWorkouts(userId: string) {
   noStore();
 
   try {
@@ -16,23 +16,23 @@ export async function getUserWorkouts(id: string) {
         description: workouts.description,
       })
       .from(workouts)
-      .where(and(eq(workouts.userId, id), eq(workouts.status, "current")));
+      .where(and(eq(workouts.userId, userId), eq(workouts.status, "current")));
 
     console.log("Workouts fetched.");
 
     return userWorkouts;
   } catch (error) {
     console.error("Database error:", error);
-    throw new Error("Failed to get user's workouts.");
+    throw new Error("Failed to retrive user's workouts.");
   }
 }
 
-export async function getWorkoutById(id: number) {
+export async function getWorkoutById(workoutId: number) {
   noStore();
 
   try {
     const workout = await db.query.workouts.findFirst({
-      where: eq(workouts.id, id),
+      where: eq(workouts.id, workoutId),
     });
 
     console.log("Workout retrived.");
