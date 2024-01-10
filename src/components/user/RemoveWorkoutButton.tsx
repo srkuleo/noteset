@@ -41,15 +41,15 @@ export const RemoveWorkoutButton = ({
       </AnimatePresence>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="backdrop-blur-xs data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70" />
+        <Dialog.Overlay className="backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70" />
 
         <Dialog.Content className="data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show fixed inset-x-0 bottom-4 space-y-4 px-4 py-4">
-          <div className="rounded-modal flex flex-col items-center gap-3 bg-slate-50/95 pt-5 dark:bg-slate-700/90">
+          <div className="rounded-modal flex flex-col items-center gap-3 bg-slate-50/90 pt-5 dark:bg-slate-700/80">
             <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
               {DangerIcon}
             </div>
             <div className="px-1 pt-2">
-              <p className="text-center text-sm font-semibold leading-snug text-slate-600 dark:text-slate-400">
+              <p className="text-center text-base font-semibold leading-snug text-slate-600 dark:text-slate-400">
                 This action is irreversible. Proceeding further will result in
                 permanent data loss. Continue?
               </p>
