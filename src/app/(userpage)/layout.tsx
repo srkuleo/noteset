@@ -6,7 +6,7 @@ export default function UserPagesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen flex-col">
+    <main className="flex min-h-screen flex-col" vaul-drawer-wrapper="">
       <UserPageHeader />
       <div className="mt-40 flex flex-col px-6 pb-8 pt-safe-top">
         {children}
