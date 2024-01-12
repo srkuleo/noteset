@@ -4,10 +4,9 @@ import Link from "next/link";
 import { manrope } from "@/styles/fonts";
 import { useState } from "react";
 import { EditSection } from "./EditSection";
-// import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
+import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 import { EditWorkoutButton } from "./EditWorkoutButton";
 import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
-import { AltPreview } from "./AltPreview";
 
 export type Workout = {
   id: number;
@@ -25,7 +24,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
   return (
     <>
       <EditSection toggleEditMode={toggleEditMode} />
-      <div className="space-y-4">
+      <div className="space-y-4 select-none">
         {workouts.map((workout) => (
           <div
             key={workout.id}
@@ -33,10 +32,10 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
           >
             <div className="flex items-center justify-between border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
               <div className="space-y-1">
-                <p className="select-none text-lg font-bold dark:text-slate-300">
+                <p className="text-lg font-bold dark:text-slate-300">
                   {workout.title}
                 </p>
-                <p className="select-none text-balance text-sm italic text-slate-400/80 dark:text-slate-400/60">
+                <p className="text-balance text-sm italic text-slate-400/80 dark:text-slate-400/60">
                   {workout.description}
                 </p>
               </div>
@@ -44,8 +43,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             </div>
             <div className="flex justify-between px-1 py-2">
               <div className="flex gap-2">
-                <AltPreview workout={workout} />
-                {/* <PreviewWorkoutButton workout={workout} /> */}
+                <PreviewWorkoutButton workout={workout} />
                 <Link
                   href={`/workout?id=${workout.id}`}
                   className={`select-none rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
