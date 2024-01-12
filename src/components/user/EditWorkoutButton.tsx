@@ -28,7 +28,7 @@ export const EditWorkoutButton = ({
         >
           <Link
             href={`/workouts/edit?id=${workout.id}`}
-            className="text-green-500 transition active:scale-95"
+            className="select-none text-green-500 transition active:scale-95"
           >
             {EditWorkoutIcon}
           </Link>

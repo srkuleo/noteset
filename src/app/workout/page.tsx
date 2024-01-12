@@ -17,7 +17,7 @@ export default async function WorkoutPage({
     <>
       <div className="fixed w-full bg-gradient-to-r from-green-600 from-20% to-violet-600 pt-safe-top dark:from-green-700 dark:to-violet-700 ">
         <nav className="flex justify-between px-4 py-3">
-          <p className="text-sm text-white">
+          <p className="select-none text-sm text-white">
             Current workout: <span className="text-lg">{workout.title}</span>
           </p>
           <ThemeButton />

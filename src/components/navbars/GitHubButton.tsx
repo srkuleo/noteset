@@ -6,6 +6,7 @@ export const GitHubButton = () => {
       href="https://github.com/srkuleo/noteset"
       target="_blank"
       rel="noreferrer"
+      className="select-none"
     >
       {GitHubIcon}
     </a>

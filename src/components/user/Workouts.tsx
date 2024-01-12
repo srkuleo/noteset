@@ -4,9 +4,10 @@ import Link from "next/link";
 import { manrope } from "@/styles/fonts";
 import { useState } from "react";
 import { EditSection } from "./EditSection";
-import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
+// import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 import { EditWorkoutButton } from "./EditWorkoutButton";
 import { RemoveWorkoutButton } from "./RemoveWorkoutButton";
+import { AltPreview } from "./AltPreview";
 
 export type Workout = {
   id: number;
@@ -28,7 +29,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
         {workouts.map((workout) => (
           <div
             key={workout.id}
-            className="flex w-full flex-col gap-2 rounded-xl bg-white px-3 py-3 shadow-md dark:bg-slate-800/90"
+            className="flex w-full flex-col gap-2 rounded-xl bg-white px-4 py-4 shadow-md dark:bg-slate-800/90"
           >
             <div className="flex items-center justify-between border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
               <div className="space-y-1">
@@ -43,10 +44,11 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             </div>
             <div className="flex justify-between px-1 py-2">
               <div className="flex gap-2">
-                <PreviewWorkoutButton workout={workout} />
+                <AltPreview workout={workout} />
+                {/* <PreviewWorkoutButton workout={workout} /> */}
                 <Link
                   href={`/workout?id=${workout.id}`}
-                  className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                  className={`select-none rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
                 >
                   Start
                 </Link>
