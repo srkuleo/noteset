@@ -24,7 +24,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
   return (
     <>
       <EditSection toggleEditMode={toggleEditMode} />
-      <div className="space-y-4 select-none">
+      <div className="space-y-4">
         {workouts.map((workout) => (
           <div
             key={workout.id}
@@ -46,7 +46,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
                 <PreviewWorkoutButton workout={workout} />
                 <Link
                   href={`/workout?id=${workout.id}`}
-                  className={`select-none rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                  className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
                 >
                   Start
                 </Link>
