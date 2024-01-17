@@ -8,7 +8,7 @@ export type Breadcrumb = {
 
 export const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) => {
   return (
-    <ul className="flex pb-2">
+    <ul className="flex pb-4">
       {breadcrumbs.map((bc, index) => (
         <li key={bc.href} aria-current={bc.active}>
           <Link
