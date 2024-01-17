@@ -6,12 +6,11 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-
-- _Finish Ui inside preview dialog. Add confirmation page that renders if searchParam.successful is set to true and redirected to via server action, confirming that workout has been added or edited with revalidation and redirect to users homepage._
+- _Figure out data model for db._
 
 - _Handle and display zod parse errors inside create and edit form._
 
-- _Figure out data model for db._
+- _Finish Ui inside preview dialog. Add confirmation page for editting or adding workout that renders if searchParams.editted or searchParams.added is set to "true" with button to redirect to users homepage with revalidated data._
 
 - _Finish UI and logic for create, edit and workout pages._
 
