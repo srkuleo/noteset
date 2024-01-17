@@ -31,11 +31,11 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             className="flex w-full flex-col gap-2 rounded-xl bg-white px-4 py-4 shadow-md dark:bg-slate-800/90"
           >
             <div className="flex items-center justify-between border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
-              <div className="space-y-1">
+              <div className="space-y-1 w-[85%]">
                 <p className="text-lg font-bold dark:text-slate-300">
                   {workout.title}
                 </p>
-                <p className="text-balance text-sm italic text-slate-400/80 dark:text-slate-400/60">
+                <p className="text-pretty text-sm italic text-slate-400/80 dark:text-slate-400/60">
                   {workout.description}
                 </p>
               </div>
