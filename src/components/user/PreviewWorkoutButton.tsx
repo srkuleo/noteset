@@ -12,9 +12,9 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70" />
 
-        <Drawer.Content className="fixed inset-0 mt-32 select-none rounded-t-modal bg-white dark:bg-slate-800">
-          <div className="rounded-t-modal border-b border-slate-200 bg-slate-100/65 px-2 pt-2 pb-4 dark:border-slate-600 dark:bg-slate-700/20">
-            <div className="mx-auto h-1.5 w-12 mb-6 rounded-full bg-slate-200 dark:bg-slate-600" />
+        <Drawer.Content className="fixed inset-0 mt-32 select-none rounded-t-modal bg-white focus:outline-none dark:bg-slate-800">
+          <div className="rounded-t-modal border-b border-slate-200 bg-slate-100/65 px-2 pb-4 pt-2 dark:border-slate-600 dark:bg-slate-700/20">
+            <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-slate-200 dark:bg-slate-600" />
             <div className="flex items-center justify-center">
               <p className="font-bold">Preview: {workout.title}</p>
               <Drawer.Close className="absolute right-4 text-lg font-extrabold text-violet-500 focus:outline-none active:text-violet-300 dark:text-violet-400 active:dark:text-violet-600">
