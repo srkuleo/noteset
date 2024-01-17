@@ -40,11 +40,11 @@ export default async function EditWorkoutPage({
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
-        <p className={`pb-6 text-lg font-semibold ${manrope.className}`}>
-          Edit {workout.title} workout
+      <div className="rounded-lg bg-white px-4 py-8 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
+        <p className={`text-center text-lg font-semibold ${manrope.className}`}>
+          Edit workout
         </p>
-        <form action={editWorkoutWithId} className="space-y-4">
+        <form action={editWorkoutWithId} className="space-y-4 pt-4">
           <label className="flex flex-col gap-1">
             <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
               Title
