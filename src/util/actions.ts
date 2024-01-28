@@ -12,11 +12,11 @@ const WorkoutSchema = z.object({
   id: z.number(),
   title: z
     .string()
-    .min(4, { message: "Must be at least 4 characters long" })
+    .min(1, {message: "Title must be provided."})
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
   description: z
     .string()
-    .min(5, { message: "Please provide a short description." })
+    .min(1, { message: "Please provide a short description." })
     .max(80, { message: "Too long. Keep it less than 80 characters." }),
   status: z.enum(["current", "done"]),
   userId: z.string(),
