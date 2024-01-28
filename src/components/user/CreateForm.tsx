@@ -94,9 +94,10 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         />
       </label>
 
-      <Drawer.Root onDrag={reset}>
+      <Drawer.Root>
         <div className="flex justify-center py-4">
           <Drawer.Trigger
+            onClick={reset}
             className={`text-sm font-semibold text-violet-500 underline underline-offset-4 focus:outline-none dark:text-violet-400 ${manrope.className}`}
           >
             Add exercise
@@ -105,7 +106,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
 
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
-          <Drawer.Content className="fixed inset-0 mt-32 flex select-none flex-col rounded-t-modal bg-white focus:outline-none dark:bg-slate-800">
+          <Drawer.Content className="fixed inset-0 mt-4 flex select-none flex-col rounded-t-modal bg-white focus:outline-none dark:bg-slate-800">
             <div className="rounded-t-modal border-b border-slate-200 bg-slate-100/65 px-2 pb-4 pt-2 dark:border-slate-600 dark:bg-slate-700/20">
               <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-slate-200 dark:bg-slate-600" />
               <div className="flex items-center justify-center">
@@ -119,35 +120,42 @@ export const CreateForm = ({ userId }: { userId: string }) => {
               </div>
             </div>
 
-            <div className="space-y-4 overflow-auto p-8">
-              <label className="flex items-center justify-around">
-                <span className="text-sm font-semibold uppercase dark:text-slate-300">
-                  Name
-                </span>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="e.g. Bench press"
-                  className="input-field"
-                  onChange={(e) =>
-                    setTempExercise({ ...tempExercise, name: e.target.value })
-                  }
-                />
-              </label>
-              <label className="flex items-center justify-around">
-                <span className="text-sm font-semibold uppercase dark:text-slate-300">
-                  Sets
-                </span>
-                <input
-                  type="number"
-                  name="sets"
-                  placeholder="e.g. 3"
-                  className="input-field"
-                  onChange={handleSetInput}
-                />
-              </label>
-              {errMessage && <p>{errMessage}</p>}
-              <div className="flex justify-center py-4">
+            <div className="h-[60%] overflow-y-scroll px-8 pb-4 pt-12">
+              <div className="flex flex-col items-center gap-4">
+                <label className="flex flex-col gap-1">
+                  <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+                    Name
+                  </span>
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="e.g. Bench press"
+                    className="input-field"
+                    onChange={(e) =>
+                      setTempExercise({ ...tempExercise, name: e.target.value })
+                    }
+                  />
+                </label>
+                <label className="flex flex-col gap-1">
+                  <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+                    Sets
+                  </span>
+
+                  <input
+                    type="number"
+                    name="sets"
+                    placeholder="e.g. 3"
+                    className="input-field"
+                    onChange={handleSetInput}
+                  />
+                  {errMessage && (
+                    <p className="max-w-[229px] text-pretty px-2 pt-1 text-xs font-semibold text-red-500 dark:text-red-400">
+                      {errMessage}
+                    </p>
+                  )}
+                </label>
+              </div>
+              <div className="flex justify-center py-6">
                 <button
                   onClick={() => {
                     setShowInputs(true);
@@ -162,26 +170,34 @@ export const CreateForm = ({ userId }: { userId: string }) => {
               {showInputs && (
                 <div className="flex justify-between">
                   <div className="flex w-32 min-w-0 flex-col">
-                    <p>REPS</p>
+                    <p
+                      className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
+                    >
+                      Reps
+                    </p>
                     <div className="space-y-4">
                       {reps.map((rep) => (
                         <input
                           key={rep}
                           placeholder={`Rep ${rep}`}
-                          className="w-full"
+                          className="smaller-input-field"
                         />
                       ))}
                     </div>
                   </div>
 
                   <div className="flex w-32 min-w-0 flex-col">
-                    <p>WEIGHT</p>
+                    <p
+                      className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
+                    >
+                      WEIGHT
+                    </p>
                     <div className="space-y-4">
                       {reps.map((weight) => (
                         <input
                           key={weight}
                           placeholder={`Weight ${weight}`}
-                          className="w-full"
+                          className="smaller-input-field"
                         />
                       ))}
                     </div>
