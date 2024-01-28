@@ -17,6 +17,10 @@
     @apply rounded-xl bg-slate-50 px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 shadow-sm outline-none ring-1 ring-slate-200 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-900/40 dark:placeholder-slate-500 dark:caret-green-600 dark:ring-slate-700 dark:focus:placeholder-slate-600 focus:dark:ring-green-600;
   }
 
+  .smaller-input-field {
+    @apply w-full rounded-xl bg-slate-50 px-6 py-2 font-semibold leading-none placeholder-slate-400/80 caret-green-500 shadow-sm outline-none ring-1 ring-slate-200 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-900/40 dark:placeholder-slate-500 dark:caret-green-600 dark:ring-slate-700 dark:focus:placeholder-slate-600 focus:dark:ring-green-600;
+  }
+
   .active-page {
     @apply bg-green-500 text-white dark:bg-green-600;
   }
