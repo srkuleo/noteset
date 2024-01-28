@@ -23,7 +23,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
 
   return (
     <>
-      <EditSection toggleEditMode={toggleEditMode} />
+      <EditSection toggleEditMode={toggleEditMode} editMode={editMode} />
       <div className="space-y-4">
         {workouts.map((workout) => (
           <div
@@ -31,7 +31,7 @@ export const Workouts = ({ workouts }: { workouts: Workout[] }) => {
             className="flex w-full flex-col gap-2 rounded-xl bg-white px-4 py-4 shadow-md dark:bg-slate-800/90"
           >
             <div className="flex items-center justify-between border-b border-green-200 px-1 pb-2 dark:border-green-900/80">
-              <div className="space-y-1 w-[85%]">
+              <div className="w-[85%] space-y-1">
                 <p className="text-lg font-bold dark:text-slate-300">
                   {workout.title}
                 </p>
