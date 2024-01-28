@@ -6,7 +6,7 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Figure out data model for db._
+- _Finish UI inside add exercise drawer, add option to save exercise, show exercise inside create form, add event listeners to reps and weights inputs and figure out data model for db._
 
 - _Handle and display zod parse errors inside create and edit form._
 
