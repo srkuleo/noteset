@@ -23,9 +23,9 @@ const initialState: Exercise = {
   weight: [],
 };
 
-const initialExercises = {
-  exercises: [] as Exercise[],
-};
+// const initialExercises = {
+//   exercises: [] as Exercise[],
+// };
 
 const maxSets = z.coerce
   .number()
@@ -34,7 +34,7 @@ const maxSets = z.coerce
 
 export const CreateForm = ({ userId }: { userId: string }) => {
   const [tempExercise, setTempExercise] = useState(initialState);
-  const [exercises, setExercises] = useState(initialExercises);
+  // const [exercises, setExercises] = useState(initialExercises);
   const [errMessage, setErrMessage] = useState<string | undefined>("");
   const [showInputs, setShowInputs] = useState(false);
 
