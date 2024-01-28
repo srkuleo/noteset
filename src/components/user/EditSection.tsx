@@ -1,32 +1,44 @@
 import Link from "next/link";
 import { manrope } from "@/styles/fonts";
-import { AddWorkoutIcon, EditIcon } from "@/icons/user/modify";
+import { AddIcon, EditIcon } from "@/icons/user/modify";
 
 export const EditSection = ({
+  editMode,
   toggleEditMode,
 }: {
   toggleEditMode: () => void;
+  editMode: boolean;
 }) => {
   return (
-    <div className="flex items-center justify-between pb-4 select-none">
+    <div className="flex select-none items-center justify-between pb-4">
       <h1
-        className={`text-xl font-bold text-slate-600 dark:text-white ${manrope.className}`}
+        className={`text-2xl font-extrabold text-slate-600 dark:text-white ${manrope.className}`}
       >
-        Your current workouts
+        Workouts
       </h1>
-      <div className="flex gap-2">
+      <div className="flex items-center gap-3">
         <Link
           href="/workouts/create"
-          className="rounded-xl bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
+          className="rounded-full bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
         >
-          {AddWorkoutIcon}
+          <AddIcon height={22} width={22} strokeWidth={2} />
         </Link>
-        <button
-          onClick={toggleEditMode}
-          className="rounded-xl bg-green-500 p-2 text-white shadow-sm transition active:scale-95 dark:bg-green-600"
-        >
-          {EditIcon}
-        </button>
+
+        {editMode ? (
+          <button
+            className="px-2 font-extrabold text-violet-500 dark:text-violet-400"
+            onClick={toggleEditMode}
+          >
+            Done
+          </button>
+        ) : (
+          <button
+            className="rounded-full bg-green-500 p-2 text-white shadow-sm dark:bg-green-600"
+            onClick={toggleEditMode}
+          >
+            {EditIcon}
+          </button>
+        )}
       </div>
     </div>
   );
