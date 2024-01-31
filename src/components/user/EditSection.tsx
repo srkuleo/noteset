@@ -16,7 +16,7 @@ export const EditSection = ({ workout }: { workout: Workout }) => {
     <div className="flex items-center gap-4">
       <Link
         href={`/workouts/edit?id=${workout.id}`}
-        className="select-none rounded-full border border-green-500 p-1 text-green-500 transition active:scale-95"
+        className="select-none text-green-500 transition active:scale-95"
       >
         {EditIcon}
       </Link>
