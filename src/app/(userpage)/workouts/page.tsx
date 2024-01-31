@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Workouts } from "@/components/user/Workouts";
-import { WorkoutsPageHeader } from "@/components/user/WorkoutsPageHeader";
+import { WorkoutCards } from "@/components/user/WorkoutCards";
+import { WorkoutCardsHeader } from "@/components/user/WorkoutCardsHeader";
 
 export const metadata: Metadata = {
   title: "Workouts",
@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   return (
     <>
-      <WorkoutsPageHeader />
+      <WorkoutCardsHeader />
       <Suspense fallback={<LoadingWorkoutsSkeleton />}>
-        <Workouts />
+        <WorkoutCards />
       </Suspense>
     </>
   );
