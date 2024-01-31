@@ -75,7 +75,7 @@ export default async function EditWorkoutPage({
               Cancel
             </Link>
             <button className="rounded-lg bg-green-500 px-4 py-1.5 font-semibold text-white shadow-sm active:scale-95 dark:bg-green-600">
-              Submit
+              Save
             </button>
           </div>
         </form>
