@@ -106,7 +106,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
 
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
-          <Drawer.Content className="fixed inset-0 mt-4 flex select-none flex-col rounded-t-modal bg-white focus:outline-none dark:bg-slate-800">
+          <Drawer.Content className="fixed inset-0 mt-4 flex select-none flex-col rounded-t-modal bg-white pt-safe-top focus:outline-none dark:bg-slate-800">
             <div className="rounded-t-modal border-b border-slate-200 bg-slate-100/65 px-2 pb-4 pt-2 dark:border-slate-600 dark:bg-slate-700/20">
               <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-slate-200 dark:bg-slate-600" />
               <div className="flex items-center justify-center">
@@ -120,7 +120,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
               </div>
             </div>
 
-            <div className="h-[60%] overflow-y-scroll px-8 pb-4 pt-12">
+            <div className="h-[80%] overflow-y-scroll px-8 pb-4 pt-12">
               <div className="flex flex-col items-center gap-4">
                 <label className="flex flex-col gap-1">
                   <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
@@ -149,9 +149,11 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                     onChange={handleSetInput}
                   />
                   {errMessage && (
-                    <p className="max-w-[229px] text-pretty px-2 pt-1 text-xs font-semibold text-red-500 dark:text-red-400">
-                      {errMessage}
-                    </p>
+                    <div className="flex justify-center pt-1">
+                      <p className="text-pretty max-w-[220px] text-center text-xs font-semibold text-red-500 dark:text-red-400">
+                        {errMessage}
+                      </p>
+                    </div>
                   )}
                 </label>
               </div>
