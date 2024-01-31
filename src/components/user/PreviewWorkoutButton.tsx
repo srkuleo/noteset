@@ -1,4 +1,6 @@
-import type { Workout } from "./Workouts";
+"use client";
+
+import type { Workout } from "@/db/schema";
 import { Drawer } from "vaul";
 import { PreviewIcon } from "@/icons/user/preview";
 import { manrope } from "@/styles/fonts";
