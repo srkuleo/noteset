@@ -27,12 +27,12 @@ export const WorkoutCards = async () => {
             <p className="text-lg font-bold dark:text-slate-300">
               {workout.title}
             </p>
-            <p className="text-pretty text-sm italic text-slate-400/80 dark:text-slate-400/60 leading-none">
+            <p className="text-pretty text-sm italic leading-none text-slate-400/80 dark:text-slate-400/60">
               {workout.description}
             </p>
           </div>
 
-        <div className="h-[1px] bg-green-200 dark:bg-green-900/80" />
+          <div className="h-[1px] bg-green-200 dark:bg-green-900/70" />
 
           <div className="flex justify-between px-1">
             <div className="flex gap-2">
