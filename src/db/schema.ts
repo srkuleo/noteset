@@ -26,4 +26,10 @@ export const workouts = mysqlTable(
   },
 );
 
+export type Workout = {
+  id: typeof workouts.$inferSelect.id;
+  title: typeof workouts.$inferSelect.title;
+  description: typeof workouts.$inferSelect.description;
+};
+
 //Later on add schema for superset and exercises
