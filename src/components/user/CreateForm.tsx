@@ -8,6 +8,7 @@ import { useState } from "react";
 import { AddIcon } from "@/icons/user/modify";
 import { z } from "zod";
 import { manrope } from "@/styles/fonts";
+import { DrawerWrapper } from "./DrawerWrapper";
 
 interface Exercise {
   name: string;
@@ -30,7 +31,7 @@ const initialState: Exercise = {
 const maxSets = z.coerce
   .number()
   .min(0, { message: "Can't do negative sets." })
-  .max(12, { message: "Don't overtrain. Maximum number of sets is 12." });
+  .max(12, { message: "Don't overtrain. Max number of sets is 12." });
 
 export const CreateForm = ({ userId }: { userId: string }) => {
   const [tempExercise, setTempExercise] = useState(initialState);
@@ -104,112 +105,91 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           </Drawer.Trigger>
         </div>
 
-        <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
-          <Drawer.Content className="fixed inset-0 mt-4 flex select-none flex-col rounded-t-modal bg-white pt-safe-top focus:outline-none dark:bg-slate-800">
-            <div className="rounded-t-modal border-b border-slate-200 bg-slate-100/65 px-2 pb-4 pt-2 dark:border-slate-600 dark:bg-slate-700/20">
-              <div className="mx-auto mb-6 h-1.5 w-12 rounded-full bg-slate-200 dark:bg-slate-600" />
-              <div className="flex items-center justify-center">
-                <p className={`font-bold ${manrope.className}`}>Add exercise</p>
-                <Drawer.Close
-                  onClick={reset}
-                  className="absolute right-4 text-lg font-extrabold text-violet-500 focus:outline-none active:text-violet-300 dark:text-violet-400 active:dark:text-violet-600"
-                >
-                  Close
-                </Drawer.Close>
-              </div>
-            </div>
+        <DrawerWrapper modalTitle="add exercise" closeButtonText="Close">
+          <div className="flex flex-col items-center gap-4">
+            <label className="flex max-w-[200px] flex-col gap-1">
+              <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+                Name
+              </span>
+              <input
+                type="text"
+                name="name"
+                placeholder="e.g. Bench press"
+                className="input-field"
+                onChange={(e) =>
+                  setTempExercise({ ...tempExercise, name: e.target.value })
+                }
+              />
+            </label>
+            <label className="flex max-w-[200px] flex-col gap-1">
+              <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+                Sets
+              </span>
 
-            <div className="h-[80%] overflow-y-scroll px-8 pb-4 pt-12">
-              <div className="flex flex-col items-center gap-4">
-                <label className="flex flex-col gap-1">
-                  <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
-                    Name
-                  </span>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="e.g. Bench press"
-                    className="input-field"
-                    onChange={(e) =>
-                      setTempExercise({ ...tempExercise, name: e.target.value })
-                    }
-                  />
-                </label>
-                <label className="flex flex-col gap-1">
-                  <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
-                    Sets
-                  </span>
-
-                  <input
-                    type="number"
-                    name="sets"
-                    placeholder="e.g. 3"
-                    className="input-field"
-                    onChange={handleSetInput}
-                  />
-                  {errMessage && (
-                    <div className="flex justify-center pt-1">
-                      <p className="text-pretty max-w-[220px] text-center text-xs font-semibold text-red-500 dark:text-red-400">
-                        {errMessage}
-                      </p>
-                    </div>
-                  )}
-                </label>
-              </div>
-              <div className="flex justify-center py-6">
-                <button
-                  onClick={() => {
-                    setShowInputs(true);
-                  }}
-                  className="flex items-center gap-2 rounded-2xl bg-green-500 px-3 py-1.5 text-xs text-white disabled:pointer-events-none disabled:opacity-30 dark:bg-green-600"
-                  disabled={showInputs || reps.length === 0}
-                >
-                  <AddIcon height={24} width={24} strokeWidth={2.5} />
-                  Add reps and weights
-                </button>
-              </div>
-              {showInputs && (
-                <div className="flex justify-between">
-                  <div className="flex w-32 min-w-0 flex-col">
-                    <p
-                      className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
-                    >
-                      Reps
-                    </p>
-                    <div className="space-y-4">
-                      {reps.map((rep) => (
-                        <input
-                          key={rep}
-                          placeholder={`Rep ${rep}`}
-                          className="smaller-input-field"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex w-32 min-w-0 flex-col">
-                    <p
-                      className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
-                    >
-                      WEIGHT
-                    </p>
-                    <div className="space-y-4">
-                      {reps.map((weight) => (
-                        <input
-                          key={weight}
-                          placeholder={`Weight ${weight}`}
-                          className="smaller-input-field"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+              <input
+                type="number"
+                name="sets"
+                placeholder="e.g. 3"
+                className="input-field"
+                onChange={handleSetInput}
+              />
+              {errMessage && (
+                <p className="text-pretty text-center text-xs pt-1 font-semibold text-red-500 dark:text-red-400">
+                  {errMessage}
+                </p>
               )}
+            </label>
+          </div>
+          <div className="flex justify-center py-6">
+            <button
+              onClick={() => {
+                setShowInputs(true);
+              }}
+              className="flex items-center gap-2 rounded-2xl bg-green-500 px-3 py-1.5 text-xs text-white disabled:pointer-events-none disabled:opacity-30 dark:bg-green-600"
+              disabled={showInputs || reps.length === 0}
+            >
+              <AddIcon height={24} width={24} strokeWidth={2.5} />
+              Add reps and weights
+            </button>
+          </div>
+          {showInputs && (
+            <div className="flex justify-between">
+              <div className="flex w-32 min-w-0 flex-col">
+                <p
+                  className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
+                >
+                  Reps
+                </p>
+                <div className="space-y-4">
+                  {reps.map((rep) => (
+                    <input
+                      key={rep}
+                      placeholder={`Rep ${rep}`}
+                      className="smaller-input-field"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex w-32 min-w-0 flex-col">
+                <p
+                  className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
+                >
+                  WEIGHT
+                </p>
+                <div className="space-y-4">
+                  {reps.map((weight) => (
+                    <input
+                      key={weight}
+                      placeholder={`Weight ${weight}`}
+                      className="smaller-input-field"
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
-            <Drawer.Close></Drawer.Close>
-          </Drawer.Content>
-        </Drawer.Portal>
+          )}
+        </DrawerWrapper>
       </Drawer.Root>
 
       <div className="flex items-center justify-end gap-2">
