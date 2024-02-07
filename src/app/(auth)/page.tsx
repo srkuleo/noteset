@@ -19,7 +19,7 @@ export default async function LoginPage() {
 
 const HeroText = () => {
   return (
-    <div className="space-y-5 pb-20 text-center">
+    <div className="space-y-5 pb-16 text-center">
       <h1 className="mx-auto w-fit bg-gradient-to-r from-green-500 to-violet-500 bg-clip-text text-6xl font-extrabold text-transparent dark:to-violet-600">
         Note<span className="font-bold">Set</span>
       </h1>
