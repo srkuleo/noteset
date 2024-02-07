@@ -17,7 +17,7 @@ export const UserPageHeader = () => {
         </div>
 
         <div className="flex gap-2">
-          <LinkButtons/>
+          <LinkButtons />
           <LogoutButton />
         </div>
       </div>
