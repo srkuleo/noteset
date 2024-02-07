@@ -13,7 +13,7 @@ export const EditSection = ({ workout }: { workout: Workout }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-2">
       <Link
         href={`/workouts/edit?id=${workout.id}`}
         className="select-none text-green-500 transition active:scale-95"
@@ -22,7 +22,7 @@ export const EditSection = ({ workout }: { workout: Workout }) => {
       </Link>
 
       <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Trigger className="select-none text-red-500 transition focus:outline-none active:scale-95 dark:text-red-400">
+        <Dialog.Trigger className="select-none pl-2 text-red-500 transition focus:outline-none active:scale-95 dark:text-red-400">
           {RemoveWorkoutIcon}
         </Dialog.Trigger>
         <Dialog.Portal>
