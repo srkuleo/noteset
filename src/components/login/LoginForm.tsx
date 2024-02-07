@@ -23,7 +23,7 @@ export const LoginForm = () => {
 
       <Separator />
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-6">
         <input
           type="email"
           name="userEmail"
@@ -33,23 +33,22 @@ export const LoginForm = () => {
           required
           onChange={(e) => setUserEmail(e.target.value)}
         />
-        <div className="flex flex-col gap-5">
-          <LoginLink
-            authUrlParams={{
-              connection_id: "conn_8366bf58a5c5457dbfbd80a0e643e04f",
-              login_hint: userEmail,
-            }}
-            className="rounded-full bg-violet-500/85 py-2 text-center font-semibold text-white shadow-md transition active:scale-95"
-          >
-            Login
-          </LoginLink>
-          <p className="font-semibold dark:text-slate-400">
-            Not a user?
-            <Link className="pl-1 font-bold text-green-500" href="/register">
-              Register here.
-            </Link>
-          </p>
-        </div>
+
+        <LoginLink
+          authUrlParams={{
+            connection_id: "conn_8366bf58a5c5457dbfbd80a0e643e04f",
+            login_hint: userEmail,
+          }}
+          className="rounded-full bg-violet-500/85 py-2 text-center font-semibold text-white shadow-md transition active:scale-95"
+        >
+          Login
+        </LoginLink>
+        <p className="font-semibold dark:text-slate-400 leading-none">
+          Not a user?
+          <Link className="pl-1 font-bold text-green-500" href="/register">
+            Register here.
+          </Link>
+        </p>
       </div>
     </div>
   );
