@@ -8,9 +8,7 @@ export default function UserPagesLayout({
   return (
     <main className="flex min-h-screen select-none flex-col">
       <UserPageHeader />
-      <div className="mt-40 px-6 pb-8 pt-safe-top">
-        {children}
-      </div>
+      <div className="mt-40 px-6 pb-8 pt-safe-top">{children}</div>
     </main>
   );
 }
