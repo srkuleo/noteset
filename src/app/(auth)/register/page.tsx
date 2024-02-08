@@ -65,7 +65,7 @@ export default function RegisterPage() {
           </RegisterLink>
           <p className="font-semibold leading-none dark:text-slate-400">
             Already a user?
-            <Link className="pl-1 font-bold text-green-500" href="/register">
+            <Link className="pl-1 font-bold text-green-500" href="/">
               Login here.
             </Link>
           </p>
