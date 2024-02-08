@@ -5,6 +5,7 @@ import { getWorkoutById } from "@/db/query";
 import { notFound } from "next/navigation";
 import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumbs";
 import { editWorkout } from "@/util/actions";
+import { SaveEditButton } from "@/components/user/SaveEditButton";
 
 export const metadata: Metadata = {
   title: "Edit",
@@ -74,9 +75,7 @@ export default async function EditWorkoutPage({
             >
               Cancel
             </Link>
-            <button className="rounded-lg bg-green-500 px-4 py-1.5 font-semibold text-white shadow-sm active:scale-95 dark:bg-green-600">
-              Save
-            </button>
+            <SaveEditButton />
           </div>
         </form>
       </div>
