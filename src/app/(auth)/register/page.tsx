@@ -51,6 +51,7 @@ export default function RegisterPage() {
               placeholder="Email"
               className="login-input-field"
               required
+              autoComplete="email"
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
           </div>
