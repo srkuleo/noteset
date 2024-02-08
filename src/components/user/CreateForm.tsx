@@ -108,7 +108,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         <DrawerWrapper modalTitle="add exercise" closeButtonText="Close">
           <div className="flex flex-col items-center gap-4">
             <label className="flex max-w-[200px] flex-col gap-1">
-              <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+              <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-200">
                 Name
               </span>
               <input
@@ -122,7 +122,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
               />
             </label>
             <label className="flex max-w-[200px] flex-col gap-1">
-              <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+              <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-200">
                 Sets
               </span>
 
@@ -134,59 +134,69 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                 onChange={handleSetInput}
               />
               {errMessage && (
-                <p className="text-pretty text-center text-xs pt-1 font-semibold text-red-500 dark:text-red-400">
+                <p className="text-pretty pt-1 text-center text-xs font-semibold text-red-500 dark:text-red-400">
                   {errMessage}
                 </p>
               )}
             </label>
           </div>
+
           <div className="flex justify-center py-6">
             <button
               onClick={() => {
                 setShowInputs(true);
               }}
-              className="flex items-center gap-2 rounded-2xl bg-green-500 px-3 py-1.5 text-xs text-white disabled:pointer-events-none disabled:opacity-30 dark:bg-green-600"
+              className="flex items-center gap-2 rounded-xl bg-green-500 px-3 py-1.5 text-xs text-white disabled:pointer-events-none disabled:opacity-30 dark:bg-green-600"
               disabled={showInputs || reps.length === 0}
             >
               <AddIcon height={24} width={24} strokeWidth={2.5} />
+              <div className="h-full w-[1px] bg-slate-300" />
               Add reps and weights
             </button>
           </div>
-          {showInputs && (
-            <div className="flex justify-between">
-              <div className="flex w-32 min-w-0 flex-col">
-                <p
-                  className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
-                >
-                  Reps
-                </p>
-                <div className="space-y-4">
-                  {reps.map((rep) => (
-                    <input
-                      key={rep}
-                      placeholder={`Rep ${rep}`}
-                      className="smaller-input-field"
-                    />
-                  ))}
-                </div>
-              </div>
 
-              <div className="flex w-32 min-w-0 flex-col">
-                <p
-                  className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase`}
-                >
-                  WEIGHT
-                </p>
-                <div className="space-y-4">
-                  {reps.map((weight) => (
-                    <input
-                      key={weight}
-                      placeholder={`Weight ${weight}`}
-                      className="smaller-input-field"
-                    />
-                  ))}
+          {showInputs && (
+            <div className="flex flex-col items-center gap-6">
+              <div className="flex max-w-[80%] gap-12">
+                <div className="flex grow flex-col">
+                  <p
+                    className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
+                  >
+                    Reps
+                  </p>
+                  <div className="space-y-4">
+                    {reps.map((rep) => (
+                      <input
+                        type="text"
+                        key={rep}
+                        placeholder={`Rep ${rep}`}
+                        className="smaller-input-field"
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex grow flex-col">
+                  <p
+                    className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
+                  >
+                    Weight
+                  </p>
+                  <div className="space-y-4">
+                    {reps.map((weight) => (
+                      <input
+                        type="number"
+                        key={weight}
+                        placeholder={`Weight ${weight}`}
+                        className="smaller-input-field"
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
+              <button className="flex shadow-md items-center text-white gap-2 rounded-xl bg-violet-500 px-6 py-1 font-bold">
+                Done
+              </button>
             </div>
           )}
         </DrawerWrapper>
