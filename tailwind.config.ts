@@ -10,6 +10,9 @@ const config: Config = {
   prefix: "",
   theme: {
     extend: {
+      gridTemplateColumns: {
+        exercise: "2fr 1fr 1fr 2fr",
+      },
       borderRadius: {
         modal: "10px",
       },
