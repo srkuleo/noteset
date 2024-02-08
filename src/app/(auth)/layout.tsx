@@ -10,7 +10,10 @@ export default function LandingPageLayout({
     <main className="flex min-h-screen touch-none select-none flex-col">
       <LandingPageHeader />
       <UiMessage />
-      {children}
+      <div className="flex grow flex-col px-8 pb-8 pt-16">
+        <HeroTitle />
+        {children}
+      </div>
     </main>
   );
 }
@@ -27,5 +30,13 @@ const UiMessage = () => {
         : UI is not suitable for large screens. Visit on mobile.
       </p>
     </div>
+  );
+};
+
+const HeroTitle = () => {
+  return (
+    <h1 className="mx-auto w-fit bg-gradient-to-r from-green-500 to-violet-500 bg-clip-text pb-6 text-6xl font-extrabold text-transparent dark:to-violet-600">
+      Note<span className="font-bold">Set</span>
+    </h1>
   );
 };
