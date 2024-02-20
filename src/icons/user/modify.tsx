@@ -28,7 +28,7 @@ export const AddIcon = ({
 
 export const EditIcon = (
   <svg
- className="h-6 w-6"
+    className="h-6 w-6"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -45,7 +45,8 @@ export const EditIcon = (
 
 export const EditWorkoutIcon = (
   <svg
-    className="h-6 w-6"
+    width={18}
+    height={18}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -62,7 +63,8 @@ export const EditWorkoutIcon = (
 
 export const RemoveWorkoutIcon = (
   <svg
-    className="h-5 w-5"
+    width={18}
+    height={18}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
