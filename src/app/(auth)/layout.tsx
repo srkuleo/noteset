@@ -7,10 +7,10 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen touch-none select-none flex-col">
+    <main className="flex min-h-screen select-none flex-col">
       <LandingPageHeader />
       <UiMessage />
-      <div className="flex grow flex-col px-8 pb-8 pt-16">
+      <div className="flex grow flex-col px-8 pb-8 mt-32 pt-safe-top">
         <HeroTitle />
         {children}
       </div>
