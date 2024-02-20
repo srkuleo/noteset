@@ -20,7 +20,7 @@ export const DrawerWrapper = ({
     <Drawer.Portal>
       <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70" />
 
-      <Drawer.Content className="fixed inset-0 mt-8 select-none  pt-safe-top focus:outline-none">
+      <Drawer.Content className="fixed inset-0 mt-8 select-none pt-safe-top focus:outline-none">
         <div className="h-full rounded-t-modal bg-white dark:bg-slate-800">
           <div className="space-y-6 rounded-t-modal bg-slate-100/65 px-2 pb-4 pt-2 dark:bg-slate-900/35">
             <div className="mx-auto h-1 w-12 rounded-full bg-slate-200 dark:bg-slate-700" />
@@ -39,7 +39,7 @@ export const DrawerWrapper = ({
           <div className="h-[1px] bg-slate-200 dark:bg-slate-700" />
 
           <div
-            className={`${modalTitle === "add exercise" && "h-4/5 overflow-y-scroll"} px-6 pb-4 pt-16`}
+            className={`${modalTitle === "add exercise" && "h-3/5 overflow-y-scroll"} px-6 pb-4 pt-8`}
           >
             {children}
           </div>
