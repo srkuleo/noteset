@@ -5,7 +5,7 @@ import { useState } from "react";
 import type { Workout } from "@/db/schema";
 import { removeWorkout } from "@/util/actions";
 import { manrope } from "@/styles/fonts";
-import { EditIcon, RemoveWorkoutIcon } from "@/icons/user/modify";
+import { EditWorkoutIcon, RemoveWorkoutIcon } from "@/icons/user/modify";
 import { DangerIcon } from "@/icons/user/warning";
 import * as Dialog from "@radix-ui/react-dialog";
 
@@ -16,13 +16,13 @@ export const EditSection = ({ workout }: { workout: Workout }) => {
     <div className="flex items-center gap-2">
       <Link
         href={`/workouts/edit?id=${workout.id}`}
-        className="select-none text-green-500 transition active:scale-95"
+        className="select-none rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-900 dark:ring-slate-600"
       >
-        {EditIcon}
+        {EditWorkoutIcon}
       </Link>
 
       <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Trigger className="select-none pl-2 text-red-500 transition focus:outline-none active:scale-95 dark:text-red-400">
+        <Dialog.Trigger className="select-none rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:text-red-400 dark:shadow-slate-900 dark:ring-slate-600">
           {RemoveWorkoutIcon}
         </Dialog.Trigger>
         <Dialog.Portal>
