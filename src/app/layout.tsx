@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.className} h-screen antialiased`}
+      className={`${nunito.className} antialiased`}
       suppressHydrationWarning
     >
       <body className="scroll-smooth bg-slate-300 dark:bg-slate-950">
