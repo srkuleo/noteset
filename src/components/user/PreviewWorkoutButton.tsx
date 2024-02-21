@@ -18,6 +18,9 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
         workout={workout}
       >
         <p>You are previewing {workout.title} workout.</p>
+        {workout.exercises.map((ex) => (
+          <div key={ex.name}>{ex.name}</div>
+        ))}
       </DrawerWrapper>
     </Drawer.Root>
   );
