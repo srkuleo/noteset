@@ -6,12 +6,14 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Finish UI inside add exercise drawer, add option to save exercise, show exercise inside create form, add event listeners to reps and weights inputs and figure out data model for db._
+- _Add one more useFormState for validating exercise before pushing it to exercises state and error messages for all the fields, add option to edit an exercise inside create form just in case, put the whole logic into a custom hook, later on abstract some of the components for clarity._
 
 - _Handle and display zod parse errors inside create and edit form._
 
-- _Finish Ui inside preview dialog. Add confirmation page for editting or adding workout that renders if searchParams.editted or searchParams.added is set to "true" with button to redirect to users homepage with revalidated data._
+- _Finish Ui inside preview dialog. Add confirmation page for editting workout._
 
-- _Finish UI and logic for create, edit and workout pages._
+- _Finish UI and logic for edit and workout pages._
 
 - _Modify profile and logs page to have an actual content._
+
+- _When Kinde support answers, modify register page to properly work._
