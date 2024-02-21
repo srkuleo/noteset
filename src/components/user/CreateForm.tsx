@@ -1,99 +1,74 @@
 "use client";
 
 import Link from "next/link";
-import { useFormStatus } from "react-dom";
-import { useState } from "react";
-import { z } from "zod";
-import { Drawer } from "vaul";
 import { manrope } from "@/styles/fonts";
+import { useFormState, useFormStatus } from "react-dom";
+import { useState } from "react";
+import { Drawer } from "vaul";
+import { validateSets, type Exercise } from "@/util/types";
 import { createWorkout } from "@/util/actions";
 import { DrawerWrapper } from "./DrawerWrapper";
-import { AddIcon } from "@/icons/user/modify";
-
-interface Exercise {
-  name: string;
-  sets: number;
-  reps: string[];
-  weights: number[];
-}
-
-const initExercise: Exercise = {
-  name: "",
-  sets: 0,
-  reps: [],
-  weights: [],
-};
-
-const maxSets = z.coerce
-  .number()
-  .min(0, { message: "Can't do negative sets." })
-  .max(12, { message: "Don't overtrain. Max number of sets is 12." });
+import debounce from "lodash.debounce";
 
 export const CreateForm = ({ userId }: { userId: string }) => {
-  const [open, setOpen] = useState(false);
-  const [tempExercise, setTempExercise] = useState(initExercise);
-  const [exercises, setExercises] = useState([] as Exercise[]);
-  const [errMessage, setErrMessage] = useState<string | undefined>("");
-  const [showInputs, setShowInputs] = useState(false);
-
-  console.log(exercises[0]?.reps);
-  console.log(exercises[0]?.weights);
-
+  const initExercise: Exercise = {
+    name: "",
+    sets: 0,
+    reps: [],
+    weights: [],
+  };
+  const initFormErrors = { errors: {}, message: "" };
+  const initSetsError: { message: string | undefined } = { message: "" };
   const reps: number[] = [];
+  const [openExerciseModal, setOpenExerciseModal] = useState(false);
+  const [tempExercise, setTempExercise] = useState(initExercise);
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const bindedCreateWorkout = createWorkout.bind(null, userId, exercises);
+  const [state, formAction] = useFormState(bindedCreateWorkout, initFormErrors);
+  const [setsError, setSetsError] = useState(initSetsError);
+
   for (let i = 1; i <= tempExercise.sets; i++) {
     reps.push(i);
   }
 
-  function handleRepsInput(index: number, inputValue: string) {
-    const modifiedReps = tempExercise.reps.toSpliced(index, 1, inputValue);
+  function handleSetsInput(sets: string) {
+    const areValidSets = validateSets.safeParse(sets);
+
+    if (!areValidSets.success) {
+      setSetsError({ message: areValidSets.error.flatten().formErrors[0] });
+      return;
+    }
+
+    const validSets = areValidSets.data;
+
+    setTempExercise({ ...tempExercise, sets: validSets });
+    setSetsError({ message: "" });
+  }
+
+  const handleRepRangeInput = debounce((repRange: string, index: number) => {
+    const modifiedReps = tempExercise.reps.toSpliced(index, 1, repRange);
 
     console.log(modifiedReps);
 
     setTempExercise({ ...tempExercise, reps: [...modifiedReps] });
-  }
+  }, 500);
 
-  function handleWeightsInput(index: number, inputValue: string) {
-    const coercedValue = Number(inputValue);
+  const handleWeightInput = debounce((weight: string, index: number) => {
+    const coercedWeight = Number(weight);
 
     const modifiedWeights = tempExercise.weights.toSpliced(
       index,
       1,
-      coercedValue,
+      coercedWeight,
     );
 
     console.log(modifiedWeights);
 
     setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
-  }
-
-  function handleSetInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const isValid = maxSets.safeParse(e.target.value);
-    console.log(isValid);
-
-    if (isValid.success) {
-      if (isValid.data === 0) {
-        reset();
-      } else {
-        setTempExercise({ ...tempExercise, sets: isValid.data });
-        setErrMessage("");
-      }
-    } else {
-      setErrMessage(isValid.error.flatten().formErrors[0]);
-      setTempExercise(initExercise);
-      setShowInputs(false);
-    }
-  }
-
-  function reset() {
-    setTempExercise(initExercise);
-    setErrMessage("");
-    setShowInputs(false);
-  }
-
-  const createWorkoutWithId = createWorkout.bind(null, userId);
+  }, 300);
 
   return (
-    <form action={createWorkoutWithId} className="space-y-4 pt-4">
+    <form action={formAction} className="space-y-4 pt-4">
       <label className="flex flex-col gap-1">
         <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
           Title
@@ -102,9 +77,19 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           type="text"
           name="title"
           placeholder="e.g. Upper 1"
-          className="input-field"
+          className={`${state.errors?.title ? "input-error-ring" : "input-focus-ring"} input-field`}
         />
+        {state.errors?.title &&
+          state.errors.title.map((error) => (
+            <p
+              key={error}
+              className="pl-1 pt-1 text-sm font-semibold text-red-500 dark:text-red-400"
+            >
+              {error}
+            </p>
+          ))}
       </label>
+
       <label className="flex flex-col gap-1">
         <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
           Description
@@ -113,14 +98,26 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           type="text"
           name="description"
           placeholder="e.g. Upper body focused workout"
-          className="input-field"
+          className={`${state.errors?.description ? "input-error-ring" : "input-focus-ring"} input-field`}
         />
+        {state.errors?.description &&
+          state.errors.description.map((error) => (
+            <p
+              key={error}
+              className="pl-1 pt-1 text-sm font-semibold text-red-500 dark:text-red-400"
+            >
+              {error}
+            </p>
+          ))}
       </label>
 
-      <Drawer.Root open={open} onOpenChange={setOpen}>
-        <div className="flex justify-center py-4">
+      <Drawer.Root open={openExerciseModal} onOpenChange={setOpenExerciseModal}>
+        <div className="flex justify-center pt-4">
           <Drawer.Trigger
-            onClick={reset}
+            onClick={() => {
+              setTempExercise(initExercise);
+              setSetsError({ message: "" });
+            }}
             className={`text-sm font-semibold text-violet-500 underline underline-offset-4 focus:outline-none dark:text-violet-400 ${manrope.className}`}
           >
             Add exercise
@@ -128,120 +125,117 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         </div>
 
         <DrawerWrapper modalTitle="add exercise" closeButtonText="Close">
-          <div className="flex flex-col items-center gap-4">
-            <label className="flex max-w-[200px] flex-col gap-1">
-              <span className="pl-1 text-sm font-semibold uppercase text-slate-500 dark:text-slate-200">
-                Name
-              </span>
-              <input
-                type="text"
-                name="name"
-                placeholder="e.g. Bench press"
-                className="input-field"
-                onChange={(e) =>
-                  setTempExercise({ ...tempExercise, name: e.target.value })
-                }
-              />
-            </label>
-            <label className="flex max-w-[200px] flex-col gap-1">
-              <span className="pl-1 text-sm font-semibold uppercase text-slate-500 dark:text-slate-200">
-                Sets
-              </span>
+          <form className="space-y-8">
+            <div className="flex flex-col items-center gap-4">
+              <label className="flex max-w-[200px] flex-col gap-1">
+                <span className="pl-1 text-sm font-semibold uppercase text-slate-500 dark:text-slate-200">
+                  Name
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="e.g. Bench press"
+                  className={`input-focus-ring input-field`}
+                  onChange={(e) =>
+                    setTempExercise({ ...tempExercise, name: e.target.value })
+                  }
+                />
+              </label>
 
-              <input
-                type="number"
-                name="sets"
-                placeholder="e.g. 3"
-                className="input-field"
-                onChange={handleSetInput}
-              />
-              {errMessage && (
-                <p className="text-pretty pt-1 text-center text-xs font-semibold text-red-500 dark:text-red-400">
-                  {errMessage}
-                </p>
-              )}
-            </label>
-          </div>
-
-          <div className="flex justify-center py-8">
-            <button
-              onClick={() => {
-                setShowInputs(true);
-              }}
-              className="flex items-center gap-2 rounded-xl bg-green-500 px-3 py-1.5 text-xs text-white disabled:pointer-events-none disabled:opacity-30 dark:bg-green-600"
-              disabled={showInputs || reps.length === 0}
-            >
-              <AddIcon height={24} width={24} strokeWidth={2.5} />
-              <div className="h-full w-[1px] bg-slate-300" />
-              Add reps and weights
-            </button>
-          </div>
-
-          {showInputs && (
-            <div className="flex flex-col max-w-[80%] mx-auto gap-12">
-              <div className="flex gap-12">
-                <div className="flex grow flex-col">
-                  <p
-                    className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
-                  >
-                    Reps
+              <label className="flex max-w-[200px] flex-col gap-1">
+                <span className="pl-1 text-sm font-semibold uppercase text-slate-500 dark:text-slate-200">
+                  Sets
+                </span>
+                <input
+                  required
+                  type="number"
+                  name="sets"
+                  placeholder="e.g. 3"
+                  className="input-focus-ring input-field"
+                  inputMode="numeric"
+                  onChange={(e) => handleSetsInput(e.target.value)}
+                />
+                {setsError.message && (
+                  <p className="pt-2 text-center text-sm text-red-500 dark:text-red-400 ">
+                    {setsError.message}
                   </p>
-                  <div className="space-y-4">
-                    {reps.map((rep, index) => (
-                      <input
-                        type="text"
-                        key={rep}
-                        placeholder={`Rep ${rep}`}
-                        className="smaller-input-field"
-                        onChange={(e) => handleRepsInput(index, e.target.value)}
-                      />
-                    ))}
-                  </div>
-                </div>
-
-                <div className="flex grow flex-col">
-                  <p
-                    className={`pb-2 text-center text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
-                  >
-                    Weight
-                  </p>
-                  <div className="space-y-4">
-                    {reps.map((weight, index) => (
-                      <input
-                        type="number"
-                        key={weight}
-                        placeholder={`Weight ${weight}`}
-                        className="smaller-input-field"
-                        onChange={(e) =>
-                          handleWeightsInput(index, e.target.value)
-                        }
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => {
-                  setExercises([...exercises, tempExercise]);
-                  setOpen(false)
-                }}
-                className="flex gap-2 rounded-xl bg-violet-500 px-6 py-2 font-bold text-white shadow-md justify-center"
-              >
-                Done
-              </button>
+                )}
+              </label>
             </div>
-          )}
+
+            {reps.length > 0 && !setsError.message && (
+              <div className="mx-auto flex max-w-[75%] flex-col gap-8">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col">
+                    <p
+                      className={`text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
+                    >
+                      Reps
+                    </p>
+                    <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
+                      {reps.map((rep, index) => (
+                        <input
+                          required
+                          key={`Rep: ${rep}`}
+                          type="text"
+                          placeholder={`Rep ${rep}`}
+                          inputMode="numeric"
+                          className="smaller-input-field"
+                          onChange={(e) =>
+                            handleRepRangeInput(e.target.value, index)
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex grow flex-col">
+                    <p
+                      className={`text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
+                    >
+                      Weights
+                    </p>
+                    <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
+                      {reps.map((weight, index) => (
+                        <input
+                          required
+                          key={`Weight: ${weight}`}
+                          type="text"
+                          placeholder={`Weight ${weight}`}
+                          inputMode="numeric"
+                          className="smaller-input-field"
+                          onChange={(e) =>
+                            handleWeightInput(e.target.value, index)
+                          }
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setExercises([...exercises, { ...tempExercise }]);
+                    setOpenExerciseModal(false);
+                  }}
+                  className="flex justify-center gap-2 rounded-xl bg-green-500 px-6  py-2 text-lg font-bold text-white shadow-md dark:bg-green-600"
+                >
+                  Done
+                </button>
+              </div>
+            )}
+          </form>
         </DrawerWrapper>
       </Drawer.Root>
 
       {exercises.length > 0 && (
-        <div className="space-y-4 pb-4">
+        <div className="flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar">
           {exercises.map((exercise) => (
             <div
               key={exercise.name}
-              className="rounded-xl bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:ring-slate-700 dark:bg-slate-900/50"
+              className="min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
             >
-              <div className="grid-cols-exercise grid gap-2 text-xs">
+              <div className="grid grid-cols-exercise gap-2 text-xs">
                 <p className="font-bold italic">Name</p>
                 <p className="text-center font-bold italic">Sets</p>
                 <p className="text-center font-bold italic">Reps</p>
@@ -249,16 +243,18 @@ export const CreateForm = ({ userId }: { userId: string }) => {
 
                 <div className="col-span-4 h-[1px] bg-slate-200 dark:bg-slate-700" />
 
-                <p className="dark:text-slate-200 my-auto">{exercise.name}</p>
-                <p className="dark:text-slate-200 my-auto text-center">{exercise.sets}</p>
-                <div className="dark:text-slate-200 flex grow flex-col items-center gap-2">
-                  {exercise.reps.map((rep) => (
-                    <p key={rep}>{rep}</p>
+                <p className="my-auto dark:text-slate-200">{exercise.name}</p>
+                <p className="my-auto text-center dark:text-slate-200">
+                  {exercise.sets}
+                </p>
+                <div className="flex grow flex-col items-center gap-2 dark:text-slate-200">
+                  {exercise.reps.map((rep, i) => (
+                    <p key={`Rep: ${i + 1}`}>{rep}</p>
                   ))}
                 </div>
-                <div className="dark:text-slate-200 flex grow flex-col items-center gap-2">
-                  {exercise.weights.map((weight) => (
-                    <p key={weight}>{weight}</p>
+                <div className="flex grow flex-col items-center gap-2 dark:text-slate-200">
+                  {exercise.weights.map((weight, i) => (
+                    <p key={`Weight: ${i + 1}`}>{weight}</p>
                   ))}
                 </div>
               </div>
@@ -266,6 +262,15 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           ))}
         </div>
       )}
+      {state.errors?.exercises &&
+        state.errors.exercises.map((error) => (
+          <p
+            key={error}
+            className="py-4 text-center font-semibold text-red-500 dark:text-red-400"
+          >
+            {error}
+          </p>
+        ))}
 
       <div className="flex items-center justify-end gap-2">
         <Link
