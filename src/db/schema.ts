@@ -1,9 +1,11 @@
+import type { Exercise } from "@/util/types";
 import {
   date,
   index,
   mysqlTable,
   serial,
   varchar,
+  json,
 } from "drizzle-orm/mysql-core";
 
 export const workouts = mysqlTable(
@@ -12,6 +14,7 @@ export const workouts = mysqlTable(
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 30 }).notNull(),
     description: varchar("description", { length: 80 }).notNull(),
+    exercises: json("exercises").$type<Exercise[]>().notNull(),
     status: varchar("status", { length: 10 }).default("current"),
     userId: varchar("user_id", { length: 255 }).notNull(),
     doneAt: date("done_at"),
@@ -30,6 +33,7 @@ export type Workout = {
   id: typeof workouts.$inferSelect.id;
   title: typeof workouts.$inferSelect.title;
   description: typeof workouts.$inferSelect.description;
+  exercises: typeof workouts.$inferSelect.exercises;
 };
 
 //Later on add schema for superset and exercises
