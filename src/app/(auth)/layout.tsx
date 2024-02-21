@@ -20,7 +20,7 @@ export default function LandingPageLayout({
 
 const UiMessage = () => {
   return (
-    <div className="hidden pt-2 md:block">
+    <div className="hidden pt-16 md:block">
       <p
         className={`${manrope.className} bg-red-500 py-2 text-center text-lg text-white`}
       >
