@@ -71,6 +71,20 @@
       "when": 1703724894245,
       "tag": "0009_pale_marvel_zombies",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "5",
+      "when": 1708471584778,
+      "tag": "0010_odd_black_tarantula",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "5",
+      "when": 1708478131775,
+      "tag": "0011_living_toad",
+      "breakpoints": true
     }
   ]
 }

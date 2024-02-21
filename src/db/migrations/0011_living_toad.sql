@@ -1,0 +1,1 @@
+ALTER TABLE `workouts` MODIFY COLUMN `exercises` json NOT NULL;
