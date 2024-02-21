@@ -14,6 +14,7 @@ export async function getUserWorkouts(userId: string) {
         id: workouts.id,
         title: workouts.title,
         description: workouts.description,
+        exercises: workouts.exercises,
       })
       .from(workouts)
       .where(and(eq(workouts.userId, userId), eq(workouts.status, "current")));
