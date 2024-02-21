@@ -65,12 +65,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${nunito.className} antialiased`}
-      suppressHydrationWarning
-    >
-      <body className="scroll-smooth bg-slate-300 dark:bg-slate-950">
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`scroll-smooth bg-slate-300 dark:bg-slate-950 ${nunito.className} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
