@@ -39,7 +39,7 @@ export const DrawerWrapper = ({
           <div className="h-[1px] bg-slate-200 dark:bg-slate-700" />
 
           <div
-            className={`${modalTitle === "add exercise" && "h-3/5 overflow-y-scroll"} px-6 pb-4 pt-8`}
+            className="px-6 pb-4 pt-8"
           >
             {children}
           </div>
