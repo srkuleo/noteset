@@ -84,7 +84,8 @@ export const CheckmarkIcon = (
     xmlns="http://www.w3.org/2000/svg"
     x="0px"
     y="0px"
-    className="size-32"
+    width={128}
+    height={128}
     viewBox="0 0 40 40"
   >
     <path
