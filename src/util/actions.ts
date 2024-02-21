@@ -5,24 +5,11 @@ import { workouts } from "@/db/schema";
 import { and, eq } from "drizzle-orm/mysql-core/expressions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { z } from "zod";
-import { WorkoutAlreadyExistsError } from "./exceptions";
-
-const WorkoutSchema = z.object({
-  id: z.number(),
-  title: z
-    .string()
-    .min(1, {message: "Title must be provided."})
-    .max(30, { message: "Too long. Keep it less than 30 characters." }),
-  description: z
-    .string()
-    .min(1, { message: "Please provide a short description." })
-    .max(80, { message: "Too long. Keep it less than 80 characters." }),
-  status: z.enum(["current", "done"]),
-  userId: z.string(),
-  doneAt: z.string(),
-  timeElapsed: z.string(),
-});
+import {
+  CreateWorkoutSchema,
+  type Exercise,
+  type InputFieldErrors,
+} from "./types";
 
 export async function removeWorkout(workoutId: number) {
   try {
@@ -32,22 +19,32 @@ export async function removeWorkout(workoutId: number) {
   }
 
   console.log("Workout deleted!");
-  revalidatePath("/workouts?action=deleted");
+  revalidatePath("/workouts");
+  redirect("/workouts?action=deleted");
 }
 
-const CreateWorkout = WorkoutSchema.omit({
-  id: true,
-  status: true,
-  userId: true,
-  doneAt: true,
-  timeElapsed: true,
-});
-
-export async function createWorkout(userId: string, formData: FormData) {
-  const { title, description } = CreateWorkout.parse({
+export async function createWorkout(
+  userId: string,
+  workoutExercises: Exercise[],
+  prevState: InputFieldErrors,
+  formData: FormData,
+) {
+  const parsedWorkout = CreateWorkoutSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description"),
+    exercises: workoutExercises,
   });
+
+  if (!parsedWorkout.success) {
+    console.log(parsedWorkout.error.flatten().fieldErrors);
+
+    return {
+      errors: parsedWorkout.error.flatten().fieldErrors,
+      message: "Workout could not be created.",
+    };
+  }
+
+  const { title, description, exercises } = parsedWorkout.data;
 
   try {
     const existingWorkout = await db.query.workouts.findFirst({
@@ -55,26 +52,25 @@ export async function createWorkout(userId: string, formData: FormData) {
     });
 
     if (existingWorkout) {
-      throw new WorkoutAlreadyExistsError(
-        `Workout with ${title} title already exists.`,
-      );
+      return {
+        message: `${title} workout already exists.`,
+      };
     }
 
-    await db
-      .insert(workouts)
-      .values({ userId: userId, title: title, description: description });
+    await db.insert(workouts).values({
+      userId: userId,
+      title: title,
+      description: description,
+      exercises: exercises,
+    });
+
+    console.log(`${title} workout created!`);
   } catch (error) {
-    if (error instanceof WorkoutAlreadyExistsError) {
-      throw new Error(error.message);
-    } else {
-      throw new Error("Database Error: Workout could not be created.");
-    }
+    console.log(error);
+    return { message: "Database Error: Workout could not be created." };
   }
 
-  console.log(`${title} workout created!`);
-
-  revalidatePath("/workouts");
-  redirect("/workouts?action=created");
+  redirect("/workout-created-page");
 }
 
 interface Ids {
@@ -86,7 +82,7 @@ export async function editWorkout(
   { userId, workoutId }: Ids,
   formData: FormData,
 ) {
-  const { title, description } = CreateWorkout.parse({
+  const { title, description } = CreateWorkoutSchema.parse({
     title: formData.get("title"),
     description: formData.get("description"),
   });
@@ -97,21 +93,18 @@ export async function editWorkout(
     });
 
     if (matchingTitleWorkout && matchingTitleWorkout.id !== workoutId) {
-      throw new WorkoutAlreadyExistsError(
-        `Workout with ${title} title already exists.`,
-      );
+      return `Workout with ${title} title already exists.`;
     }
 
     await db
       .update(workouts)
       .set({ title: title, description: description })
       .where(eq(workouts.id, workoutId));
+
+    console.log(`${title} workout edited.`);
   } catch (error) {
-    if (error instanceof WorkoutAlreadyExistsError) {
-      throw new Error(error.message);
-    } else {
-      throw new Error("Database Error: Workout could not be edited.");
-    }
+    console.log(error);
+    throw new Error("Database Error: Workout could not be edited.");
   }
 
   revalidatePath("/workouts");
