@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function WorkoutCreatedPage() {
   return (
-    <div className="flex grow flex-col items-center justify-center gap-12">
+    <>
       {CheckmarkIcon}
       <div className="space-y-2 text-center">
         <h1 className="text-2xl font-bold">Well done, workout created!</h1>
@@ -17,6 +17,6 @@ export default function WorkoutCreatedPage() {
       >
         Home page
       </Link>
-    </div>
+    </>
   );
 }
