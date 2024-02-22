@@ -8,7 +8,9 @@ export default function FeedbackPagesLayout({
   return (
     <main className="flex min-h-screen select-none flex-col">
       <LandingPageHeader />
-      {children}
+      <div className="flex grow flex-col items-center justify-center gap-12 pt-safe-top">
+        {children}
+      </div>
     </main>
   );
 }
