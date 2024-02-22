@@ -11,5 +11,6 @@ export const config = {
     "/logs/:paths*",
     "/profile",
     "/workout/:paths*",
+    "/workout-created-page",
   ],
 };
