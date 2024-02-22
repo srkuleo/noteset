@@ -147,7 +147,6 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                   Sets
                 </span>
                 <input
-                  required
                   type="number"
                   name="sets"
                   placeholder="e.g. 3"
@@ -179,8 +178,8 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                           key={`Rep: ${rep}`}
                           type="text"
                           placeholder={`Rep ${rep}`}
-                          inputMode="numeric"
                           className="smaller-input-field"
+                          pattern="^[0-9]+[-][0-9]+$|[0-9]+"
                           onChange={(e) =>
                             handleRepRangeInput(e.target.value, index)
                           }
@@ -200,9 +199,8 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                         <input
                           required
                           key={`Weight: ${weight}`}
-                          type="text"
+                          type="number"
                           placeholder={`Weight ${weight}`}
-                          inputMode="numeric"
                           className="smaller-input-field"
                           onChange={(e) =>
                             handleWeightInput(e.target.value, index)
