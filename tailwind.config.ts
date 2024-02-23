@@ -11,6 +11,10 @@ const config: Config = {
   prefix: "",
   theme: {
     extend: {
+      fontFamily: {
+        nunito: ["var(--font-nunito)"],
+        manrope: ["var(--font-manrope)"],
+      },
       gridTemplateColumns: {
         exercise: "2fr 1fr 2fr 2fr",
       },
