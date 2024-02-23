@@ -7,9 +7,9 @@ export default function WorkoutCreatedPage() {
       {CheckmarkIcon}
       <div className="space-y-2 text-center">
         <h1 className="text-2xl font-bold">Well done, workout created!</h1>
-        <p className="text-sm font-semibold italic text-slate-400 ">
+        <h2 className="text-sm font-semibold italic text-slate-400 ">
           Go back to home page to see the changes.
-        </p>
+        </h2>
       </div>
       <Link
         href="/workouts"
