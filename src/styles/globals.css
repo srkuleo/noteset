@@ -10,6 +10,10 @@
   main {
     @apply bg-gradient-to-t from-slate-300 via-slate-100 to-slate-300 to-85% text-slate-500 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white;
   }
+
+  h2 {
+    font-family: var(--font-manrope);
+  }
 }
 
 @layer components {
