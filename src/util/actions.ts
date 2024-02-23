@@ -30,8 +30,8 @@ export async function createWorkout(
   formData: FormData,
 ) {
   const parsedWorkout = CreateWorkoutSchema.safeParse({
-    title: formData.get("title"),
-    description: formData.get("description"),
+    title: formData.get("workoutTitle"),
+    description: formData.get("workoutDescription"),
     exercises: workoutExercises,
   });
 
@@ -83,8 +83,8 @@ export async function editWorkout(
   formData: FormData,
 ) {
   const { title, description } = CreateWorkoutSchema.parse({
-    title: formData.get("title"),
-    description: formData.get("description"),
+    title: formData.get("workoutTitle"),
+    description: formData.get("workoutDescription"),
   });
 
   try {
