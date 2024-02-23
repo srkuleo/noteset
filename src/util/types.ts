@@ -1,5 +1,17 @@
 import { z } from "zod";
 
+export type UserProfile = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+export type Breadcrumb = {
+  label: string;
+  href: string;
+  active?: boolean;
+};
+
 export const ExerciseSchema = z.object({
   name: z
     .string()
