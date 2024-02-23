@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import { GoogleOAuthButton } from "./GoogleOAuthBtn";
 import { Separator } from "./Separator";
@@ -22,7 +22,6 @@ export const LoginForm = () => {
           id="userEmail"
           placeholder="Email"
           className="login-input-field"
-          required
           autoComplete="email"
           onChange={(e) => setUserEmail(e.target.value)}
         />
