@@ -1,10 +1,5 @@
 import Link from "next/link";
-
-export type Breadcrumb = {
-  label: string;
-  href: string;
-  active?: boolean;
-};
+import type { Breadcrumb } from "@/util/types";
 
 export const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) => {
   return (
@@ -15,7 +10,7 @@ export const Breadcrumbs = ({ breadcrumbs }: { breadcrumbs: Breadcrumb[] }) => {
             href={bc.href}
             className={`${
               bc.active
-                ? "font-semibold uppercase"
+                ? "font-manrope font-semibold uppercase"
                 : "text-slate-400 dark:text-slate-600"
             } text-xl`}
           >

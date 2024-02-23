@@ -1,10 +1,9 @@
 import Link from "next/link";
-import { manrope } from "@/styles/fonts";
-import { EmptyPage } from "./EmptyPage";
-import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
-import { EditSection } from "./EditSection";
-import { getUserWorkouts } from "@/db/query";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getUserWorkouts } from "@/db/query";
+import { EmptyPage } from "./EmptyPage";
+import { EditSection } from "./EditSection";
+import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 
 export const WorkoutCards = async () => {
   const { getUser } = getKindeServerSession();
@@ -24,10 +23,10 @@ export const WorkoutCards = async () => {
           className="flex w-full flex-col gap-4 rounded-xl bg-white px-4 py-6 shadow-md dark:bg-slate-800/90"
         >
           <div className="space-y-1 px-1">
-            <p className="text-lg font-bold dark:text-slate-300">
+            <p className="text-lg font-bold dark:text-slate-300 font-manrope">
               {workout.title}
             </p>
-            <p className="text-pretty text-sm italic leading-none text-slate-400/80 dark:text-slate-400/60">
+            <p className="text-pretty text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60">
               {workout.description}
             </p>
           </div>
@@ -39,7 +38,7 @@ export const WorkoutCards = async () => {
               <PreviewWorkoutButton workout={workout} />
               <Link
                 href={`/workout?id=${workout.id}`}
-                className={`rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 ${manrope.className}`}
+                className="rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600 font-manrope"
               >
                 Start
               </Link>
