@@ -1,5 +1,4 @@
 import { LandingPageHeader } from "@/components/navbars/LandingPageHeader";
-import { manrope } from "@/styles/fonts";
 
 export default function LandingPageLayout({
   children,
@@ -10,7 +9,7 @@ export default function LandingPageLayout({
     <main className="flex min-h-screen select-none flex-col">
       <LandingPageHeader />
       <UiMessage />
-      <div className="flex grow flex-col px-8 pb-8 mt-32 pt-safe-top">
+      <div className="mt-32 flex grow flex-col px-8 pb-8 pt-safe-top">
         <HeroTitle />
         {children}
       </div>
@@ -21,9 +20,7 @@ export default function LandingPageLayout({
 const UiMessage = () => {
   return (
     <div className="hidden pt-16 md:block">
-      <p
-        className={`${manrope.className} bg-red-500 py-2 text-center text-lg text-white`}
-      >
+      <p className="bg-red-500 py-2 text-center font-manrope text-lg text-white">
         <span className="font-bold underline underline-offset-4">
           Important
         </span>
