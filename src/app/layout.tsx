@@ -1,6 +1,6 @@
 import "@/styles/globals.css";
 import type { Metadata, Viewport } from "next";
-import { nunito } from "@/styles/fonts";
+import { manrope, nunito } from "@/styles/fonts";
 import { Providers } from "@/context/Providers";
 
 export const viewport: Viewport = {
@@ -65,10 +65,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`scroll-smooth bg-slate-300 dark:bg-slate-950 ${nunito.className} antialiased`}
-      >
+    <html
+      lang="en"
+      className={`${nunito.variable} ${manrope.variable} min-h-screen antialiased`}
+      suppressHydrationWarning
+    >
+      <body className="scroll-smooth bg-slate-300 font-nunito dark:bg-slate-950">
         <Providers>{children}</Providers>
       </body>
     </html>
