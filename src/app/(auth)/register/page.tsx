@@ -6,15 +6,16 @@ import { HeroSubtitle } from "@/components/login/HeroSubtitle";
 import { GoogleOAuthButton } from "@/components/login/GoogleOAuthBtn";
 import { Separator } from "@/components/login/Separator";
 import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs";
+import type { UserProfile } from "@/util/types";
 
-type UserProfile = {
-  firstName: string;
-  lastName: string;
-  email: string;
+const userProfile: UserProfile = {
+  firstName: "",
+  lastName: "",
+  email: "",
 };
 
 export default function RegisterPage() {
-  const [user, setUser] = useState({} as UserProfile);
+  const [user, setUser] = useState(userProfile);
 
   return (
     <>
