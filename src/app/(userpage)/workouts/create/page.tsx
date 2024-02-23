@@ -1,7 +1,7 @@
-import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumbs";
-import { CreateForm } from "@/components/user/CreateForm";
-import { manrope } from "@/styles/fonts";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { type Breadcrumb } from "@/util/types";
+import { Breadcrumbs } from "@/components/user/Breadcrumbs";
+import { CreateForm } from "@/components/user/CreateForm";
 
 export default async function CreateWorkoutPage() {
   const { getUser } = getKindeServerSession();
@@ -24,9 +24,9 @@ export default async function CreateWorkoutPage() {
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <div className="rounded-lg bg-white px-4 py-8 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
-        <p className={`text-center text-lg font-semibold ${manrope.className}`}>
+        <h2 className="text-center text-lg font-semibold">
           Create a new workout
-        </p>
+        </h2>
         <CreateForm userId={userId} />
       </div>
     </>
