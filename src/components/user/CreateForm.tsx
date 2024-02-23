@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { manrope } from "@/styles/fonts";
-import { useFormState, useFormStatus } from "react-dom";
+import debounce from "lodash.debounce";
 import { useState } from "react";
+import { useFormState } from "react-dom";
 import { Drawer } from "vaul";
 import { validateSets, type Exercise } from "@/util/types";
 import { createWorkout } from "@/util/actions";
 import { DrawerWrapper } from "./DrawerWrapper";
-import debounce from "lodash.debounce";
+import { SubmitFormButton } from "./SubmitFormButton";
 
 export const CreateForm = ({ userId }: { userId: string }) => {
   const initExercise: Exercise = {
@@ -69,13 +69,17 @@ export const CreateForm = ({ userId }: { userId: string }) => {
 
   return (
     <form action={formAction} className="space-y-4 pt-4">
-      <label className="flex flex-col gap-1">
-        <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="title"
+          className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+        >
           Title
-        </span>
+        </label>
         <input
+          id="title"
+          name="workoutTitle"
           type="text"
-          name="title"
           placeholder="e.g. Upper 1"
           className={`${state.errors?.title ? "input-error-ring" : "input-focus-ring"} input-field`}
         />
@@ -83,33 +87,37 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           state.errors.title.map((error) => (
             <p
               key={error}
-              className="pl-1 pt-1 text-sm font-semibold text-red-500 dark:text-red-400"
+              className="pl-1 text-sm font-semibold text-red-500 dark:text-red-400"
             >
               {error}
             </p>
           ))}
-      </label>
+      </div>
 
-      <label className="flex flex-col gap-1">
-        <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+      <div className="flex flex-col gap-1">
+        <label
+          htmlFor="description"
+          className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+        >
           Description
-        </span>
+        </label>
         <input
+          id="description"
+          name="workoutDescription"
           type="text"
-          name="description"
-          placeholder="e.g. Upper body focused workout"
+          placeholder="e.g. Upper 1"
           className={`${state.errors?.description ? "input-error-ring" : "input-focus-ring"} input-field`}
         />
         {state.errors?.description &&
           state.errors.description.map((error) => (
             <p
               key={error}
-              className="pl-1 pt-1 text-sm font-semibold text-red-500 dark:text-red-400"
+              className="pl-1 text-sm font-semibold text-red-500 dark:text-red-400"
             >
               {error}
             </p>
           ))}
-      </label>
+      </div>
 
       <Drawer.Root open={openExerciseModal} onOpenChange={setOpenExerciseModal}>
         <div className="flex justify-center pt-4">
@@ -118,7 +126,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
               setTempExercise(initExercise);
               setSetsError({ message: "" });
             }}
-            className={`text-sm font-semibold text-violet-500 underline underline-offset-4 focus:outline-none dark:text-violet-400 ${manrope.className}`}
+            className="font-manrope text-sm font-semibold text-violet-500 underline underline-offset-4 focus:outline-none dark:text-violet-400"
           >
             Add exercise
           </Drawer.Trigger>
@@ -166,9 +174,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
               <div className="mx-auto flex max-w-[75%] flex-col gap-8">
                 <div className="flex flex-col gap-3">
                   <div className="flex flex-col">
-                    <p
-                      className={`text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
-                    >
+                    <p className="font-manrope text-sm font-semibold uppercase dark:text-slate-200">
                       Reps
                     </p>
                     <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
@@ -189,9 +195,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                   </div>
 
                   <div className="flex grow flex-col">
-                    <p
-                      className={`text-sm font-semibold ${manrope.className} uppercase dark:text-slate-200`}
-                    >
+                    <p className="font-manrope text-sm font-semibold uppercase dark:text-slate-200">
                       Weights
                     </p>
                     <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
@@ -277,22 +281,8 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         >
           Cancel
         </Link>
-        <CreateButton />
+        <SubmitFormButton buttonText="Create" />
       </div>
     </form>
-  );
-};
-
-const CreateButton = () => {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="rounded-lg bg-green-500 px-4 py-1.5 font-semibold text-white shadow-sm active:scale-95 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600"
-    >
-      {pending ? "Creating..." : "Create"}
-    </button>
   );
 };
