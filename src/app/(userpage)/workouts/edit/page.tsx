@@ -1,11 +1,11 @@
-import { manrope } from "@/styles/fonts";
-import type { Metadata } from "next";
 import Link from "next/link";
-import { getWorkoutById } from "@/db/query";
 import { notFound } from "next/navigation";
-import { type Breadcrumb, Breadcrumbs } from "@/components/user/Breadcrumbs";
+import { type Metadata } from "next";
+import { getWorkoutById } from "@/db/query";
 import { editWorkout } from "@/util/actions";
-import { SaveEditButton } from "@/components/user/SaveEditButton";
+import { type Breadcrumb } from "@/util/types";
+import { Breadcrumbs } from "@/components/user/Breadcrumbs";
+import { SubmitFormButton } from "@/components/user/SubmitFormButton";
 
 export const metadata: Metadata = {
   title: "Edit",
@@ -42,32 +42,38 @@ export default async function EditWorkoutPage({
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <div className="rounded-lg bg-white px-4 py-8 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
-        <p className={`text-center text-lg font-semibold ${manrope.className}`}>
-          Edit workout
-        </p>
+        <h2 className="text-center text-lg font-semibold">Edit workout</h2>
         <form action={editWorkoutWithId} className="space-y-4 pt-4">
-          <label className="flex flex-col gap-1">
-            <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="title"
+              className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+            >
               Title
-            </span>
+            </label>
             <input
+              id="title"
+              name="workoutTitle"
               type="text"
-              name="title"
               defaultValue={workout.title}
-              className="input-field"
+              className="input-field input-focus-ring"
             />
-          </label>
-          <label className="flex flex-col gap-1">
-            <span className="pl-1 text-sm font-semibold uppercase dark:text-slate-300">
+          </div>
+          <div className="flex flex-col gap-1">
+            <label
+              htmlFor="description"
+              className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+            >
               Description
-            </span>
+            </label>
             <input
+              id="description"
+              name="workoutDescription"
               type="text"
-              name="description"
               defaultValue={workout.description}
-              className="input-field"
+              className="input-field input-focus-ring"
             />
-          </label>
+          </div>
           <div className="flex items-center justify-end gap-2 pt-4">
             <Link
               href="/workouts"
@@ -75,7 +81,7 @@ export default async function EditWorkoutPage({
             >
               Cancel
             </Link>
-            <SaveEditButton />
+            <SubmitFormButton buttonText="Save" />
           </div>
         </form>
       </div>
