@@ -3,7 +3,7 @@ import { AddIcon } from "@/icons/user/modify";
 
 export const WorkoutCardsHeader = () => {
   return (
-    <div className="flex select-none items-center justify-between pb-4">
+    <div className="flex items-center justify-between pb-4">
       <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white ">
         Workouts
       </h2>
