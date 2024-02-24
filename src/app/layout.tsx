@@ -4,14 +4,9 @@ import { manrope, nunito } from "@/styles/fonts";
 import { Providers } from "@/context/Providers";
 
 export const viewport: Viewport = {
-  // colorScheme: "dark light",
   userScalable: false,
   initialScale: 1,
   viewportFit: "cover",
-  // themeColor: [
-  //   { media: "(prefers-color-scheme: light)", color: "#cbd5e1" },
-  //   { media: "(prefers-color-scheme: dark)", color: "#020617" },
-  // ],
 };
 
 export const metadata: Metadata = {
