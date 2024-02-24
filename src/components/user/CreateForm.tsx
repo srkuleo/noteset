@@ -69,7 +69,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
 
   return (
     <form action={formAction} className="space-y-4 pt-4">
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <label
           htmlFor="title"
           className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
@@ -94,7 +94,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           ))}
       </div>
 
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         <label
           htmlFor="description"
           className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
