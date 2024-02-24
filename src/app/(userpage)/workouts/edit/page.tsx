@@ -44,7 +44,7 @@ export default async function EditWorkoutPage({
       <div className="rounded-lg bg-white px-4 py-8 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
         <h2 className="text-center text-lg font-semibold">Edit workout</h2>
         <form action={editWorkoutWithId} className="space-y-4 pt-4">
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-2">
             <label
               htmlFor="title"
               className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
@@ -59,7 +59,8 @@ export default async function EditWorkoutPage({
               className="input-field input-focus-ring"
             />
           </div>
-          <div className="flex flex-col gap-1">
+
+          <div className="flex flex-col gap-2">
             <label
               htmlFor="description"
               className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
