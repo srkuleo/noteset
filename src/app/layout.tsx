@@ -4,6 +4,7 @@ import { manrope, nunito } from "@/styles/fonts";
 import { Providers } from "@/context/Providers";
 
 export const viewport: Viewport = {
+  colorScheme: "dark light",
   userScalable: false,
   initialScale: 1,
   viewportFit: "cover",
