@@ -2,7 +2,7 @@ import { EmptyIcon } from "@/icons/user/warning";
 
 export const EmptyPage = () => {
   return (
-    <div className="flex select-none flex-col items-center gap-8 px-4 pt-36">
+    <div className="flex flex-col items-center gap-8 px-4 pt-36">
       <div className="text-slate-400/60 dark:text-slate-700/80">
         {EmptyIcon}
       </div>

@@ -20,7 +20,7 @@ export const LinkButtons = () => {
         <Link
           key={link.href}
           href={link.href}
-          className={`relative flex grow select-none items-center justify-center rounded-xl shadow-md transition active:scale-95 ${
+          className={`relative flex grow items-center justify-center rounded-xl shadow-md transition active:scale-95 ${
             path.includes(link.href) ? "active-page" : "idle-page"
           }`}
         >
