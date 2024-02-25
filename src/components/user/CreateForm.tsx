@@ -204,6 +204,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                           required
                           key={`Weight: ${weight}`}
                           type="number"
+                          inputMode="numeric"
                           placeholder={`Weight ${weight}`}
                           className="smaller-input-field"
                           onChange={(e) =>
@@ -231,7 +232,9 @@ export const CreateForm = ({ userId }: { userId: string }) => {
       </Drawer.Root>
 
       {exercises.length > 0 && (
-        <div className="flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar">
+        <div
+          className={`${exercises.length === 1 && "justify-center"} flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar`}
+        >
           {exercises.map((exercise) => (
             <div
               key={exercise.name}
@@ -268,7 +271,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         state.errors.exercises.map((error) => (
           <p
             key={error}
-            className="py-4 text-center font-semibold text-red-500 dark:text-red-400"
+            className="py-4 text-center text-sm font-semibold text-red-500 dark:text-red-400"
           >
             {error}
           </p>
@@ -283,6 +286,11 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         </Link>
         <SubmitFormButton buttonText="Create" />
       </div>
+      {state.message && (
+        <p className="py-2 text-right text-sm font-semibold text-red-500 dark:text-red-400">
+          {state.message}
+        </p>
+      )}
     </form>
   );
 };
