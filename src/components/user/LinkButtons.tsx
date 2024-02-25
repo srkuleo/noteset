@@ -2,13 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { type PageLink } from "@/util/types";
 import { HomeIcon, ProfileIcon, LogsIcon } from "@/icons/user/links";
 
-type Link = {
-  href: string;
-  icon: JSX.Element;
-};
-const links: Link[] = [
+const pageLinks: PageLink[] = [
   { href: "/workouts", icon: HomeIcon },
   { href: "/profile", icon: ProfileIcon },
   { href: "/logs", icon: LogsIcon },
@@ -19,16 +16,16 @@ export const LinkButtons = () => {
 
   return (
     <>
-      {links.map((link) => (
+      {pageLinks.map((link) => (
         <Link
           key={link.href}
           href={link.href}
           className={`relative flex grow select-none items-center justify-center rounded-xl shadow-md transition active:scale-95 ${
-            link.href === path ? "active-page" : "idle-page"
+            path.includes(link.href) ? "active-page" : "idle-page"
           }`}
         >
           {link.icon}
-          {link.href === path && (
+          {path.includes(link.href) && (
             <div className="absolute bottom-1.5 h-[1px] w-5 bg-white" />
           )}
         </Link>
