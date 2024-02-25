@@ -70,7 +70,7 @@ export async function createWorkout(
     return { message: "Database Error: Workout could not be created." };
   }
 
-  redirect("/workout-created-page");
+  redirect("/workout-created");
 }
 
 interface Ids {
