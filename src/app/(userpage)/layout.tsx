@@ -1,6 +1,8 @@
+import { Logo } from "@/icons/navbars/logo";
+import { ThemeButton } from "@/components/navbars/ThemeButton";
+import { GitHubButton } from "@/components/navbars/GitHubButton";
 import { LinkButtons } from "@/components/user/LinkButtons";
 import { LogoutButton } from "@/components/user/LogoutButton";
-import { UserPageHeader } from "@/components/user/UserPageHeader";
 
 export default function UserPagesLayout({
   children,
@@ -11,12 +13,32 @@ export default function UserPagesLayout({
     <main className="flex min-h-svh select-none flex-col">
       <UserPageHeader />
       <div className="mb-20 px-6 pb-safe-bottom">{children}</div>
-      <div className="fixed inset-x-0 bottom-0 border-t border-slate-400/20 bg-slate-300/60 px-3 pb-safe-bottom pt-3 backdrop-blur-lg dark:border-slate-800/80 dark:bg-slate-950/60">
-        <div className="mb-3 flex gap-2">
-          <LinkButtons />
-          <LogoutButton />
-        </div>
-      </div>
+      <UserPageNavBar />
     </main>
   );
 }
+
+const UserPageHeader = () => {
+  return (
+    <div className="px-4 pb-4 pt-2">
+      <div className="flex justify-between rounded-[28px] bg-white px-4 py-2 shadow-md dark:bg-slate-800">
+        <Logo />
+        <div className="flex items-center gap-4">
+          <ThemeButton />
+          <GitHubButton />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const UserPageNavBar = () => {
+  return (
+    <div className="fixed inset-x-0 bottom-0 border-t border-slate-400/35 bg-slate-300/55 px-3 pb-safe-bottom pt-3 backdrop-blur-lg dark:border-slate-800/80 dark:bg-slate-950/55">
+      <div className="mb-3 flex gap-2">
+        <LinkButtons />
+        <LogoutButton />
+      </div>
+    </div>
+  );
+};
