@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+export type PageLink = {
+  href: string;
+  icon: JSX.Element;
+};
+
 export type UserProfile = {
   firstName: string;
   lastName: string;
