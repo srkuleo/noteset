@@ -9,7 +9,6 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/workouts",
     scope: "/",
     background_color: "#cbd5e1",
-    theme_color: "#cbd5e1",
     description: "Tracking workout progress",
     icons: [
       {

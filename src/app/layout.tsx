@@ -11,7 +11,7 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "#020617" },
     { media: "(prefers-color-scheme: light)", color: "#cbd5e1" },
   ],
-  colorScheme: "dark light"
+  colorScheme: "dark light",
 };
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     capable: true,
     startupImage: [
       {
-        url: "/apple-splash-1170-2532.jpeg",
+        url: "/apple-splash-1170-2532.jpg",
         media:
           "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
       },
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
           "(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
       },
       {
-        url: "/apple-splash-1290-2796.jpeg",
+        url: "/apple-splash-1290-2796.jpg",
         media:
           "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
       },
