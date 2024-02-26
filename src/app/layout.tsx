@@ -7,6 +7,11 @@ export const viewport: Viewport = {
   userScalable: false,
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#020617" },
+    { media: "(prefers-color-scheme: light)", color: "#cbd5e1" },
+  ],
+  colorScheme: "dark light"
 };
 
 export const metadata: Metadata = {
@@ -18,15 +23,12 @@ export const metadata: Metadata = {
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/shortcut-icon.png",
-    apple: "apple-icon.png",
+    apple: "/apple-icon.png",
     other: {
       rel: "apple-touch-icon-precomposed",
       url: "/apple-icon.png",
     },
   },
-  manifest: "/site.webmanifest",
   appleWebApp: {
     statusBarStyle: "black-translucent",
     capable: true,
