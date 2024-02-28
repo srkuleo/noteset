@@ -23,12 +23,7 @@ export default async function CreateWorkoutPage() {
   return (
     <>
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="rounded-lg bg-white px-4 py-8 shadow-md ring-1 ring-slate-400/30 dark:bg-slate-800">
-        <h2 className="text-center text-lg font-semibold">
-          Create a new workout
-        </h2>
-        <CreateForm userId={userId} />
-      </div>
+      <CreateForm userId={userId} />
     </>
   );
 }
