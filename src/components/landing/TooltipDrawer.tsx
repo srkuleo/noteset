@@ -11,7 +11,7 @@ export const TooltipDrawer = () => {
       </Drawer.Trigger>
 
       <DrawerWrapper modalType="tooltip">
-        <div className="flex flex-col font-manrope">
+        <div className="flex flex-col pb-safe-bottom font-manrope">
           <p className="pt-8 text-xl font-bold text-slate-800 dark:text-white">
             For a better user experience
           </p>
