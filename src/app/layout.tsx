@@ -9,9 +9,8 @@ export const viewport: Viewport = {
   viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#020617" },
-    { media: "(prefers-color-scheme: light)", color: "#cbd5e1" },
+    { media: "(prefers-color-scheme: light)", color: "#e2e8f0" },
   ],
-  colorScheme: "dark light",
 };
 
 export const metadata: Metadata = {
@@ -23,8 +22,8 @@ export const metadata: Metadata = {
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
   appleWebApp: {
-    statusBarStyle: "black-translucent",
-    capable: true,
+    // statusBarStyle: "black-translucent",
+    // capable: true,
     startupImage: [
       {
         url: "/apple-splash-1170-2532.jpg",
@@ -58,10 +57,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.variable} ${manrope.variable} min-h-screen antialiased`}
+      className={`${nunito.variable} ${manrope.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="scroll-smooth bg-slate-300 font-nunito dark:bg-slate-950">
+      <body className="scroll-smooth bg-slate-200 font-nunito dark:bg-slate-950">
         <Providers>{children}</Providers>
       </body>
     </html>
