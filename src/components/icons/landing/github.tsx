@@ -1,11 +1,10 @@
 export const GitHubIcon = (
   <svg
-    width={28}
-    height={28}
     version="1.1"
     viewBox="0 0 16 16"
     fill="currentColor"
     aria-hidden="true"
+    className="size-7"
   >
     <path
       fillRule="evenodd"

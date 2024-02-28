@@ -1,16 +1,14 @@
 export const AddIcon = ({
-  width,
-  height,
+  size,
   strokeWidth,
 }: {
-  width: number;
-  height: number;
+  size: number;
   strokeWidth: number;
 }) => {
   return (
     <svg
-      width={width}
-      height={height}
+      width={size}
+      height={size}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -28,12 +26,12 @@ export const AddIcon = ({
 
 export const EditIcon = (
   <svg
-    className="h-6 w-6"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.8}
     stroke="currentColor"
+    className="size-6"
   >
     <path
       strokeLinecap="round"
@@ -45,13 +43,12 @@ export const EditIcon = (
 
 export const EditWorkoutIcon = (
   <svg
-    width={18}
-    height={18}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    strokeWidth={1.2}
     stroke="currentColor"
+    className="size-5"
   >
     <path
       strokeLinecap="round"
@@ -63,13 +60,12 @@ export const EditWorkoutIcon = (
 
 export const RemoveWorkoutIcon = (
   <svg
-    width={18}
-    height={18}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    strokeWidth={1.2}
     stroke="currentColor"
+    className="size-5"
   >
     <path
       strokeLinecap="round"

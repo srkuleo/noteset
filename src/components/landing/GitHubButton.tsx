@@ -1,4 +1,4 @@
-import { GitHubIcon } from "@/icons/navbars/github";
+import { GitHubIcon } from "../icons/landing/github";
 
 export const GitHubButton = () => {
   return (
@@ -6,7 +6,6 @@ export const GitHubButton = () => {
       href="https://github.com/srkuleo/noteset"
       target="_blank"
       rel="noreferrer"
-      className="select-none"
     >
       {GitHubIcon}
     </a>
