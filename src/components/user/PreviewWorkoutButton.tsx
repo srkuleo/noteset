@@ -3,7 +3,7 @@
 import type { Workout } from "@/db/schema";
 import { Drawer } from "vaul";
 import { DrawerWrapper } from "./DrawerWrapper";
-import { PreviewIcon } from "@/icons/user/preview";
+import { PreviewIcon } from "../icons/user/preview";
 
 export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
   return (
@@ -13,7 +13,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
       </Drawer.Trigger>
 
       <DrawerWrapper
-        modalTitle="preview"
+        modalType="preview"
         closeButtonText="Done"
         workout={workout}
       >
