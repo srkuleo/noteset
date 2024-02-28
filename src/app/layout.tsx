@@ -21,31 +21,33 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
-  // appleWebApp: {
-  //   title: "Noteset - workout app",
-  //   startupImage: [
-  //     {
-  //       url: "/apple-splash-1170-2532.jpg",
-  //       media:
-  //         "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-  //     },
-  //     {
-  //       url: "/apple-splash-dark-1170-2532.jpg",
-  //       media:
-  //         "(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-  //     },
-  //     {
-  //       url: "/apple-splash-1290-2796.jpg",
-  //       media:
-  //         "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-  //     },
-  //     {
-  //       url: "/apple-splash-dark-1290-2796.jpg",
-  //       media:
-  //         "(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-  //     },
-  //   ],
-  // },
+  appleWebApp: {
+    title: "Noteset - workout app",
+    capable: true,
+    statusBarStyle: "default",
+    startupImage: [
+      {
+        url: "/apple-splash-1170-2532.jpg",
+        media:
+          "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+      {
+        url: "/apple-splash-dark-1170-2532.jpg",
+        media:
+          "(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+      {
+        url: "/apple-splash-1290-2796.jpg",
+        media:
+          "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+      {
+        url: "/apple-splash-dark-1290-2796.jpg",
+        media:
+          "(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
