@@ -4,7 +4,7 @@ import { SadIcon } from "@/components/icons/user/warning";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-screen touch-none select-none flex-col">
+    <main className="flex min-h-screen touch-none select-none flex-col pt-safe-top">
       <LandingPageBar />
       <div className="flex grow flex-col items-center justify-center gap-8 px-4 pb-8">
         <div className="text-slate-400/60 dark:text-slate-700/80">
