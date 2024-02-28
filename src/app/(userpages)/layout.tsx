@@ -10,7 +10,7 @@ export default function UserPagesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-svh select-none flex-col pt-safe-top">
+    <main className="flex min-h-lvh select-none flex-col pt-safe-top">
       <UserPageHeader />
       <div className="mb-20 px-6 pb-safe-bottom">{children}</div>
       <UserPageNavBar />
