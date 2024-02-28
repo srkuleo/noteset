@@ -27,11 +27,6 @@ export const ExerciseSchema = z.object({
   weights: z.array(z.number()),
 });
 
-export const validateSets = z.coerce
-  .number()
-  .min(0, { message: "Please provide number greater than 0." })
-  .max(10, { message: "Don't overtrain. Max number of sets is 10." });
-
 export type Exercise = z.infer<typeof ExerciseSchema>;
 
 export type InputFieldErrors = {
