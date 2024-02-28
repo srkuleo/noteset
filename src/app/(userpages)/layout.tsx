@@ -1,6 +1,6 @@
-import { Logo } from "@/icons/navbars/logo";
-import { ThemeButton } from "@/components/navbars/ThemeButton";
-import { GitHubButton } from "@/components/navbars/GitHubButton";
+import { Logo } from "@/components/icons/landing/logo";
+import { ThemeButton } from "@/components/landing/ThemeButton";
+import { GitHubButton } from "@/components/landing/GitHubButton";
 import { LinkButtons } from "@/components/user/LinkButtons";
 import { LogoutButton } from "@/components/user/LogoutButton";
 

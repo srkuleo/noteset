@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { AddIcon } from "@/icons/user/modify";
+import { AddIcon } from "@/components/icons/user/modify";
 import { WorkoutCards } from "@/components/user/WorkoutCards";
 
 export const metadata: Metadata = {
@@ -28,9 +28,9 @@ const WorkoutCardsHeader = () => {
       <div className="flex items-center gap-3">
         <Link
           href="/workouts/create"
-          className="rounded-full bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700"
+          className="rounded-full bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/85"
         >
-          <AddIcon height={22} width={22} strokeWidth={2} />
+          <AddIcon size={24} strokeWidth={2} />
         </Link>
       </div>
     </div>
