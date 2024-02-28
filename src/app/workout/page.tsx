@@ -1,7 +1,7 @@
 import { getWorkoutById } from "@/db/query";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ThemeButton } from "@/components/navbars/ThemeButton";
+import { ThemeButton } from "@/components/landing/ThemeButton";
 
 export default async function WorkoutPage({
   searchParams,
@@ -15,14 +15,15 @@ export default async function WorkoutPage({
 
   return (
     <>
-      <div className="fixed w-full bg-gradient-to-r from-green-600 from-20% to-violet-600 pt-safe-top dark:from-green-700 dark:to-violet-700 ">
-        <nav className="flex justify-between px-4 py-3">
-          <p className="select-none text-sm text-white">
-            Current workout: <span className="text-lg">{workout.title}</span>
+      <div className="fixed w-full select-none bg-gradient-to-r from-green-600 from-20% to-violet-600 pt-safe-top dark:from-green-700 dark:to-violet-700">
+        <nav className="flex items-center justify-between px-4  py-3 font-manrope">
+          <p className="text-sm uppercase text-white">
+            Workout: <span className="text-xl ">{workout.title}</span>
           </p>
           <ThemeButton />
         </nav>
       </div>
+
       <div className="mt-24 grow px-4 pb-8 pt-safe-top text-center">
         <p className="text-xl font-semibold">
           You are currently tracking {workout.title} workout
