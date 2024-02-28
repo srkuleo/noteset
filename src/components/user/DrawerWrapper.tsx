@@ -21,7 +21,7 @@ export const DrawerWrapper = ({
       <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/70" />
 
       <Drawer.Content
-        className={`${modalType === "tooltip" ? "max-h-[65%]" : "max-h-[92%]"} h-full fixed bottom-0 left-0 right-0 select-none pt-safe-top text-slate-500 focus:outline-none dark:text-white`}
+        className={`${modalType === "tooltip" ? "max-h-[80%]" : "max-h-[92%]"} h-full fixed bottom-0 left-0 right-0 select-none pt-safe-top text-slate-500 focus:outline-none dark:text-white`}
       >
         <div className="h-full rounded-t-modal bg-white dark:bg-slate-900">
           <div className="space-y-4 rounded-t-modal bg-slate-100/50 px-2 pb-4 pt-2 dark:bg-slate-800/50">
