@@ -1,4 +1,4 @@
-import { CheckmarkIcon } from "@/icons/user/modify";
+import { CheckmarkIcon } from "@/components/icons/user/modify"; 
 import Link from "next/link";
 
 export default function WorkoutCreatedPage() {
@@ -22,7 +22,7 @@ export default function WorkoutCreatedPage() {
         </Link>
         <Link
           href="/workouts"
-          className="rounded-full px-3 py-1.5 font-manrope font-semibold text-slate-400 active:bg-slate-800 dark:text-slate-300"
+          className="rounded-full px-3 py-1.5 font-manrope font-semibold active:bg-slate-300 dark:text-slate-300 active:dark:bg-slate-800"
         >
           Home page
         </Link>
