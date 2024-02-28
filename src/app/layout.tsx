@@ -22,8 +22,7 @@ export const metadata: Metadata = {
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.vercel.app"),
   appleWebApp: {
-    // statusBarStyle: "black-translucent",
-    // capable: true,
+    capable: false,
     startupImage: [
       {
         url: "/apple-splash-1170-2532.jpg",
