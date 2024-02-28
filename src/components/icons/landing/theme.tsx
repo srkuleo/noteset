@@ -29,7 +29,7 @@ export const System = (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-5"
+    className="size-6"
   >
     <path
       strokeLinecap="round"
@@ -46,7 +46,7 @@ export const Sun = (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-5"
+    className="size-6"
   >
     <path
       strokeLinecap="round"
@@ -63,7 +63,7 @@ export const Moon = (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-5"
+    className="size-6"
   >
     <path
       strokeLinecap="round"

@@ -59,10 +59,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.variable} ${manrope.variable} min-h-svh antialiased`}
+      className={`${nunito.variable} ${manrope.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="scroll-smooth font-nunito">
+      <body className="scroll-smooth bg-slate-200 font-nunito dark:bg-slate-950">
         <Providers>{children}</Providers>
       </body>
     </html>

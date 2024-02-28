@@ -26,29 +26,29 @@ export const ThemeButton = () => {
               onClick={() => setOpen(false)}
             />
             <motion.div
-              initial={{ opacity: 0, y: 68 }}
+              initial={{ opacity: 0, y: 72 }}
               animate={{
                 opacity: 1,
-                y: 84,
+                y: 92,
                 transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
               }}
               exit={{
                 opacity: 0,
-                y: 68,
+                y: 72,
                 transition: {
                   delay: 0.2,
                   duration: 0.1,
                   ease: [0.36, 0.66, 0.04, 1],
                 },
               }}
-              className="absolute right-6 z-10 flex flex-col rounded-lg bg-white p-1 ring-1 ring-slate-300 dark:bg-slate-900 dark:ring-slate-800"
+              className="absolute right-6 z-10 flex flex-col rounded-lg bg-white p-1 ring-1 ring-slate-300 dark:bg-slate-900 dark:ring-slate-800 text-sm"
             >
               <button
                 onClick={() => {
                   chooseTheme("system");
                   setOpen(false);
                 }}
-                className={`${theme === "system" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-xs font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
+                className={`${theme === "system" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
             `}
               >
                 {System}
@@ -59,7 +59,7 @@ export const ThemeButton = () => {
                   chooseTheme("dark");
                   setOpen(false);
                 }}
-                className={`${theme === "dark" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left text-xs font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
+                className={`${theme === "dark" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
             `}
               >
                 {Moon}
@@ -70,7 +70,7 @@ export const ThemeButton = () => {
                   chooseTheme("light");
                   setOpen(false);
                 }}
-                className={`${theme === "light" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left text-xs font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
+                className={`${theme === "light" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
             `}
               >
                 {Sun}
