@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type PageLink } from "@/util/types";
-import { HomeIcon, ProfileIcon, LogsIcon } from "@/icons/user/links";
+import { HomeIcon, ProfileIcon, LogsIcon } from "../icons/user/links";
 
 const pageLinks: PageLink[] = [
   { href: "/workouts", icon: HomeIcon },

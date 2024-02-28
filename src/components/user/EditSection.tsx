@@ -5,8 +5,8 @@ import { useState } from "react";
 import type { Workout } from "@/db/schema";
 import { removeWorkout } from "@/util/actions";
 import { manrope } from "@/styles/fonts";
-import { EditWorkoutIcon, RemoveWorkoutIcon } from "@/icons/user/modify";
-import { DangerIcon } from "@/icons/user/warning";
+import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
+import { DangerIcon } from "../icons/user/warning";
 import * as Dialog from "@radix-ui/react-dialog";
 
 export const EditSection = ({ workout }: { workout: Workout }) => {
