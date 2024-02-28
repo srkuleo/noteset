@@ -22,13 +22,13 @@ export default async function HomePage() {
 const WorkoutCardsHeader = () => {
   return (
     <div className="flex items-center justify-between pb-4">
-      <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white ">
+      <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white">
         Workouts
       </h2>
       <div className="flex items-center gap-3">
         <Link
           href="/workouts/create"
-          className="rounded-full bg-white p-2 shadow-sm transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/85"
+          className="rounded-full bg-white p-2 shadow-sm ring-1 ring-slate-300/60 transition active:scale-95 dark:bg-slate-800 dark:ring-slate-700/85"
         >
           <AddIcon size={24} strokeWidth={2} />
         </Link>
