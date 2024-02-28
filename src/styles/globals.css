@@ -8,7 +8,7 @@
   }
 
   main {
-    @apply bg-gradient-to-b from-slate-300 via-slate-50 to-slate-300 text-slate-500 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white;
+    @apply bg-gradient-to-b from-slate-200 via-white to-slate-200 text-slate-500 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white;
   }
 
   h2 {
