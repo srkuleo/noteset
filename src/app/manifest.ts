@@ -8,7 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     id: "/workouts",
     start_url: "/workouts",
     scope: "/",
-    background_color: "#cbd5e1",
+    //still waiting for the option to put prefer color schema
+    background_color: "#e2e8f0",
     description: "Tracking workout progress",
     icons: [
       {
