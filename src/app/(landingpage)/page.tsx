@@ -4,14 +4,14 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { TooltipDrawer } from "@/components/landing/TooltipDrawer";
 import { ArrowIcon } from "@/components/icons/landing/arrow";
 
-export default async function LoginPage() {
+export default async function LandingPage() {
   const { isAuthenticated } = getKindeServerSession();
   const isLoggedIn = await isAuthenticated();
 
   isLoggedIn && redirect("/workouts");
 
   return (
-    <div className="mt-40 flex grow flex-col px-8 pb-8 pt-safe-top">
+    <div className="pt-40 flex flex-col px-8 pb-8">
       <h1 className="mx-auto w-fit bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pb-8 text-7xl font-extrabold text-transparent dark:to-violet-600">
         Note<span className="font-bold">Set</span>
       </h1>
@@ -22,7 +22,7 @@ export default async function LoginPage() {
       </h2>
 
       <div className="flex justify-center gap-4">
-        <TooltipDrawer  />
+        <TooltipDrawer />
 
         <div className="w-[1px] bg-slate-300/50 dark:bg-slate-700/80" />
 
