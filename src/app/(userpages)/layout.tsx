@@ -34,7 +34,7 @@ const UserPageHeader = () => {
 
 const UserPageNavBar = () => {
   return (
-    <div className="fixed inset-x-0 bottom-0 border-t border-slate-400/35 bg-slate-300/55 px-4 pb-safe-bottom pt-3 backdrop-blur-lg dark:border-slate-800/80 dark:bg-slate-950/55">
+    <div className="fixed inset-x-0 bottom-0 border-t border-slate-300/60 bg-slate-200/55 px-4 pb-safe-bottom pt-3 backdrop-blur-lg dark:border-slate-800/80 dark:bg-slate-950/55">
       <div className="flex gap-3 pb-3">
         <LinkButtons />
         <LogoutButton />
