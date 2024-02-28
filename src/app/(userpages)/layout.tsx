@@ -10,7 +10,7 @@ export default function UserPagesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-lvh select-none flex-col pb-safe-bottom pt-safe-top">
+    <main className="flex min-h-lvh select-none flex-col pt-safe-top">
       <UserPageHeader />
       <div className="mb-20 px-6 pb-safe-bottom">{children}</div>
       <UserPageNavBar />
@@ -34,9 +34,11 @@ const UserPageHeader = () => {
 
 const UserPageNavBar = () => {
   return (
-    <div className="fixed inset-x-0 bottom-0 flex gap-3 border-t border-slate-300/60 bg-slate-200/55 px-4 py-3 backdrop-blur-lg dark:border-slate-800/80 dark:bg-slate-950/55">
-      <LinkButtons />
-      <LogoutButton />
+    <div className="fixed inset-x-0 bottom-0 border-t border-slate-300/60 bg-slate-200/55 px-4 pb-safe-bottom pt-3 backdrop-blur-lg dark:border-slate-800/80 dark:bg-slate-950/55">
+      <div className="flex gap-3 pb-3">
+        <LinkButtons />
+        <LogoutButton />
+      </div>
     </div>
   );
 };
