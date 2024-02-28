@@ -11,7 +11,6 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: dark)", color: "#020617" },
     { media: "(prefers-color-scheme: light)", color: "#e2e8f0" },
   ],
-  colorScheme: "dark light",
 };
 
 export const metadata: Metadata = {
@@ -25,12 +24,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     title: "Noteset - workout app",
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     startupImage: [
       {
         url: "/apple-splash-1170-2532.jpg",
         media:
-          "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+          "(prefers-color-scheme: light) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
       },
       {
         url: "/apple-splash-dark-1170-2532.jpg",
@@ -40,7 +39,7 @@ export const metadata: Metadata = {
       {
         url: "/apple-splash-1290-2796.jpg",
         media:
-          "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
+          "(prefers-color-scheme: light) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
       },
       {
         url: "/apple-splash-dark-1290-2796.jpg",
