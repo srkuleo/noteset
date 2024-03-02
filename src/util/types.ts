@@ -11,10 +11,15 @@ export type UserProfile = {
   email: string;
 };
 
-export type Breadcrumb = {
-  label: string;
-  href: string;
-  active?: boolean;
+export type ActionResponse = {
+  status: "success" | "error" | "unset";
+  errors?: {
+    title?: string[];
+    description?: string[];
+    exercises?: string[];
+  };
+  message: string;
+  timestamp: number;
 };
 
 export const ExerciseSchema = z.object({
@@ -25,18 +30,10 @@ export const ExerciseSchema = z.object({
   sets: z.number(),
   reps: z.array(z.string()),
   weights: z.array(z.number()),
+  comment: z.string().max(80, { message: "Comment is too long" }).optional(),
 });
 
 export type Exercise = z.infer<typeof ExerciseSchema>;
-
-export type InputFieldErrors = {
-  errors?: {
-    title?: string[];
-    description?: string[];
-    exercises?: string[];
-  };
-  message?: string | null;
-};
 
 export const WorkoutSchema = z.object({
   id: z.number(),
@@ -46,8 +43,8 @@ export const WorkoutSchema = z.object({
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
   description: z
     .string()
-    .min(5, { message: "Please provide a short description." })
-    .max(80, { message: "Too long. Keep it less than 80 characters." }),
+    .max(80, { message: "Too long. Keep it less than 80 characters." })
+    .optional(),
   exercises: z
     .array(ExerciseSchema)
     .nonempty({ message: "Please add at least one exercise." }),
