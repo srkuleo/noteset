@@ -7,6 +7,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  main {
+    @apply min-h-lvh select-none overflow-y-scroll bg-gradient-to-b from-slate-200 via-white to-slate-200 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950;
+  }
+
   h2 {
     font-family: var(--font-manrope);
   }
