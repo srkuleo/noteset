@@ -1,6 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
@@ -12,6 +13,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       themes={["system", "dark", "light"]}
     >
       {children}
+      <Toaster duration={5000} position="bottom-center" />
     </ThemeProvider>
   );
 }
