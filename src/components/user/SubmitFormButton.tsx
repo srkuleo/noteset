@@ -2,9 +2,14 @@
 
 import { useFormStatus } from "react-dom";
 
-export const SubmitFormButton = ({ buttonText }: { buttonText: string }) => {
+export const SubmitFormButton = ({
+  label,
+  loading,
+}: {
+  label: string;
+  loading: string;
+}) => {
   const { pending } = useFormStatus();
-  const pendingText = buttonText.substring(0, buttonText.length - 1) + "ing...";
 
   return (
     <button
@@ -12,7 +17,7 @@ export const SubmitFormButton = ({ buttonText }: { buttonText: string }) => {
       disabled={pending}
       className="rounded-lg bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600"
     >
-      {pending ? pendingText : buttonText}
+      {pending ? loading : label}
     </button>
   );
 };
