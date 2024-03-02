@@ -13,7 +13,7 @@ export const workouts = mysqlTable(
   {
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 30 }).notNull(),
-    description: varchar("description", { length: 80 }).notNull(),
+    description: varchar("description", { length: 80 }),
     exercises: json("exercises").$type<Exercise[]>().notNull(),
     status: varchar("status", { length: 10 }).default("current"),
     userId: varchar("user_id", { length: 255 }).notNull(),
