@@ -1,7 +1,7 @@
 import debounce from "lodash.debounce";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
-import { AddIcon, CloseIcon } from "../icons/user/modify";
+import { AddIcon } from "../icons/user/modify";
 
 import type { Exercise } from "@/util/types";
 
@@ -49,6 +49,13 @@ export const ExerciseForm = ({
     setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
   }, 300);
 
+  function createExercise(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    updateExercises(tempExercise);
+    setTempExercise(initExercise);
+    setAddingExercise(false);
+  }
+
   return (
     <Dialog.Root open={addingExercise} onOpenChange={setAddingExercise}>
       <Dialog.Trigger className="flex items-center gap-2 font-manrope text-xs font-semibold focus:outline-none">
@@ -68,16 +75,13 @@ export const ExerciseForm = ({
 
         <Dialog.Content className="fixed inset-x-0 top-8 z-10 px-12 pt-safe-top">
           <form
-            action=""
+            onSubmit={createExercise}
             className="rounded-xl bg-white pb-4 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80"
           >
             <div className="relative rounded-t-xl border-b border-slate-200 bg-slate-100 py-4 dark:border-slate-700/80 dark:bg-slate-900">
               <Dialog.Title className="text-center font-manrope text-lg font-bold ">
                 Adding exercise
               </Dialog.Title>
-              <Dialog.Close className="absolute right-2 top-2 rounded-full bg-slate-200 p-1 shadow-md outline-none ring-1 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700">
-                {CloseIcon}
-              </Dialog.Close>
             </div>
 
             <div className="space-y-4 px-4 pt-4">
@@ -197,15 +201,16 @@ export const ExerciseForm = ({
                 </div>
               )}
 
-              <div className="pt-4">
+              <div className="flex gap-2 pt-4">
+                <Dialog.Close
+                  onClick={() => setTempExercise(initExercise)}
+                  className="rounded-xl bg-slate-50 ring-1 ring-inset ring-slate-200 px-4 text-sm font-semibold shadow-sm dark:bg-white dark:text-slate-600 "
+                >
+                  Cancel
+                </Dialog.Close>
                 <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    updateExercises(tempExercise);
-                    setTempExercise(initExercise);
-                    setAddingExercise(false);
-                  }}
-                  className="flex w-full justify-center gap-2 rounded-xl bg-green-500 px-6 py-2 text-lg font-bold text-white shadow-md dark:bg-green-600"
+                  type="submit"
+                  className="flex grow justify-center rounded-xl bg-green-500 px-6 py-1.5 text-lg font-bold text-white shadow-md dark:bg-green-600"
                 >
                   Done
                 </button>
