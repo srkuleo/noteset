@@ -11,12 +11,12 @@ export default async function LandingPage() {
   isLoggedIn && redirect("/workouts");
 
   return (
-    <div className="pt-44 flex flex-col px-8 pb-8">
+    <div className="flex flex-col justify-center mb-10 px-8 pb-8 pt-safe-top">
       <h1 className="mx-auto w-fit bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pb-6 text-7xl font-extrabold text-transparent dark:to-violet-600">
         Note<span className="font-bold">Set</span>
       </h1>
 
-      <h2 className="pb-12 text-lg  text-center font-semibold text-pretty leading-snug dark:text-slate-400 md:text-balance">
+      <h2 className="text-pretty pb-12 text-center text-lg font-semibold leading-snug dark:text-slate-400 md:text-balance">
         Personalized workout tracking PWA, aimed to replace a notebook in the
         gym.
       </h2>
@@ -26,8 +26,8 @@ export default async function LandingPage() {
 
         <div className="w-[1px] bg-slate-300/50 dark:bg-slate-700/80" />
 
-        <LoginLink className="flex items-center gap-1 rounded-full px-4 py-2 font-manrope text-slate-600 active:bg-slate-200 dark:text-slate-300 active:dark:bg-slate-800">
-          Login {ArrowIcon}
+        <LoginLink className="flex items-center gap-1 rounded-full px-4 py-2 font-manrope font-semibold text-slate-600 active:bg-slate-200 dark:text-slate-300 active:dark:bg-slate-800">
+          Join {ArrowIcon}
         </LoginLink>
       </div>
     </div>
