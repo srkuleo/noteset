@@ -1,0 +1,1 @@
+ALTER TABLE `workouts` MODIFY COLUMN `description` varchar(80);
