@@ -8,27 +8,39 @@ import { redirect } from "next/navigation";
 import {
   CreateWorkoutSchema,
   type Exercise,
-  type InputFieldErrors,
+  type ActionResponse,
 } from "./types";
 
-export async function removeWorkout(workoutId: number) {
+export async function removeWorkout(
+  workoutId: number,
+  workoutTitle: string,
+): Promise<Omit<ActionResponse, "timestamp">> {
   try {
     await db.delete(workouts).where(eq(workouts.id, workoutId));
-  } catch (err) {
-    throw new Error("Database error: Workout could not be deleted.");
-  }
 
-  console.log("Workout deleted!");
-  revalidatePath("/workouts");
-  redirect("/workouts?action=deleted");
+    console.log("Workout deleted!");
+
+    revalidatePath("/workouts");
+
+    return {
+      status: "success",
+      message: `${workoutTitle} workout has been removed.`,
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      status: "error",
+      message: `${workoutTitle} workout could not be removed.`,
+    };
+  }
 }
 
 export async function createWorkout(
   userId: string,
   workoutExercises: Exercise[],
-  prevState: InputFieldErrors,
+  prevState: ActionResponse,
   formData: FormData,
-) {
+): Promise<ActionResponse> {
   const parsedWorkout = CreateWorkoutSchema.safeParse({
     title: formData.get("workoutTitle"),
     description: formData.get("workoutDescription"),
@@ -39,8 +51,10 @@ export async function createWorkout(
     console.log(parsedWorkout.error.flatten().fieldErrors);
 
     return {
+      status: "error",
       errors: parsedWorkout.error.flatten().fieldErrors,
       message: "Workout could not be created.",
+      timestamp: Date.now(),
     };
   }
 
@@ -53,24 +67,36 @@ export async function createWorkout(
 
     if (existingWorkout) {
       return {
+        status: "error",
         message: `${title} workout already exists.`,
+        timestamp: Date.now(),
       };
     }
 
     await db.insert(workouts).values({
       userId: userId,
       title: title,
-      description: description,
+      description: description ? description : "Description not provided.",
       exercises: exercises,
     });
 
     console.log(`${title} workout created!`);
+
+    revalidatePath("/workouts");
+
+    return {
+      status: "success",
+      message: `${title} workout has been created.`,
+      timestamp: Date.now(),
+    };
   } catch (error) {
     console.log(error);
-    return { message: "Database Error: Workout could not be created." };
+    return {
+      status: "error",
+      message: "Database Error: Workout could not be created.",
+      timestamp: Date.now(),
+    };
   }
-
-  redirect("/workout-created");
 }
 
 interface Ids {
