@@ -11,8 +11,10 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <p className="text-center text-lg font-semibold">Profile page</p>
-      <p className="pt-10">
+      <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white pt-2 pb-6">
+        Profile page
+      </h2>
+      <p className="">
         Full name: {user?.given_name} {user?.family_name}
       </p>
     </>

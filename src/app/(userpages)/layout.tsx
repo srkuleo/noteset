@@ -10,7 +10,7 @@ export default function UserPagesLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="select-none overflow-y-auto pt-safe-top">
+    <main className="pt-safe-top">
       <UserPageHeader />
       <div className="mb-20 px-6 pb-safe-bottom">{children}</div>
       <UserPageNavBar />

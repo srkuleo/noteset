@@ -7,7 +7,9 @@ export const metadata: Metadata = {
 export default function LogsPage() {
   return (
     <>
-      <p className="text-lg font-semibold text-center">This is user`s Logs page.</p>
+      <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white pt-2 pb-6">
+        Logs page
+      </h2>
     </>
   );
 }
