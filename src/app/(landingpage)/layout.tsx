@@ -6,7 +6,7 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex min-h-screen select-none justify-center">
+    <main className="flex flex-col min-h-screen select-none">
       <LandingPageBar />
       <UiMessage />
       {children}
