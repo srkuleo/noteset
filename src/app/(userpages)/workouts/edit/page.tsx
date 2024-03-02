@@ -27,9 +27,9 @@ export default async function EditWorkoutPage({
 
   return (
     <>
-      <p className="pb-6 pt-2 font-manrope text-2xl font-bold leading-none">
+      <h2 className="pb-6 pt-2 text-2xl font-extrabold text-slate-600 dark:text-white">
         Editing {workout.title}
-      </p>
+      </h2>
       <form
         action={editWorkoutWithId}
         className="space-y-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-300/50 dark:bg-slate-800 dark:ring-slate-700/70"

@@ -6,12 +6,11 @@ export default async function CreateWorkoutPage() {
   const user = await getUser();
   const userId = user?.id as string;
 
-
   return (
     <>
-      <p className="text-2xl font-bold font-manrope leading-none pt-2 pb-6">
+      <h2 className="pb-6 pt-2 text-2xl font-extrabold text-slate-600 dark:text-white">
         Create a new workout
-      </p>
+      </h2>
       <CreateForm userId={userId} />
     </>
   );
