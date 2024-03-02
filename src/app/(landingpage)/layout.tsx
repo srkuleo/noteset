@@ -6,7 +6,7 @@ export default function LandingPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex grow select-none flex-col overscroll-none pt-safe-top">
+    <main className="flex min-h-screen select-none justify-center">
       <LandingPageBar />
       <UiMessage />
       {children}
@@ -17,7 +17,7 @@ export default function LandingPageLayout({
 const UiMessage = () => {
   return (
     <>
-      <div className="hidden md:block">
+      <div className="mt-18 hidden pt-safe-top md:block">
         <p className="bg-red-500 py-2 text-center font-manrope text-lg text-white">
           <span className="font-bold underline underline-offset-4">
             Important

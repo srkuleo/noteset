@@ -17,25 +17,20 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="flex min-h-screen touch-none select-none flex-col pt-safe-top">
+    <main className="flex min-h-screen select-none justify-center">
       <LandingPageBar />
-      <div className="flex grow flex-col items-center justify-center gap-8 px-4 pb-8">
+      <div className="flex flex-col items-center justify-center gap-6 mb-4 px-4 pb-8 pt-safe-top">
         <div className="text-slate-400/60 dark:text-slate-700/80">
           {SadIcon}
         </div>
 
-        <div className="space-y-2 text-center">
-          <h2 className="text-xl font-semibold dark:text-slate-300">
-            Sorry, something went wrong!
-          </h2>
-          <p className="text-sm text-slate-400 dark:text-slate-500">
-            {error.message}
-          </p>
-        </div>
+        <h2 className="pb-8 text-xl font-semibold dark:text-slate-300">
+          Sorry, something went wrong!
+        </h2>
 
         <div className="flex flex-col items-center gap-2">
           <Link
-            href="/"
+            href="/workouts"
             className="rounded-xl bg-violet-500 px-8 py-2 font-semibold text-white shadow-sm dark:bg-violet-600"
           >
             Go back
