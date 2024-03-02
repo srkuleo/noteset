@@ -61,7 +61,7 @@ export default function RootLayout({
       className={`${nunito.variable} ${manrope.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="flex min-h-screen scroll-smooth bg-slate-200 font-nunito dark:bg-slate-950">
+      <body className="min-h-screen scroll-smooth bg-gradient-to-b from-slate-200 via-white to-slate-200 font-nunito text-slate-500 bg-fixed dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-white">
         <Providers>{children}</Providers>
       </body>
     </html>
