@@ -9,6 +9,7 @@ import { ExerciseForm } from "./ExerciseForm";
 import { SubmitFormButton } from "./SubmitFormButton";
 
 import { type ActionResponse, type Exercise } from "@/util/types";
+import { twMerge } from "tailwind-merge";
 
 const emptyFormState: ActionResponse = {
   status: "unset",
@@ -32,10 +33,8 @@ export const CreateForm = ({ userId }: { userId: string }) => {
     formAction(formData);
 
     if (state.status === "success") {
-      console.log("Did I render again?");
       toast.success(state.message);
     } else if (state.status === "error") {
-      console.log("Did I render again?");
       toast.error(state.message);
     }
   };
@@ -48,7 +47,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="title"
-          className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+          className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
         >
           Title
         </label>
@@ -57,14 +56,14 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           name="workoutTitle"
           type="text"
           placeholder="e.g. Upper 1"
-          className={`${state.errors?.title ? "input-error-ring" : "input-focus-ring"} input-field`}
+          className={twMerge(
+            "input-field",
+            state.errors?.title && "ring-red-500 dark:ring-red-500",
+          )}
         />
         {state.errors?.title &&
           state.errors.title.map((error) => (
-            <p
-              key={error}
-              className="pl-1 text-sm font-semibold text-red-500 dark:text-red-400"
-            >
+            <p key={error} className="pl-1 text-sm font-semibold text-red-500">
               {error}
             </p>
           ))}
@@ -72,7 +71,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="description"
-          className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+          className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
         >
           Description
         </label>
@@ -81,22 +80,16 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           name="workoutDescription"
           type="text"
           placeholder="e.g. Workout for the upper body"
-          className={`${state.errors?.description ? "input-error-ring" : "input-focus-ring"} input-field`}
+          className="input-field"
         />
-        {state.errors?.description &&
-          state.errors.description.map((error) => (
-            <p
-              key={error}
-              className="pl-1 text-sm font-semibold text-red-500 dark:text-red-400"
-            >
-              {error}
-            </p>
-          ))}
       </div>
 
       {exercises.length > 0 && (
         <div
-          className={`${exercises.length === 1 && "justify-center"} flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar`}
+          className={twMerge(
+            "flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar",
+            exercises.length === 1 && "justify-center",
+          )}
         >
           {exercises.map((exercise) => (
             <div
@@ -134,14 +127,17 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         state.errors.exercises.map((error) => (
           <p
             key={error}
-            className="py-4 text-center text-sm font-semibold text-red-500 dark:text-red-400"
+            className="py-4 text-center text-sm font-semibold text-red-500"
           >
             {error}
           </p>
         ))}
 
       <div
-        className={`${exercises.length === 0 && "pt-4"} flex items-center justify-between`}
+        className={twMerge(
+          "flex items-center justify-between",
+          exercises.length === 0 && "pt-4",
+        )}
       >
         <ExerciseForm updateExercises={updateExercises} />
 
@@ -152,7 +148,7 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           >
             Cancel
           </Link>
-          <SubmitFormButton label="Create" loading="Creating.." />
+          <SubmitFormButton label="Create" loading="Creating..." />
         </div>
       </div>
     </form>
