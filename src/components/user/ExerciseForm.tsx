@@ -1,11 +1,13 @@
 import debounce from "lodash.debounce";
 import * as Dialog from "@radix-ui/react-dialog";
+import * as Select from "@radix-ui/react-select";
 import { useState } from "react";
-import { AddIcon } from "../icons/user/modify";
+import { AddIcon, ArrowDownIcon } from "../icons/user/modify";
 
 import type { Exercise } from "@/util/types";
+import { twMerge } from "tailwind-merge";
 
-const chooseSets = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as const;
+const chooseSets = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"] as const;
 
 const initExercise: Exercise = {
   name: "",
@@ -58,10 +60,9 @@ export const ExerciseForm = ({
 
   return (
     <Dialog.Root open={addingExercise} onOpenChange={setAddingExercise}>
-      <Dialog.Trigger className="flex items-center gap-2 font-manrope text-xs font-semibold focus:outline-none">
-        <div className="rounded-full bg-violet-500 p-1 text-white dark:bg-violet-400">
-          <AddIcon size={20} strokeWidth={1.5} />
-        </div>
+      <Dialog.Trigger className="flex items-center gap-1.5 rounded-lg bg-violet-500 px-2 py-1.5 font-manrope text-xs font-semibold text-white focus:outline-none">
+        <AddIcon size={20} strokeWidth={1.5} />
+        <div className="h-[16px] w-[1px] bg-white" />
         Exercise
       </Dialog.Trigger>
 
@@ -70,13 +71,13 @@ export const ExerciseForm = ({
           onClick={() => {
             setTempExercise(initExercise);
           }}
-          className="fixed inset-0 z-10 bg-slate-900/80 dark:bg-slate-950/85"
+          className="fixed inset-0 z-10 bg-slate-900/80 data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/85"
         />
 
-        <Dialog.Content className="fixed inset-x-0 top-8 z-10 px-12 pt-safe-top">
+        <Dialog.Content className="data-[state=closed]:animate-modal-scale-down data-[state=open]:animate-modal-scale-up fixed inset-x-0 top-8 z-10 px-12 pt-safe-top">
           <form
             onSubmit={createExercise}
-            className="rounded-xl bg-white pb-4 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80"
+            className="rounded-xl bg-white pb-8 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80"
           >
             <div className="relative rounded-t-xl border-b border-slate-200 bg-slate-100 py-4 dark:border-slate-700/80 dark:bg-slate-900">
               <Dialog.Title className="text-center font-manrope text-lg font-bold ">
@@ -84,12 +85,12 @@ export const ExerciseForm = ({
               </Dialog.Title>
             </div>
 
-            <div className="space-y-4 px-4 pt-4">
+            <div className="space-y-4 px-8 pt-8">
               <div className="space-y-4">
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="name"
-                    className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+                    className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
                   >
                     Name
                   </label>
@@ -98,7 +99,7 @@ export const ExerciseForm = ({
                     name="exerciseName"
                     type="text"
                     placeholder="e.g. Bench press"
-                    className="input-field input-focus-ring"
+                    className={twMerge("input-field", "py-2")}
                     onChange={(e) =>
                       setTempExercise({
                         ...tempExercise,
@@ -110,16 +111,57 @@ export const ExerciseForm = ({
                 <div className="flex flex-col gap-2">
                   <label
                     htmlFor="sets"
-                    className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
+                    className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
                   >
                     Sets
                   </label>
-                  <select
-                    name="exerciseSets"
-                    id="sets"
-                    defaultValue=""
+
+                  <Select.Root>
+                    <Select.Trigger className="inline-flex items-center justify-between text-[15px] rounded-xl bg-slate-50 px-4 py-2 shadow-sm outline-none ring-1 ring-slate-300/80 focus:ring-2 focus:ring-green-500 data-[placeholder]:text-sm data-[placeholder]:font-semibold data-[placeholder]:italic data-[placeholder]:leading-none data-[placeholder]:text-slate-400/80 data-[placeholder]:focus:text-slate-300 dark:bg-slate-900/40 dark:shadow-slate-900 dark:ring-slate-700 focus:dark:ring-green-600 data-[placeholder]:dark:text-slate-500 data-[placeholder]:focus:dark:text-slate-600">
+                      <Select.Value placeholder="Choose a number" />
+                      <Select.Icon>{ArrowDownIcon}</Select.Icon>
+                    </Select.Trigger>
+
+                    <Select.Portal>
+                      <Select.Content
+                        className="relative z-10 w-[140px] rounded-lg bg-slate-50 shadow-md ring-1 ring-slate-300 dark:bg-slate-900 dark:ring-slate-800"
+                        position="popper"
+                        side="bottom"
+                        sideOffset={6}
+                        align="start"
+                      >
+                        <Select.Viewport className="p-1">
+                          <Select.Item
+                            value="Number of sets"
+                            disabled
+                            className="px-2 pt-1 text-center text-sm italic text-slate-400/80 dark:text-slate-500"
+                          >
+                            <Select.ItemText>Number of sets</Select.ItemText>
+                          </Select.Item>
+
+                          <Select.Separator className="my-1 h-[1px] w-full bg-slate-200 dark:bg-slate-800" />
+
+                          {chooseSets.map((sets) => (
+                            <Select.Item
+                              value={sets}
+                              key={sets}
+                              className="rounded-md px-2 py-1 font-manrope font-semibold outline-none data-[highlighted]:bg-green-500 data-[highlighted]:text-green-100 data-[highlighted]:dark:bg-green-600"
+                            >
+                              <Select.ItemText>{sets}</Select.ItemText>
+                            </Select.Item>
+                          ))}
+                        </Select.Viewport>
+                      </Select.Content>
+                    </Select.Portal>
+                  </Select.Root>
+
+                  {/* <select
+                    placeholder="Choose a number"
                     required
-                    className="peer rounded-xl bg-slate-50 px-4 py-3 shadow-sm outline-none ring-1 ring-slate-200 invalid:text-sm invalid:italic invalid:text-slate-100/80 focus:ring-2 focus:ring-green-500 dark:bg-slate-900/40 dark:ring-slate-700 invalid:dark:text-slate-500  focus:dark:ring-green-600"
+                    id="sets"
+                    name="exerciseSets"
+                    defaultValue=""
+                    className="appearance-none peer rounded-xl bg-slate-50 px-4 py-2 shadow-sm outline-none ring-1 ring-slate-200 invalid:text-sm invalid:italic invalid:text-slate-100/80 focus:ring-2 focus:ring-green-500 dark:bg-slate-900/40 dark:ring-slate-700 invalid:dark:text-slate-500 focus:dark:ring-green-600"
                     onChange={(e) => {
                       setTempExercise({
                         ...tempExercise,
@@ -127,11 +169,7 @@ export const ExerciseForm = ({
                       });
                     }}
                   >
-                    <option
-                      value=""
-                      disabled
-                      className="text-sm font-semibold italic "
-                    >
+                    <option value="" disabled className="text-sm font-semibold">
                       Choose a number
                     </option>
 
@@ -144,7 +182,7 @@ export const ExerciseForm = ({
                         {set}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                 </div>
               </div>
 
@@ -165,8 +203,10 @@ export const ExerciseForm = ({
                           id={`rep ${rep}`}
                           type="text"
                           placeholder={`Rep ${rep}`}
-                          className="smaller-input-field"
-                          pattern="^[0-9]+[-][0-9]+$|[0-9]+"
+                          className={twMerge(
+                            "input-field",
+                            "max-w-[40%] px-0 py-1.5 text-center",
+                          )}
                           onChange={(e) =>
                             handleRepRangeInput(e.target.value, index)
                           }
@@ -190,7 +230,10 @@ export const ExerciseForm = ({
                           type="number"
                           inputMode="numeric"
                           placeholder={`Weight ${weight}`}
-                          className="smaller-input-field"
+                          className={twMerge(
+                            "input-field",
+                            "max-w-[40%] px-0 py-1.5 text-center",
+                          )}
                           onChange={(e) =>
                             handleWeightInput(e.target.value, index)
                           }
@@ -204,7 +247,7 @@ export const ExerciseForm = ({
               <div className="flex gap-2 pt-4">
                 <Dialog.Close
                   onClick={() => setTempExercise(initExercise)}
-                  className="rounded-xl bg-slate-50 ring-1 ring-inset ring-slate-200 px-4 text-sm font-semibold shadow-sm dark:bg-white dark:text-slate-600 "
+                  className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 dark:bg-white dark:text-slate-600 "
                 >
                   Cancel
                 </Dialog.Close>
