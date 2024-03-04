@@ -10,6 +10,7 @@ import { SubmitFormButton } from "./SubmitFormButton";
 
 import { type ActionResponse, type Exercise } from "@/util/types";
 import { twMerge } from "tailwind-merge";
+import { ErrorTriangleIcon } from "../icons/user/warning";
 
 const emptyFormState: ActionResponse = {
   status: "unset",
@@ -63,7 +64,11 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         />
         {state.errors?.title &&
           state.errors.title.map((error) => (
-            <p key={error} className="pl-1 text-sm font-semibold text-red-500">
+            <p
+              key={error}
+              className="flex items-center gap-1 pl-1 text-sm font-semibold text-red-500"
+            >
+              {ErrorTriangleIcon}
               {error}
             </p>
           ))}
@@ -127,8 +132,9 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         state.errors.exercises.map((error) => (
           <p
             key={error}
-            className="py-4 text-center text-sm font-semibold text-red-500"
+            className="flex items-center gap-1 py-4 pl-1 justify-center text-sm font-semibold text-red-500"
           >
+            {ErrorTriangleIcon}
             {error}
           </p>
         ))}
