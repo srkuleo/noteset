@@ -15,7 +15,6 @@ export type ActionResponse = {
   status: "success" | "error" | "unset";
   errors?: {
     title?: string[];
-    description?: string[];
     exercises?: string[];
   };
   message: string;
