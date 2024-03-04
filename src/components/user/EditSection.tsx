@@ -30,7 +30,7 @@ export const EditSection = ({ workout }: { workout: Workout }) => {
         <Dialog.Portal>
           <Dialog.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/70" />
 
-          <Dialog.Content className="fixed inset-x-0 bottom-0 select-none space-y-4 px-4 pb-12 data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show">
+          <Dialog.Content className="fixed inset-x-0 bottom-0 select-none space-y-4 px-4 pb-12 data-[state=closed]:animate-modal-slide-down data-[state=open]:animate-modal-slide-up">
             <div className="flex flex-col items-center gap-3 rounded-modal bg-slate-50/90 pt-5 dark:bg-slate-700/80">
               <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
                 {DangerIcon}
