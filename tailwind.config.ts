@@ -37,10 +37,17 @@ const config: Config = {
         "overlay-hide":
           "overlay-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 100ms",
 
-        "content-show": "content-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        "modal-slide-up":
+          "modal-slide-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
 
-        "content-hide":
-          "content-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 100ms",
+        "modal-slide-down":
+          "modal-slide-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 100ms",
+
+        "modal-scale-up":
+          "modal-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+
+        "modal-scale-down":
+          "modal-scale-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 100ms",
       },
     },
   },
