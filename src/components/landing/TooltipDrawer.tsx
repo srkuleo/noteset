@@ -12,7 +12,7 @@ export const TooltipDrawer = () => {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/70" />
 
-        <Dialog.Content className="fixed inset-x-0 bottom-0 select-none px-4 pb-12 data-[state=closed]:animate-content-hide data-[state=open]:animate-content-show">
+        <Dialog.Content className="data-[state=closed]:animate-modal-slide-down data-[state=open]:animate-modal-slide-up fixed inset-x-0 bottom-0 select-none px-4 pb-12">
           <div className="rounded-modal bg-white ring-1 ring-inset ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
             <Dialog.Title className="px-6 py-4 text-xl font-bold leading-snug text-slate-800 dark:text-white">
               For a better user experience
