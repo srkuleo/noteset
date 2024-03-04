@@ -75,19 +75,19 @@ export const RemoveWorkoutIcon = (
   </svg>
 );
 
-export const CloseIcon = (
+export const ArrowDownIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-4"
+    className="size-5"
   >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M6 18 18 6M6 6l12 12"
+      d="m19.5 8.25-7.5 7.5-7.5-7.5"
     />
   </svg>
 );
