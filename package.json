@@ -15,7 +15,6 @@
     "@kinde-oss/kinde-auth-nextjs": "^2.1.15",
     "@planetscale/database": "^1.16.0",
     "@radix-ui/react-dialog": "^1.0.5",
-    "@radix-ui/react-select": "^2.0.0",
     "drizzle-orm": "^0.29.4",
     "framer-motion": "^11.0.8",
     "lodash.debounce": "^4.0.8",
