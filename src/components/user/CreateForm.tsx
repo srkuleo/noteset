@@ -1,47 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { toast } from "sonner";
-import { useState } from "react";
-import { useFormState } from "react-dom";
-import { createWorkout } from "@/util/actions";
-import { ExerciseForm } from "./ExerciseForm";
-import { SubmitFormButton } from "./SubmitFormButton";
-
-import { type ActionResponse, type Exercise } from "@/util/types";
 import { twMerge } from "tailwind-merge";
-import { ErrorTriangleIcon } from "../icons/user/warning";
-
-const emptyFormState: ActionResponse = {
-  status: "unset",
-  message: "",
-  errors: {},
-  timestamp: Date.now(),
-};
+import { useToastNotification, useWorkouts } from "@/util/hooks";
+import { AddExercise } from "./AddExercise";
+import { SubmitFormButton } from "./SubmitFormButton";
+import { InputFieldError } from "./InputFieldError";
 
 export const CreateForm = ({ userId }: { userId: string }) => {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-  const [state, formAction] = useFormState(
-    createWorkout.bind(null, userId, exercises),
-    emptyFormState,
-  );
+  const { formState, formAction, exercises, updateExercises, formRef } =
+    useWorkouts(userId);
 
-  const updateExercises = (newExercise: Exercise) => {
-    setExercises([...exercises, { ...newExercise }]);
-  };
+  useToastNotification(formState);
 
   const addWorkout = async (formData: FormData) => {
     formAction(formData);
-
-    if (state.status === "success") {
-      toast.success(state.message);
-    } else if (state.status === "error") {
-      toast.error(state.message);
-    }
   };
 
   return (
     <form
+      ref={formRef}
       action={addWorkout}
       className="space-y-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-300/50 dark:bg-slate-800 dark:ring-slate-700/70"
     >
@@ -59,20 +37,12 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           placeholder="e.g. Upper 1"
           className={twMerge(
             "input-field",
-            state.errors?.title && "ring-red-500 dark:ring-red-500",
+            formState.errors?.title && "ring-red-500 dark:ring-red-500",
           )}
         />
-        {state.errors?.title &&
-          state.errors.title.map((error) => (
-            <p
-              key={error}
-              className="flex items-center gap-1 pl-1 text-sm font-semibold text-red-500"
-            >
-              {ErrorTriangleIcon}
-              {error}
-            </p>
-          ))}
+        <InputFieldError errorArr={formState.errors?.title} className="pl-1" />
       </div>
+
       <div className="flex flex-col gap-2">
         <label
           htmlFor="description"
@@ -113,12 +83,12 @@ export const CreateForm = ({ userId }: { userId: string }) => {
                 <p className="my-auto text-center dark:text-slate-200">
                   {exercise.sets}
                 </p>
-                <div className="flex grow flex-col items-center gap-2 dark:text-slate-200">
+                <div className="flex grow flex-col items-center justify-center gap-2 dark:text-slate-200">
                   {exercise.reps.map((rep, i) => (
                     <p key={`Rep: ${i + 1}`}>{rep}</p>
                   ))}
                 </div>
-                <div className="flex grow flex-col items-center gap-2 dark:text-slate-200">
+                <div className="flex grow flex-col items-center justify-center gap-2 dark:text-slate-200">
                   {exercise.weights.map((weight, i) => (
                     <p key={`Weight: ${i + 1}`}>{weight}</p>
                   ))}
@@ -128,24 +98,18 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           ))}
         </div>
       )}
-      {state.errors?.exercises &&
-        state.errors.exercises.map((error) => (
-          <p
-            key={error}
-            className="flex items-center gap-1 py-4 pl-1 justify-center text-sm font-semibold text-red-500"
-          >
-            {ErrorTriangleIcon}
-            {error}
-          </p>
-        ))}
+      <InputFieldError
+        errorArr={formState.errors?.exercises}
+        className="justify-center py-4"
+      />
 
       <div
         className={twMerge(
           "flex items-center justify-between",
-          exercises.length === 0 && "pt-4",
+          exercises.length === 0 && !formState.errors?.exercises && "pt-4",
         )}
       >
-        <ExerciseForm updateExercises={updateExercises} />
+        <AddExercise updateExercises={updateExercises} />
 
         <div className="flex justify-end gap-2">
           <Link
