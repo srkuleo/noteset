@@ -31,7 +31,7 @@ export const EditIcon = (
     viewBox="0 0 24 24"
     strokeWidth={1.8}
     stroke="currentColor"
-    className="size-6"
+    className="size-[14px]"
   >
     <path
       strokeLinecap="round"
