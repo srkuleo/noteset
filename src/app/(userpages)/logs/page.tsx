@@ -1,3 +1,5 @@
+import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
+import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,10 +8,8 @@ export const metadata: Metadata = {
 
 export default function LogsPage() {
   return (
-    <>
-      <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white pt-2 pb-6">
-        Logs page
-      </h2>
-    </>
+    <WorkoutsPagesWrapper>
+      <WorkoutsPagesHeadingText label="Logs" />
+    </WorkoutsPagesWrapper>
   );
 }

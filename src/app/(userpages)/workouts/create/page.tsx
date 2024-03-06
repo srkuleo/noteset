@@ -1,5 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
 import { CreateForm } from "@/components/user/CreateForm";
+import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
 
 export default async function CreateWorkoutPage() {
   const { getUser } = getKindeServerSession();
@@ -7,11 +9,9 @@ export default async function CreateWorkoutPage() {
   const userId = user?.id as string;
 
   return (
-    <>
-      <h2 className="pb-6 pt-2 text-2xl font-extrabold text-slate-600 dark:text-white">
-        Create a new workout
-      </h2>
+    <WorkoutsPagesWrapper>
+      <WorkoutsPagesHeadingText label="Create a new workout" />
       <CreateForm userId={userId} />
-    </>
+    </WorkoutsPagesWrapper>
   );
 }

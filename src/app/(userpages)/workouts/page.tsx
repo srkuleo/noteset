@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
+import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
 import { AddIcon } from "@/components/icons/user/modify";
 import { WorkoutCards } from "@/components/user/WorkoutCards";
 
@@ -10,29 +12,26 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   return (
-    <>
+    <WorkoutsPagesWrapper className="mb-20">
       <WorkoutCardsHeader />
       <Suspense fallback={<LoadingWorkoutsSkeleton />}>
         <WorkoutCards />
       </Suspense>
-    </>
+    </WorkoutsPagesWrapper>
   );
 }
 
 const WorkoutCardsHeader = () => {
   return (
-    <div className="flex items-center justify-between pb-4">
-      <h2 className="text-2xl font-extrabold text-slate-600 dark:text-white">
-        Workouts
-      </h2>
-      <div className="flex items-center gap-3">
-        <Link
-          href="/workouts/create"
-          className="rounded-full bg-white p-2 shadow-sm ring-1 ring-slate-300/60 transition active:scale-95 dark:bg-slate-800 dark:ring-slate-700/85"
-        >
-          <AddIcon size={24} strokeWidth={2} />
-        </Link>
-      </div>
+    <div className="flex items-center justify-between pb-6 pt-2">
+      <WorkoutsPagesHeadingText label="Workouts" className="p-0"/>
+
+      <Link
+        href="/workouts/create"
+        className="rounded-full bg-white p-2 shadow-sm ring-1 ring-slate-300/60 transition active:scale-95 dark:bg-slate-800 dark:ring-slate-700/85"
+      >
+        <AddIcon size={24} strokeWidth={2} />
+      </Link>
     </div>
   );
 };

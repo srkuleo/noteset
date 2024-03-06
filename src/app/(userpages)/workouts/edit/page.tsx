@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWorkoutById } from "@/db/query";
 import { editWorkout } from "@/util/actions";
+import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
+import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
 import { SubmitFormButton } from "@/components/user/SubmitFormButton";
 
 import { type Metadata } from "next";
@@ -26,10 +28,8 @@ export default async function EditWorkoutPage({
   });
 
   return (
-    <>
-      <h2 className="pb-6 pt-2 text-2xl font-extrabold text-slate-600 dark:text-white">
-        Editing {workout.title}
-      </h2>
+    <WorkoutsPagesWrapper>
+      <WorkoutsPagesHeadingText label={`Editing ${workout.title}`} />
       <form
         action={editWorkoutWithId}
         className="space-y-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-300/50 dark:bg-slate-800 dark:ring-slate-700/70"
@@ -75,6 +75,6 @@ export default async function EditWorkoutPage({
           <SubmitFormButton label="Save" loading="Saving" />
         </div>
       </form>
-    </>
+    </WorkoutsPagesWrapper>
   );
 }
