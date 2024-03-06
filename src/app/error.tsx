@@ -19,7 +19,7 @@ export default function Error({
   return (
     <main className="flex">
       <LandingPageBar />
-      <div className="flex grow flex-col items-center justify-center gap-6 mb-4 px-4 pb-8 pt-safe-top">
+      <div className="mb-4 flex grow flex-col items-center justify-center gap-6 px-4 pb-8 pt-safe-top">
         <div className="text-slate-400/60 dark:text-slate-700/80">
           {SadIcon}
         </div>
