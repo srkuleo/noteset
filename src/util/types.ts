@@ -11,7 +11,18 @@ export type UserProfile = {
   email: string;
 };
 
-export type ActionResponse = {
+export type ExerciseActionResponse = {
+  errors?: {
+    name?: string[] | undefined;
+    sets?: string[] | undefined;
+    reps?: string[] | undefined;
+    weights?: string[] | undefined;
+    comment?: string[] | undefined;
+  };
+  message?: string;
+};
+
+export type WorkoutActionResponse = {
   status: "success" | "error" | "unset";
   errors?: {
     title?: string[];
@@ -26,13 +37,19 @@ export const ExerciseSchema = z.object({
     .string()
     .min(2, { message: "Exercise name must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
-  sets: z.number(),
+  sets: z.number().min(1, { message: "Please choose the number of sets." }),
   reps: z.array(z.string()),
   weights: z.array(z.number()),
   comment: z.string().max(80, { message: "Comment is too long" }).optional(),
 });
 
-export type Exercise = z.infer<typeof ExerciseSchema>;
+export const AddExerciseSchema = ExerciseSchema.omit({
+  comment: true,
+});
+
+export type ExerciseType = z.infer<typeof ExerciseSchema>;
+
+export type AddExerciseType = z.infer<typeof AddExerciseSchema>;
 
 export const WorkoutSchema = z.object({
   id: z.number(),
