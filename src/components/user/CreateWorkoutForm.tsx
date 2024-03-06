@@ -14,14 +14,10 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
 
   useToastNotification(formState);
 
-  const addWorkout = async (formData: FormData) => {
-    formAction(formData);
-  };
-
   return (
     <form
       ref={formRef}
-      action={addWorkout}
+      action={formAction}
       className="space-y-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-300/50 dark:bg-slate-800 dark:ring-slate-700/70"
     >
       <div className="flex flex-col gap-2">
