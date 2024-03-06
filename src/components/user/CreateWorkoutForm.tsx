@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { useToastNotification, useWorkouts } from "@/util/hooks";
-import { AddExercise } from "./AddExercise";
+import { AddExerciseForm } from "./AddExerciseForm";
 import { SubmitFormButton } from "./SubmitFormButton";
 import { InputFieldError } from "./InputFieldError";
+import { EditExerciseForm } from "./EditExerciseForm";
 
-export const CreateForm = ({ userId }: { userId: string }) => {
+export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
   const { formState, formAction, exercises, updateExercises, formRef } =
     useWorkouts(userId);
 
@@ -59,6 +60,8 @@ export const CreateForm = ({ userId }: { userId: string }) => {
         />
       </div>
 
+      <AddExerciseForm updateExercises={updateExercises} />
+
       {exercises.length > 0 && (
         <div
           className={twMerge(
@@ -69,8 +72,12 @@ export const CreateForm = ({ userId }: { userId: string }) => {
           {exercises.map((exercise) => (
             <div
               key={exercise.name}
-              className="min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
+              className="relative min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
             >
+              <EditExerciseForm
+                updateExercises={updateExercises}
+                exercise={exercise}
+              />
               <div className="grid grid-cols-exercise gap-2 text-xs">
                 <p className="font-bold italic">Name</p>
                 <p className="text-center font-bold italic">Sets</p>
@@ -105,21 +112,17 @@ export const CreateForm = ({ userId }: { userId: string }) => {
 
       <div
         className={twMerge(
-          "flex items-center justify-between",
+          "flex justify-end gap-2",
           exercises.length === 0 && !formState.errors?.exercises && "pt-4",
         )}
       >
-        <AddExercise updateExercises={updateExercises} />
-
-        <div className="flex justify-end gap-2">
-          <Link
-            href="/workouts"
-            className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
-          >
-            Cancel
-          </Link>
-          <SubmitFormButton label="Create" loading="Creating..." />
-        </div>
+        <Link
+          href="/workouts"
+          className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
+        >
+          Cancel
+        </Link>
+        <SubmitFormButton label="Create" loading="Creating..." />
       </div>
     </form>
   );
