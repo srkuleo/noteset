@@ -8,21 +8,16 @@ import { useFormState } from "react-dom";
 export const useToastNotification = (formState: WorkoutActionResponse) => {
   const prevTimestamp = useRef(formState.timestamp);
 
-  const showToastNotification =
-    formState.message && formState.timestamp !== prevTimestamp.current;
-
-  console.log(formState.message, showToastNotification);
-
   //renders a new toast notif for every form validation process
   useEffect(() => {
-    if (showToastNotification) {
+    if (formState.message && formState.timestamp !== prevTimestamp.current) {
       if (formState.status === "error") {
         showToast(formState.message, "error");
       } else {
         showToast(formState.message, "success");
       }
     }
-  }, [showToastNotification, formState.status, formState.message]);
+  }, [formState.status, formState.message, formState.timestamp]);
 };
 
 const initExercises: ExerciseType[] = [];
@@ -33,7 +28,6 @@ const emptyFormState: WorkoutActionResponse = {
   errors: {},
   timestamp: Date.now(),
 };
-
 
 /* contains exercises state, setter, ref for the workout form reset, 
 formState and formAction for handling validation on the server 
@@ -46,10 +40,6 @@ export const useWorkouts = (userId: string) => {
   );
   const formRef = useRef<HTMLFormElement>(null);
   const prevTimestamp = useRef(formState.timestamp);
-
-  function updateExercises(newExercise: ExerciseType) {
-    setExercises([...exercises, { ...newExercise }]);
-  }
 
   //resets form if workout is created and empties exercises state
   useEffect(() => {
@@ -66,6 +56,10 @@ export const useWorkouts = (userId: string) => {
       prevTimestamp.current = formState.timestamp;
     }
   }, [formState.status, formState.timestamp]);
+
+  function updateExercises(newExercise: ExerciseType) {
+    setExercises([...exercises, { ...newExercise }]);
+  }
 
   return { formRef, exercises, updateExercises, formState, formAction };
 };
