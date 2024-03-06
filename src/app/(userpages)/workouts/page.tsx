@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
-import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
+import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
+import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
 import { AddIcon } from "@/components/icons/user/modify";
 import { WorkoutCards } from "@/components/user/WorkoutCards";
 
@@ -12,19 +12,19 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   return (
-    <WorkoutsPagesWrapper className="mb-20">
+    <UserPagesWrapper className="mb-20">
       <WorkoutCardsHeader />
       <Suspense fallback={<LoadingWorkoutsSkeleton />}>
         <WorkoutCards />
       </Suspense>
-    </WorkoutsPagesWrapper>
+    </UserPagesWrapper>
   );
 }
 
 const WorkoutCardsHeader = () => {
   return (
     <div className="flex items-center justify-between pb-6 pt-2">
-      <WorkoutsPagesHeadingText label="Workouts" className="p-0"/>
+      <UserPagesHeadingText label="Workouts" className="p-0" />
 
       <Link
         href="/workouts/create"

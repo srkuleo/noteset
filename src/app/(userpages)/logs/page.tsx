@@ -1,5 +1,5 @@
-import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
-import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
+import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
+import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 
 export default function LogsPage() {
   return (
-    <WorkoutsPagesWrapper>
-      <WorkoutsPagesHeadingText label="Logs" />
-    </WorkoutsPagesWrapper>
+    <UserPagesWrapper>
+      <UserPagesHeadingText label="Logs" />
+    </UserPagesWrapper>
   );
 }

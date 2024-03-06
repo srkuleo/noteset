@@ -1,7 +1,7 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { WorkoutsPagesWrapper } from "@/components/user/WorkoutsPagesWrapper";
-import { CreateForm } from "@/components/user/CreateForm";
-import { WorkoutsPagesHeadingText } from "@/components/user/WorkoutsPagesHeadingText";
+import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
+import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
+import { CreateWorkoutForm } from "@/components/user/CreateWorkoutForm";
 
 export default async function CreateWorkoutPage() {
   const { getUser } = getKindeServerSession();
@@ -9,9 +9,9 @@ export default async function CreateWorkoutPage() {
   const userId = user?.id as string;
 
   return (
-    <WorkoutsPagesWrapper>
-      <WorkoutsPagesHeadingText label="Create a new workout" />
-      <CreateForm userId={userId} />
-    </WorkoutsPagesWrapper>
+    <UserPagesWrapper>
+      <UserPagesHeadingText label="Create a new workout" />
+      <CreateWorkoutForm userId={userId} />
+    </UserPagesWrapper>
   );
 }
