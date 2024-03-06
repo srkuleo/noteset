@@ -43,6 +43,7 @@ export async function createWorkout(
 ): Promise<WorkoutActionResponse> {
   const parsedWorkout = CreateWorkoutSchema.safeParse({
     title: formData.get("workoutTitle"),
+    description: formData.get("workoutDescription"),
     exercises: workoutExercises,
   });
 
