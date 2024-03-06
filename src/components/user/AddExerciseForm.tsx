@@ -1,6 +1,5 @@
 import debounce from "lodash.debounce";
 import { useState } from "react";
-import { useFormState } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import * as Dialog from "@radix-ui/react-dialog";
 import { AddIcon } from "../icons/user/modify";
@@ -8,30 +7,33 @@ import { InputFieldError } from "./InputFieldError";
 import { SubmitFormButton } from "./SubmitFormButton";
 
 import {
-  type AddExerciseType,
+  type ExerciseType,
   type ExerciseActionResponse,
   AddExerciseSchema,
 } from "@/util/types";
 
-const chooseSets = [1, 2, 3, 4] as const;
+export const chooseSets = [1, 2, 3, 4] as const;
 
-const initExercise: AddExerciseType = {
+export const initExercise: ExerciseType = {
   name: "",
   sets: 0,
   reps: [],
   weights: [],
 };
 
-const initialErrors: ExerciseActionResponse = { errors: {}, message: "" };
+export const initialErrors: ExerciseActionResponse = {
+  errors: {},
+  message: "",
+};
 
-export const AddExercise = ({
+export const AddExerciseForm = ({
   updateExercises,
 }: {
-  updateExercises: (newExercise: AddExerciseType) => void;
+  updateExercises: (newExercise: ExerciseType) => void;
 }) => {
   const [addingExercise, setAddingExercise] = useState(false);
   const [tempExercise, setTempExercise] = useState(initExercise);
-  const [state, formAction] = useFormState(createExercise, initialErrors);
+  const [exerciseFormErrors, setExerciseFormErrors] = useState(initialErrors);
   const reps: number[] = [];
 
   for (let i = 1; i <= tempExercise.sets; i++) {
@@ -60,39 +62,39 @@ export const AddExercise = ({
     setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
   }, 300);
 
-  function createExercise(): ExerciseActionResponse {
+  function createExercise() {
     const isValidExercise = AddExerciseSchema.safeParse({ ...tempExercise });
 
     if (!isValidExercise.success) {
-      console.log(isValidExercise.error.flatten().fieldErrors);
-      return { errors: isValidExercise.error.flatten().fieldErrors };
+      setExerciseFormErrors({
+        errors: isValidExercise.error.flatten().fieldErrors,
+      });
+      return;
     }
 
     const validExercise = isValidExercise.data;
 
     updateExercises(validExercise);
-    setTempExercise(initExercise);
     setAddingExercise(false);
-
-    return { message: `${validExercise.name} exercise added!` };
   }
 
   return (
     <Dialog.Root open={addingExercise} onOpenChange={setAddingExercise}>
-      <Dialog.Trigger className="flex items-center gap-1.5 rounded-lg bg-violet-500 p-2 font-manrope text-xs font-semibold text-white focus:outline-none">
-        <AddIcon size={20} strokeWidth={1.5} />
-        <div className="h-[16px] w-[1px] bg-white" />
-        Exercise
+      <Dialog.Trigger
+        className="flex w-full justify-center pt-4 focus:outline-none"
+        onClick={() => {
+          setExerciseFormErrors(initialErrors);
+          setTempExercise(initExercise);
+        }}
+      >
+        <div className="rounded-full bg-violet-500/90 p-2 text-white dark:bg-violet-500 dark:text-violet-50">
+          <AddIcon size={24} strokeWidth={1.5} />
+          <span className="sr-only">Add Exercise</span>
+        </div>
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay
-          onClick={() => {
-            setTempExercise(initExercise);
-            
-          }}
-          className="fixed inset-0 z-10 bg-slate-900/80 data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/85"
-        />
+        <Dialog.Overlay className="fixed inset-0 z-10 bg-slate-900/80 data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/85" />
 
         <Dialog.Content
           onOpenAutoFocus={(e) => {
@@ -101,7 +103,7 @@ export const AddExercise = ({
           className="fixed inset-x-0 top-8 z-10 px-12 pt-safe-top data-[state=closed]:animate-modal-scale-down data-[state=open]:animate-modal-scale-up"
         >
           <form
-            action={formAction}
+            action={createExercise}
             className="rounded-xl bg-white pb-8 dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80"
           >
             <div className="relative rounded-t-xl border-b border-slate-200 bg-slate-100 py-4 dark:border-slate-700/80 dark:bg-slate-900">
@@ -132,7 +134,10 @@ export const AddExercise = ({
                       })
                     }
                   />
-                  <InputFieldError errorArr={state.errors?.name} className="gap-3"/>
+                  <InputFieldError
+                    errorArr={exerciseFormErrors.errors?.name}
+                    className="gap-3"
+                  />
                 </div>
 
                 <div className="flex flex-col gap-2">
@@ -175,7 +180,10 @@ export const AddExercise = ({
                       }
                     />
                   </div>
-                  <InputFieldError errorArr={state.errors?.sets} className="gap-3"/>
+                  <InputFieldError
+                    errorArr={exerciseFormErrors.errors?.sets}
+                    className="gap-3"
+                  />
                 </div>
               </div>
 
@@ -245,10 +253,7 @@ export const AddExercise = ({
               )}
 
               <div className="flex gap-2 pt-4">
-                <Dialog.Close
-                  onClick={() => setTempExercise(initExercise)}
-                  className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 dark:bg-white dark:text-slate-600 "
-                >
+                <Dialog.Close className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 dark:bg-white dark:text-slate-600 ">
                   Cancel
                 </Dialog.Close>
                 <SubmitFormButton
