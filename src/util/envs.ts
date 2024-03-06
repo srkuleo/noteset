@@ -1,6 +1,9 @@
 import { z } from "zod";
 
 const envVariablesSchema = z.object({
+  DATABASE_HOST: z.string(),
+  DATABASE_USERNAME: z.string(),
+  DATABASE_PASSWORD: z.string(),
   DATABASE_URL: z.string().url(),
 });
 
