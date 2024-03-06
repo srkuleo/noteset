@@ -7,14 +7,14 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   CreateWorkoutSchema,
-  type Exercise,
-  type ActionResponse,
+  type ExerciseType,
+  type WorkoutActionResponse,
 } from "./types";
 
 export async function removeWorkout(
   workoutId: number,
   workoutTitle: string,
-): Promise<Omit<ActionResponse, "timestamp">> {
+): Promise<Omit<WorkoutActionResponse, "timestamp">> {
   try {
     await db.delete(workouts).where(eq(workouts.id, workoutId));
 
@@ -37,13 +37,12 @@ export async function removeWorkout(
 
 export async function createWorkout(
   userId: string,
-  workoutExercises: Exercise[],
-  prevState: ActionResponse,
+  workoutExercises: ExerciseType[],
+  prevState: WorkoutActionResponse,
   formData: FormData,
-): Promise<ActionResponse> {
+): Promise<WorkoutActionResponse> {
   const parsedWorkout = CreateWorkoutSchema.safeParse({
     title: formData.get("workoutTitle"),
-    description: formData.get("workoutDescription"),
     exercises: workoutExercises,
   });
 
