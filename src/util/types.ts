@@ -49,8 +49,6 @@ export const AddExerciseSchema = ExerciseSchema.omit({
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
 
-export type AddExerciseType = z.infer<typeof AddExerciseSchema>;
-
 export const WorkoutSchema = z.object({
   id: z.number(),
   title: z
