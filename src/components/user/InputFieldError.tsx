@@ -14,15 +14,12 @@ export const InputFieldError = ({
   }
 
   return errorArr.map((error) => (
-    <p
+    <div
       key={error}
-      className={twMerge(
-        "flex items-center gap-1.5 pt-1 text-sm font-semibold text-red-500",
-        className,
-      )}
+      className={twMerge("flex items-center gap-1.5 pt-1", className)}
     >
-      {ErrorTriangleIcon}
-      {error}
-    </p>
+      <div className="text-red-500">{ErrorTriangleIcon}</div>
+      <p className="text-sm font-semibold text-red-500 leading-tight">{error}</p>
+    </div>
   ));
 };
