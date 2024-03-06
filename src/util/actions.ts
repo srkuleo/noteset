@@ -48,8 +48,6 @@ export async function createWorkout(
   });
 
   if (!parsedWorkout.success) {
-    console.log(parsedWorkout.error.flatten().fieldErrors);
-
     return {
       status: "error",
       errors: parsedWorkout.error.flatten().fieldErrors,
