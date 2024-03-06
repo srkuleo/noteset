@@ -9,7 +9,7 @@ export default async function CreateWorkoutPage() {
   const userId = user?.id as string;
 
   return (
-    <UserPagesWrapper>
+    <UserPagesWrapper className="mb-20">
       <UserPagesHeadingText label="Create a new workout" />
       <CreateWorkoutForm userId={userId} />
     </UserPagesWrapper>
