@@ -6,7 +6,7 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Add option to edit an exercise inside create form just in case, fix error placement in add exercise form, useRef to reset errors inside adding exercise._
+- _Add option to edit an exercise inside create form just in case._
 
 - _Handle and display zod parse errors inside the edit form, fix an error with exercises not being provided while editing._
 
