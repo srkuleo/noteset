@@ -12,7 +12,7 @@ export default function UserPagesLayout({
   return (
     <main className="pt-safe-top">
       <UserPageHeader />
-      <div className="mb-20 px-6 pb-safe-bottom">{children}</div>
+      {children}
       <UserPageNavBar />
     </main>
   );
