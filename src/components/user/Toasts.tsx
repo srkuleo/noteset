@@ -4,7 +4,7 @@ import { ErrorIcon, SuccessIcon } from "../icons/user/feedback";
 
 const SuccessToast = ({ message }: { message: string }) => {
   return (
-    <div className="mb-7 pb-safe-bottom">
+    <div className="pb-safe-bottom">
       <div className="flex items-center gap-4 rounded-xl bg-green-50 px-4 py-2 shadow-md">
         <SuccessIcon />
 
@@ -19,7 +19,7 @@ const SuccessToast = ({ message }: { message: string }) => {
 
 const ErrorToast = ({ message }: { message: string }) => {
   return (
-    <div className="mb-7 pb-safe-bottom">
+    <div className="pb-safe-bottom">
       <div className="flex items-center gap-4 rounded-xl bg-red-50 px-4 py-2 shadow-md">
         <ErrorIcon />
 
@@ -36,12 +36,14 @@ type ToastType = "error" | "success";
 
 export const showToast = debounce(
   (message: string, type: ToastType) =>
-    toast.custom(() => {
-      if (type === "success") {
-        return <SuccessToast message={message} />;
-      }
-
-      return <ErrorToast message={message} />;
-    }),
-  300,
+    toast.custom((t) => (
+      <div onClick={() => toast.dismiss(t)}>
+        {type === "success" ? (
+          <SuccessToast message={message} />
+        ) : (
+          <ErrorToast message={message} />
+        )}
+      </div>
+    )),
+  200,
 );
