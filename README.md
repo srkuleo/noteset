@@ -6,14 +6,14 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Put into separate components few stuff from AddExerciseForm and EditExerciseForm for better readability, check EditExerciseForm for potential bugs._
+- _Empty state for exercises if not prvided in form + remove modal for removing exercise._
 
-- _Handle and display zod parse errors inside the edit form, fix an error with exercises not being provided while editing._
+- _Finish Ui inside preview dialog._
+
+- _Handle and display zod parse errors inside the edit form, fix an error with exercises not being provided while editing. Add toast notification for editting workout. Complete UI and logic for whole edit page._
 
 - _Set up own auth flow with Lucia 3.0._
 
-- _Finish Ui inside preview dialog. Add toast notification for editting workout._
-
-- _Finish UI and logic for edit and workout pages._
+- _Finish UI and logic for workout pages._
 
 - _Modify profile and logs page to have an actual content._
