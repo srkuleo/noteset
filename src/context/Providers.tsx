@@ -13,7 +13,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       themes={["system", "dark", "light"]}
     >
       {children}
-      <Toaster duration={5000} position="bottom-center" />
+      <Toaster duration={3000} position="bottom-center" />
     </ThemeProvider>
   );
 }
