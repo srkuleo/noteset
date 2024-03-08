@@ -6,7 +6,7 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Add option to edit an exercise inside create form just in case._
+- _Put into separate components few stuff from AddExerciseForm and EditExerciseForm for better readability, check EditExerciseForm for potential bugs._
 
 - _Handle and display zod parse errors inside the edit form, fix an error with exercises not being provided while editing._
 
