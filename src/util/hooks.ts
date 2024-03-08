@@ -1,9 +1,69 @@
 import { useEffect, useRef, useState } from "react";
+import { useFormState } from "react-dom";
+import { createWorkout } from "./actions";
 import { showToast } from "@/components/user/Toasts";
 
-import type { ExerciseType, WorkoutActionResponse } from "./types";
-import { createWorkout } from "./actions";
-import { useFormState } from "react-dom";
+import type {
+  ExerciseActionResponse,
+  ExerciseType,
+  WorkoutActionResponse,
+} from "./types";
+
+const initErrors: ExerciseActionResponse = {
+  errors: {},
+  message: "",
+};
+
+export const useExerciseForm = (initExercise: ExerciseType) => {
+  const [tempExercise, setTempExercise] = useState(initExercise);
+  const [needMoreSets, setNeedMoreSets] = useState(false);
+  const [exerciseFormErrors, setExerciseFormErrors] = useState(initErrors);
+  const chooseSets = [1, 2, 3, 4] as const;
+
+  const handleSetsInput = (input: string | number) => {
+    const sets = Number(input);
+    const reps = Array.from({ length: sets }, () => "");
+    const weights = Array.from({ length: sets }, () => 0);
+
+    setTempExercise({
+      ...tempExercise,
+      sets: sets,
+      reps: [...reps],
+      weights: [...weights],
+    });
+  };
+
+  const handleRepsInput = (eventValue: string, index: number) => {
+    const modifiedReps = tempExercise.reps.toSpliced(index, 1, eventValue);
+
+    console.log(modifiedReps);
+
+    setTempExercise({ ...tempExercise, reps: [...modifiedReps] });
+  };
+
+  const handleWeightInput = (eventValue: string, index: number) => {
+    const weight = Number(eventValue);
+
+    const modifiedWeights = tempExercise.weights.toSpliced(index, 1, weight);
+
+    console.log(modifiedWeights);
+
+    setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
+  };
+
+  return {
+    chooseSets,
+    tempExercise,
+    needMoreSets,
+    exerciseFormErrors,
+    setTempExercise,
+    setNeedMoreSets,
+    setExerciseFormErrors,
+    handleSetsInput,
+    handleRepsInput,
+    handleWeightInput,
+  };
+};
 
 export const useToastNotification = (formState: WorkoutActionResponse) => {
   const prevTimestamp = useRef(formState.timestamp);
@@ -61,5 +121,17 @@ export const useWorkouts = (userId: string) => {
     setExercises([...exercises, { ...newExercise }]);
   }
 
-  return { formRef, exercises, updateExercises, formState, formAction };
+  function editExercises(editedExercise: ExerciseType, index: number) {
+    const modifiedExercises = exercises.toSpliced(index, 1, editedExercise);
+    setExercises([...modifiedExercises]);
+  }
+
+  return {
+    formRef,
+    exercises,
+    updateExercises,
+    editExercises,
+    formState,
+    formAction,
+  };
 };
