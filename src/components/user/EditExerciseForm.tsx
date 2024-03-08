@@ -1,10 +1,13 @@
-import { twMerge } from "tailwind-merge";
 import { useState } from "react";
 import { useExerciseForm } from "@/util/hooks";
 import * as Dialog from "@radix-ui/react-dialog";
 import { EditExerciseIcon } from "../icons/user/modify";
-import { InputFieldError } from "./InputFieldError";
-import { RepsInputs, SetsInput, WeightInputs } from "./ExerciseInputs";
+import {
+  NameInput,
+  RepsInputs,
+  SetsInput,
+  WeightInputs,
+} from "./ExerciseInputs";
 import { SubmitFormButton } from "./SubmitFormButton";
 
 import { AddExerciseSchema, type ExerciseType } from "@/util/types";
@@ -73,8 +76,8 @@ const ExerciseForm = ({
   const {
     tempExercise,
     exerciseFormErrors,
-    setTempExercise,
     setExerciseFormErrors,
+    handleNameInput,
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
@@ -99,32 +102,11 @@ const ExerciseForm = ({
   return (
     <form action={editExercise} className="space-y-6 p-8">
       <div className="space-y-3">
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
-          >
-            Name
-          </label>
-          <input
-            id="name"
-            name="exerciseName"
-            type="text"
-            value={tempExercise.name}
-            placeholder="e.g. Bench press"
-            className={twMerge("input-field", "py-2")}
-            onChange={(e) =>
-              setTempExercise({
-                ...tempExercise,
-                name: e.target.value,
-              })
-            }
-          />
-          <InputFieldError
-            errorArr={exerciseFormErrors.errors?.name}
-            className="gap-3"
-          />
-        </div>
+        <NameInput
+          name={tempExercise.name}
+          nameError={exerciseFormErrors.errors?.name}
+          handleNameInput={handleNameInput}
+        />
         <SetsInput
           sets={tempExercise.sets}
           handleSetsInput={handleSetsInput}
