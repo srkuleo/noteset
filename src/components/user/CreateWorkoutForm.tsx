@@ -9,8 +9,14 @@ import { InputFieldError } from "./InputFieldError";
 import { EditExerciseForm } from "./EditExerciseForm";
 
 export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
-  const { formState, formAction, exercises, updateExercises, formRef } =
-    useWorkouts(userId);
+  const {
+    formState,
+    formAction,
+    exercises,
+    formRef,
+    updateExercises,
+    editExercises,
+  } = useWorkouts(userId);
 
   useToastNotification(formState);
 
@@ -65,14 +71,15 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
             exercises.length === 1 && "justify-center",
           )}
         >
-          {exercises.map((exercise) => (
+          {exercises.map((exercise, index) => (
             <div
               key={exercise.name}
               className="relative min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
             >
               <EditExerciseForm
-                updateExercises={updateExercises}
                 exercise={exercise}
+                exerciseIndex={index}
+                editExercises={editExercises}
               />
               <div className="grid grid-cols-exercise gap-2 text-xs">
                 <p className="font-bold italic">Name</p>
