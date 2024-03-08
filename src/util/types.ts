@@ -38,12 +38,11 @@ export const ExerciseSchema = z.object({
     .min(2, { message: "Exercise name must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
   sets: z.number().min(1, { message: "Please choose the number of sets." }),
-  reps: z
-    .array(
-      z
-        .string()
-        .regex(/^(?:\d+|\d+-\d+)$/, { message: "Reps must be number or range." }),
-    ),
+  reps: z.array(
+    z
+      .string()
+      .regex(/^(?:\d+|\d+-\d+)$/, { message: "Reps must be number or range." }),
+  ),
   weights: z.array(z.number()),
   comment: z.string().max(80, { message: "Comment is too long" }).optional(),
 });
@@ -66,7 +65,7 @@ export const WorkoutSchema = z.object({
     .optional(),
   exercises: z
     .array(ExerciseSchema)
-    .nonempty({ message: "Please add at least one exercise." }),
+    .min(1, { message: "Please add at least one exercise." }),
   status: z.enum(["current", "done"]),
   userId: z.string(),
   doneAt: z.string(),
@@ -80,3 +79,5 @@ export const CreateWorkoutSchema = WorkoutSchema.omit({
   doneAt: true,
   timeElapsed: true,
 });
+
+export type WorkoutType = z.infer<typeof CreateWorkoutSchema>;
