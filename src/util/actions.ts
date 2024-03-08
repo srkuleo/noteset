@@ -7,8 +7,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import {
   CreateWorkoutSchema,
-  type ExerciseType,
   type WorkoutActionResponse,
+  type WorkoutType,
 } from "./types";
 
 export async function removeWorkout(
@@ -37,26 +37,20 @@ export async function removeWorkout(
 
 export async function createWorkout(
   userId: string,
-  workoutExercises: ExerciseType[],
-  prevState: WorkoutActionResponse,
-  formData: FormData,
+  workout: WorkoutType,
 ): Promise<WorkoutActionResponse> {
-  const parsedWorkout = CreateWorkoutSchema.safeParse({
-    title: formData.get("workoutTitle"),
-    description: formData.get("workoutDescription"),
-    exercises: workoutExercises,
-  });
+  const isValidWorkout = CreateWorkoutSchema.safeParse(workout);
 
-  if (!parsedWorkout.success) {
+  if (!isValidWorkout.success) {
     return {
       status: "error",
-      errors: parsedWorkout.error.flatten().fieldErrors,
+      errors: isValidWorkout.error.flatten().fieldErrors,
       message: "Workout could not be created.",
       timestamp: Date.now(),
     };
   }
 
-  const { title, description, exercises } = parsedWorkout.data;
+  const { title, description, exercises } = isValidWorkout.data;
 
   try {
     const existingWorkout = await db.query.workouts.findFirst({
