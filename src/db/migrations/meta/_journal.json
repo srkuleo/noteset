@@ -1,103 +1,12 @@
 {
   "version": "5",
-  "dialect": "mysql",
+  "dialect": "pg",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1701877842175,
-      "tag": "0000_chubby_mattie_franklin",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1701989421623,
-      "tag": "0001_greedy_queen_noir",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1702484935777,
-      "tag": "0002_swift_captain_america",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1702485476649,
-      "tag": "0003_sweet_hedge_knight",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1703717310760,
-      "tag": "0004_tiresome_thena",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1703717523493,
-      "tag": "0005_remarkable_skullbuster",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "5",
-      "when": 1703717691492,
-      "tag": "0006_dear_tusk",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "5",
-      "when": 1703717729493,
-      "tag": "0007_luxuriant_omega_flight",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "5",
-      "when": 1703722930940,
-      "tag": "0008_far_thunderbird",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "5",
-      "when": 1703724894245,
-      "tag": "0009_pale_marvel_zombies",
-      "breakpoints": true
-    },
-    {
-      "idx": 10,
-      "version": "5",
-      "when": 1708471584778,
-      "tag": "0010_odd_black_tarantula",
-      "breakpoints": true
-    },
-    {
-      "idx": 11,
-      "version": "5",
-      "when": 1708478131775,
-      "tag": "0011_living_toad",
-      "breakpoints": true
-    },
-    {
-      "idx": 12,
-      "version": "5",
-      "when": 1709334485733,
-      "tag": "0012_young_iron_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 13,
-      "version": "5",
-      "when": 1709334906498,
-      "tag": "0013_slim_dakota_north",
+      "when": 1712431542179,
+      "tag": "0000_bouncy_warbird",
       "breakpoints": true
     }
   ]

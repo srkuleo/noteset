@@ -1,1 +1,0 @@
-ALTER TABLE `workouts` MODIFY COLUMN `title` varchar(100);

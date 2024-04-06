@@ -1,1 +1,0 @@
-ALTER TABLE `workouts` ADD `exercises` json;
