@@ -26,7 +26,7 @@ export const EditExerciseForm = ({
   return (
     <Dialog.Root open={isEditing} onOpenChange={setIsEditing}>
       <Dialog.Trigger>
-        <div className="rounded-full bg-green-500 p-1.5 text-white dark:bg-green-600">
+        <div className="rounded-full bg-green-500 p-1.5 text-white dark:bg-green-600 shadow-sm">
           {EditExerciseIcon}
           <span className="sr-only">Edit exercise</span>
         </div>
