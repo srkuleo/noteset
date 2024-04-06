@@ -1,14 +1,14 @@
 import type { ExerciseType } from "@/util/types";
 import {
-  date,
+  pgTable,
   index,
-  mysqlTable,
-  serial,
-  varchar,
   json,
-} from "drizzle-orm/mysql-core";
+  serial,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 
-export const workouts = mysqlTable(
+export const workouts = pgTable(
   "workouts",
   {
     id: serial("id").primaryKey(),
@@ -17,7 +17,7 @@ export const workouts = mysqlTable(
     exercises: json("exercises").$type<ExerciseType[]>().notNull(),
     status: varchar("status", { length: 10 }).default("current"),
     userId: varchar("user_id", { length: 255 }).notNull(),
-    doneAt: date("done_at"),
+    doneAt: timestamp("done_at").defaultNow(),
     timeElapsed: varchar("time_elapsed", { length: 100 }),
   },
   (table) => {
