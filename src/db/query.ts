@@ -1,9 +1,9 @@
 "use server";
 
 import { unstable_noStore as noStore } from "next/cache";
-import { db } from ".";
+import { db } from "."; 
 import { workouts } from "./schema";
-import { and, eq } from "drizzle-orm/mysql-core/expressions";
+import { and, eq } from "drizzle-orm"; 
 
 export async function getUserWorkouts(userId: string) {
   noStore();
