@@ -6,8 +6,6 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Empty state for exercises if not prvided in form + remove modal for removing exercise._
-
 - _Finish Ui inside preview dialog._
 
 - _Handle and display zod parse errors inside the edit form, fix an error with exercises not being provided while editing. Add toast notification for editting workout. Complete UI and logic for whole edit page._
