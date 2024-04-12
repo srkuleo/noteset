@@ -22,7 +22,7 @@ export const AddExerciseForm = ({
   return (
     <Dialog.Root open={addingExercise} onOpenChange={setAddingExercise}>
       <Dialog.Trigger className="flex w-full justify-center pt-4 focus:outline-none">
-        <div className="rounded-full bg-violet-500/90 p-2 text-white dark:bg-violet-500 dark:text-violet-50 shadow-md">
+        <div className="rounded-full bg-violet-500/90 p-2 text-white dark:bg-violet-500 shadow-md">
           <AddIcon size={24} strokeWidth={1.5} />
           <span className="sr-only">Add Exercise</span>
         </div>
