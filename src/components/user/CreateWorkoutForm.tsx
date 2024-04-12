@@ -6,7 +6,7 @@ import { useToastNotification, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions";
 import { AddExerciseForm } from "./AddExerciseForm";
 import { EditExerciseForm } from "./EditExerciseForm";
-import { RemoveExerciseIcon } from "../icons/user/modify";
+import { RemoveExerciseModal } from "./RemoveExerciseModal";
 import { InputFieldError } from "./InputFieldError";
 import { SubmitFormButton } from "./SubmitFormButton";
 
@@ -85,60 +85,68 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
         />
       </div>
 
-      <AddExerciseForm updateExercises={updateExercises} />
-
-      {workout.exercises.length > 0 && (
-        <div
-          className={twMerge(
-            "flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar",
-            workout.exercises.length === 1 && "justify-center",
-          )}
-        >
-          {workout.exercises.map((exercise, index) => (
-            <div
-              key={exercise.name}
-              className="relative min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
-            >
-              <div className="absolute -right-2 -top-4 flex gap-3">
-                <EditExerciseForm
-                  exercise={exercise}
-                  exerciseIndex={index}
-                  editExercises={editExercises}
-                />
-                <button
-                  className="rounded-full bg-red-500 p-1.5 text-white"
-                  onClick={() => removeExercise(index)}
-                >
-                  {RemoveExerciseIcon}
-                  <span className="sr-only">Remove exercise</span>
-                </button>
-              </div>
-              <div className="grid grid-cols-exercise gap-2 text-xs">
-                <p className="font-bold italic">Name</p>
-                <p className="text-center font-bold italic">Sets</p>
-                <p className="text-center font-bold italic">Reps</p>
-                <p className="text-center font-bold italic">Weights - kg</p>
-
-                <div className="col-span-4 h-[1px] bg-slate-200 dark:bg-slate-700" />
-
-                <p className="my-auto dark:text-slate-200">{exercise.name}</p>
-                <p className="my-auto text-center dark:text-slate-200">
-                  {exercise.sets}
-                </p>
-                <div className="flex grow flex-col items-center justify-center gap-2 dark:text-slate-200">
-                  {exercise.reps.map((rep, i) => (
-                    <p key={`Rep: ${i + 1}`}>{rep}</p>
-                  ))}
-                </div>
-                <div className="flex grow flex-col items-center justify-center gap-2 dark:text-slate-200">
-                  {exercise.weights.map((weight, i) => (
-                    <p key={`Weight: ${i + 1}`}>{weight}</p>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
+      {workout.exercises.length === 0 ? (
+        <div className="pt-4">
+          <div className="rounded-xl border-2 border-dashed border-slate-300/80 bg-slate-50 px-4 py-8 dark:border-slate-700 dark:bg-slate-900/40">
+            <p className="text-center text-sm font-semibold text-slate-400/80 dark:text-slate-500">
+              Currently no exercise added.
+            </p>
+            <AddExerciseForm updateExercises={updateExercises} />
+          </div>
         </div>
+      ) : (
+        <>
+          <AddExerciseForm updateExercises={updateExercises} />
+
+          <div
+            className={twMerge(
+              "flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar",
+              workout.exercises.length === 1 && "justify-center",
+            )}
+          >
+            {workout.exercises.map((exercise, index) => (
+              <div
+                key={exercise.name}
+                className="relative min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
+              >
+                <div className="absolute -right-2 -top-4 flex gap-3">
+                  <EditExerciseForm
+                    exercise={exercise}
+                    exerciseIndex={index}
+                    editExercises={editExercises}
+                  />
+                  <RemoveExerciseModal
+                    exerciseName={exercise.name}
+                    removeExercise={() => removeExercise(index)}
+                  />
+                </div>
+                <div className="grid grid-cols-exercise gap-2 text-xs">
+                  <p className="font-bold italic">Name</p>
+                  <p className="text-center font-bold italic">Sets</p>
+                  <p className="text-center font-bold italic">Reps</p>
+                  <p className="text-center font-bold italic">Weights - kg</p>
+
+                  <div className="col-span-4 h-[1px] bg-slate-200 dark:bg-slate-700" />
+
+                  <p className="my-auto dark:text-slate-200">{exercise.name}</p>
+                  <p className="my-auto text-center dark:text-slate-200">
+                    {exercise.sets}
+                  </p>
+                  <div className="flex grow flex-col items-center justify-center gap-2 dark:text-slate-200">
+                    {exercise.reps.map((rep, i) => (
+                      <p key={`Rep: ${i + 1}`}>{rep}</p>
+                    ))}
+                  </div>
+                  <div className="flex grow flex-col items-center justify-center gap-2 dark:text-slate-200">
+                    {exercise.weights.map((weight, i) => (
+                      <p key={`Weight: ${i + 1}`}>{weight}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
       <InputFieldError
         errorArr={createWorkoutRes.errors?.exercises}
