@@ -36,8 +36,8 @@ export const AddExerciseForm = ({
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
-        <Drawer.Content className="fixed inset-0 top-0 px-4 pt-safe-top focus:outline-none">
-          <div className="rounded-b-xl bg-white dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+        <Drawer.Content className="fixed inset-x-0 top-0 px-4 focus:outline-none">
+          <div className="rounded-b-xl bg-white pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               updateExercises={updateExercises}
               closeModal={() => setAddingExercise(false)}
