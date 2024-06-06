@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useExerciseForm } from "@/util/hooks";
-import * as Dialog from "@radix-ui/react-dialog";
+import { Drawer } from "vaul";
 import { EditExerciseIcon } from "../icons/user/modify";
 import {
   NameInput,
@@ -24,40 +24,29 @@ export const EditExerciseForm = ({
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <Dialog.Root open={isEditing} onOpenChange={setIsEditing}>
-      <Dialog.Trigger>
-        <div className="rounded-full bg-green-500 p-1.5 text-white dark:bg-green-600 shadow-sm">
+    <Drawer.Root open={isEditing} onOpenChange={setIsEditing} direction="top">
+      <Drawer.Trigger>
+        <div className="rounded-full bg-green-500 p-1.5 text-white shadow-sm dark:bg-green-600">
           {EditExerciseIcon}
           <span className="sr-only">Edit exercise</span>
         </div>
-      </Dialog.Trigger>
+      </Drawer.Trigger>
 
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-10 bg-slate-900/80 data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/85" />
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
-        <Dialog.Content
-          //Prevent autofocus on modal opening
-          onOpenAutoFocus={(e) => {
-            e.preventDefault();
-          }}
-          className="fixed inset-x-0 top-8 z-10 px-12 pt-safe-top data-[state=closed]:animate-modal-scale-down data-[state=open]:animate-modal-scale-up"
-        >
-          <div className="rounded-xl bg-white dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
-            <div className="rounded-t-xl border-b border-slate-200 bg-slate-100 py-4 dark:border-slate-700/80 dark:bg-slate-900">
-              <Dialog.Title className="text-center font-manrope text-lg font-bold ">
-                Editing {exercise.name}
-              </Dialog.Title>
-            </div>
+        <Drawer.Content className="fixed inset-0 top-0 px-4 pt-safe-top focus:outline-none">
+          <div className="rounded-b-xl bg-white dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               exercise={exercise}
               exerciseIndex={exerciseIndex}
               editExercises={editExercises}
-              afterEdit={() => setIsEditing(false)}
+              closeModal={() => setIsEditing(false)}
             />
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
   );
 };
 
@@ -65,12 +54,12 @@ const ExerciseForm = ({
   exercise,
   exerciseIndex,
   editExercises,
-  afterEdit,
+  closeModal,
 }: {
   exercise: ExerciseType;
   exerciseIndex: number;
   editExercises: (editedExercise: ExerciseType, index: number) => void;
-  afterEdit: () => void;
+  closeModal: () => void;
 }) => {
   const initExercise = { ...exercise };
   const {
@@ -96,7 +85,7 @@ const ExerciseForm = ({
     const validExercise = isValidExercise.data;
 
     editExercises(validExercise, exerciseIndex);
-    afterEdit();
+    closeModal();
   }
 
   return (
@@ -128,9 +117,16 @@ const ExerciseForm = ({
       </div>
 
       <div className="flex gap-2 pt-2">
-        <Dialog.Close className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 dark:bg-white dark:text-slate-600 ">
+        <button
+          type="button"
+          onClick={async () => {
+            await new Promise((resolve) => setTimeout(resolve, 200));
+            closeModal();
+          }}
+          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
+        >
           Cancel
-        </Dialog.Close>
+        </button>
         <SubmitFormButton
           label="Add"
           loading="Adding..."
