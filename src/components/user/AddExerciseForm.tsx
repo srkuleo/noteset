@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useExerciseForm } from "@/util/hooks";
-import * as Dialog from "@radix-ui/react-dialog";
+import { Drawer } from "vaul";
+import { AnimatePresence, motion } from "framer-motion";
 import { AddIcon } from "../icons/user/modify";
 import {
   NameInput,
@@ -20,38 +21,31 @@ export const AddExerciseForm = ({
   const [addingExercise, setAddingExercise] = useState(false);
 
   return (
-    <Dialog.Root open={addingExercise} onOpenChange={setAddingExercise}>
-      <Dialog.Trigger className="flex w-full justify-center pt-4 focus:outline-none">
-        <div className="rounded-full bg-violet-500/90 p-2 text-white dark:bg-violet-500 shadow-md">
+    <Drawer.Root
+      open={addingExercise}
+      onOpenChange={setAddingExercise}
+      direction="top"
+    >
+      <Drawer.Trigger className="flex w-full justify-center pt-4 focus:outline-none">
+        <div className="rounded-full bg-violet-500/90 p-2 text-white shadow-md dark:bg-violet-500">
           <AddIcon size={24} strokeWidth={1.5} />
           <span className="sr-only">Add Exercise</span>
         </div>
-      </Dialog.Trigger>
+      </Drawer.Trigger>
 
-      <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-10 bg-slate-900/80 data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/85" />
+      <Drawer.Portal>
+        <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
-        <Dialog.Content
-          //Prevent autofocus on modal opening
-          onOpenAutoFocus={(e) => {
-            e.preventDefault();
-          }}
-          className="fixed inset-x-0 top-10 z-10 px-12 pt-safe-top outline-none data-[state=closed]:animate-modal-scale-down data-[state=open]:animate-modal-scale-up"
-        >
-          <div className="rounded-xl bg-white dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
-            <div className="rounded-t-xl border-b border-slate-200 bg-slate-100 py-4 dark:border-slate-700/80 dark:bg-slate-900">
-              <Dialog.Title className="text-center font-manrope text-lg font-bold">
-                Adding exercise
-              </Dialog.Title>
-            </div>
+        <Drawer.Content className="fixed inset-0 top-0 px-4 pt-safe-top focus:outline-none">
+          <div className="rounded-b-xl bg-white dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               updateExercises={updateExercises}
-              afterCreate={() => setAddingExercise(false)}
+              closeModal={() => setAddingExercise(false)}
             />
           </div>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+        </Drawer.Content>
+      </Drawer.Portal>
+    </Drawer.Root>
   );
 };
 
@@ -64,10 +58,10 @@ const initExercise: ExerciseType = {
 
 const ExerciseForm = ({
   updateExercises,
-  afterCreate,
+  closeModal,
 }: {
   updateExercises: (newExercise: ExerciseType) => void;
-  afterCreate: () => void;
+  closeModal: () => void;
 }) => {
   const {
     tempExercise,
@@ -92,7 +86,7 @@ const ExerciseForm = ({
     const validExercise = isValidExercise.data;
 
     updateExercises(validExercise);
-    afterCreate();
+    closeModal();
   }
 
   return (
@@ -109,26 +103,41 @@ const ExerciseForm = ({
           handleSetsInput={handleSetsInput}
         />
       </div>
-
-      {tempExercise.sets !== 0 && (
-        <div className="space-y-3">
-          <RepsInputs
-            form="add"
-            reps={tempExercise.reps}
-            repsError={exerciseFormErrors.errors?.reps}
-            handleRepsInput={handleRepsInput}
-          />
-          <WeightInputs
-            weights={tempExercise.weights}
-            handleWeightInput={handleWeightInput}
-          />
-        </div>
-      )}
+      <AnimatePresence>
+        {tempExercise.sets !== 0 && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{
+              height: "auto",
+              transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
+            }}
+            className="space-y-3 overflow-y-hidden"
+          >
+            <RepsInputs
+              form="add"
+              reps={tempExercise.reps}
+              repsError={exerciseFormErrors.errors?.reps}
+              handleRepsInput={handleRepsInput}
+            />
+            <WeightInputs
+              weights={tempExercise.weights}
+              handleWeightInput={handleWeightInput}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <div className="flex gap-2 pt-2">
-        <Dialog.Close className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 dark:bg-white dark:text-slate-600">
+        <button
+          type="button"
+          onClick={async () => {
+            await new Promise((resolve) => setTimeout(resolve, 200));
+            closeModal();
+          }}
+          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
+        >
           Cancel
-        </Dialog.Close>
+        </button>
         <SubmitFormButton
           label="Add"
           loading="Adding..."
