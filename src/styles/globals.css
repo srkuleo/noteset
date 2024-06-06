@@ -22,7 +22,9 @@
   }
 }
 
-@keyframes overlay-show {
+/* Currently not used */
+
+/* @keyframes overlay-show {
   from {
     opacity: 0;
   }
@@ -78,4 +80,4 @@
     opacity: 0;
     transform: scale(0.9);
   }
-}
+} */
