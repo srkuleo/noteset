@@ -15,10 +15,10 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
-        <Drawer.Content className="fixed inset-x-0 bottom-0 select-none px-4 pb-12">
+        <Drawer.Content className="fixed inset-x-0 bottom-0 select-none px-4 pb-12 focus:outline-none">
           <div className="rounded-modal bg-white ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/80">
             <div className="rounded-t-modal border-b border-b-slate-300/65 bg-slate-200/70 p-2 dark:border-b-slate-700/80 dark:bg-slate-800">
-              <Drawer.Handle className="dark:bg-slate-500 bg-slate-300 select-none" />
+              <Drawer.Handle className="bg-slate-300 dark:bg-slate-500" />
               <Drawer.Title className="pt-2 text-center font-manrope text-lg font-bold">
                 Preview: {workout.title}
               </Drawer.Title>
