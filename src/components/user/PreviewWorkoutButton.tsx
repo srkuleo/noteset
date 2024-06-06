@@ -18,7 +18,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
         <Drawer.Content className="fixed inset-x-0 bottom-0 select-none px-4 pb-12">
           <div className="rounded-modal bg-white ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/80">
             <div className="rounded-t-modal border-b border-b-slate-300/65 bg-slate-200/70 p-2 dark:border-b-slate-700/80 dark:bg-slate-800">
-              <Drawer.Handle className="dark:bg-slate-500 bg-slate-300" />
+              <Drawer.Handle className="dark:bg-slate-500 bg-slate-300 select-none" />
               <Drawer.Title className="pt-2 text-center font-manrope text-lg font-bold">
                 Preview: {workout.title}
               </Drawer.Title>
