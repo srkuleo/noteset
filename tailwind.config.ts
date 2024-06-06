@@ -32,22 +32,18 @@ const config: Config = {
         38: "9.5rem",
       },
       animation: {
-        "overlay-show": "overlay-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-
-        "overlay-hide":
-          "overlay-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
-
-        "modal-slide-up":
-          "modal-slide-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-
-        "modal-slide-down":
-          "modal-slide-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
-
-        "modal-scale-up":
-          "modal-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-
-        "modal-scale-down":
-          "modal-scale-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+        // Currently not used
+        // "overlay-show": "overlay-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        // "overlay-hide":
+        //   "overlay-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+        // "modal-slide-up":
+        //   "modal-slide-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        // "modal-slide-down":
+        //   "modal-slide-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+        // "modal-scale-up":
+        //   "modal-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        // "modal-scale-down":
+        //   "modal-scale-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
       },
     },
   },
