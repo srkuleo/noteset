@@ -16,7 +16,7 @@ export const TooltipDrawer = () => {
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
         <Drawer.Content className="fixed inset-x-0 bottom-0 select-none px-2 focus:outline-none">
-          <div className="rounded-t-modal bg-white pb-8 ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
+          <div className="rounded-t-modal bg-white pb-safe-bottom ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
             <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
               <Drawer.Handle className="bg-slate-300 dark:bg-slate-500" />
               <Drawer.Title className="px-6 pt-3 text-xl font-bold text-slate-800 dark:text-white">
@@ -24,7 +24,7 @@ export const TooltipDrawer = () => {
               </Drawer.Title>
             </div>
 
-            <div className="flex flex-col px-6 pt-6 font-manrope">
+            <div className="flex flex-col px-6 py-8 font-manrope">
               <p className="text-lg text-slate-500 dark:text-slate-300">
                 For better user experience
               </p>
