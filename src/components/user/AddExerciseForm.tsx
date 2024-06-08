@@ -36,12 +36,13 @@ export const AddExerciseForm = ({
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
-        <Drawer.Content className="fixed inset-x-0 top-0 px-4 focus:outline-none">
-          <div className="rounded-b-xl bg-white pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+        <Drawer.Content className="fixed inset-x-0 top-0 px-2 focus:outline-none">
+          <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               updateExercises={updateExercises}
               closeModal={() => setAddingExercise(false)}
             />
+            <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
           </div>
         </Drawer.Content>
       </Drawer.Portal>
@@ -90,7 +91,7 @@ const ExerciseForm = ({
   }
 
   return (
-    <form action={createExercise} className="space-y-6 p-8">
+    <form action={createExercise} className="py-4 space-y-6 px-8">
       <div className="space-y-3">
         <NameInput
           name={tempExercise.name}
