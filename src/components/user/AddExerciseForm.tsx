@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { useExerciseForm } from "@/util/hooks";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "framer-motion";
-import { AddIcon } from "../icons/user/modify";
 import {
   NameInput,
   RepsInputs,
@@ -14,25 +12,20 @@ import { SubmitFormButton } from "./SubmitFormButton";
 import { type ExerciseType, AddExerciseSchema } from "@/util/types";
 
 export const AddExerciseForm = ({
+  addingExercise,
   updateExercises,
+  setAddingExercise,
 }: {
+  addingExercise: boolean;
   updateExercises: (newExercise: ExerciseType) => void;
+  setAddingExercise: (isOpen: boolean) => void;
 }) => {
-  const [addingExercise, setAddingExercise] = useState(false);
-
   return (
     <Drawer.Root
       open={addingExercise}
       onOpenChange={setAddingExercise}
       direction="top"
     >
-      <Drawer.Trigger className="flex w-full justify-center pt-4 focus:outline-none">
-        <div className="rounded-full bg-violet-500/90 p-2 text-white shadow-md dark:bg-violet-500">
-          <AddIcon size={24} strokeWidth={1.5} />
-          <span className="sr-only">Add Exercise</span>
-        </div>
-      </Drawer.Trigger>
-
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
@@ -42,7 +35,10 @@ export const AddExerciseForm = ({
               updateExercises={updateExercises}
               closeModal={() => setAddingExercise(false)}
             />
-            <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
+            <Drawer.Handle
+              preventCycle
+              className="bg-slate-300 dark:bg-slate-600"
+            />
           </div>
         </Drawer.Content>
       </Drawer.Portal>
@@ -91,7 +87,7 @@ const ExerciseForm = ({
   }
 
   return (
-    <form action={createExercise} className="py-4 space-y-6 px-8">
+    <form action={createExercise} className="space-y-6 px-8 py-4">
       <div className="space-y-3">
         <NameInput
           name={tempExercise.name}
