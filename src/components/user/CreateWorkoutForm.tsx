@@ -1,16 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { useToastNotification, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions";
 import { AddExerciseForm } from "./AddExerciseForm";
+import { AddIcon } from "../icons/user/modify";
 import { EditExerciseForm } from "./EditExerciseForm";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
 import { InputFieldError } from "./InputFieldError";
 import { SubmitFormButton } from "./SubmitFormButton";
 
 export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
+  const [openDrawer, setOpenDrawer] = useState(false);
   const {
     workout,
     createWorkoutRes,
@@ -85,18 +88,42 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
         />
       </div>
 
+      <AddExerciseForm
+        addingExercise={openDrawer}
+        setAddingExercise={setOpenDrawer}
+        updateExercises={updateExercises}
+      />
+
       {workout.exercises.length === 0 ? (
         <div className="pt-4">
           <div className="rounded-xl border-2 border-dashed border-slate-300/80 bg-slate-50 px-4 py-8 dark:border-slate-700 dark:bg-slate-900/40">
-            <p className="text-center text-sm font-semibold text-slate-400/80 dark:text-slate-500">
+            <p className="pb-4 text-center text-sm font-semibold text-slate-400/80 dark:text-slate-500">
               Currently no exercise added.
             </p>
-            <AddExerciseForm updateExercises={updateExercises} />
+            <div className="flex w-full justify-center focus:outline-none">
+              <button
+                type="button"
+                onClick={() => setOpenDrawer(true)}
+                className="rounded-full bg-violet-500/90 p-2 text-white shadow-md dark:bg-violet-500"
+              >
+                <AddIcon size={24} strokeWidth={1.5} />
+                <span className="sr-only">Add Exercise</span>
+              </button>
+            </div>
           </div>
         </div>
       ) : (
-        <>
-          <AddExerciseForm updateExercises={updateExercises} />
+        <div>
+          <div className="flex w-full justify-center py-2 focus:outline-none">
+            <button
+              type="button"
+              onClick={() => setOpenDrawer(true)}
+              className="rounded-full bg-violet-500/90 p-2 text-white shadow-md dark:bg-violet-500"
+            >
+              <AddIcon size={24} strokeWidth={1.5} />
+              <span className="sr-only">Add Exercise</span>
+            </button>
+          </div>
 
           <div
             className={twMerge(
@@ -146,7 +173,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
       <InputFieldError
         errorArr={createWorkoutRes.errors?.exercises}
@@ -163,7 +190,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
       >
         <Link
           href="/workouts"
-          className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
+          className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60"
         >
           Cancel
         </Link>
