@@ -36,14 +36,17 @@ export const EditExerciseForm = ({
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
         <Drawer.Content className="fixed inset-x-0 top-0 px-4 focus:outline-none">
-          <div className="rounded-b-xl bg-white pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80 pb-2">
+          <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               exercise={exercise}
               exerciseIndex={exerciseIndex}
               editExercises={editExercises}
               closeModal={() => setIsEditing(false)}
             />
-            <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
+            <Drawer.Handle
+              preventCycle
+              className="bg-slate-300 dark:bg-slate-600"
+            />
           </div>
         </Drawer.Content>
       </Drawer.Portal>
