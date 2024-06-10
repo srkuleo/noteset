@@ -5,20 +5,17 @@ import { DangerIcon } from "../icons/user/warning";
 
 export const RemoveExerciseModal = ({
   exerciseName,
+  openRemoveModal,
+  setOpenRemoveModal,
   removeExercise,
 }: {
   exerciseName: string;
+  openRemoveModal: boolean;
+  setOpenRemoveModal: (isOpen: boolean) => void;
   removeExercise: () => void;
 }) => {
-  const [open, setOpen] = useState(false);
-
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger className="select-none rounded-full bg-red-500 p-1.5 text-white">
-        {RemoveExerciseIcon}
-        <span className="sr-only">Remove exercise</span>
-      </Drawer.Trigger>
-
+    <Drawer.Root open={openRemoveModal} onOpenChange={setOpenRemoveModal}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
@@ -42,16 +39,22 @@ export const RemoveExerciseModal = ({
             <button
               onClick={() => {
                 removeExercise();
-                setOpen(false);
+                setOpenRemoveModal(false);
               }}
               className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
             >
               Remove {exerciseName}
             </button>
           </div>
-          <Drawer.Close className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90">
+          <button
+            onClick={async () => {
+              await new Promise((resolve) => setTimeout(resolve, 100));
+              setOpenRemoveModal(false);
+            }}
+            className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
+          >
             Cancel
-          </Drawer.Close>
+          </button>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
