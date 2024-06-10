@@ -6,14 +6,17 @@ import { twMerge } from "tailwind-merge";
 import { useToastNotification, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions";
 import { AddExerciseForm } from "./AddExerciseForm";
-import { AddIcon } from "../icons/user/modify";
+import { AddIcon, RemoveExerciseIcon } from "../icons/user/modify";
 import { EditExerciseForm } from "./EditExerciseForm";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
 import { InputFieldError } from "./InputFieldError";
 import { SubmitFormButton } from "./SubmitFormButton";
 
 export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openAddDrawer, setOpenAddDrawer] = useState(false);
+  const [openRemoveModal, setOpenRemoveModal] = useState(false);
+  const [exerciseToRemove, setExerciseToRemove] = useState({ name: "", id: 0 });
+
   const {
     workout,
     createWorkoutRes,
@@ -89,9 +92,16 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
       </div>
 
       <AddExerciseForm
-        addingExercise={openDrawer}
-        setAddingExercise={setOpenDrawer}
+        openAddDrawer={openAddDrawer}
+        setOpenAddDrawer={setOpenAddDrawer}
         updateExercises={updateExercises}
+      />
+
+      <RemoveExerciseModal
+        openRemoveModal={openRemoveModal}
+        setOpenRemoveModal={setOpenRemoveModal}
+        exerciseName={exerciseToRemove.name}
+        removeExercise={() => removeExercise(exerciseToRemove.id)}
       />
 
       {workout.exercises.length === 0 ? (
@@ -103,7 +113,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
             <div className="flex w-full justify-center focus:outline-none">
               <button
                 type="button"
-                onClick={() => setOpenDrawer(true)}
+                onClick={() => setOpenAddDrawer(true)}
                 className="rounded-full bg-violet-500/90 p-2 text-white shadow-md dark:bg-violet-500"
               >
                 <AddIcon size={24} strokeWidth={1.5} />
@@ -117,7 +127,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
           <div className="flex w-full justify-center py-2 focus:outline-none">
             <button
               type="button"
-              onClick={() => setOpenDrawer(true)}
+              onClick={() => setOpenAddDrawer(true)}
               className="rounded-full bg-violet-500/90 p-2 text-white shadow-md dark:bg-violet-500"
             >
               <AddIcon size={24} strokeWidth={1.5} />
@@ -142,10 +152,20 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
                     exerciseIndex={index}
                     editExercises={editExercises}
                   />
-                  <RemoveExerciseModal
-                    exerciseName={exercise.name}
-                    removeExercise={() => removeExercise(index)}
-                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setExerciseToRemove({
+                        name: exercise.name,
+                        id: index,
+                      });
+                      setOpenRemoveModal(true);
+                    }}
+                    className="select-none rounded-full bg-red-500 p-1.5 text-white"
+                  >
+                    {RemoveExerciseIcon}
+                    <span className="sr-only">Remove exercise</span>
+                  </button>
                 </div>
                 <div className="grid grid-cols-exercise gap-2 text-xs">
                   <p className="font-bold italic">Name</p>
