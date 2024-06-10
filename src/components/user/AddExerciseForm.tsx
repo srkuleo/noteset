@@ -12,18 +12,18 @@ import { SubmitFormButton } from "./SubmitFormButton";
 import { type ExerciseType, AddExerciseSchema } from "@/util/types";
 
 export const AddExerciseForm = ({
-  addingExercise,
+  openAddDrawer,
+  setOpenAddDrawer,
   updateExercises,
-  setAddingExercise,
 }: {
-  addingExercise: boolean;
+  openAddDrawer: boolean;
+  setOpenAddDrawer: (isOpen: boolean) => void;
   updateExercises: (newExercise: ExerciseType) => void;
-  setAddingExercise: (isOpen: boolean) => void;
 }) => {
   return (
     <Drawer.Root
-      open={addingExercise}
-      onOpenChange={setAddingExercise}
+      open={openAddDrawer}
+      onOpenChange={setOpenAddDrawer}
       direction="top"
     >
       <Drawer.Portal>
@@ -33,7 +33,7 @@ export const AddExerciseForm = ({
           <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               updateExercises={updateExercises}
-              closeModal={() => setAddingExercise(false)}
+              closeModal={() => setOpenAddDrawer(false)}
             />
             <Drawer.Handle
               preventCycle
@@ -128,7 +128,7 @@ const ExerciseForm = ({
         <button
           type="button"
           onClick={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 200));
+            await new Promise((resolve) => setTimeout(resolve, 100));
             closeModal();
           }}
           className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"

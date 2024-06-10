@@ -21,10 +21,14 @@ export const EditExerciseForm = ({
   exerciseIndex: number;
   editExercises: (editedExercise: ExerciseType, index: number) => void;
 }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [openEditDrawer, setOpenEditDrawer] = useState(false);
 
   return (
-    <Drawer.Root open={isEditing} onOpenChange={setIsEditing} direction="top">
+    <Drawer.Root
+      open={openEditDrawer}
+      onOpenChange={setOpenEditDrawer}
+      direction="top"
+    >
       <Drawer.Trigger>
         <div className="rounded-full bg-green-500 p-1.5 text-white shadow-sm dark:bg-green-600">
           {EditExerciseIcon}
@@ -41,7 +45,7 @@ export const EditExerciseForm = ({
               exercise={exercise}
               exerciseIndex={exerciseIndex}
               editExercises={editExercises}
-              closeModal={() => setIsEditing(false)}
+              closeModal={() => setOpenEditDrawer(false)}
             />
             <Drawer.Handle
               preventCycle
@@ -124,7 +128,7 @@ const ExerciseForm = ({
         <button
           type="button"
           onClick={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 200));
+            await new Promise((resolve) => setTimeout(resolve, 100));
             closeModal();
           }}
           className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
