@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Drawer } from "vaul";
-import { RemoveExerciseIcon } from "../icons/user/modify";
 import { DangerIcon } from "../icons/user/warning";
 
 export const RemoveExerciseModal = ({
