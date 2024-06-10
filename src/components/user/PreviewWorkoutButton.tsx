@@ -43,7 +43,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
 
               <button
                 onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 200));
+                  await new Promise((resolve) => setTimeout(resolve, 100));
                   setOpen(false);
                 }}
                 className="flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"

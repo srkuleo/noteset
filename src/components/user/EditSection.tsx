@@ -64,7 +64,7 @@ export const EditSection = ({ workout }: { workout: Workout }) => {
             </div>
             <button
               onClick={async () => {
-                await new Promise((resolve) => setTimeout(resolve, 200));
+                await new Promise((resolve) => setTimeout(resolve, 100));
                 setOpen(false);
               }}
               className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
