@@ -118,6 +118,7 @@ const ExerciseForm = ({
             />
             <WeightInputs
               weights={tempExercise.weights}
+              weightsError={exerciseFormErrors.errors?.weights}
               handleWeightInput={handleWeightInput}
             />
           </motion.div>
