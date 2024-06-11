@@ -24,12 +24,12 @@ export const NameInput = ({
         value={name}
         type="text"
         placeholder="e.g. Bench press"
+        onChange={(e) => handleNameInput(e.target.value)}
         className={twMerge(
           "input-field",
           "py-2",
           nameError && "ring-red-500 dark:ring-red-500",
         )}
-        onChange={(e) => handleNameInput(e.target.value)}
       />
       <InputFieldError errorArr={nameError} className="gap-3" />
     </div>
@@ -84,20 +84,20 @@ export const SetsInput = ({
               key={cS}
               id={`Set ${cS}`}
               type="button"
+              onClick={() => handleSetsInput(cS)}
               className={twMerge(
                 "rounded-xl bg-slate-200/80 px-6 py-2 font-manrope text-sm ring-1 ring-slate-400/50 dark:bg-slate-900/80 dark:ring-slate-700",
                 sets === cS &&
                   "bg-green-500 text-white dark:bg-green-600 dark:ring-slate-50",
               )}
-              onClick={() => handleSetsInput(cS)}
             >
               {cS}
             </button>
           ))}
           <button
             type="button"
-            className="min-w-fit pl-2 text-sm font-semibold"
             onClick={() => setNeedMoreSets(true)}
+            className="min-w-fit pl-2 text-sm font-semibold"
           >
             More sets
           </button>
@@ -134,12 +134,13 @@ export const RepsInputs = ({
         {reps.map((rep, index) => (
           <input
             required
-            autoFocus={form === "add" && index === 0}
             key={`Rep: ${index + 1}`}
             id={`rep ${index + 1}`}
             value={rep}
             type="text"
             placeholder={`Rep ${index + 1}`}
+            autoFocus={form === "add" && index === 0}
+            onChange={(e) => handleRepsInput(e.target.value, index)}
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
@@ -147,7 +148,6 @@ export const RepsInputs = ({
                 ? "ring-red-500 dark:ring-red-500"
                 : "",
             )}
-            onChange={(e) => handleRepsInput(e.target.value, index)}
           />
         ))}
       </div>
@@ -158,9 +158,11 @@ export const RepsInputs = ({
 
 export const WeightInputs = ({
   weights,
+  weightsError,
   handleWeightInput,
 }: {
-  weights: number[];
+  weights: string[];
+  weightsError: string[] | undefined;
   handleWeightInput: (eventValue: string, index: number) => void;
 }) => {
   return (
@@ -180,18 +182,22 @@ export const WeightInputs = ({
             required
             key={`Weight: ${index + 1}`}
             id={`weight ${index + 1}`}
-            value={weight === 0 ? "" : weight}
+            value={weight}
             type="number"
             inputMode="numeric"
             placeholder={`Weight ${index + 1}`}
+            onChange={(e) => handleWeightInput(e.target.value, index)}
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
+              weightsError && !/^\d+(\.\d+)?$/.test(weight)
+                ? "ring-red-500 dark:ring-red-500"
+                : "",
             )}
-            onChange={(e) => handleWeightInput(e.target.value, index)}
           />
         ))}
       </div>
+      <InputFieldError errorArr={weightsError} className="gap-3" />
     </div>
   );
 };
