@@ -190,7 +190,7 @@ export const WeightInputs = ({
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
-              weightsError && !/^\d+(\,\d+)?$/.test(weight)
+              weightsError && !/^\d+(,\d+)?$/.test(weight)
                 ? "ring-red-500 dark:ring-red-500"
                 : "",
             )}

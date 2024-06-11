@@ -44,7 +44,7 @@ export const ExerciseSchema = z.object({
       .regex(/^(?:\d+|\d+-\d+)$/, { message: "Reps must be number or range." }),
   ),
   weights: z.array(
-    z.string().regex(/^\d+(\,\d+)?$/, {
+    z.string().regex(/^\d+(,\d+)?$/, {
       message: "Weight must be positve or decimal number.",
     }),
   ),
