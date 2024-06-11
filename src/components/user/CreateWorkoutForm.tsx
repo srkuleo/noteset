@@ -15,13 +15,14 @@ import { SubmitFormButton } from "./SubmitFormButton";
 export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
   const [openAddDrawer, setOpenAddDrawer] = useState(false);
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
-  const [exerciseToRemove, setExerciseToRemove] = useState({ name: "", id: 0 });
 
   const {
     workout,
     createWorkoutRes,
+    exerciseToRemove,
     setWorkout,
     setCreateWorkoutRes,
+    setExerciseToRemove,
     updateExercises,
     editExercises,
     removeExercise,
@@ -101,7 +102,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
         openRemoveModal={openRemoveModal}
         setOpenRemoveModal={setOpenRemoveModal}
         exerciseName={exerciseToRemove.name}
-        removeExercise={() => removeExercise(exerciseToRemove.id)}
+        removeExercise={removeExercise}
       />
 
       {workout.exercises.length === 0 ? (
