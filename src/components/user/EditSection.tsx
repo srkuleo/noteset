@@ -1,10 +1,5 @@
 import Link from "next/link";
-import { Drawer } from "vaul";
-import { useState } from "react";
-import { removeWorkout } from "@/util/actions";
-import { DangerIcon } from "../icons/user/warning";
 import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
-import { showToast } from "./Toasts";
 
 import type { Workout } from "@/db/schema";
 
