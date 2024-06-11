@@ -138,6 +138,7 @@ export const RepsInputs = ({
             id={`rep ${index + 1}`}
             value={rep}
             type="text"
+            inputMode="numeric"
             placeholder={`Rep ${index + 1}`}
             autoFocus={form === "add" && index === 0}
             onChange={(e) => handleRepsInput(e.target.value, index)}
@@ -184,7 +185,7 @@ export const WeightInputs = ({
             id={`weight ${index + 1}`}
             value={weight}
             type="number"
-            inputMode="numeric"
+            inputMode="decimal"
             placeholder={`Weight ${index + 1}`}
             onChange={(e) => handleWeightInput(e.target.value, index)}
             className={twMerge(
