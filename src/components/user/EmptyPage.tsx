@@ -8,7 +8,7 @@ export const EmptyPage = () => {
       </div>
       <div className="space-y-4 text-center">
         <h2 className="text-xl font-semibold dark:text-slate-300">
-          Seems like you haven't created any workout yet
+          Seems like you haven&apos;t created any workout yet
         </h2>
         <p className="font-semibold italic text-slate-400/85">
           Tap the plus button to create one
