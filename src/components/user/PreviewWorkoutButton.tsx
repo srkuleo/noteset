@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { Drawer } from "vaul";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
