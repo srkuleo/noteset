@@ -80,4 +80,4 @@ export const CreateWorkoutSchema = WorkoutSchema.omit({
   timeElapsed: true,
 });
 
-export type WorkoutType = z.infer<typeof CreateWorkoutSchema>;
+export type WorkoutWithoutId = z.infer<typeof CreateWorkoutSchema>;
