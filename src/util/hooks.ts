@@ -27,7 +27,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   function handleSetsInput(input: string | number) {
     const sets = Number(input);
     const reps = Array.from({ length: sets }, () => "");
-    const weights = Array.from({ length: sets }, () => 0);
+    const weights = Array.from({ length: sets }, () => "");
 
     setTempExercise({
       ...tempExercise,
@@ -59,9 +59,11 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   }
 
   function handleWeightInput(eventValue: string, index: number) {
-    const weight = Number(eventValue);
-
-    const modifiedWeights = tempExercise.weights.toSpliced(index, 1, weight);
+    const modifiedWeights = tempExercise.weights.toSpliced(
+      index,
+      1,
+      eventValue,
+    );
 
     console.log(modifiedWeights);
 
