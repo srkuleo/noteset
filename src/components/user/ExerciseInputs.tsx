@@ -138,7 +138,6 @@ export const RepsInputs = ({
             id={`rep ${index + 1}`}
             value={rep}
             type="text"
-            inputMode="numeric"
             placeholder={`Rep ${index + 1}`}
             autoFocus={form === "add" && index === 0}
             onChange={(e) => handleRepsInput(e.target.value, index)}
@@ -174,7 +173,7 @@ export const WeightInputs = ({
       >
         Weights
         <span className="text-xs lowercase italic text-slate-400/65 dark:text-slate-500">
-          (number only)
+          (eg. 25, 2,5)
         </span>
       </label>
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
@@ -184,14 +183,14 @@ export const WeightInputs = ({
             key={`Weight: ${index + 1}`}
             id={`weight ${index + 1}`}
             value={weight}
-            type="number"
+            type="text"
             inputMode="decimal"
             placeholder={`Weight ${index + 1}`}
             onChange={(e) => handleWeightInput(e.target.value, index)}
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
-              weightsError && !/^\d+(\.\d+)?$/.test(weight)
+              weightsError && !/^\d+(\,\d+)?$/.test(weight)
                 ? "ring-red-500 dark:ring-red-500"
                 : "",
             )}
