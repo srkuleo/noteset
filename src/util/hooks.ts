@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { showToast } from "@/components/user/Toasts";
 
 import type {
-  ExerciseActionResponse,
   ExerciseType,
+  WorkoutWithoutId,
+  ExerciseActionResponse,
   WorkoutActionResponse,
-  WorkoutType,
 } from "./types";
 
 const initErrors: ExerciseActionResponse = {
@@ -103,7 +103,7 @@ export const useToastNotification = (
   ]);
 };
 
-const initWorkout: WorkoutType = {
+const initWorkout: WorkoutWithoutId = {
   title: "",
   description: "",
   exercises: [],
@@ -116,14 +116,22 @@ const emptyRes: WorkoutActionResponse = {
   timestamp: Date.now(),
 };
 
-/* contains workout state (data passed to server action), 
-createWorkoutRes (a state that preserve the server action feedback, needed for
-toast notif, errors and reseting form),
-resetForm function that runs if createWorkoutRes.status is successful
-and two handler functions for creating and editing existing exercise inside a workout */
+/* 
+Contains:
+
+- workout state (data passed to server action)
+- exercise to remove state (tracks which exercise is to be removed when modal opens)
+- createWorkoutRes (a state that preserve the server action feedback, needed for
+toast notif, errors and reseting form)
+- resetForm function that runs if createWorkoutRes.status is successful
+- three handler functions for creating, editing or removing existing exercise inside a workout 
+
+*/
+
 export const useWorkouts = () => {
   const [workout, setWorkout] = useState(initWorkout);
   const [createWorkoutRes, setCreateWorkoutRes] = useState(emptyRes);
+  const [exerciseToRemove, setExerciseToRemove] = useState({ name: "", id: 0 });
 
   function updateExercises(newExercise: ExerciseType) {
     setWorkout({
@@ -160,8 +168,10 @@ export const useWorkouts = () => {
     });
   }
 
-  function removeExercise(index: number) {
-    const modifiedExercises = workout.exercises.filter((_, i) => i !== index);
+  function removeExercise() {
+    const modifiedExercises = workout.exercises.filter(
+      (_, i) => i !== exerciseToRemove.id,
+    );
 
     setWorkout({
       title: workout.title,
@@ -177,8 +187,10 @@ export const useWorkouts = () => {
   return {
     workout,
     createWorkoutRes,
+    exerciseToRemove,
     setWorkout,
     setCreateWorkoutRes,
+    setExerciseToRemove,
     updateExercises,
     editExercises,
     removeExercise,
