@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import {
   CreateWorkoutSchema,
   type WorkoutActionResponse,
-  type WorkoutType,
+  type WorkoutWithoutId,
 } from "./types";
 
 export async function removeWorkout(
@@ -37,7 +37,7 @@ export async function removeWorkout(
 
 export async function createWorkout(
   userId: string,
-  workout: WorkoutType,
+  workout: WorkoutWithoutId,
 ): Promise<WorkoutActionResponse> {
   const isValidWorkout = CreateWorkoutSchema.safeParse(workout);
 
