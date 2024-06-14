@@ -11,6 +11,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
     <Drawer.Root open={open} onOpenChange={setOpen}>
       <Drawer.Trigger className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
         {ShowIcon}
+        <p className="sr-only">Preview workout</p>
       </Drawer.Trigger>
 
       <Drawer.Portal>

@@ -17,7 +17,10 @@ export const ThemeButton = () => {
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>{SunAndMoon}</button>
+      <button onClick={() => setOpen(!open)}>
+        <p className="sr-only">Toggle color mode</p>
+        {SunAndMoon}
+      </button>
       <AnimatePresence>
         {open && (
           <>
@@ -41,15 +44,14 @@ export const ThemeButton = () => {
                   ease: [0.36, 0.66, 0.04, 1],
                 },
               }}
-              className="absolute right-6 z-10 flex flex-col rounded-lg bg-white p-1 ring-1 ring-slate-300 dark:bg-slate-900 dark:ring-slate-800 text-sm"
+              className="absolute right-6 z-10 flex flex-col rounded-lg bg-white p-1 text-sm ring-1 ring-slate-300 dark:bg-slate-900 dark:ring-slate-800"
             >
               <button
                 onClick={() => {
                   chooseTheme("system");
                   setOpen(false);
                 }}
-                className={`${theme === "system" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
-            `}
+                className={`${theme === "system" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800`}
               >
                 {System}
                 System
@@ -59,8 +61,7 @@ export const ThemeButton = () => {
                   chooseTheme("dark");
                   setOpen(false);
                 }}
-                className={`${theme === "dark" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
-            `}
+                className={`${theme === "dark" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800`}
               >
                 {Moon}
                 Dark
@@ -70,8 +71,7 @@ export const ThemeButton = () => {
                   chooseTheme("light");
                   setOpen(false);
                 }}
-                className={`${theme === "light" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800
-            `}
+                className={`${theme === "light" ? "text-green-500" : ""} flex items-center gap-2 rounded-md py-1 pl-2 pr-12 text-left font-semibold uppercase active:bg-slate-200 active:dark:bg-slate-800`}
               >
                 {Sun}
                 Light

@@ -8,6 +8,7 @@ export const GitHubButton = () => {
       rel="noreferrer"
     >
       {GitHubIcon}
+      <p className="sr-only">Visit project on GitHub</p>
     </a>
   );
 };
