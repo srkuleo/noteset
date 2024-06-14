@@ -1,4 +1,4 @@
-import type { ExerciseType } from "@/util/types";
+import { workoutStatus, type ExerciseType } from "@/util/types";
 import {
   pgTable,
   index,
@@ -6,7 +6,10 @@ import {
   serial,
   timestamp,
   varchar,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+export const statusEnum = pgEnum("status", workoutStatus);
 
 export const workouts = pgTable(
   "workouts",
@@ -15,7 +18,7 @@ export const workouts = pgTable(
     title: varchar("title", { length: 30 }).notNull(),
     description: varchar("description", { length: 80 }),
     exercises: json("exercises").$type<ExerciseType[]>().notNull(),
-    status: varchar("status", { length: 10 }).default("current"),
+    status: statusEnum("status").default("current"),
     userId: varchar("user_id", { length: 255 }).notNull(),
     doneAt: timestamp("done_at").defaultNow(),
     timeElapsed: varchar("time_elapsed", { length: 100 }),
