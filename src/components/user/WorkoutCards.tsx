@@ -28,7 +28,7 @@ export const WorkoutCards = ({ workouts }: { workouts: Workout[] }) => {
       from re-rendering on subsequent reloads */
       router.replace("/workouts");
     }
-  }, []);
+  });
 
   return (
     <>
