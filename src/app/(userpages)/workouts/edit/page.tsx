@@ -25,6 +25,7 @@ export default async function EditWorkoutPage({
   const editWorkoutWithId = editWorkout.bind(null, {
     userId: workout.userId,
     workoutId: coercedWorkoutId,
+    prevTitle: workout.title,
   });
 
   return (
@@ -68,7 +69,7 @@ export default async function EditWorkoutPage({
         <div className="flex items-center justify-end gap-2 pt-4">
           <Link
             href="/workouts"
-            className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60 "
+            className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60"
           >
             Cancel
           </Link>
