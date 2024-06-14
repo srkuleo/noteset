@@ -57,6 +57,8 @@ export const AddExerciseSchema = ExerciseSchema.omit({
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
 
+export const workoutStatus = ["current", "done"] as const;
+
 export const WorkoutSchema = z.object({
   id: z.number(),
   title: z
@@ -70,7 +72,7 @@ export const WorkoutSchema = z.object({
   exercises: z
     .array(ExerciseSchema)
     .min(1, { message: "Please add at least one exercise." }),
-  status: z.enum(["current", "done"]),
+  status: z.enum(workoutStatus),
   userId: z.string(),
   doneAt: z.string(),
   timeElapsed: z.string(),
