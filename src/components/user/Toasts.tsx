@@ -1,32 +1,39 @@
 import debounce from "lodash.debounce";
 import { toast } from "sonner";
-import { ErrorIcon, SuccessIcon } from "../icons/user/feedback";
 
-const SuccessToast = ({ message }: { message: string }) => {
+export const SuccessToast = ({ message }: { message: string }) => {
   return (
     <div className="pb-safe-bottom">
-      <div className="flex items-center gap-4 rounded-xl bg-green-50 px-4 py-2 shadow-md">
-        <SuccessIcon />
-
-        <div className="flex flex-col gap-0.5 font-manrope text-green-600">
-          <p className="font-bold">Success!</p>
-          <p className="text-sm font-semibold text-green-500">{message}</p>
+      <div className="flex justify-between gap-4 rounded-xl bg-white px-4 py-3 shadow-md ring-1 ring-slate-300/60 dark:bg-slate-900 dark:ring-slate-700/90">
+        <div className="flex flex-col gap-0.5 font-manrope">
+          <p className="font-bold text-green-600">Success!</p>
+          <p className="text-sm font-semibold text-slate-400/95 dark:text-slate-200">
+            {message}
+          </p>
         </div>
+
+        <button className="text-xs text-slate-400/80 underline underline-offset-2 dark:text-slate-300">
+          Hide
+        </button>
       </div>
     </div>
   );
 };
 
-const ErrorToast = ({ message }: { message: string }) => {
+export const ErrorToast = ({ message }: { message: string }) => {
   return (
     <div className="pb-safe-bottom">
-      <div className="flex items-center gap-4 rounded-xl bg-red-50 px-4 py-2 shadow-md">
-        <ErrorIcon />
-
+      <div className="flex justify-between gap-4 rounded-xl bg-white px-4 py-3 shadow-md ring-1 ring-slate-300/60 dark:bg-slate-900 dark:ring-slate-700/90">
         <div className="flex flex-col gap-0.5 font-manrope">
-          <p className="font-bold text-red-600">Oops!</p>
-          <p className="text-sm font-semibold text-red-400">{message}</p>
+          <p className="font-bold text-red-600">Oops...</p>
+          <p className="text-sm font-semibold text-slate-400/95 dark:text-slate-200">
+            {message}
+          </p>
         </div>
+
+        <button className="text-xs text-slate-400/80 underline underline-offset-2 dark:text-slate-300">
+          Hide
+        </button>
       </div>
     </div>
   );
@@ -45,5 +52,5 @@ export const showToast = debounce(
         )}
       </div>
     )),
-  200,
+  250,
 );
