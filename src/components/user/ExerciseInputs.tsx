@@ -127,7 +127,7 @@ export const RepsInputs = ({
       >
         Reps
         <span className="text-xs lowercase italic text-slate-400/65 dark:text-slate-500">
-          (eg. 6-8, 10)
+          (e.g. 6-8, 10)
         </span>
       </label>
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
@@ -173,7 +173,7 @@ export const WeightInputs = ({
       >
         Weights
         <span className="text-xs lowercase italic text-slate-400/65 dark:text-slate-500">
-          (eg. 25, 2,5)
+          (e.g. 25, 2,5)
         </span>
       </label>
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
