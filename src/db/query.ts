@@ -1,9 +1,9 @@
 "use server";
 
 import { unstable_noStore as noStore } from "next/cache";
-import { db } from "."; 
+import { db } from ".";
 import { workouts } from "./schema";
-import { and, eq } from "drizzle-orm"; 
+import { and, eq } from "drizzle-orm";
 
 export async function getUserWorkouts(userId: string) {
   noStore();
@@ -17,7 +17,8 @@ export async function getUserWorkouts(userId: string) {
         exercises: workouts.exercises,
       })
       .from(workouts)
-      .where(and(eq(workouts.userId, userId), eq(workouts.status, "current")));
+      .where(and(eq(workouts.userId, userId), eq(workouts.status, "current")))
+      .orderBy(workouts.id);
 
     console.log("Workouts fetched.");
 
