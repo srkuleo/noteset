@@ -28,6 +28,8 @@ export default function Error({
           Sorry, something went wrong!
         </h2>
 
+        <p>{error.message}</p>
+
         <div className="flex flex-col items-center gap-2">
           <Link
             href="/workouts"
