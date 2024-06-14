@@ -101,7 +101,7 @@ export async function editWorkout(
   { userId, workoutId, prevTitle }: WorkoutData,
   formData: FormData,
 ) {
-  const { title, description, exercises } = CreateWorkoutSchema.parse({
+  const { title, description } = CreateWorkoutSchema.parse({
     title: formData.get("workoutTitle"),
     description: formData.get("workoutDescription"),
     //change this later to accept actually exercises
