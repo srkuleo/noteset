@@ -9,8 +9,7 @@ export const config = {
   matcher: [
     "/workouts/:path*",
     "/logs/:paths*",
-    "/profile",
     "/workout/:paths*",
-    "/workout-created-page",
+    "/profile",
   ],
 };
