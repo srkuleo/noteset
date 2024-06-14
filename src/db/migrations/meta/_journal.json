@@ -1,12 +1,19 @@
 {
-  "version": "5",
-  "dialect": "pg",
+  "version": "7",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "5",
-      "when": 1712431542179,
-      "tag": "0000_bouncy_warbird",
+      "version": "7",
+      "when": 1718389167645,
+      "tag": "0000_tired_the_executioner",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1718389387756,
+      "tag": "0001_giant_darkhawk",
       "breakpoints": true
     }
   ]

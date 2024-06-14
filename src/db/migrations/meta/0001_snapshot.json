@@ -1,6 +1,6 @@
 {
-  "id": "d8847c18-7629-4183-b70b-da514c9996ac",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "d5664f54-6939-4ee7-97f1-a313f0c0caa0",
+  "prevId": "d8847c18-7629-4183-b70b-da514c9996ac",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -37,7 +37,8 @@
           "type": "status",
           "typeSchema": "public",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "default": "'current'"
         },
         "user_id": {
           "name": "user_id",
