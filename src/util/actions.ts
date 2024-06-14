@@ -91,18 +91,23 @@ export async function createWorkout(
   }
 }
 
-interface Ids {
+interface WorkoutData {
   userId: string;
   workoutId: number;
+  prevTitle: string;
 }
 
 export async function editWorkout(
-  { userId, workoutId }: Ids,
+  { userId, workoutId, prevTitle }: WorkoutData,
   formData: FormData,
 ) {
-  const { title, description } = CreateWorkoutSchema.parse({
+  const { title, description, exercises } = CreateWorkoutSchema.parse({
     title: formData.get("workoutTitle"),
     description: formData.get("workoutDescription"),
+    //change this later to accept actually exercises
+    exercises: [
+      { name: "Bench press", sets: 1, reps: ["10"], weights: ["45"] },
+    ],
   });
 
   try {
@@ -119,12 +124,12 @@ export async function editWorkout(
       .set({ title: title, description: description })
       .where(eq(workouts.id, workoutId));
 
-    console.log(`${title} workout edited.`);
+    console.log(`${prevTitle} workout edited.`);
   } catch (error) {
     console.log(error);
     throw new Error("Database Error: Workout could not be edited.");
   }
 
   revalidatePath("/workouts");
-  redirect("/workouts?action=edited");
+  redirect(`/workouts?message=${prevTitle} workout has been edited.`);
 }
