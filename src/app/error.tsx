@@ -31,7 +31,7 @@ export default function Error({
         <div className="flex flex-col items-center gap-2">
           <Link
             href="/workouts"
-            className="rounded-xl bg-violet-500 px-8 py-2 font-semibold text-white shadow-sm dark:bg-violet-600"
+            className="rounded-xl bg-violet-500 px-8 py-2 font-semibold text-white shadow-sm active:scale-95 dark:bg-violet-600"
           >
             Go back
           </Link>
