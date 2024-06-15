@@ -28,16 +28,46 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
             </div>
 
             <div className="flex flex-col px-4 py-8">
-              <p className="pb-2">
-                You are previewing {workout.title} workout.
-              </p>
-              <div className="pb-8">
-                Exercises:{" "}
-                {workout.exercises.map((ex) => (
-                  <div key={ex.name} className="inline-block">
-                    {ex.name}
-                  </div>
-                ))}
+              <div className="grid-cols-preview grid gap-4 overflow-x-scroll pb-8 no-scrollbar md:justify-center">
+                <div className="flex flex-col gap-4 rounded-xl bg-slate-50/70 px-4 pt-4 shadow-sm dark:bg-slate-800/45">
+                  {workout.exercises.map((exercise) => (
+                    <p key={exercise.name} className="pb-4 font-bold">
+                      {exercise.name}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="w-0.5 bg-slate-100 dark:bg-slate-800" />
+
+                <div className="flex flex-col gap-4 px-4 pt-4">
+                  {workout.exercises.map((exercise) => (
+                    <div key={exercise.name} className="flex pb-4">
+                      {exercise.reps.map((rep, i) => (
+                        <div key={i} className="flex gap-1">
+                          <p className="font-bold">{rep}</p>
+                          <p>({exercise.weights[i]}kg)</p>
+                          {i < exercise.reps.length - 1 && (
+                            <div className="mx-2 w-0.5 bg-slate-100 dark:bg-slate-800" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="w-0.5 bg-slate-100 dark:bg-slate-800" />
+
+                <div className="flex flex-col gap-4 rounded-xl bg-slate-50/70 px-4 pt-4 dark:bg-slate-800/45">
+                  {workout.exercises.map((exercise, i) =>
+                    exercise.comment ? (
+                      <p key={i} className="pb-4 font-semibold">
+                        {exercise.comment}
+                      </p>
+                    ) : (
+                      <div key={i} className="h-10" />
+                    ),
+                  )}
+                </div>
               </div>
 
               <button
