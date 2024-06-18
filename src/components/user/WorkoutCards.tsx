@@ -63,9 +63,10 @@ export const WorkoutCards = ({ workouts }: { workouts: Workout[] }) => {
                   <PreviewWorkoutButton workout={workout} />
                   <Link
                     href={`/workout?id=${workout.id}`}
-                    className="rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-manrope font-semibold text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600"
+                    className="flex items-center rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-manrope text-xs text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600"
                   >
-                    Start
+                    Go to Workout
+                    <p className="sr-only">Start this workout</p>
                   </Link>
                 </div>
 
