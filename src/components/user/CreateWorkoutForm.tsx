@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { useToastNotification, useWorkouts } from "@/util/hooks";
+import { emptyWorkout, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions";
+import { showToast } from "./Toasts";
 import { AddExerciseForm } from "./AddExerciseForm";
-import { AddIcon, RemoveExerciseIcon } from "../icons/user/modify";
 import { EditExerciseForm } from "./EditExerciseForm";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
+import { AddIcon, RemoveExerciseIcon } from "../icons/user/modify";
 import { InputFieldError } from "./InputFieldError";
 import { SubmitFormButton } from "./SubmitFormButton";
 
@@ -18,26 +19,27 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
 
   const {
     workout,
-    createWorkoutRes,
+    actionRes,
     exerciseToRemove,
     setWorkout,
-    setCreateWorkoutRes,
+    setActionRes,
     setExerciseToRemove,
     updateExercises,
     editExercises,
     removeExercise,
     resetWorkoutForm,
-  } = useWorkouts();
-
-  useToastNotification(createWorkoutRes);
+  } = useWorkouts(emptyWorkout);
 
   async function clientAction() {
     const res = await createWorkout(userId, workout);
 
-    setCreateWorkoutRes({ ...res });
+    setActionRes({ ...res });
 
     if (res.status === "success") {
       resetWorkoutForm();
+      showToast(res.message, "success");
+    } else {
+      showToast(res.message, "error");
     }
   }
 
@@ -58,16 +60,13 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
           value={workout.title}
           type="text"
           placeholder="e.g. Upper 1"
+          onChange={(e) => setWorkout({ ...workout, title: e.target.value })}
           className={twMerge(
             "input-field",
-            createWorkoutRes.errors?.title && "ring-red-500 dark:ring-red-500",
+            actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
           )}
-          onChange={(e) => setWorkout({ ...workout, title: e.target.value })}
         />
-        <InputFieldError
-          errorArr={createWorkoutRes.errors?.title}
-          className="pl-1"
-        />
+        <InputFieldError errorArr={actionRes.errors?.title} className="pl-1" />
       </div>
 
       <div className="flex flex-col gap-2">
@@ -85,22 +84,22 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
           value={workout.description}
           type="text"
           placeholder="e.g. Workout for the upper body"
-          className="input-field"
           onChange={(e) =>
             setWorkout({ ...workout, description: e.target.value })
           }
+          className="input-field"
         />
       </div>
 
       <AddExerciseForm
-        openAddDrawer={openAddDrawer}
-        setOpenAddDrawer={setOpenAddDrawer}
+        isOpen={openAddDrawer}
+        setIsOpen={setOpenAddDrawer}
         updateExercises={updateExercises}
       />
 
       <RemoveExerciseModal
-        openRemoveModal={openRemoveModal}
-        setOpenRemoveModal={setOpenRemoveModal}
+        isOpen={openRemoveModal}
+        setIsOpen={setOpenRemoveModal}
         exerciseName={exerciseToRemove.name}
         removeExercise={removeExercise}
       />
@@ -197,7 +196,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
         </div>
       )}
       <InputFieldError
-        errorArr={createWorkoutRes.errors?.exercises}
+        errorArr={actionRes.errors?.exercises}
         className="justify-center py-4"
       />
 
@@ -205,7 +204,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
         className={twMerge(
           "flex justify-end gap-2",
           workout.exercises.length === 0 &&
-            !createWorkoutRes.errors?.exercises &&
+            !actionRes.errors?.exercises &&
             "pt-4",
         )}
       >
