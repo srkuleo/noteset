@@ -1,7 +1,9 @@
 import type { HTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 
-type HeadingTextProps = HTMLAttributes<HTMLHeadingElement> & { label: string };
+type HeadingTextProps = HTMLAttributes<HTMLHeadingElement> & {
+  label: string;
+};
 
 export const UserPagesHeadingText = ({
   label,
