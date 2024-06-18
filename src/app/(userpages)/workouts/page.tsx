@@ -32,6 +32,7 @@ const WorkoutsPageHeader = () => {
         className="rounded-full bg-white p-2 shadow-sm ring-1 ring-slate-300/60 transition active:scale-95 active:bg-slate-100 dark:bg-slate-800 dark:ring-slate-700/85 dark:active:bg-slate-600"
       >
         <AddIcon size={24} strokeWidth={2} />
+        <p className="sr-only">Add a new workout</p>
       </Link>
     </div>
   );
