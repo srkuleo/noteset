@@ -16,7 +16,7 @@ export const workouts = pgTable(
   {
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 30 }).notNull(),
-    description: varchar("description", { length: 80 }),
+    description: varchar("description", { length: 80 }).notNull(),
     exercises: json("exercises").$type<ExerciseType[]>().notNull(),
     status: statusEnum("status").default("current"),
     userId: varchar("user_id", { length: 255 }).notNull(),
@@ -39,4 +39,10 @@ export type Workout = {
   exercises: typeof workouts.$inferSelect.exercises;
 };
 
-//Later on add schema for superset and exercises
+export type FetchedWorkout = {
+  id: typeof workouts.$inferSelect.id;
+  title: typeof workouts.$inferSelect.title;
+  description: typeof workouts.$inferSelect.description;
+  userId: typeof workouts.$inferSelect.userId;
+  exercises: typeof workouts.$inferSelect.exercises;
+};
