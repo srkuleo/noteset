@@ -19,7 +19,7 @@ export const EditSection = ({
         className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-900 dark:ring-slate-600"
       >
         {EditWorkoutIcon}
-        <span className="sr-only">Edit exercise</span>
+        <span className="sr-only">Edit workout</span>
       </Link>
 
       <button
@@ -30,7 +30,7 @@ export const EditSection = ({
         className="rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:text-red-400 dark:shadow-slate-900 dark:ring-slate-600"
       >
         {RemoveWorkoutIcon}
-        <span className="sr-only">Remove exercise</span>
+        <span className="sr-only">Remove workout</span>
       </button>
     </div>
   );

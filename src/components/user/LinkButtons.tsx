@@ -8,9 +8,9 @@ import { HomeIcon, ProfileIcon, LogsIcon } from "../icons/user/links";
 import { type PageLink } from "@/util/types";
 
 const pageLinks: PageLink[] = [
-  { href: "/workouts", icon: HomeIcon },
-  { href: "/profile", icon: ProfileIcon },
-  { href: "/logs", icon: LogsIcon },
+  { href: "/workouts", icon: HomeIcon, button: "Home" },
+  { href: "/profile", icon: ProfileIcon, button: "Profile" },
+  { href: "/logs", icon: LogsIcon, button: "Logs" },
 ];
 
 export const LinkButtons = () => {
@@ -32,6 +32,7 @@ export const LinkButtons = () => {
           {path.includes(link.href) && (
             <div className="absolute bottom-1.5 h-[1px] w-5 bg-white" />
           )}
+          <p className="sr-only">{link.button} button</p>
         </Link>
       ))}
     </>
