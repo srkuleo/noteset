@@ -12,20 +12,16 @@ import { SubmitFormButton } from "./SubmitFormButton";
 import { type ExerciseType, AddExerciseSchema } from "@/util/types";
 
 export const AddExerciseForm = ({
-  openAddDrawer,
-  setOpenAddDrawer,
+  isOpen,
+  setIsOpen,
   updateExercises,
 }: {
-  openAddDrawer: boolean;
-  setOpenAddDrawer: (isOpen: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
   return (
-    <Drawer.Root
-      open={openAddDrawer}
-      onOpenChange={setOpenAddDrawer}
-      direction="top"
-    >
+    <Drawer.Root open={isOpen} onOpenChange={setIsOpen} direction="top">
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
@@ -33,7 +29,7 @@ export const AddExerciseForm = ({
           <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               updateExercises={updateExercises}
-              closeModal={() => setOpenAddDrawer(false)}
+              closeModal={() => setIsOpen(false)}
             />
             <Drawer.Handle
               preventCycle

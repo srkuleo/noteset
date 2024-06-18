@@ -3,17 +3,17 @@ import { DangerIcon } from "../icons/user/warning";
 
 export const RemoveExerciseModal = ({
   exerciseName,
-  openRemoveModal,
-  setOpenRemoveModal,
+  isOpen,
+  setIsOpen,
   removeExercise,
 }: {
   exerciseName: string;
-  openRemoveModal: boolean;
-  setOpenRemoveModal: (isOpen: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   removeExercise: () => void;
 }) => {
   return (
-    <Drawer.Root open={openRemoveModal} onOpenChange={setOpenRemoveModal}>
+    <Drawer.Root open={isOpen} onOpenChange={setIsOpen}>
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
@@ -37,7 +37,7 @@ export const RemoveExerciseModal = ({
             <button
               onClick={() => {
                 removeExercise();
-                setOpenRemoveModal(false);
+                setIsOpen(false);
               }}
               className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
             >
@@ -47,7 +47,7 @@ export const RemoveExerciseModal = ({
           <button
             onClick={async () => {
               await new Promise((resolve) => setTimeout(resolve, 100));
-              setOpenRemoveModal(false);
+              setIsOpen(false);
             }}
             className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
           >
