@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { showToast } from "@/components/user/Toasts";
+import { useState } from "react";
 
 import type {
   ExerciseType,
-  WorkoutWithoutId,
+  WorkoutWithoutIds,
   ExerciseActionResponse,
   WorkoutActionResponse,
 } from "./types";
@@ -81,31 +80,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   };
 };
 
-export const useToastNotification = (
-  createWorkoutRes: WorkoutActionResponse,
-) => {
-  const prevTimestamp = useRef(createWorkoutRes.timestamp);
-
-  //renders a new toast notif for every form validation process
-  useEffect(() => {
-    if (
-      createWorkoutRes.message &&
-      createWorkoutRes.timestamp !== prevTimestamp.current
-    ) {
-      if (createWorkoutRes.status === "error") {
-        showToast(createWorkoutRes.message, "error");
-      } else {
-        showToast(createWorkoutRes.message, "success");
-      }
-    }
-  }, [
-    createWorkoutRes.status,
-    createWorkoutRes.message,
-    createWorkoutRes.timestamp,
-  ]);
-};
-
-const initWorkout: WorkoutWithoutId = {
+export const emptyWorkout: WorkoutWithoutIds = {
   title: "",
   description: "",
   exercises: [],
@@ -115,7 +90,6 @@ const emptyRes: WorkoutActionResponse = {
   status: "unset",
   message: "",
   errors: {},
-  timestamp: Date.now(),
 };
 
 /* 
@@ -123,16 +97,15 @@ Contains:
 
 - workout state (data passed to server action)
 - exercise to remove state (tracks which exercise is to be removed when modal opens)
-- createWorkoutRes (a state that preserve the server action feedback, needed for
-toast notif, errors and reseting form)
-- resetForm function that runs if createWorkoutRes.status is successful
+- createWorkoutRes (a state that preserve the server action feedback needed for rendering errors)
+- resetForm function that runs if res.status is successful
 - three handler functions for creating, editing or removing existing exercise inside a workout 
 
 */
 
-export const useWorkouts = () => {
+export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
   const [workout, setWorkout] = useState(initWorkout);
-  const [createWorkoutRes, setCreateWorkoutRes] = useState(emptyRes);
+  const [actionRes, setActionRes] = useState(emptyRes);
   const [exerciseToRemove, setExerciseToRemove] = useState({ name: "", id: 0 });
 
   function updateExercises(newExercise: ExerciseType) {
@@ -143,13 +116,13 @@ export const useWorkouts = () => {
     });
 
     if (
-      createWorkoutRes.errors?.exercises &&
-      createWorkoutRes.errors.exercises.length > 0
+      actionRes.errors?.exercises &&
+      actionRes.errors.exercises.length > 0
     ) {
-      setCreateWorkoutRes({
-        ...createWorkoutRes,
+      setActionRes({
+        ...actionRes,
         errors: {
-          ...createWorkoutRes.errors,
+          ...actionRes.errors,
           exercises: undefined,
         },
       });
@@ -188,10 +161,10 @@ export const useWorkouts = () => {
 
   return {
     workout,
-    createWorkoutRes,
+    actionRes,
     exerciseToRemove,
     setWorkout,
-    setCreateWorkoutRes,
+    setActionRes,
     setExerciseToRemove,
     updateExercises,
     editExercises,
@@ -199,3 +172,4 @@ export const useWorkouts = () => {
     resetWorkoutForm,
   };
 };
+
