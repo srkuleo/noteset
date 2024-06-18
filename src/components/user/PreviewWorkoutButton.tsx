@@ -57,7 +57,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
 
                 <div className="w-0.5 bg-slate-100 dark:bg-slate-800" />
 
-                <div className="flex flex-col gap-4 rounded-xl bg-slate-50/70 px-4 pt-4 dark:bg-slate-800/45">
+                <div className="flex flex-col gap-4 px-4 pt-4 ">
                   {workout.exercises.map((exercise, i) =>
                     exercise.comment ? (
                       <p key={i} className="pb-4 font-semibold">
