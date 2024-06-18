@@ -35,6 +35,13 @@ export async function getWorkoutById(workoutId: number) {
   try {
     const workout = await db.query.workouts.findFirst({
       where: eq(workouts.id, workoutId),
+      columns: {
+        id: true,
+        title: true,
+        description: true,
+        userId: true,
+        exercises: true,
+      },
     });
 
     console.log("Workout retrived.");
