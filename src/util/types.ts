@@ -3,6 +3,7 @@ import { z } from "zod";
 export type PageLink = {
   href: string;
   icon: JSX.Element;
+  button: "Home" | "Logs" | "Profile";
 };
 
 export type UserProfile = {
@@ -29,7 +30,6 @@ export type WorkoutActionResponse = {
     exercises?: string[];
   };
   message: string;
-  timestamp: number;
 };
 
 export const ExerciseSchema = z.object({
@@ -74,7 +74,7 @@ export const WorkoutSchema = z.object({
     .min(1, { message: "Please add at least one exercise." }),
   status: z.enum(workoutStatus),
   userId: z.string(),
-  doneAt: z.string(),
+  doneAt: z.date(),
   timeElapsed: z.string(),
 });
 
@@ -86,4 +86,4 @@ export const CreateWorkoutSchema = WorkoutSchema.omit({
   timeElapsed: true,
 });
 
-export type WorkoutWithoutId = z.infer<typeof CreateWorkoutSchema>;
+export type WorkoutWithoutIds = z.infer<typeof CreateWorkoutSchema>;
