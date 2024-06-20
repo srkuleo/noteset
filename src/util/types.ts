@@ -33,6 +33,7 @@ export type WorkoutActionResponse = {
 };
 
 export const ExerciseSchema = z.object({
+  id: z.string(),
   name: z
     .string()
     .min(2, { message: "Exercise name must be at least 2 characters long." })
