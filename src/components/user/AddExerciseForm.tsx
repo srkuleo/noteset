@@ -11,6 +11,14 @@ import { SubmitFormButton } from "./SubmitFormButton";
 
 import { type ExerciseType, AddExerciseSchema } from "@/util/types";
 
+const initExercise: ExerciseType = {
+  id: "",
+  name: "",
+  sets: 0,
+  reps: [],
+  weights: [],
+};
+
 export const AddExerciseForm = ({
   isOpen,
   setIsOpen,
@@ -42,13 +50,6 @@ export const AddExerciseForm = ({
   );
 };
 
-const initExercise: ExerciseType = {
-  name: "",
-  sets: 0,
-  reps: [],
-  weights: [],
-};
-
 const ExerciseForm = ({
   updateExercises,
   closeModal,
@@ -64,10 +65,15 @@ const ExerciseForm = ({
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
+    generateExerciseId,
   } = useExerciseForm(initExercise);
 
   function createExercise() {
-    const isValidExercise = AddExerciseSchema.safeParse(tempExercise);
+    const exerciseWithId: ExerciseType = {
+      ...tempExercise,
+      id: generateExerciseId(),
+    };
+    const isValidExercise = AddExerciseSchema.safeParse(exerciseWithId);
 
     if (!isValidExercise.success) {
       setExerciseFormErrors({
