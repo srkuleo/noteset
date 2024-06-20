@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { useExerciseForm } from "@/util/hooks";
 import { Drawer } from "vaul";
-import { EditExerciseIcon } from "../icons/user/modify";
 import {
   NameInput,
   RepsInputs,
@@ -13,29 +11,18 @@ import { SubmitFormButton } from "./SubmitFormButton";
 import { AddExerciseSchema, type ExerciseType } from "@/util/types";
 
 export const EditExerciseForm = ({
+  isOpen,
   exercise,
-  exerciseIndex,
+  setIsOpen,
   editExercises,
 }: {
+  isOpen: boolean;
   exercise: ExerciseType;
-  exerciseIndex: number;
-  editExercises: (editedExercise: ExerciseType, index: number) => void;
+  setIsOpen: (isOpen: boolean) => void;
+  editExercises: (editedExercise: ExerciseType) => void;
 }) => {
-  const [openEditDrawer, setOpenEditDrawer] = useState(false);
-
   return (
-    <Drawer.Root
-      open={openEditDrawer}
-      onOpenChange={setOpenEditDrawer}
-      direction="top"
-    >
-      <Drawer.Trigger>
-        <div className="rounded-full bg-green-500 p-1.5 text-white shadow-sm dark:bg-green-600">
-          {EditExerciseIcon}
-          <span className="sr-only">Edit exercise</span>
-        </div>
-      </Drawer.Trigger>
-
+    <Drawer.Root open={isOpen} onOpenChange={setIsOpen} direction="top">
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
@@ -43,9 +30,8 @@ export const EditExerciseForm = ({
           <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <ExerciseForm
               exercise={exercise}
-              exerciseIndex={exerciseIndex}
               editExercises={editExercises}
-              closeModal={() => setOpenEditDrawer(false)}
+              closeModal={() => setIsOpen(false)}
             />
             <Drawer.Handle
               preventCycle
@@ -60,13 +46,11 @@ export const EditExerciseForm = ({
 
 const ExerciseForm = ({
   exercise,
-  exerciseIndex,
   editExercises,
   closeModal,
 }: {
   exercise: ExerciseType;
-  exerciseIndex: number;
-  editExercises: (editedExercise: ExerciseType, index: number) => void;
+  editExercises: (editedExercise: ExerciseType) => void;
   closeModal: () => void;
 }) => {
   const initExercise = { ...exercise };
@@ -92,7 +76,7 @@ const ExerciseForm = ({
 
     const validExercise = isValidExercise.data;
 
-    editExercises(validExercise, exerciseIndex);
+    editExercises(validExercise);
     closeModal();
   }
 
