@@ -6,8 +6,6 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Handle and display zod parse errors inside the edit form. Complete UI and logic for whole edit page._
-
 - _Set up own auth flow with Lucia 3.0._
 
 - _Finish UI and logic for workout pages._
