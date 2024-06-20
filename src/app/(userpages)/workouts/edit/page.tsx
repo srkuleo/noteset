@@ -1,10 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getWorkoutById } from "@/db/query";
-import { editWorkout } from "@/util/actions";
 import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
 import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
-import { SubmitFormButton } from "@/components/user/SubmitFormButton";
+import { EditWorkoutForm } from "@/components/user/EditWorkoutForm";
 
 import { type Metadata } from "next";
 
@@ -18,64 +16,14 @@ export default async function EditWorkoutPage({
   searchParams: { id: string };
 }) {
   const coercedWorkoutId = Number(searchParams.id);
-  const workout = await getWorkoutById(coercedWorkoutId);
+  const fetchedWorkout = await getWorkoutById(coercedWorkoutId);
 
-  if (!workout) notFound();
-
-  const editWorkoutWithId = editWorkout.bind(null, {
-    userId: workout.userId,
-    workoutId: coercedWorkoutId,
-    prevTitle: workout.title,
-  });
+  if (!fetchedWorkout) notFound();
 
   return (
     <UserPagesWrapper>
-      <UserPagesHeadingText label={`Editing ${workout.title}`} />
-      <form
-        action={editWorkoutWithId}
-        className="space-y-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-300/50 dark:bg-slate-800 dark:ring-slate-700/70"
-      >
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="title"
-            className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
-          >
-            Title
-          </label>
-          <input
-            id="title"
-            name="workoutTitle"
-            type="text"
-            defaultValue={workout.title}
-            className="input-field input-focus-ring"
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="description"
-            className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
-          >
-            Description
-          </label>
-          <input
-            id="description"
-            name="workoutDescription"
-            type="text"
-            defaultValue={workout.description || "Description not provided."}
-            className="input-field input-focus-ring"
-          />
-        </div>
-        <div className="flex items-center justify-end gap-2 pt-4">
-          <Link
-            href="/workouts"
-            className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60"
-          >
-            Cancel
-          </Link>
-          <SubmitFormButton label="Save" loading="Saving" />
-        </div>
-      </form>
+      <UserPagesHeadingText label={`Editing ${fetchedWorkout.title}`} />
+      <EditWorkoutForm fetchedWorkout={fetchedWorkout} />
     </UserPagesWrapper>
   );
 }
