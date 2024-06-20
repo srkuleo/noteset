@@ -52,8 +52,6 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   function handleRepsInput(eventValue: string, index: number) {
     const modifiedReps = tempExercise.reps.toSpliced(index, 1, eventValue);
 
-    console.log(modifiedReps);
-
     setTempExercise({ ...tempExercise, reps: [...modifiedReps] });
   }
 
@@ -64,9 +62,12 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
       eventValue,
     );
 
-    console.log(modifiedWeights);
-
     setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
+  }
+
+  function generateExerciseId() {
+    const randomComponent = Math.random().toString(36).substring(2, 10);
+    return "id" + String(Date.now()) + randomComponent;
   }
 
   return {
@@ -77,6 +78,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
+    generateExerciseId,
   };
 };
 
@@ -96,9 +98,8 @@ const emptyRes: WorkoutActionResponse = {
 Contains:
 
 - workout state (data passed to server action)
-- exercise to remove state (tracks which exercise is to be removed when modal opens)
-- createWorkoutRes (a state that preserve the server action feedback needed for rendering errors)
-- resetForm function that runs if res.status is successful
+- actionRes state (preserve the server action response needed for rendering errors)
+- resetForm function (resets form fields if res.status is successful on workout creation)
 - three handler functions for creating, editing or removing existing exercise inside a workout 
 
 */
@@ -106,7 +107,6 @@ Contains:
 export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
   const [workout, setWorkout] = useState(initWorkout);
   const [actionRes, setActionRes] = useState(emptyRes);
-  const [exerciseToRemove, setExerciseToRemove] = useState({ name: "", id: 0 });
 
   function updateExercises(newExercise: ExerciseType) {
     setWorkout({
@@ -115,10 +115,7 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
       exercises: [...workout.exercises, newExercise],
     });
 
-    if (
-      actionRes.errors?.exercises &&
-      actionRes.errors.exercises.length > 0
-    ) {
+    if (actionRes.errors?.exercises && actionRes.errors.exercises.length > 0) {
       setActionRes({
         ...actionRes,
         errors: {
@@ -129,11 +126,9 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
     }
   }
 
-  function editExercises(editedExercise: ExerciseType, index: number) {
-    const modifiedExercises = workout.exercises.toSpliced(
-      index,
-      1,
-      editedExercise,
+  function editExercises(editedExercise: ExerciseType) {
+    const modifiedExercises = workout.exercises.map((exercise) =>
+      exercise.id === editedExercise.id ? editedExercise : exercise,
     );
 
     setWorkout({
@@ -143,9 +138,9 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
     });
   }
 
-  function removeExercise() {
+  function removeExercise(id: string) {
     const modifiedExercises = workout.exercises.filter(
-      (_, i) => i !== exerciseToRemove.id,
+      (exercise) => exercise.id !== id,
     );
 
     setWorkout({
@@ -162,14 +157,11 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
   return {
     workout,
     actionRes,
-    exerciseToRemove,
     setWorkout,
     setActionRes,
-    setExerciseToRemove,
     updateExercises,
     editExercises,
     removeExercise,
     resetWorkoutForm,
   };
 };
-
