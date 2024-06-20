@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { workouts } from "@/db/schema";
-import { and, eq } from "drizzle-orm/mysql-core/expressions";
+import { and, eq, ilike, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import {
   CreateWorkoutSchema,
@@ -52,7 +52,10 @@ export async function createWorkout(
 
   try {
     const existingWorkout = await db.query.workouts.findFirst({
-      where: and(eq(workouts.title, title.trim()), eq(workouts.userId, userId)),
+      where: and(
+        ilike(workouts.title, title.trim()),
+        eq(workouts.userId, userId),
+      ),
     });
 
     if (existingWorkout) {
@@ -112,11 +115,15 @@ export async function editWorkout(
   const { title, description, exercises } = isValidWorkout.data;
 
   try {
-    const matchingTitleWorkout = await db.query.workouts.findFirst({
-      where: and(eq(workouts.title, title), eq(workouts.userId, userId)),
+    const alreadyExistWorkout = await db.query.workouts.findFirst({
+      where: and(
+        ilike(workouts.title, title.trim()),
+        eq(workouts.userId, userId),
+        ne(workouts.id, workoutId),
+      ),
     });
 
-    if (matchingTitleWorkout && matchingTitleWorkout.id !== workoutId) {
+    if (alreadyExistWorkout) {
       return {
         status: "error",
         message: `Workout with ${title} title already exists.`,
