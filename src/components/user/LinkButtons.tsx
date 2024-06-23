@@ -23,15 +23,13 @@ export const LinkButtons = () => {
           key={link.href}
           href={link.href}
           className={twMerge(
-            "relative flex grow items-center justify-center rounded-xl bg-white shadow-md transition active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-inset dark:ring-slate-700/80",
-            path.includes(link.href) &&
-              "bg-green-500 text-white dark:bg-green-600 ring-0 p-0.5",
+            "relative flex grow items-center justify-center rounded-xl shadow-md transition active:scale-95",
+            path.includes(link.href)
+              ? "bg-green-500 p-0.5 text-white ring-1 ring-white dark:bg-green-600"
+              : "bg-white dark:bg-slate-800 dark:ring-1 dark:ring-inset dark:ring-slate-700/80",
           )}
         >
           {link.icon}
-          {path.includes(link.href) && (
-            <div className="absolute bottom-1.5 h-[1px] w-5 bg-white" />
-          )}
           <p className="sr-only">{link.button} button</p>
         </Link>
       ))}
