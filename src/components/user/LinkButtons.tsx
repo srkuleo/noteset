@@ -5,7 +5,11 @@ import { usePathname } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { HomeIcon, ProfileIcon, LogsIcon } from "../icons/user/links";
 
-import { type PageLink } from "@/util/types";
+export type PageLink = {
+  href: string;
+  icon: JSX.Element;
+  button: "Home" | "Logs" | "Profile";
+};
 
 const pageLinks: PageLink[] = [
   { href: "/workouts", icon: HomeIcon, button: "Home" },
