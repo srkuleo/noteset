@@ -10,14 +10,17 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
   return (
     <Drawer.Root open={open} onOpenChange={setOpen}>
       <Drawer.Trigger className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-900 dark:ring-slate-600">
-        {ShowIcon}
+        <ShowIcon className="size-5" />
         <p className="sr-only">Preview workout</p>
       </Drawer.Trigger>
 
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
-        <Drawer.Content className="fixed inset-x-0 bottom-0 select-none px-2 focus:outline-none">
+        <Drawer.Content
+          aria-describedby={undefined}
+          className="fixed inset-x-0 bottom-0 select-none px-2 focus:outline-none"
+        >
           <div className="rounded-t-modal bg-white pb-safe-bottom ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
             <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
               <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
@@ -28,7 +31,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
             </div>
 
             <div className="flex flex-col px-4 py-8">
-              <div className="grid-cols-preview grid gap-4 overflow-x-scroll pb-8 no-scrollbar md:justify-center">
+              <div className="grid grid-cols-preview gap-4 overflow-x-scroll pb-8 no-scrollbar md:justify-center">
                 <div className="flex flex-col gap-4 rounded-xl bg-slate-50/70 px-4 pt-4 shadow-sm dark:bg-slate-800/45">
                   {workout.exercises.map((exercise) => (
                     <p key={exercise.name} className="pb-4 font-bold">
@@ -57,7 +60,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
 
                 <div className="w-0.5 bg-slate-100 dark:bg-slate-800" />
 
-                <div className="flex flex-col gap-4 px-4 pt-4 ">
+                <div className="flex flex-col gap-4 px-4 pt-4">
                   {workout.exercises.map((exercise, i) =>
                     exercise.comment ? (
                       <p key={i} className="pb-4 font-semibold">
@@ -78,7 +81,7 @@ export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
                 className="flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
               >
                 Hide
-                {HideIcon}
+                <HideIcon className="size-[22px]" />
               </button>
             </div>
           </div>
