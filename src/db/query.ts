@@ -29,12 +29,12 @@ export async function getUserWorkouts(userId: string) {
   }
 }
 
-export async function getWorkoutById(workoutId: number) {
+export async function getWorkoutById(workoutId: number, userId: string) {
   noStore();
 
   try {
     const workout = await db.query.workouts.findFirst({
-      where: eq(workouts.id, workoutId),
+      where: and(eq(workouts.userId, userId), eq(workouts.id, workoutId)),
       columns: {
         id: true,
         title: true,
