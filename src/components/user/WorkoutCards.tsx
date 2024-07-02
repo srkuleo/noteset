@@ -1,9 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { showToast } from "./Toasts";
+import { useState } from "react";
 import { EmptyPage } from "./EmptyPage";
 import { EditSection } from "./EditSection";
 import { RemoveWorkoutModal } from "./RemoveWorkoutModal";
@@ -12,23 +10,8 @@ import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 import type { Workout } from "@/db/schema";
 
 export const WorkoutCards = ({ workouts }: { workouts: Workout[] }) => {
-  const searchParams = useSearchParams();
-  const router = useRouter();
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
   const [workoutToRemove, setWorkoutToRemove] = useState({ title: "", id: 0 });
-
-  const message = searchParams.get("message");
-
-  useEffect(() => {
-    if (message) {
-      //Shows toast if searchParam is provided
-      showToast(message, "success");
-
-      /* Replaces the URL with original /workouts route, preventing toast 
-      from re-rendering on subsequent reloads */
-      router.replace("/workouts");
-    }
-  });
 
   return (
     <>
