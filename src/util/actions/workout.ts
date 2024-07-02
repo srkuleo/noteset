@@ -8,31 +8,7 @@ import {
   CreateWorkoutSchema,
   type WorkoutActionResponse,
   type WorkoutWithoutIds,
-} from "./types";
-
-export async function removeWorkout(
-  workoutId: number,
-  workoutTitle: string,
-): Promise<Omit<WorkoutActionResponse, "timestamp">> {
-  try {
-    await db.delete(workouts).where(eq(workouts.id, workoutId));
-
-    console.log("Workout deleted!");
-
-    revalidatePath("/workouts");
-
-    return {
-      status: "success",
-      message: `${workoutTitle} workout has been removed.`,
-    };
-  } catch (err) {
-    console.error(err);
-    return {
-      status: "error",
-      message: `${workoutTitle} workout could not be removed.`,
-    };
-  }
-}
+} from "@/util/types";
 
 export async function createWorkout(
   userId: string,
@@ -44,7 +20,7 @@ export async function createWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: "Workout could not be created.",
+      message: "Workout could not be created",
     };
   }
 
@@ -63,10 +39,10 @@ export async function createWorkout(
 
       return {
         status: "error",
-        message: `${title} workout already exists.`,
         errors: {
           title: ["Workout with this title already exists."],
         },
+        message: `"${title}" workout already exists`,
       };
     }
 
@@ -85,13 +61,13 @@ export async function createWorkout(
 
     return {
       status: "success",
-      message: `${title} workout has been created.`,
+      message: `${title} workout created`,
     };
   } catch (error) {
     console.log(error);
     return {
       status: "error",
-      message: "Database Error: Workout could not be created.",
+      message: "Database Error: Workout could not be created",
     };
   }
 }
@@ -108,7 +84,7 @@ export async function editWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: "Workout could not be edited.",
+      message: "Workout could not be edited",
     };
   }
 
@@ -126,10 +102,10 @@ export async function editWorkout(
     if (alreadyExistWorkout) {
       return {
         status: "error",
-        message: `Workout with ${title} title already exists.`,
         errors: {
           title: ["Workout with this title already exists."],
         },
+        message: `Workout already exists`,
       };
     }
 
@@ -149,14 +125,38 @@ export async function editWorkout(
     revalidatePath("/workouts");
 
     return {
-      status: "success",
-      message: `${initTitle} workout has been edited.`,
+      status: "success-redirect",
+      message: `"${initTitle}" workout edited`,
     };
   } catch (error) {
     console.log(error);
     return {
       status: "error",
-      message: "Database Error: Workout could not be edited.",
+      message: "Database Error: Workout could not be edited",
+    };
+  }
+}
+
+export async function removeWorkout(
+  workoutId: number,
+  workoutTitle: string,
+): Promise<Omit<WorkoutActionResponse, "timestamp">> {
+  try {
+    await db.delete(workouts).where(eq(workouts.id, workoutId));
+
+    console.log("Workout deleted!");
+
+    revalidatePath("/workouts");
+
+    return {
+      status: "success",
+      message: `"${workoutTitle}" workout removed`,
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      status: "error",
+      message: "Database Error: Workout could not be removed",
     };
   }
 }
