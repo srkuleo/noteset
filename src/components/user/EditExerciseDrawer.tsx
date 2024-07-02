@@ -6,11 +6,11 @@ import {
   SetsInput,
   WeightInputs,
 } from "./ExerciseInputs";
-import { SubmitFormButton } from "./SubmitFormButton";
+import { SubmitFormButton } from "./FormButtons";
 
 import { AddExerciseSchema, type ExerciseType } from "@/util/types";
 
-export const EditExerciseForm = ({
+export const EditExerciseDrawer = ({
   isOpen,
   exercise,
   setIsOpen,
@@ -28,10 +28,10 @@ export const EditExerciseForm = ({
 
         <Drawer.Content className="fixed inset-x-0 top-0 px-4 focus:outline-none">
           <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
-            <ExerciseForm
+            <EditExerciseForm
               exercise={exercise}
               editExercises={editExercises}
-              closeModal={() => setIsOpen(false)}
+              closeDrawer={() => setIsOpen(false)}
             />
             <Drawer.Handle
               preventCycle
@@ -44,14 +44,14 @@ export const EditExerciseForm = ({
   );
 };
 
-const ExerciseForm = ({
+const EditExerciseForm = ({
   exercise,
   editExercises,
-  closeModal,
+  closeDrawer,
 }: {
   exercise: ExerciseType;
   editExercises: (editedExercise: ExerciseType) => void;
-  closeModal: () => void;
+  closeDrawer: () => void;
 }) => {
   const initExercise = { ...exercise };
   const {
@@ -77,7 +77,7 @@ const ExerciseForm = ({
     const validExercise = isValidExercise.data;
 
     editExercises(validExercise);
-    closeModal();
+    closeDrawer();
   }
 
   return (
@@ -114,7 +114,7 @@ const ExerciseForm = ({
           type="button"
           onClick={async () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
-            closeModal();
+            closeDrawer();
           }}
           className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
         >
