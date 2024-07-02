@@ -4,14 +4,10 @@ export const metadata: Metadata = {
   title: "Workout",
 };
 
-export default function WorkoutPageLayout({
+export default async function WorkoutPageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <main className="flex min-h-screen flex-col">
-     {children}
-    </main>
-  );
+  return <main className="flex min-h-screen flex-col">{children}</main>;
 }
