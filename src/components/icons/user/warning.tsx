@@ -5,7 +5,7 @@ export const RetryIcon = (
     viewBox="0 0 24 24"
     strokeWidth={1.7}
     stroke="currentColor"
-    className="h-5 w-5"
+    className="size-5"
   >
     <path
       strokeLinecap="round"
@@ -17,13 +17,12 @@ export const RetryIcon = (
 
 export const EmptyIcon = (
   <svg
-    width={56}
-    height={56}
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
+    className="size-14"
   >
     <path
       strokeLinecap="round"
@@ -40,8 +39,7 @@ export const SadIcon = (
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    width={56}
-    height={56}
+    className="size-14"
   >
     <path
       strokeLinecap="round"
@@ -58,24 +56,6 @@ export const DangerIcon = (
     viewBox="0 0 24 24"
     strokeWidth={2}
     stroke="currentColor"
-    width={20}
-    height={20}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-    />
-  </svg>
-);
-
-export const ErrorTriangleIcon = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
     className="size-5"
   >
     <path
@@ -85,3 +65,24 @@ export const ErrorTriangleIcon = (
     />
   </svg>
 );
+
+export const ErrorTriangleIcon = ({ size }: { size: number }) => {
+  return (
+    <div className="text-red-500">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className={`size-${size}`}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+        />
+      </svg>
+    </div>
+  );
+};
