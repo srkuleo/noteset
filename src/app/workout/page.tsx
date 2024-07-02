@@ -1,6 +1,7 @@
-import { getWorkoutById } from "@/db/query";
-import { notFound } from "next/navigation";
 import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import { getAuth } from "@/util/actions/auth";
+import { getWorkoutById } from "@/db/query";
 import { ThemeButton } from "@/components/landing/ThemeButton";
 
 export default async function WorkoutPage({
@@ -8,17 +9,23 @@ export default async function WorkoutPage({
 }: {
   searchParams: { id: string };
 }) {
+  const { user } = await getAuth();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   const coercedId = Number(searchParams.id);
-  const workout = await getWorkoutById(coercedId);
+  const workout = await getWorkoutById(coercedId, user.id);
 
   if (!workout) notFound();
 
   return (
     <>
       <div className="fixed w-full select-none bg-gradient-to-r from-green-600 from-20% to-violet-600 pt-safe-top dark:from-green-700 dark:to-violet-700">
-        <nav className="flex items-center justify-between px-4  py-3 font-manrope">
+        <nav className="flex items-center justify-between px-4 py-3 font-manrope">
           <p className="text-sm uppercase text-white">
-            Workout: <span className="text-xl ">{workout.title}</span>
+            Workout: <span className="text-xl">{workout.title}</span>
           </p>
           <ThemeButton />
         </nav>
@@ -29,7 +36,7 @@ export default async function WorkoutPage({
           You are currently tracking {workout.title} workout
         </p>
         <div className="space-y-2 pb-10">
-          <p className="text-lg ">This is your description</p>
+          <p className="text-lg">This is your description</p>
           <p>{workout.description}</p>
         </div>
         <Link

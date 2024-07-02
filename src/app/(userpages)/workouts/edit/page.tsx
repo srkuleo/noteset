@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { getAuth } from "@/util/actions/auth";
 import { getWorkoutById } from "@/db/query";
 import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
 import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
@@ -15,8 +16,14 @@ export default async function EditWorkoutPage({
 }: {
   searchParams: { id: string };
 }) {
+  const { user } = await getAuth();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   const coercedWorkoutId = Number(searchParams.id);
-  const fetchedWorkout = await getWorkoutById(coercedWorkoutId);
+  const fetchedWorkout = await getWorkoutById(coercedWorkoutId, user.id);
 
   if (!fetchedWorkout) notFound();
 
