@@ -1,6 +1,6 @@
 import { LandingPageBar } from "@/components/landing/LandingPageBar";
 
-export default function LandingPageLayout({
+export default async function LandingPageLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -9,7 +9,9 @@ export default function LandingPageLayout({
     <main className="flex flex-col">
       <LandingPageBar />
       <UiMessage />
-      {children}
+      <div className="mb-10 flex grow flex-col justify-center px-8 pb-8 pt-safe-top lg:mb-32">
+        {children}
+      </div>
     </main>
   );
 }
