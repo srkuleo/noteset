@@ -1,14 +1,22 @@
+import { redirect } from "next/navigation";
+import { getAuth } from "@/util/actions/auth";
 import { Logo } from "@/components/icons/landing/logo";
 import { ThemeButton } from "@/components/landing/ThemeButton";
 import { GitHubButton } from "@/components/landing/GitHubButton";
 import { LinkButtons } from "@/components/user/LinkButtons";
 import { LogoutButton } from "@/components/user/LogoutButton";
 
-export default function UserPagesLayout({
+export default async function UserPagesLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { user } = await getAuth();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
     <main className="pt-safe-top">
       <UserPageHeader />
