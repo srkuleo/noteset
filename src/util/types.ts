@@ -1,17 +1,5 @@
 import { z } from "zod";
 
-export type PageLink = {
-  href: string;
-  icon: JSX.Element;
-  button: "Home" | "Logs" | "Profile";
-};
-
-export type UserProfile = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
-
 export type ExerciseActionResponse = {
   errors?: {
     name?: string[] | undefined;
@@ -24,7 +12,7 @@ export type ExerciseActionResponse = {
 };
 
 export type WorkoutActionResponse = {
-  status: "success" | "error" | "unset";
+  status: "success" | "success-redirect" | "error" | "unset";
   errors?: {
     title?: string[];
     exercises?: string[];
