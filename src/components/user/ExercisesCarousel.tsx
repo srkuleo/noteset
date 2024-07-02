@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { AddExerciseDrawer } from "./AddExerciseDrawer";
+import { EditExerciseDrawer } from "./EditExerciseDrawer";
+import { RemoveExerciseModal } from "./RemoveExerciseModal";
 import {
   AddIcon,
   EditExerciseIcon,
   RemoveExerciseIcon,
 } from "../icons/user/modify";
-import { AddExerciseForm } from "./AddExerciseForm";
-import { EditExerciseForm } from "./EditExerciseForm";
-import { RemoveExerciseModal } from "./RemoveExerciseModal";
 
 import type { ExerciseType } from "@/util/types";
 
@@ -37,13 +37,13 @@ export const ExercisesCarousel = ({
 
   return (
     <>
-      <AddExerciseForm
+      <AddExerciseDrawer
         isOpen={openAddDrawer}
         setIsOpen={setOpenAddDrawer}
         updateExercises={updateExercises}
       />
 
-      <EditExerciseForm
+      <EditExerciseDrawer
         isOpen={openEditDrawer}
         setIsOpen={setOpenEditDrawer}
         exercise={currentExercise}
