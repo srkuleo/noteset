@@ -6,8 +6,10 @@ Making this app with an idea to use it in a gym instead of a notebook. Still WIP
 
 ## Future updates and plans:
 
-- _Set up own auth flow with Lucia 3.0._
+- _Add drag option to rearrange exercises when editing._
 
 - _Finish UI and logic for workout pages._
 
 - _Modify profile and logs page to have an actual content._
+
+- _Add email verification and password reset option, option to delete profile with cascading, uploading profile picture._
