@@ -1,12 +1,16 @@
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { redirect } from "next/navigation";
+import { getAuth } from "@/util/actions/auth";
 import { getUserWorkouts } from "@/db/query";
 import { WorkoutCards } from "./WorkoutCards";
 
 export const WorkoutsPageContent = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const { user } = await getAuth();
 
-  const workouts = await getUserWorkouts(user?.id as string);
+  if (!user) {
+    redirect("/login");
+  }
+
+  const workouts = await getUserWorkouts(user.id);
 
   return <WorkoutCards workouts={workouts} />;
 };
