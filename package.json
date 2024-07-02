@@ -12,13 +12,16 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@kinde-oss/kinde-auth-nextjs": "^2.3.1",
+    "@lucia-auth/adapter-drizzle": "^1.0.7",
     "@neondatabase/serverless": "^0.9.3",
+    "bcrypt": "^5.1.1",
     "drizzle-orm": "^0.31.2",
     "framer-motion": "^11.2.11",
     "lodash.debounce": "^4.0.8",
+    "lucia": "^3.2.0",
     "next": "^14.2.4",
     "next-themes": "^0.3.0",
+    "oslo": "^1.2.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "sonner": "^1.5.0",
@@ -27,6 +30,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/lodash.debounce": "^4.0.9",
     "@types/node": "latest",
     "@types/react": "latest",
