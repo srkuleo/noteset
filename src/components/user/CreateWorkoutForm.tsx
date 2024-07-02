@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 import { emptyWorkout, useWorkouts } from "@/util/hooks";
-import { createWorkout } from "@/util/actions";
+import { createWorkout } from "@/util/actions/workout";
 import { showToast } from "./Toasts";
 import { InputFieldError } from "./InputFieldError";
-import { SubmitFormButton } from "./SubmitFormButton";
+import { SubmitFormButton } from "./FormButtons";
 import { ExercisesCarousel } from "./ExercisesCarousel";
 
 export const CreateWorkoutForm = ({ userId }: { userId: string }) => {

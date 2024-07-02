@@ -1,14 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { useWorkouts } from "@/util/hooks";
-import { editWorkout } from "@/util/actions";
+import { editWorkout } from "@/util/actions/workout";
 import { showToast } from "./Toasts";
 import { InputFieldError } from "./InputFieldError";
 import { ExercisesCarousel } from "./ExercisesCarousel";
-import { SubmitFormButton } from "./SubmitFormButton";
+import { SubmitFormButton } from "./FormButtons";
 
 import type { FetchedWorkout } from "@/db/schema";
 
@@ -35,12 +34,13 @@ export const EditWorkoutForm = ({
       fetchedWorkout.id,
     );
 
-    if (res.status === "success") {
-      redirect(`/workouts?message=${res.message}`);
+    if (res.status === "success-redirect") {
+      showToast(res.message, res.status, "/workouts", "View workouts");
+    } else if (res.status === "success" || res.status === "error") {
+      showToast(res.message, res.status);
     }
 
     setActionRes({ ...res });
-    showToast(res.message, "error");
   }
 
   return (

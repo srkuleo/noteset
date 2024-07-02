@@ -1,4 +1,4 @@
-import { removeWorkout } from "@/util/actions";
+import { removeWorkout } from "@/util/actions/workout";
 import { showToast } from "./Toasts";
 import { Drawer } from "vaul";
 import { DangerIcon } from "../icons/user/warning";
@@ -18,6 +18,7 @@ export const RemoveWorkoutModal = ({
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
         <Drawer.Content
+          aria-describedby={undefined}
           data-vaul-no-drag
           className="fixed inset-x-0 bottom-0 select-none space-y-4 px-4 pb-12 focus:outline-none"
         >
@@ -26,10 +27,10 @@ export const RemoveWorkoutModal = ({
               {DangerIcon}
             </div>
             <div className="px-1 pt-2">
-              <p className="text-center text-base font-semibold leading-snug text-slate-600 dark:text-slate-400">
+              <Drawer.Title className="text-center text-base font-semibold leading-snug text-slate-600 dark:text-slate-400">
                 This action is irreversible. Proceeding further will result in
                 permanent data loss. Continue?
-              </p>
+              </Drawer.Title>
             </div>
             <button
               onClick={async () => {
