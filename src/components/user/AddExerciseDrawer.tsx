@@ -1,6 +1,7 @@
-import { useExerciseForm } from "@/util/hooks";
 import { Drawer } from "vaul";
 import { AnimatePresence, motion } from "framer-motion";
+import { generateIdFromEntropySize } from "lucia";
+import { useExerciseForm } from "@/util/hooks";
 import {
   NameInput,
   RepsInputs,
@@ -65,13 +66,12 @@ const AddExerciseForm = ({
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
-    generateExerciseId,
   } = useExerciseForm(initExercise);
 
   function createExercise() {
     const exerciseWithId: ExerciseType = {
       ...tempExercise,
-      id: generateExerciseId(),
+      id: generateIdFromEntropySize(10),
     };
     const isValidExercise = AddExerciseSchema.safeParse(exerciseWithId);
 
