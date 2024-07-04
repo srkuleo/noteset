@@ -65,11 +65,6 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
   }
 
-  function generateExerciseId() {
-    const randomComponent = Math.random().toString(36).substring(2, 10);
-    return "id" + String(Date.now()) + randomComponent;
-  }
-
   return {
     tempExercise,
     exerciseFormErrors,
@@ -78,7 +73,6 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
-    generateExerciseId,
   };
 };
 
