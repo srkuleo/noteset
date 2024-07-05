@@ -5,7 +5,7 @@ export const HomeIcon = (
     viewBox="0 0 24 24"
     strokeWidth={2}
     stroke="currentColor"
-    className="size-6"
+    className="size-[22px]"
   >
     <path
       strokeLinecap="round"
@@ -22,7 +22,7 @@ export const ProfileIcon = (
     viewBox="0 0 24 24"
     strokeWidth={2}
     stroke="currentColor"
-    className="size-6"
+    className="size-[22px]"
   >
     <path
       strokeLinecap="round"
@@ -39,7 +39,7 @@ export const LogsIcon = (
     viewBox="0 0 24 24"
     strokeWidth={2}
     stroke="currentColor"
-    className="size-6"
+    className="size-[22px]"
   >
     <path
       strokeLinecap="round"
