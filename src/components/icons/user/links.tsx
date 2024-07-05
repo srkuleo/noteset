@@ -3,9 +3,9 @@ export const HomeIcon = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.7}
+    strokeWidth={2}
     stroke="currentColor"
-    className="size-5"
+    className="size-6"
   >
     <path
       strokeLinecap="round"
@@ -20,9 +20,9 @@ export const ProfileIcon = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.7}
+    strokeWidth={2}
     stroke="currentColor"
-    className="size-5"
+    className="size-6"
   >
     <path
       strokeLinecap="round"
@@ -37,9 +37,9 @@ export const LogsIcon = (
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.7}
+    strokeWidth={2}
     stroke="currentColor"
-    className="size-5"
+    className="size-6"
   >
     <path
       strokeLinecap="round"

@@ -11,7 +11,7 @@ export const LogoutButton = () => {
 
   return (
     <Drawer.Root open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger className="flex items-center rounded-xl bg-white px-4 py-2 shadow-md active:scale-95 dark:bg-slate-800 dark:ring-1 dark:ring-inset dark:ring-slate-700/80">
+      <Drawer.Trigger className="flex items-center justify-center py-2.5 px-5">
         {LogoutIcon}
         <p className="sr-only">Logout button</p>
       </Drawer.Trigger>
