@@ -1,7 +1,6 @@
 import Link from "next/link";
 import debounce from "lodash.debounce";
 import { toast } from "sonner";
-import { twMerge } from "tailwind-merge";
 import { ErrorIcon, SuccessIcon } from "../icons/user/toasts";
 
 type ToastType = "error" | "success" | "success-redirect";
@@ -30,10 +29,7 @@ export const Toast = ({
 }) => {
   return (
     <div
-      className={twMerge(
-        "flex items-center justify-between gap-2 rounded-lg bg-white p-4 font-manrope text-sm shadow-md ring-[1.5px] dark:bg-slate-900",
-        type === "error" ? "ring-red-500" : "ring-green-500",
-      )}
+      className="flex items-center justify-between gap-2 rounded-lg bg-white p-4 font-manrope text-sm shadow-md ring-[1.5px] dark:bg-slate-900 ring-slate-300/90 dark:ring-slate-800"
     >
       <div className="flex items-center gap-1.5">
         {type === "success" ? (
