@@ -1,5 +1,6 @@
-import { useExerciseForm } from "@/util/hooks";
 import { Drawer } from "vaul";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { useExerciseForm } from "@/util/hooks";
 import {
   NameInput,
   RepsInputs,
@@ -26,8 +27,15 @@ export const EditExerciseDrawer = ({
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
-        <Drawer.Content className="fixed inset-x-0 top-0 px-4 focus:outline-none">
+        <Drawer.Content
+          aria-describedby={undefined}
+          className="fixed inset-x-0 top-0 px-4 focus:outline-none"
+        >
           <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+            <VisuallyHidden asChild>
+              <Drawer.Title>Adding new exercise</Drawer.Title>
+            </VisuallyHidden>
+
             <EditExerciseForm
               exercise={exercise}
               editExercises={editExercises}
