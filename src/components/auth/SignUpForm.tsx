@@ -3,10 +3,10 @@
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { signUp, type AuthActionResponse } from "@/util/actions/auth";
+import { showToast } from "../user/Toasts";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 import { InputFieldError } from "../user/InputFieldError";
 import { SubmitFormButton } from "../user/FormButtons";
-import { showToast } from "../user/Toasts";
 
 export const SignUpForm = () => {
   const [actionRes, setActionRes] = useState<AuthActionResponse>({});
