@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import { emptyWorkout, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions/workout";
 import { showToast } from "./Toasts";
@@ -94,7 +94,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
       />
 
       <div
-        className={twMerge(
+        className={twJoin(
           "flex justify-end gap-2",
           workout.exercises.length === 0 &&
             !actionRes.errors?.exercises &&

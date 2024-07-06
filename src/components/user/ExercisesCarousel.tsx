@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 import { EditExerciseDrawer } from "./EditExerciseDrawer";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
@@ -91,15 +91,15 @@ export const ExercisesCarousel = ({
           </div>
 
           <div
-            className={twMerge(
-              "flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-2 py-4 no-scrollbar",
+            className={twJoin(
+              "flex snap-x snap-proximity items-start gap-4 overflow-x-scroll px-1 py-4 no-scrollbar",
               exercises.length === 1 && "justify-center",
             )}
           >
             {exercises.map((exercise) => (
               <div
                 key={exercise.id}
-                className="relative min-w-[95%] snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
+                className="relative w-[95%] shrink-0 snap-center rounded-lg bg-slate-50 p-4 shadow-md ring-1 ring-slate-200 dark:bg-slate-900/50 dark:ring-slate-700"
               >
                 <div className="absolute -right-2 -top-4 flex gap-3">
                   <button
