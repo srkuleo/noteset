@@ -37,7 +37,7 @@ export const sessions = pgTable("sessions", {
   id: varchar("id", { length: 255 }).primaryKey(),
   userId: varchar("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   expiresAt: timestamp("expires_at", {
     withTimezone: true,
     mode: "date",
@@ -54,7 +54,7 @@ export const workouts = pgTable(
     status: statusEnum("status").default("current"),
     userId: varchar("user_id", { length: 255 })
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id, { onDelete: "cascade" }),
     doneAt: timestamp("done_at", { mode: "string" }),
     timeElapsed: varchar("time_elapsed", { length: 100 }),
   },

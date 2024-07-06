@@ -43,6 +43,13 @@
       "when": 1719851418790,
       "tag": "0005_mighty_ares",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1720290089025,
+      "tag": "0006_parallel_toro",
+      "breakpoints": true
     }
   ]
 }
