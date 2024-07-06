@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Drawer } from "vaul";
 import { logout } from "@/util/actions/auth";
-import { LogoutIcon, QuestionMarkIcon } from "../icons/user/logout";
+import { LogoutIcon } from "../icons/user/logout";
 import { ConfirmLogOutButton } from "./FormButtons";
 
 export const LogoutButton = () => {
@@ -11,8 +11,9 @@ export const LogoutButton = () => {
 
   return (
     <Drawer.Root open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger className="flex items-center justify-center py-2.5 px-5">
+      <Drawer.Trigger className="flex flex-col items-center justify-center px-5">
         {LogoutIcon}
+        <span className="font-manrope text-[10px]">Log out</span>
         <p className="sr-only">Logout button</p>
       </Drawer.Trigger>
 
@@ -25,14 +26,10 @@ export const LogoutButton = () => {
           className="fixed inset-x-0 bottom-0 select-none space-y-4 px-4 pb-12 focus:outline-none"
         >
           <div className="flex flex-col items-center gap-3 rounded-modal bg-slate-50/90 pt-5 dark:bg-slate-700/70">
-            <div className="rounded-full bg-green-500 p-1 text-green-100 shadow-sm dark:bg-green-100/95 dark:text-green-500">
-              {QuestionMarkIcon}
-            </div>
-            <div className="px-1 pt-2">
-              <Drawer.Title className="text-center text-base font-semibold leading-snug text-slate-600 dark:text-slate-400">
-                Are you sure you want to log out?
-              </Drawer.Title>
-            </div>
+            <Drawer.Title className="px-2 text-center font-nunito leading-snug text-slate-600 dark:text-slate-400">
+              Are you sure you want to log out?
+            </Drawer.Title>
+
             <form action={logout} className="w-full">
               <ConfirmLogOutButton />
             </form>

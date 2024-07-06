@@ -2,20 +2,20 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { twMerge } from "tailwind-merge";
+import { twJoin } from "tailwind-merge";
 import { usePathname } from "next/navigation";
 import { HomeIcon, ProfileIcon, LogsIcon } from "../icons/user/links";
 
 export type PageLink = {
-  href: string;
+  href: "/workouts" | "/profile" | "/logs";
   icon: JSX.Element;
-  button: "Home" | "Logs" | "Profile";
+  label: "Home" | "Logs" | "Profile";
 };
 
 const pageLinks: PageLink[] = [
-  { href: "/workouts", icon: HomeIcon, button: "Home" },
-  { href: "/profile", icon: ProfileIcon, button: "Profile" },
-  { href: "/logs", icon: LogsIcon, button: "Logs" },
+  { href: "/workouts", icon: HomeIcon, label: "Home" },
+  { href: "/profile", icon: ProfileIcon, label: "Profile" },
+  { href: "/logs", icon: LogsIcon, label: "Logs" },
 ];
 
 export const LinkButtons = () => {
@@ -27,7 +27,7 @@ export const LinkButtons = () => {
         <Link
           key={link.href}
           href={link.href}
-          className="relative flex grow items-center justify-center rounded-full py-2.5"
+          className="relative flex grow flex-col items-center justify-center rounded-full py-1"
         >
           {path.includes(link.href) && (
             <motion.div
@@ -37,14 +37,22 @@ export const LinkButtons = () => {
             />
           )}
           <span
-            className={twMerge(
+            className={twJoin(
               "relative z-10",
               path.includes(link.href) && "text-white",
             )}
           >
             {link.icon}
           </span>
-          <p className="sr-only">{link.button} button</p>
+          <span
+            className={twJoin(
+              "relative z-10 font-manrope text-[10px]",
+              path.includes(link.href) && "text-white",
+            )}
+          >
+            {link.label}
+          </span>
+          <p className="sr-only">{link.label} button</p>
         </Link>
       ))}
     </>
