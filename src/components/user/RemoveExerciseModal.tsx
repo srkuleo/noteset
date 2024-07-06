@@ -22,6 +22,7 @@ export const RemoveExerciseModal = ({
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
         <Drawer.Content
+          aria-describedby={undefined}
           data-vaul-no-drag
           className="fixed inset-x-0 bottom-0 select-none space-y-4 px-4 pb-12 focus:outline-none"
         >
@@ -29,15 +30,14 @@ export const RemoveExerciseModal = ({
             <div className="mx-auto w-fit rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
               {DangerIcon}
             </div>
-            <div className="px-1 pt-2">
-              <p className="text-center font-semibold leading-snug text-slate-600 dark:text-slate-400">
-                Are you sure you want to remove{" "}
-                <span className="font-bold text-slate-700 dark:text-slate-200">
-                  {exerciseName}
-                </span>{" "}
-                exercise from the current list? This action is irreversible.
-              </p>
-            </div>
+
+            <Drawer.Title className="px-2 pt-2 text-center font-nunito text-sm leading-snug text-slate-600 dark:text-slate-400">
+              Are you sure you want to remove{" "}
+              <span className="font-semibold text-slate-700 dark:text-slate-100">
+                {exerciseName}
+              </span>{" "}
+              exercise from the current list? This action is irreversible.
+            </Drawer.Title>
 
             <div className="flex flex-col">
               {isEditWorkoutPage && typeof openEditDrawer === "function" && (
@@ -51,6 +51,7 @@ export const RemoveExerciseModal = ({
                   Modify {exerciseName}
                 </button>
               )}
+              
               <button
                 onClick={() => {
                   removeExercise();

@@ -26,12 +26,12 @@ export const RemoveWorkoutModal = ({
             <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
               {DangerIcon}
             </div>
-            <div className="px-1 pt-2">
-              <Drawer.Title className="text-center text-base font-semibold leading-snug text-slate-600 dark:text-slate-400">
-                This action is irreversible. Proceeding further will result in
-                permanent data loss. Continue?
-              </Drawer.Title>
-            </div>
+
+            <Drawer.Title className="px-2 pt-2 text-center font-nunito text-sm leading-snug text-slate-600 dark:text-slate-400">
+              This action is irreversible. Proceeding further will result in
+              permanent data loss. Continue?
+            </Drawer.Title>
+
             <button
               onClick={async () => {
                 const res = await removeWorkout(
@@ -52,6 +52,7 @@ export const RemoveWorkoutModal = ({
               Remove {workoutToRemove.title}
             </button>
           </div>
+
           <button
             onClick={async () => {
               await new Promise((resolve) => setTimeout(resolve, 100));
