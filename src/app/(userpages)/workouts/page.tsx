@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function WorkoutsPage() {
   return (
-    <UserPagesWrapper className="mb-20">
+    <UserPagesWrapper className="mb-24">
       <WorkoutsPageHeader />
       <Suspense fallback={<LoadingWorkoutsSkeleton />}>
         <WorkoutsPageContent />

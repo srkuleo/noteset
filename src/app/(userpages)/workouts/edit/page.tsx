@@ -28,7 +28,7 @@ export default async function EditWorkoutPage({
   if (!fetchedWorkout) notFound();
 
   return (
-    <UserPagesWrapper>
+    <UserPagesWrapper className="mb-24">
       <UserPagesHeadingText label={`Editing ${fetchedWorkout.title}`} />
       <EditWorkoutForm fetchedWorkout={fetchedWorkout} />
     </UserPagesWrapper>
