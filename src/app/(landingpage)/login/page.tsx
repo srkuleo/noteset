@@ -17,10 +17,8 @@ export default async function LoginPage() {
   }
 
   return (
-    <div className="space-y-6 px-7 sm:px-[150px] md:px-[200px] lg:px-[300px] xl:px-[450px] 2xl:px-[500px]">
-      <h1 className="font-manrope text-[26px] font-semibold">
-        Hey, welcome back!
-      </h1>
+    <div className="space-y-6 px-7 pt-24 sm:px-[150px] md:px-[200px] lg:px-[300px] xl:px-[450px] 2xl:px-[500px]">
+      <h2 className="text-[26px] font-semibold">Hey, welcome back!</h2>
 
       <LoginForm />
 

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function RegisterPage() {
   return (
-    <div className="space-y-6 px-7 sm:px-[150px] md:px-[200px] lg:px-[300px] xl:px-[450px] 2xl:px-[500px]">
+    <div className="space-y-6 px-7 pt-24 sm:px-[150px] md:px-[200px] lg:px-[300px] xl:px-[450px] 2xl:px-[500px]">
       <h2 className="text-[26px] font-semibold">Create an account</h2>
 
       <SignUpForm />
