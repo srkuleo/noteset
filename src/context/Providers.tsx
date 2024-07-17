@@ -7,13 +7,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
       attribute="class"
-      enableSystem={true}
       defaultTheme="system"
+      enableSystem={true}
       enableColorScheme={true}
       themes={["system", "dark", "light"]}
     >
       {children}
-      <Toaster duration={5000} position="bottom-center" />
+      <Toaster duration={4000} position="bottom-center" />
     </ThemeProvider>
   );
 }
