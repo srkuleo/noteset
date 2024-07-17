@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { getAuth } from "@/util/actions/auth";
-import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
 import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
 
 import type { Metadata } from "next";
@@ -19,12 +18,17 @@ export default async function ProfilePage() {
   const userJoined = user.createdAt.substring(0, 10);
 
   return (
-    <UserPagesWrapper>
-      <UserPagesHeadingText label="Profile page" />
-      <p className="">Username: {user.username}</p>
-      <p>Email: {user.email}</p>
-      <p>Verified: {user.isVerifiedEmail ? "Yes" : "No"}</p>
-      <p>Joined: {userJoined}</p>
-    </UserPagesWrapper>
+    <>
+      <div className="border-b border-slate-300/80 px-6 py-4 dark:border-slate-800">
+        <UserPagesHeadingText label="Profile page" />
+      </div>
+
+      <main className="space-y-4 px-6 py-2">
+        <p className="">Username: {user.username}</p>
+        <p>Email: {user.email}</p>
+        <p>Verified: {user.isVerifiedEmail ? "Yes" : "No"}</p>
+        <p>Joined: {userJoined}</p>
+      </main>
+    </>
   );
 }
