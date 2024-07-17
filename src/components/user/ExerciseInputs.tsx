@@ -15,7 +15,7 @@ export const NameInput = ({
     <div className="flex flex-col gap-2">
       <label
         htmlFor="name"
-        className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
+        className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Name
       </label>
@@ -52,7 +52,7 @@ export const SetsInput = ({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={needMoreSets ? "setsInput" : "Set 1"}
-        className="pl-1 text-sm font-semibold uppercase dark:text-slate-200"
+        className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Sets
       </label>
@@ -86,7 +86,7 @@ export const SetsInput = ({
               type="button"
               onClick={() => handleSetsInput(cS)}
               className={twMerge(
-                "rounded-xl bg-slate-200/80 px-6 py-2 font-manrope text-sm ring-1 ring-slate-400/50 dark:bg-slate-900/80 dark:ring-slate-700",
+                "rounded-xl bg-white px-6 py-2 font-manrope text-sm font-semibold ring-1 ring-slate-400/40 dark:bg-slate-900/80 dark:ring-slate-700",
                 sets === cS &&
                   "bg-green-500 text-white dark:bg-green-600 dark:ring-slate-50",
               )}
@@ -123,10 +123,10 @@ export const RepsInputs = ({
     <div className="flex flex-col gap-1">
       <label
         htmlFor="rep 1"
-        className="flex items-center gap-2 pl-1 font-manrope text-sm font-semibold uppercase dark:text-slate-200"
+        className="flex items-center gap-2 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Reps
-        <span className="text-xs lowercase italic text-slate-400/65 dark:text-slate-500">
+        <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
           (e.g. 6-8, 10)
         </span>
       </label>
@@ -169,10 +169,10 @@ export const WeightInputs = ({
     <div className="flex flex-col gap-1">
       <label
         htmlFor="weight 1"
-        className="flex items-center gap-2 pl-1 font-manrope text-sm font-semibold uppercase dark:text-slate-200"
+        className="flex items-center gap-2 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Weights
-        <span className="text-xs lowercase italic text-slate-400/65 dark:text-slate-500">
+        <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
           (e.g. 25, 2,5)
         </span>
       </label>
