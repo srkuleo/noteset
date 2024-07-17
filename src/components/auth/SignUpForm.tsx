@@ -2,11 +2,13 @@
 
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { signUp, type AuthActionResponse } from "@/util/actions/auth";
-import { showToast } from "../user/Toasts";
+import { signUp } from "@/util/actions/auth";
+import { showToast } from "../Toasts";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 import { InputFieldError } from "../user/InputFieldError";
-import { SubmitFormButton } from "../user/FormButtons";
+import { SubmitFormButton } from "../SubmitButtons";
+
+import type { AuthActionResponse } from "@/util/types";
 
 export const SignUpForm = () => {
   const [actionRes, setActionRes] = useState<AuthActionResponse>({});
@@ -133,7 +135,7 @@ export const SignUpForm = () => {
       <SubmitFormButton
         label="Sign Up"
         loading="Creating profile..."
-        className="mt-6 rounded-full py-2.5"
+        className="mt-6 rounded-full py-2.5 shadow-md"
       />
     </form>
   );
