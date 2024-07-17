@@ -15,7 +15,7 @@ const config: Config = {
         manrope: ["var(--font-manrope)"],
       },
       gridTemplateColumns: {
-        exercise: "2fr 1fr 2fr 2fr",
+        // exercise: "2fr 1fr 1fr",
         preview: "max-content 10px max-content 10px max-content",
       },
       borderRadius: {
