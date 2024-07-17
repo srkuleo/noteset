@@ -1,21 +1,17 @@
 import Link from "next/link";
-import { Logo } from "../icons/landing/logo";
-import { ThemeButton } from "./ThemeButton";
-import { GitHubButton } from "./GitHubButton";
+import { Logo } from "../icons/logo";
+import { ThemeButton } from "../ThemeButton";
+import { GitHubButton } from "../GitHubButton";
 
 export const LandingPageBar = () => {
   return (
-    <div className="fixed inset-x-0 top-0 border-b border-slate-300 bg-slate-200/60 px-4 backdrop-blur-md pt-safe-top dark:border-slate-800/90 dark:bg-slate-950/65">
-      <div className="flex justify-between py-2">
-        <Link href="/">
-          <Logo />
-        </Link>
+    <header className="border-b border-slate-400/40 px-4 dark:border-slate-800/90">
+      <div className="flex items-center gap-4 py-2 [&>*:nth-child(1)]:mr-auto">
+        <Link href="/">{Logo}</Link>
 
-        <div className="flex items-center gap-4">
-          <ThemeButton />
-          <GitHubButton />
-        </div>
+        <ThemeButton />
+        <GitHubButton />
       </div>
-    </div>
+    </header>
   );
 };
