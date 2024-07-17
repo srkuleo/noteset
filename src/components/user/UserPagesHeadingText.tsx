@@ -9,14 +9,5 @@ export const UserPagesHeadingText = ({
   label,
   className,
 }: HeadingTextProps) => {
-  return (
-    <h2
-      className={twMerge(
-        "pb-6 pt-2 text-[26px] font-extrabold text-slate-600 dark:text-white",
-        className,
-      )}
-    >
-      {label}
-    </h2>
-  );
+  return <h2 className={twMerge("text-[26px]", className)}>{label}</h2>;
 };
