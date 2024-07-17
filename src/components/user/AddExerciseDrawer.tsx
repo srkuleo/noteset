@@ -3,13 +3,14 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AnimatePresence, motion } from "framer-motion";
 import { generateIdFromEntropySize } from "lucia";
 import { useExerciseForm } from "@/util/hooks";
+import { AddIcon } from "../icons/user/modify";
 import {
   NameInput,
   RepsInputs,
   SetsInput,
   WeightInputs,
 } from "./ExerciseInputs";
-import { SubmitFormButton } from "./FormButtons";
+import { SubmitFormButton } from "../SubmitButtons";
 
 import { type ExerciseType, AddExerciseSchema } from "@/util/types";
 
@@ -31,15 +32,25 @@ export const AddExerciseDrawer = ({
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
   return (
-    <Drawer.Root open={isOpen} onOpenChange={setIsOpen} direction="top">
+    <Drawer.Root
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      direction="top"
+      noBodyStyles
+    >
+      <Drawer.Trigger className="rounded-full p-2 text-violet-400 focus:outline-none active:bg-slate-200 dark:text-violet-400 active:dark:bg-slate-700">
+        <AddIcon size={26} strokeWidth={2} />
+        <span className="sr-only">Add Exercise</span>
+      </Drawer.Trigger>
+
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
+        <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
         <Drawer.Content
           aria-describedby={undefined}
-          className="fixed inset-x-0 top-0 px-2 focus:outline-none"
+          className="fixed inset-x-0 top-0 z-[9999] px-2 focus:outline-none"
         >
-          <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+          <div className="rounded-b-modal bg-slate-200 pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <VisuallyHidden asChild>
               <Drawer.Title>Adding new exercise</Drawer.Title>
             </VisuallyHidden>
@@ -142,7 +153,7 @@ const AddExerciseForm = ({
             await new Promise((resolve) => setTimeout(resolve, 100));
             closeDrawer();
           }}
-          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
+          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-300 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
         >
           Cancel
         </button>
