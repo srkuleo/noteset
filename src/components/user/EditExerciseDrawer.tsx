@@ -7,7 +7,7 @@ import {
   SetsInput,
   WeightInputs,
 } from "./ExerciseInputs";
-import { SubmitFormButton } from "./FormButtons";
+import { SubmitFormButton } from "../SubmitButtons";
 
 import { AddExerciseSchema, type ExerciseType } from "@/util/types";
 
@@ -23,15 +23,20 @@ export const EditExerciseDrawer = ({
   editExercises: (editedExercise: ExerciseType) => void;
 }) => {
   return (
-    <Drawer.Root open={isOpen} onOpenChange={setIsOpen} direction="top">
+    <Drawer.Root
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      direction="top"
+      noBodyStyles
+    >
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
+        <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
 
         <Drawer.Content
           aria-describedby={undefined}
-          className="fixed inset-x-0 top-0 px-4 focus:outline-none"
+          className="fixed inset-x-0 top-0 z-[9999] px-2 focus:outline-none"
         >
-          <div className="rounded-b-xl bg-white pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+          <div className="rounded-b-modal bg-slate-200 pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <VisuallyHidden asChild>
               <Drawer.Title>Adding new exercise</Drawer.Title>
             </VisuallyHidden>
@@ -43,7 +48,7 @@ export const EditExerciseDrawer = ({
             />
             <Drawer.Handle
               preventCycle
-              className="bg-slate-300 dark:bg-slate-600"
+              className="bg-slate-400/60 dark:bg-slate-600"
             />
           </div>
         </Drawer.Content>
