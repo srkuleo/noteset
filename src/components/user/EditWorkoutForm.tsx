@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import { twJoin, twMerge } from "tailwind-merge";
+import { twMerge } from "tailwind-merge";
 import { useWorkouts } from "@/util/hooks";
 import { editWorkout } from "@/util/actions/workout";
-import { showToast } from "./Toasts";
+import { showToast } from "../Toasts";
+import { FormHeader } from "./WorkoutFormHeader";
 import { InputFieldError } from "./InputFieldError";
 import { ExercisesCarousel } from "./ExercisesCarousel";
-import { SubmitFormButton } from "./FormButtons";
 
 import type { FetchedWorkout } from "@/db/schema";
 
@@ -44,78 +43,77 @@ export const EditWorkoutForm = ({
   }
 
   return (
-    <form
-      action={clientAction}
-      className="space-y-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-300/50 dark:bg-slate-800 dark:ring-slate-700/70"
-    >
-      <div className="flex flex-col gap-2">
-        <label
-          htmlFor="title"
-          className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
-        >
-          Title
-        </label>
-        <input
-          id="title"
-          name="workoutTitle"
-          type="text"
-          defaultValue={workout.title}
-          onChange={(e) => setWorkout({ ...workout, title: e.target.value })}
-          className={twMerge(
-            "input-field",
-            actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
-          )}
-        />
-        <InputFieldError errorArr={actionRes.errors?.title} className="pl-1" />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        <label
-          htmlFor="description"
-          className="pl-1 text-sm font-semibold uppercase dark:text-slate-300"
-        >
-          Description
-        </label>
-        <input
-          id="description"
-          name="workoutDescription"
-          type="text"
-          defaultValue={workout.description}
-          onChange={(e) =>
-            setWorkout({ ...workout, description: e.target.value })
-          }
-          className="input-field"
-        />
-      </div>
-
-      <ExercisesCarousel
-        editForm
-        exercises={workout.exercises}
+    <>
+      <FormHeader
+        heading="Edit workout"
+        formId="edit-form"
         updateExercises={updateExercises}
-        editExercises={editExercises}
-        removeExercise={removeExercise}
-      />
-      <InputFieldError
-        errorArr={actionRes.errors?.exercises}
-        className="justify-center py-4"
       />
 
-      <div
-        className={twJoin(
-          "flex justify-end gap-2",
-          workout.exercises.length === 0 &&
-            !actionRes.errors?.exercises &&
-            "pt-4",
-        )}
-      >
-        <Link
-          href="/workouts"
-          className="rounded-lg px-3 py-2 text-sm font-semibold active:scale-95 active:bg-slate-100 dark:text-slate-200 active:dark:bg-slate-900/60"
-        >
-          Cancel
-        </Link>
-        <SubmitFormButton label="Save" loading="Saving" />
-      </div>
-    </form>
+      <main className="overflow-y-auto overscroll-contain scroll-smooth px-8 pb-4 pt-6">
+        <form action={clientAction} id="edit-form" className="space-y-4">
+          <div className="flex flex-col gap-2 px-4">
+            <label
+              htmlFor="title"
+              className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+            >
+              Title
+            </label>
+            <input
+              id="title"
+              name="workoutTitle"
+              type="text"
+              defaultValue={workout.title}
+              onChange={(e) =>
+                setWorkout({ ...workout, title: e.target.value })
+              }
+              className={twMerge(
+                "input-field",
+                actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
+              )}
+            />
+            <InputFieldError
+              errorArr={actionRes.errors?.title}
+              className="pl-1"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2 px-4">
+            <label
+              htmlFor="description"
+              className="flex gap-1 pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+            >
+              Description
+              <span className="text-xs lowercase italic text-slate-400/80 dark:text-slate-500">
+                (optional)
+              </span>
+            </label>
+            <input
+              id="description"
+              name="workoutDescription"
+              type="text"
+              defaultValue={workout.description}
+              onChange={(e) =>
+                setWorkout({ ...workout, description: e.target.value })
+              }
+              className="input-field"
+            />
+          </div>
+
+          <ExercisesCarousel
+            editForm
+            isErroring={actionRes.errors?.exercises ? true : false}
+            workout={workout}
+            setWorkout={setWorkout}
+            editExercises={editExercises}
+            removeExercise={removeExercise}
+          />
+          <InputFieldError
+            errorArr={actionRes.errors?.exercises}
+            className="justify-center py-4"
+          />
+        </form>
+      </main>
+    </>
   );
 };
