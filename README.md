@@ -1,12 +1,12 @@
 # NoteSet - my own app for tracking fitness results
 
-**Important: This is the continuation of noteset_archive app with App Router, RSC and Server Actions. UI not optimize for a Desktop, only check on mobile or Inspect it with a mobile resolution.**
+**Important: This is the continuation of noteset_archive app with App Router, RSC and Server Actions. UI is not optimized for Desktop devices, only check on mobile or Inspect it with a mobile resolution.**
 
-Making this app with an idea to use it in a gym instead of a notebook. Still WIP, plan to ship it soon. In the future might change the logo and add a hero image or a bg design pattern.
+Making this app with the idea to use it in the gym instead of a notebook. Still WIP, plan to ship it soon.
 
 ## Future updates and plans:
 
-- _Add drag option to rearrange exercises when editing._
+- _See the way for pending state inside both create and edit form, fix the layout problem (overscrolling on stateless pages, scroll kept after closing keyboard, div scrollable without touch-none)._
 
 - _Finish UI and logic for workout pages._
 
