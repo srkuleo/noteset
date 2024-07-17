@@ -17,26 +17,26 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="flex">
+    <div className="flex h-full flex-col pt-safe-top">
       <LandingPageBar />
-      <div className="mb-4 flex grow flex-col items-center justify-center gap-6 px-4 pb-8 pt-safe-top">
-        <div className="text-slate-400/60 dark:text-slate-700/80">
-          {SadIcon}
-        </div>
 
-        <h2 className="pb-8 text-xl font-semibold dark:text-slate-300">
-          Sorry, something went wrong!
-        </h2>
+      <main className="flex flex-col items-center justify-center gap-6 pb-16">
+        <div className="text-slate-400/70 dark:text-slate-700">{SadIcon}</div>
 
-        <div className="flex flex-col items-center gap-2">
+        <h3 className="pb-8 font-manrope text-slate-600">
+          Sorry, something went wrong...
+        </h3>
+
+        <div className="flex flex-col items-center gap-4">
           <Link
             href="/workouts"
             className="rounded-xl bg-violet-500 px-8 py-2 font-semibold text-white shadow-sm active:scale-95 dark:bg-violet-600"
           >
-            Go back
+            Back to homepage
           </Link>
+
           <button
-            className="w-fit rounded-xl px-4 py-2 text-sm font-semibold active:bg-slate-200 dark:text-slate-300 active:dark:bg-slate-800"
+            className="rounded-xl px-4 py-2 text-sm font-semibold active:bg-slate-200 dark:text-slate-300 active:dark:bg-slate-800"
             onClick={
               // Attempt to recover by trying to re-render the segment
               () => reset()
@@ -45,7 +45,7 @@ export default function Error({
             Try again!
           </button>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

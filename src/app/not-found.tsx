@@ -4,29 +4,28 @@ import { SadIcon } from "@/components/icons/user/warning";
 
 export default function NotFound() {
   return (
-    <main className="flex">
+    <div className="flex h-full flex-col pt-safe-top">
       <LandingPageBar />
-      <div className="flex grow flex-col items-center justify-center gap-8 px-4 pb-8 pt-safe-top">
-        <div className="text-slate-400/60 dark:text-slate-700/80">
-          {SadIcon}
-        </div>
 
-        <div className="space-y-2 text-center">
-          <h2 className="text-xl font-semibold dark:text-slate-300">
+      <main className="flex flex-col items-center justify-center gap-6 pb-16">
+        <div className="text-slate-400/70 dark:text-slate-700">{SadIcon}</div>
+
+        <div className="space-y-2 pb-2 text-center">
+          <h3 className="font-manrope text-slate-600">
             404 Page could not be found
-          </h2>
-          <p className="text-sm text-slate-400 dark:text-slate-500">
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
             Invalid URL
           </p>
         </div>
 
         <Link
-          href="/"
+          href="/login"
           className="rounded-xl bg-violet-500 px-3 py-2 font-semibold text-white shadow-sm dark:bg-violet-600"
         >
-          Go back
+          Go to Login page
         </Link>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
