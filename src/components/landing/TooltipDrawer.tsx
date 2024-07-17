@@ -7,15 +7,18 @@ export const TooltipDrawer = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
-      <Drawer.Trigger className="rounded-full px-6 py-2 font-manrope font-semibold text-slate-600 shadow-md ring-1 ring-slate-300 dark:text-white dark:ring-slate-400">
+    <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
+      <Drawer.Trigger className="rounded-full px-6 py-2 font-manrope font-semibold text-slate-600 shadow-md ring-1 ring-slate-400/40 dark:text-white dark:ring-slate-400">
         Tooltip
       </Drawer.Trigger>
 
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
-        <Drawer.Content className="fixed inset-x-0 bottom-0 select-none px-2 focus:outline-none">
+        <Drawer.Content
+          aria-describedby={undefined}
+          className="fixed inset-x-0 bottom-0 select-none px-2 focus:outline-none"
+        >
           <div className="rounded-t-modal bg-white pb-safe-bottom ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
             <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
               <Drawer.Handle className="bg-slate-300 dark:bg-slate-500" />
