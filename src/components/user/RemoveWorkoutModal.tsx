@@ -1,5 +1,5 @@
 import { removeWorkout } from "@/util/actions/workout";
-import { showToast } from "./Toasts";
+import { showToast } from "../Toasts";
 import { Drawer } from "vaul";
 import { DangerIcon } from "../icons/user/warning";
 
@@ -13,21 +13,21 @@ export const RemoveWorkoutModal = ({
   workoutToRemove: { title: string; id: number };
 }) => {
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
+    <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
+        <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
         <Drawer.Content
           aria-describedby={undefined}
           data-vaul-no-drag
-          className="fixed inset-x-0 bottom-0 select-none space-y-4 px-4 pb-12 focus:outline-none"
+          className="fixed inset-x-0 bottom-0 z-[9999] select-none space-y-4 px-4 pb-12 focus:outline-none"
         >
           <div className="flex flex-col items-center gap-3 rounded-modal bg-slate-50/90 pt-5 dark:bg-slate-700/70">
             <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
               {DangerIcon}
             </div>
 
-            <Drawer.Title className="px-2 pt-2 text-center font-nunito text-sm leading-snug text-slate-600 dark:text-slate-400">
+            <Drawer.Title className="px-2 pt-2 text-center font-nunito text-sm font-semibold leading-snug dark:text-slate-400">
               This action is irreversible. Proceeding further will result in
               permanent data loss. Continue?
             </Drawer.Title>
