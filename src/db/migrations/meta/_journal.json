@@ -50,6 +50,13 @@
       "when": 1720290089025,
       "tag": "0006_parallel_toro",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1721209534437,
+      "tag": "0007_bouncy_valkyrie",
+      "breakpoints": true
     }
   ]
 }
