@@ -1,4 +1,3 @@
-import { workoutStatus, type ExerciseType } from "@/util/types";
 import {
   pgTable,
   index,
@@ -8,8 +7,12 @@ import {
   varchar,
   pgEnum,
   boolean,
+  date,
 } from "drizzle-orm/pg-core";
 
+import type { ExerciseType } from "@/util/types";
+
+export const workoutStatus = ["current", "done"] as const;
 export const statusEnum = pgEnum("status", workoutStatus);
 
 export const users = pgTable(
@@ -55,7 +58,7 @@ export const workouts = pgTable(
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    doneAt: timestamp("done_at", { mode: "string" }),
+    doneAt: date("done_at", { mode: "string" }),
     timeElapsed: varchar("time_elapsed", { length: 100 }),
   },
   (table) => {
