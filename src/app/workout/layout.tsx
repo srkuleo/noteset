@@ -9,5 +9,5 @@ export default async function WorkoutPageLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="flex min-h-screen flex-col">{children}</main>;
+  return <div className="flex flex-col h-full">{children}</div>;
 }
