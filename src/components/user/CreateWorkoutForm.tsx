@@ -4,7 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { emptyWorkout, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
-import { FormHeader } from "./WorkoutFormHeader";
+import { WorkoutFormHeader } from "./WorkoutFormHeader";
 import { InputFieldError } from "./InputFieldError";
 import { ExercisesCarousel } from "./ExercisesCarousel";
 
@@ -35,7 +35,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
 
   return (
     <>
-      <FormHeader
+      <WorkoutFormHeader
         heading="Create workout"
         formId="create-form"
         updateExercises={updateExercises}
