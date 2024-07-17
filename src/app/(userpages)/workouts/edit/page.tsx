@@ -1,8 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { getAuth } from "@/util/actions/auth";
 import { getWorkoutById } from "@/db/query";
-import { UserPagesWrapper } from "@/components/user/UserPagesWrapper";
-import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
 import { EditWorkoutForm } from "@/components/user/EditWorkoutForm";
 
 import { type Metadata } from "next";
@@ -27,10 +25,5 @@ export default async function EditWorkoutPage({
 
   if (!fetchedWorkout) notFound();
 
-  return (
-    <UserPagesWrapper className="mb-24">
-      <UserPagesHeadingText label={`Editing ${fetchedWorkout.title}`} />
-      <EditWorkoutForm fetchedWorkout={fetchedWorkout} />
-    </UserPagesWrapper>
-  );
+  return <EditWorkoutForm fetchedWorkout={fetchedWorkout} />;
 }
