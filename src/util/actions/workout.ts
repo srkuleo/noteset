@@ -1,14 +1,15 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { and, eq, ilike, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { workouts } from "@/db/schema";
-import { and, eq, ilike, ne } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
+
 import {
   CreateWorkoutSchema,
   type WorkoutActionResponse,
   type WorkoutWithoutIds,
-} from "@/util/types";
+} from "../types";
 
 export async function createWorkout(
   userId: string,
@@ -28,10 +29,7 @@ export async function createWorkout(
 
   try {
     const existingWorkout = await db.query.workouts.findFirst({
-      where: and(
-        ilike(workouts.title, title.trim()),
-        eq(workouts.userId, userId),
-      ),
+      where: and(ilike(workouts.title, title), eq(workouts.userId, userId)),
     });
 
     if (existingWorkout) {
@@ -48,10 +46,8 @@ export async function createWorkout(
 
     await db.insert(workouts).values({
       userId: userId,
-      title: title.trim(),
-      description: description
-        ? description.trim()
-        : "Description not provided.",
+      title: title,
+      description: description ? description : "Description not provided.",
       exercises: exercises,
     });
 
@@ -93,7 +89,7 @@ export async function editWorkout(
   try {
     const alreadyExistWorkout = await db.query.workouts.findFirst({
       where: and(
-        ilike(workouts.title, title.trim()),
+        ilike(workouts.title, title),
         eq(workouts.userId, userId),
         ne(workouts.id, workoutId),
       ),
@@ -112,10 +108,8 @@ export async function editWorkout(
     await db
       .update(workouts)
       .set({
-        title: title.trim(),
-        description: description
-          ? description.trim()
-          : "Description not provided.",
+        title: title,
+        description: description ? description : "Description not provided.",
         exercises: exercises,
       })
       .where(eq(workouts.id, workoutId));
@@ -140,7 +134,7 @@ export async function editWorkout(
 export async function removeWorkout(
   workoutId: number,
   workoutTitle: string,
-): Promise<Omit<WorkoutActionResponse, "timestamp">> {
+): Promise<WorkoutActionResponse> {
   try {
     await db.delete(workouts).where(eq(workouts.id, workoutId));
 
