@@ -48,7 +48,7 @@ export const AddExerciseSchema = ExerciseSchema.omit({
 //Workout types and schemas
 
 export type WorkoutActionResponse = {
-  status: "success" | "success-redirect" | "error" | "unset";
+  status: "success" | "success-redirect" | "error" | "unset" | "pending";
   errors?: {
     title?: string[];
     exercises?: string[];
