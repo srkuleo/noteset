@@ -2,7 +2,7 @@
 
 // import { Argon2id } from "oslo/password";
 import bcrypt from "bcrypt";
-import { z } from "zod";
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { eq, ilike } from "drizzle-orm";
@@ -10,71 +10,8 @@ import { generateIdFromEntropySize, type Session, type User } from "lucia";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { lucia } from "../lucia";
-import { cache } from "react";
 
-export type AuthActionResponse = {
-  status?: "success" | "error" | "success-redirect";
-  errors?: {
-    username?: string[];
-    email?: string[];
-    password?: string[];
-    confirmPassword?: string[];
-  };
-  message?: string;
-};
-
-const signUpSchema = z
-  .object({
-    username: z
-      .string()
-      .min(3, { message: "Must contain at least 3 characters." })
-      .max(32, { message: "Must be within 3 and 32 characters long." }),
-    email: z.string().email({ message: "Not a valid email address." }),
-    password: z.string().superRefine((password, context) => {
-      if (password.length < 8 && !/[0-9]/.test(password)) {
-        context.addIssue({
-          code: z.ZodIssueCode.too_small,
-          minimum: 8,
-          type: "string",
-          inclusive: true,
-          message: "Must contain at least 8 characters and 1 number.",
-        });
-
-        return;
-      }
-
-      if (password.length < 8) {
-        context.addIssue({
-          code: z.ZodIssueCode.too_small,
-          minimum: 8,
-          type: "string",
-          inclusive: true,
-          message: "Must contain at least 8 characters.",
-        });
-
-        return;
-      }
-
-      if (!/[0-9]/.test(password)) {
-        context.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "Must contain at least one number.",
-        });
-
-        return;
-      }
-    }),
-    confirmPassword: z.string(),
-  })
-  .superRefine(({ confirmPassword, password }, context) => {
-    if (confirmPassword !== password) {
-      context.addIssue({
-        code: "custom",
-        message: "Passwords do not match.",
-        path: ["confirmPassword"],
-      });
-    }
-  });
+import { type AuthActionResponse, loginSchema, signUpSchema } from "../types";
 
 export async function signUp(formData: FormData): Promise<AuthActionResponse> {
   const signUpRaw = signUpSchema.safeParse({
@@ -95,14 +32,14 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
 
   try {
     const duplicateUsername = await db.query.users.findFirst({
-      where: ilike(users.username, username.trim()),
+      where: ilike(users.username, username),
       columns: {
         username: true,
       },
     });
 
     const duplicateEmail = await db.query.users.findFirst({
-      where: eq(users.email, email.trim()),
+      where: eq(users.email, email),
       columns: {
         email: true,
       },
@@ -147,8 +84,8 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
   try {
     await db.insert(users).values({
       id: userId,
-      username: username.trim(),
-      email: email.trim(),
+      username: username,
+      email: email,
       hashedPassword: hashedPassword,
     });
   } catch (error) {
@@ -173,21 +110,6 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
   };
 }
 
-const loginSchema = z.object({
-  username: z
-    .string()
-    .min(3, { message: "Invalid username." })
-    .max(32, { message: "Invalid username." }),
-  password: z.string().superRefine((password, context) => {
-    if (password.length < 8 || !/[0-9]/.test(password)) {
-      context.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Invalid password.",
-      });
-    }
-  }),
-});
-
 export async function login(formData: FormData): Promise<AuthActionResponse> {
   const loginRaw = loginSchema.safeParse({
     username: formData.get("username"),
@@ -204,7 +126,7 @@ export async function login(formData: FormData): Promise<AuthActionResponse> {
   const { username, password } = loginRaw.data;
 
   const user = await db.query.users.findFirst({
-    where: eq(users.username, username.trim()),
+    where: eq(users.username, username),
   });
 
   if (!user) {
