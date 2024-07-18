@@ -6,7 +6,9 @@ Making this app with the idea to use it in the gym instead of a notebook. Still 
 
 ## Future updates and plans:
 
-- _See the way for pending state inside both create and edit form, fix the layout problem (overscrolling on stateless pages, scroll kept after closing keyboard, div scrollable without touch-none)._
+- _See the way for pending state inside both create and edit form - (found solution with flushSync), fix the layout problem (overscrolling on stateless pages or statefull with overscroll-contain and less UI state than needed to become scrollable, scroll kept after closing keyboard on workout forms, body scrollable without touch-none)._
+
+- _implement form pending state, add animation to theme buttton with translate origin top right and scale._
 
 - _Finish UI and logic for workout pages._
 
