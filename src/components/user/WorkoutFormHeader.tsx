@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useState } from "react";
-import { useFormStatus } from "react-dom";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 import { ArrowLeftIcon } from "../icons/arrows";
 import { CheckmarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
@@ -8,16 +7,17 @@ import { CheckmarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
 import type { ExerciseType } from "@/util/types";
 
 export const WorkoutFormHeader = ({
+  pending,
   heading,
   formId,
   updateExercises,
 }: {
+  pending: boolean;
   heading: string;
   formId: string;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
   const [openAddDrawer, setOpenAddDrawer] = useState(false);
-  const { pending } = useFormStatus();
 
   return (
     <div className="flex items-center gap-2.5 border-b border-slate-300 px-6 py-4 dark:border-slate-800 [&>*:nth-child(2)]:mr-auto">
