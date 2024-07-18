@@ -17,9 +17,11 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   const [exerciseFormErrors, setExerciseFormErrors] = useState(initErrors);
 
   function handleNameInput(input: string) {
-    setTempExercise({
-      ...tempExercise,
-      name: input,
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        name: input,
+      };
     });
   }
 
@@ -28,23 +30,27 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     const reps = Array.from({ length: sets }, () => "");
     const weights = Array.from({ length: sets }, () => "");
 
-    setTempExercise({
-      ...tempExercise,
-      sets: sets,
-      reps: [...reps],
-      weights: [...weights],
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        sets: sets,
+        reps: reps,
+        weights: weights,
+      };
     });
 
     if (
       exerciseFormErrors.errors?.sets &&
       exerciseFormErrors.errors.sets.length > 0
     ) {
-      setExerciseFormErrors({
-        ...exerciseFormErrors,
-        errors: {
-          ...exerciseFormErrors.errors,
-          sets: undefined,
-        },
+      setExerciseFormErrors((prev) => {
+        return {
+          ...prev,
+          errors: {
+            ...prev.errors,
+            sets: undefined,
+          },
+        };
       });
     }
   }
@@ -52,7 +58,12 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   function handleRepsInput(eventValue: string, index: number) {
     const modifiedReps = tempExercise.reps.toSpliced(index, 1, eventValue);
 
-    setTempExercise({ ...tempExercise, reps: [...modifiedReps] });
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        reps: modifiedReps,
+      };
+    });
   }
 
   function handleWeightInput(eventValue: string, index: number) {
@@ -62,7 +73,12 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
       eventValue,
     );
 
-    setTempExercise({ ...tempExercise, weights: [...modifiedWeights] });
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        weights: modifiedWeights,
+      };
+    });
   }
 
   return {
@@ -103,19 +119,19 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
   const [actionRes, setActionRes] = useState(emptyRes);
 
   function updateExercises(newExercise: ExerciseType) {
-    setWorkout({
-      title: workout.title,
-      description: workout.description,
-      exercises: [...workout.exercises, newExercise],
+    setWorkout((prev) => {
+      return {
+        ...prev,
+        exercises: [...prev.exercises, newExercise],
+      };
     });
 
     if (actionRes.errors?.exercises && actionRes.errors.exercises.length > 0) {
-      setActionRes({
-        ...actionRes,
-        errors: {
-          ...actionRes.errors,
-          exercises: undefined,
-        },
+      setActionRes((prev) => {
+        return {
+          ...prev,
+          errors: { ...prev.errors, exercises: undefined },
+        };
       });
     }
   }
@@ -125,10 +141,11 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
       exercise.id === editedExercise.id ? editedExercise : exercise,
     );
 
-    setWorkout({
-      title: workout.title,
-      description: workout.description,
-      exercises: [...modifiedExercises],
+    setWorkout((prev) => {
+      return {
+        ...prev,
+        exercises: modifiedExercises,
+      };
     });
   }
 
@@ -137,10 +154,11 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
       (exercise) => exercise.id !== id,
     );
 
-    setWorkout({
-      title: workout.title,
-      description: workout.description,
-      exercises: modifiedExercises,
+    setWorkout((prev) => {
+      return {
+        ...prev,
+        exercises: modifiedExercises,
+      };
     });
   }
 
