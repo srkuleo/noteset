@@ -1,5 +1,6 @@
 "use client";
 
+import { flushSync } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { emptyWorkout, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions/workout";
@@ -21,6 +22,10 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
   } = useWorkouts(emptyWorkout);
 
   async function clientAction() {
+    flushSync(() => {
+      setActionRes({ ...actionRes, status: "pending" });
+    });
+
     const res = await createWorkout(userId, workout);
 
     setActionRes({ ...res });
@@ -36,6 +41,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
   return (
     <>
       <WorkoutFormHeader
+        pending={actionRes.status === "pending"}
         heading="Create workout"
         formId="create-form"
         updateExercises={updateExercises}

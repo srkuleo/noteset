@@ -1,5 +1,6 @@
 "use client";
 
+import { flushSync } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { useWorkouts } from "@/util/hooks";
 import { editWorkout } from "@/util/actions/workout";
@@ -26,6 +27,10 @@ export const EditWorkoutForm = ({
   } = useWorkouts(fetchedWorkout);
 
   async function clientAction() {
+    flushSync(() => {
+      setActionRes({ ...actionRes, status: "pending" });
+    });
+
     const res = await editWorkout(
       fetchedWorkout.title,
       workout,
@@ -33,18 +38,19 @@ export const EditWorkoutForm = ({
       fetchedWorkout.id,
     );
 
+    setActionRes({ ...res });
+
     if (res.status === "success-redirect") {
       showToast(res.message, res.status, "/workouts", "View workouts");
     } else if (res.status === "success" || res.status === "error") {
       showToast(res.message, res.status);
     }
-
-    setActionRes({ ...res });
   }
 
   return (
     <>
       <WorkoutFormHeader
+        pending={actionRes.status === "pending"}
         heading="Edit workout"
         formId="edit-form"
         updateExercises={updateExercises}
