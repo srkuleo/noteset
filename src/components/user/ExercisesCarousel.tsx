@@ -181,7 +181,7 @@ const ExerciseCard = ({
           {...attributes}
           {...listeners}
           type="button"
-          className="cursor-move rounded-lg px-2 py-1 active:bg-slate-300 active:dark:bg-slate-600"
+          className="cursor-move touch-none rounded-lg px-2 py-1 active:bg-slate-300 active:dark:bg-slate-600"
         >
           {DragExerciseIcon}
         </button>
