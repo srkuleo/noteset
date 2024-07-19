@@ -8,9 +8,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider
       attribute="class"
       defaultTheme="system"
-      enableSystem={true}
-      enableColorScheme={true}
       themes={["system", "dark", "light"]}
+      enableSystem
+      disableTransitionOnChange
     >
       {children}
       <Toaster duration={4000} position="bottom-center" />
