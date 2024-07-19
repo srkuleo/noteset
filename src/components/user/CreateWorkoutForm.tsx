@@ -1,6 +1,5 @@
 "use client";
 
-import { flushSync } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { emptyWorkout, useWorkouts } from "@/util/hooks";
 import { createWorkout } from "@/util/actions/workout";
@@ -22,11 +21,9 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
   } = useWorkouts(emptyWorkout);
 
   async function clientAction() {
-    flushSync(() => {
-      setActionRes({ ...actionRes, status: "pending" });
-    });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const res = await createWorkout(userId, workout);
+    const res = await createWorkout(workout, userId);
 
     setActionRes({ ...res });
 
@@ -48,7 +45,12 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
       />
 
       <main className="overflow-y-auto overscroll-contain scroll-smooth px-8 pb-4 pt-6">
-        <form action={clientAction} id="create-form" className="space-y-4">
+        <form
+          onSubmit={() => setActionRes({ ...actionRes, status: "pending" })}
+          action={clientAction}
+          id="create-form"
+          className="space-y-4"
+        >
           <div className="flex flex-col gap-2 px-4">
             <label
               htmlFor="title"
