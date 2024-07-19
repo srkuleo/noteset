@@ -10,7 +10,6 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     display_override: ["standalone", "minimal-ui", "window-controls-overlay"],
     //still waiting for the option to put prefer color schema
-    background_color: "#e2e8f0",
     description: "Tracking workout progress",
     icons: [
       {
