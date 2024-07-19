@@ -25,7 +25,7 @@ export default async function WorkoutsPage() {
         </Link>
       </div>
 
-      <main className="space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-6 py-2">
+      <main className="space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-6 py-4">
         <Suspense fallback={<LoadingWorkoutsSkeleton />}>
           <WorkoutsPageContent />
         </Suspense>
