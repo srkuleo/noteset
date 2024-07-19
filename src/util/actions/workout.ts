@@ -12,8 +12,8 @@ import {
 } from "../types";
 
 export async function createWorkout(
-  userId: string,
   workout: WorkoutWithoutIds,
+  userId: string,
 ): Promise<WorkoutActionResponse> {
   const isValidWorkout = CreateWorkoutSchema.safeParse(workout);
 
@@ -69,10 +69,10 @@ export async function createWorkout(
 }
 
 export async function editWorkout(
-  initTitle: string,
   editedWorkout: WorkoutWithoutIds,
-  userId: string,
   workoutId: number,
+  initTitle: string,
+  userId: string,
 ): Promise<WorkoutActionResponse> {
   const isValidWorkout = CreateWorkoutSchema.safeParse(editedWorkout);
 
