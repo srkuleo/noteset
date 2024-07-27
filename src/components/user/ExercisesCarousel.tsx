@@ -18,10 +18,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import {
-  restrictToVerticalAxis,
-  restrictToFirstScrollableAncestor,
-} from "@dnd-kit/modifiers";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { EditExerciseDrawer } from "./EditExerciseDrawer";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
 import {
@@ -109,10 +106,7 @@ export const ExercisesCarousel = ({
       ) : (
         <DndContext
           sensors={sensors}
-          modifiers={[
-            restrictToVerticalAxis,
-            restrictToFirstScrollableAncestor,
-          ]}
+          modifiers={[restrictToVerticalAxis]}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
