@@ -24,10 +24,12 @@ const initExercise: ExerciseType = {
 
 export const AddExerciseDrawer = ({
   isOpen,
+  isPending,
   setIsOpen,
   updateExercises,
 }: {
   isOpen: boolean;
+  isPending: boolean;
   setIsOpen: (isOpen: boolean) => void;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
@@ -38,7 +40,10 @@ export const AddExerciseDrawer = ({
       direction="top"
       noBodyStyles
     >
-      <Drawer.Trigger className="rounded-full p-2 text-violet-400 focus:outline-none active:bg-slate-200 dark:text-violet-400 active:dark:bg-slate-700">
+      <Drawer.Trigger
+        disabled={isPending}
+        className="rounded-full p-2 text-violet-400 focus:outline-none active:bg-slate-200 disabled:opacity-50 dark:text-violet-400 active:dark:bg-slate-700"
+      >
         <AddIcon size={26} strokeWidth={2} />
         <span className="sr-only">Add Exercise</span>
       </Drawer.Trigger>
