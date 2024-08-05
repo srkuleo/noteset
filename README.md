@@ -1,14 +1,12 @@
 # NoteSet - my own app for tracking fitness results
 
-**Important: This is the continuation of noteset_archive app with App Router, RSC and Server Actions. UI is not optimized for Desktop devices, only check on mobile or Inspect it with a mobile resolution.**
+**Important: This is the continuation of noteset_archive app with App Router, RSC and Server Actions. Initially planned to just be a project to improve App Router knowledge, but started to like the direction it went and decided to ship it fully. UI is not optimized for Desktop devices, since the app should be used mainly inside the gym on the mobile/tablet.**
 
-Making this app with the idea to use it in the gym instead of a notebook. Still WIP, plan to ship it soon.
+**_If you are interested in checking functionality or design, please inspect in mobile mode._**
+
+Since I am also interested in mobile dev, I might even make a proper app using React Native instead of Next.js PWA. Going deeper and making the webapp more complex has exposed quite a few shortcomings of PWA.
 
 ## Future updates and plans:
-
-- _See the way for pending state inside both create and edit form - (found solution with flushSync), fix the layout problem (overscrolling on stateless pages or statefull with overscroll-contain and less UI state than needed to become scrollable, scroll kept after closing keyboard on workout forms, body scrollable without touch-none)._
-
-- _implement form pending state, add animation to theme buttton with translate origin top right and scale._
 
 - _Finish UI and logic for workout pages._
 
