@@ -7,13 +7,13 @@ import { CheckmarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
 import type { ExerciseType } from "@/util/types";
 
 export const WorkoutFormHeader = ({
-  pending,
   heading,
+  isPending,
   formId,
   updateExercises,
 }: {
-  pending: boolean;
   heading: string;
+  isPending: boolean;
   formId: string;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
@@ -29,6 +29,7 @@ export const WorkoutFormHeader = ({
 
       <AddExerciseDrawer
         isOpen={openAddDrawer}
+        isPending={isPending}
         setIsOpen={setOpenAddDrawer}
         updateExercises={updateExercises}
       />
@@ -36,10 +37,10 @@ export const WorkoutFormHeader = ({
       <button
         type="submit"
         form={formId}
-        disabled={pending}
+        disabled={isPending}
         className="rounded-full bg-green-500 p-2 text-white shadow-sm active:scale-95 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600"
       >
-        {pending ? ThreeDotIcon : CheckmarkIcon}
+        {isPending ? ThreeDotIcon : <CheckmarkIcon className="size-[22px]" />}
       </button>
     </div>
   );
