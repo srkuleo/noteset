@@ -31,6 +31,7 @@ import type { ExerciseType, WorkoutWithoutIds } from "@/util/types";
 
 export const ExercisesCarousel = ({
   workout,
+  isPending,
   isErroring,
   editForm,
   setWorkout,
@@ -38,6 +39,7 @@ export const ExercisesCarousel = ({
   removeExercise,
 }: {
   workout: WorkoutWithoutIds;
+  isPending: boolean;
   isErroring: boolean;
   editForm?: boolean;
   setWorkout: (workout: WorkoutWithoutIds) => void;
@@ -102,7 +104,7 @@ export const ExercisesCarousel = ({
       />
 
       {workout.exercises.length === 0 ? (
-        <ExerciseShell isErroring={isErroring} />
+        <ExerciseShell isPending={isPending} isErroring={isErroring} />
       ) : (
         <DndContext
           sensors={sensors}
@@ -119,6 +121,7 @@ export const ExercisesCarousel = ({
                 <ExerciseCard
                   key={exercise.id}
                   exercise={exercise}
+                  isPending={isPending}
                   setCurrentExercise={setCurrentExercise}
                   openEditDrawer={() => setOpenEditDrawer(true)}
                   openRemoveModal={() => setOpenRemoveModal(true)}
@@ -132,13 +135,20 @@ export const ExercisesCarousel = ({
   );
 };
 
-const ExerciseShell = ({ isErroring }: { isErroring: boolean }) => {
+const ExerciseShell = ({
+  isErroring,
+  isPending,
+}: {
+  isErroring: boolean;
+  isPending: boolean;
+}) => {
   return (
     <div className="pt-6">
       <div
         className={twMerge(
           "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center dark:border-slate-700 dark:bg-slate-900",
           isErroring && "border-red-500 dark:border-red-500",
+          isPending && "opacity-50",
         )}
       >
         <h3>Exercises not added yet</h3>
@@ -153,11 +163,13 @@ const ExerciseShell = ({ isErroring }: { isErroring: boolean }) => {
 
 const ExerciseCard = ({
   exercise,
+  isPending,
   setCurrentExercise,
   openEditDrawer,
   openRemoveModal,
 }: {
   exercise: ExerciseType;
+  isPending: boolean;
   setCurrentExercise: (exercise: ExerciseType) => void;
   openEditDrawer: () => void;
   openRemoveModal: () => void;
@@ -174,7 +186,10 @@ const ExerciseCard = ({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex w-full flex-col gap-3 rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-900 dark:ring-slate-700"
+      className={twMerge(
+        "flex w-full flex-col gap-3 rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-900 dark:ring-slate-700",
+        isPending && "opacity-50",
+      )}
     >
       <div className="flex items-center gap-2 border-b border-slate-200 pb-4 dark:border-slate-700/70 [&>*:nth-child(2)]:mr-auto">
         <button
@@ -191,6 +206,7 @@ const ExerciseCard = ({
         </p>
 
         <button
+          disabled={isPending}
           type="button"
           onClick={() => {
             setCurrentExercise({ ...exercise });
@@ -203,6 +219,7 @@ const ExerciseCard = ({
         </button>
 
         <button
+          disabled={isPending}
           type="button"
           onClick={() => {
             setCurrentExercise({ ...exercise });
