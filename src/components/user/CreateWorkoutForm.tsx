@@ -38,8 +38,8 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
   return (
     <>
       <WorkoutFormHeader
-        pending={actionRes.status === "pending"}
         heading="Create workout"
+        isPending={actionRes.status === "pending"}
         formId="create-form"
         updateExercises={updateExercises}
       />
@@ -54,11 +54,15 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
           <div className="flex flex-col gap-2 px-4">
             <label
               htmlFor="title"
-              className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+              className={twMerge(
+                "pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200",
+                actionRes.status === "pending" && "opacity-40",
+              )}
             >
               Title
             </label>
             <input
+              disabled={actionRes.status === "pending"}
               id="title"
               value={workout.title}
               type="text"
@@ -67,7 +71,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
                 setWorkout({ ...workout, title: e.target.value })
               }
               className={twMerge(
-                "input-field",
+                "input-field disabled:opacity-50",
                 actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
               )}
             />
@@ -80,7 +84,10 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
           <div className="flex flex-col gap-2 px-4">
             <label
               htmlFor="description"
-              className="flex gap-1 pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+              className={twMerge(
+                "flex gap-1 pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200",
+                actionRes.status === "pending" && "opacity-40",
+              )}
             >
               Description
               <span className="text-xs lowercase italic text-slate-400/80 dark:text-slate-500">
@@ -88,6 +95,7 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
               </span>
             </label>
             <input
+              disabled={actionRes.status === "pending"}
               id="description"
               value={workout.description}
               type="text"
@@ -95,13 +103,14 @@ export const CreateWorkoutForm = ({ userId }: { userId: string }) => {
               onChange={(e) =>
                 setWorkout({ ...workout, description: e.target.value })
               }
-              className="input-field"
+              className="input-field disabled:opacity-50"
             />
           </div>
 
           <ExercisesCarousel
-            isErroring={actionRes.errors?.exercises ? true : false}
             workout={workout}
+            isErroring={!!actionRes.errors?.exercises}
+            isPending={actionRes.status === "pending"}
             setWorkout={setWorkout}
             editExercises={editExercises}
             removeExercise={removeExercise}
