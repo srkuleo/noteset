@@ -6,7 +6,7 @@ import { editWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { WorkoutFormHeader } from "./WorkoutFormHeader";
 import { InputFieldError } from "./InputFieldError";
-import { ExercisesCarousel } from "./ExercisesCarousel";
+import { ExercisesList } from "./ExercisesList";
 
 import type { FetchedWorkout } from "@/db/schema";
 
@@ -43,89 +43,85 @@ export const EditWorkoutForm = ({
 
   return (
     <>
-      <WorkoutFormHeader
-        heading="Edit workout"
-        isPending={actionRes.status === "pending"}
-        formId="edit-form"
-        updateExercises={updateExercises}
-      />
+      <fieldset disabled={actionRes.status === "pending"} className="group">
+        <WorkoutFormHeader
+          heading="Edit workout"
+          formId="edit-form"
+          updateExercises={updateExercises}
+        />
+      </fieldset>
 
       <main className="overflow-y-auto overscroll-contain scroll-smooth px-8 pb-4 pt-6">
         <form
-          onSubmit={() => setActionRes({ ...actionRes, status: "pending" })}
-          action={clientAction}
           id="edit-form"
-          className="space-y-4"
+          action={clientAction}
+          onSubmit={() => setActionRes({ ...actionRes, status: "pending" })}
         >
-          <div className="flex flex-col gap-2 px-4">
-            <label
-              htmlFor="title"
-              className={twMerge(
-                "pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200",
-                actionRes.status === "pending" && "opacity-40",
-              )}
-            >
-              Title
-            </label>
-            <input
-              disabled={actionRes.status === "pending"}
-              id="title"
-              name="workoutTitle"
-              type="text"
-              defaultValue={workout.title}
-              onChange={(e) =>
-                setWorkout({ ...workout, title: e.target.value })
-              }
-              className={twMerge(
-                "input-field disabled:opacity-50",
-                actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
-              )}
+          <fieldset
+            disabled={actionRes.status === "pending"}
+            className="group space-y-4"
+          >
+            <div className="flex flex-col gap-2 px-4 group-disabled:opacity-50">
+              <label
+                htmlFor="title"
+                className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+              >
+                Title
+              </label>
+              <input
+                id="title"
+                name="workoutTitle"
+                type="text"
+                defaultValue={workout.title}
+                onChange={(e) =>
+                  setWorkout({ ...workout, title: e.target.value })
+                }
+                className={twMerge(
+                  "input-field",
+                  actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
+                )}
+              />
+              <InputFieldError
+                errorArr={actionRes.errors?.title}
+                className="pl-1 group-disabled:opacity-50"
+              />
+            </div>
+
+            <div className="flex flex-col gap-2 px-4 group-disabled:opacity-50">
+              <label
+                htmlFor="description"
+                className="flex gap-1 pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+              >
+                Description
+                <span className="text-xs lowercase italic text-slate-400/80 dark:text-slate-500">
+                  (optional)
+                </span>
+              </label>
+              <input
+                id="description"
+                name="workoutDescription"
+                type="text"
+                defaultValue={workout.description}
+                onChange={(e) =>
+                  setWorkout({ ...workout, description: e.target.value })
+                }
+                className="input-field"
+              />
+            </div>
+
+            <ExercisesList
+              editForm
+              isErroring={!!actionRes.errors?.exercises}
+              workout={workout}
+              setWorkout={setWorkout}
+              editExercises={editExercises}
+              removeExercise={removeExercise}
             />
             <InputFieldError
-              errorArr={actionRes.errors?.title}
-              className="pl-1"
+              errorArr={actionRes.errors?.exercises}
+              className="justify-center py-4 group-disabled:opacity-50"
             />
-          </div>
-
-          <div className="flex flex-col gap-2 px-4">
-            <label
-              htmlFor="description"
-              className={twMerge(
-                "flex gap-1 pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200",
-                actionRes.status === "pending" && "opacity-40",
-              )}
-            >
-              Description
-              <span className="text-xs lowercase italic text-slate-400/80 dark:text-slate-500">
-                (optional)
-              </span>
-            </label>
-            <input
-              disabled={actionRes.status === "pending"}
-              id="description"
-              name="workoutDescription"
-              type="text"
-              defaultValue={workout.description}
-              onChange={(e) =>
-                setWorkout({ ...workout, description: e.target.value })
-              }
-              className="input-field disabled:opacity-50"
-            />
-          </div>
-
-          <ExercisesCarousel
-            editForm
-            isErroring={!!actionRes.errors?.exercises}
-            isPending={actionRes.status === "pending"}
-            workout={workout}
-            setWorkout={setWorkout}
-            editExercises={editExercises}
-            removeExercise={removeExercise}
-          />
-          <InputFieldError
-            errorArr={actionRes.errors?.exercises}
-            className="justify-center py-4"
-          />
+          </fieldset>
         </form>
       </main>
     </>
