@@ -27,11 +27,11 @@ const navBarLinks: NavBarLinkType[] = [
   { href: "/logs", icon: LogsIcon, label: "Logs" },
 ];
 
-export const UserPageNavBar = () => {
+export const UserPagesNavBar = () => {
   const path = usePathname();
 
   return (
-    <nav className="flex justify-center gap-3 border-t border-slate-300/80 pb-7 text-slate-400 dark:border-slate-800 dark:text-slate-500">
+    <nav className="flex justify-center gap-6 border-t border-slate-300/80 pb-7 text-slate-400 dark:border-slate-800 dark:text-slate-500">
       {navBarLinks.map((link) => (
         <Link
           key={link.href}
