@@ -1,6 +1,6 @@
+import { Drawer } from "vaul";
 import { removeWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
-import { Drawer } from "vaul";
 import { DangerIcon } from "../icons/user/warning";
 
 export const RemoveWorkoutModal = ({
