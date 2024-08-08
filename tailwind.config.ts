@@ -33,10 +33,15 @@ const config: Config = {
         38: "9.5rem",
       },
       animation: {
+        "overlay-show": "overlay-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        "overlay-hide":
+          "overlay-hide 200ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+        "dropdown-menu-scale-up":
+          "dropdown-menu-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        "dropdown-menu-scale-down":
+          "dropdown-menu-scale-down 200ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+
         // Currently not used
-        // "overlay-show": "overlay-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-        // "overlay-hide":
-        //   "overlay-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
         // "modal-slide-up":
         //   "modal-slide-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
         // "modal-slide-down":
