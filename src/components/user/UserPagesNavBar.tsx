@@ -78,8 +78,8 @@ export const LogoutButton = () => {
           data-vaul-no-drag
           className="fixed inset-x-0 bottom-0 z-[9999] select-none space-y-4 px-4 pb-12 focus:outline-none"
         >
-          <div className="flex flex-col items-center gap-3 rounded-modal bg-slate-50/90 dark:bg-slate-700/70">
-            <Drawer.Title className="px-2 pb-2 pt-5 text-center font-bold">
+          <div className="flex flex-col gap-3 rounded-modal bg-slate-50/90 text-center dark:bg-slate-700/70">
+            <Drawer.Title className="px-2 pb-2 pt-5 font-bold">
               Are you sure you want to log out?
             </Drawer.Title>
 
