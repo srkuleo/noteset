@@ -77,6 +77,8 @@ export const WorkoutSchema = z.object({
   timeElapsed: z.string(),
 });
 
+export type WorkoutType = Omit<z.infer<typeof WorkoutSchema>, "doneAt">;
+
 export const CreateWorkoutSchema = WorkoutSchema.omit({
   id: true,
   status: true,
