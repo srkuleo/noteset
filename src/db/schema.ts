@@ -8,11 +8,12 @@ import {
   pgEnum,
   boolean,
   date,
+  integer,
 } from "drizzle-orm/pg-core";
 
 import type { ExerciseType } from "@/util/types";
 
-export const workoutStatus = ["current", "done"] as const;
+export const workoutStatus = ["current", "done", "arhived"] as const;
 export const statusEnum = pgEnum("status", workoutStatus);
 
 export const users = pgTable(
@@ -22,7 +23,7 @@ export const users = pgTable(
     username: varchar("username", { length: 32 }).unique().notNull(),
     email: varchar("email", { length: 255 }).unique().notNull(),
     hashedPassword: varchar("hashed_password", { length: 100 }).notNull(),
-    isVerifiedEmail: boolean("is_verified_email").default(false),
+    isVerified: boolean("is_verified").default(false),
     createdAt: timestamp("created_at", {
       withTimezone: true,
       mode: "string",
@@ -54,12 +55,12 @@ export const workouts = pgTable(
     title: varchar("title", { length: 30 }).notNull(),
     description: varchar("description", { length: 80 }).notNull(),
     exercises: json("exercises").$type<ExerciseType[]>().notNull(),
-    status: statusEnum("status").default("current"),
+    status: statusEnum("status").default("current").notNull(),
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     doneAt: date("done_at", { mode: "string" }),
-    timeElapsed: varchar("time_elapsed", { length: 100 }),
+    timeElapsed: integer("time_elapsed"),
   },
   (table) => {
     return {
@@ -70,17 +71,7 @@ export const workouts = pgTable(
   },
 );
 
-export type Workout = {
-  id: typeof workouts.$inferSelect.id;
-  title: typeof workouts.$inferSelect.title;
-  description: typeof workouts.$inferSelect.description;
-  exercises: typeof workouts.$inferSelect.exercises;
-};
-
-export type FetchedWorkout = {
-  id: typeof workouts.$inferSelect.id;
-  title: typeof workouts.$inferSelect.title;
-  description: typeof workouts.$inferSelect.description;
-  userId: typeof workouts.$inferSelect.userId;
-  exercises: typeof workouts.$inferSelect.exercises;
-};
+export type FetchedWorkout = Pick<
+  typeof workouts.$inferSelect,
+  "id" | "title" | "description" | "exercises" | "status"
+>;
