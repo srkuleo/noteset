@@ -41,10 +41,6 @@ export const ExerciseSchema = z.object({
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
 
-export const AddExerciseSchema = ExerciseSchema.omit({
-  comment: true,
-});
-
 //Workout types and schemas
 
 export type WorkoutActionResponse = {
@@ -74,20 +70,18 @@ export const WorkoutSchema = z.object({
   status: z.enum(workoutStatus),
   userId: z.string(),
   doneAt: z.date(),
-  timeElapsed: z.string(),
+  timeElapsed: z.number(),
 });
 
-export type WorkoutType = Omit<z.infer<typeof WorkoutSchema>, "doneAt">;
+export type WorkoutType = z.infer<typeof WorkoutSchema>;
 
-export const CreateWorkoutSchema = WorkoutSchema.omit({
-  id: true,
-  status: true,
-  userId: true,
-  doneAt: true,
-  timeElapsed: true,
+export const CreateWorkoutSchema = WorkoutSchema.pick({
+  title: true,
+  description: true,
+  exercises: true,
 });
 
-export type WorkoutWithoutIds = z.infer<typeof CreateWorkoutSchema>;
+export type CreateWorkoutType = z.infer<typeof CreateWorkoutSchema>;
 
 //Auth types and schemas
 
