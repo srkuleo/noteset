@@ -1,5 +1,5 @@
 import { Drawer } from "vaul";
-import { removeWorkout } from "@/util/actions/workout";
+import { archiveWorkout, removeWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { DangerIcon } from "../icons/user/warning";
 
@@ -22,8 +22,8 @@ export const RemoveWorkoutModal = ({
           data-vaul-no-drag
           className="fixed inset-x-0 bottom-0 z-[9999] select-none space-y-4 px-4 pb-12 focus:outline-none"
         >
-          <div className="flex flex-col items-center gap-3 rounded-modal bg-slate-50/90 pt-5 dark:bg-slate-700/70">
-            <div className="rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
+          <div className="flex flex-col gap-3 rounded-modal bg-slate-50/90 pt-5 dark:bg-slate-700/70">
+            <div className="mx-auto w-fit rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
               {DangerIcon}
             </div>
 
@@ -32,25 +32,47 @@ export const RemoveWorkoutModal = ({
               permanent data loss. Continue?
             </Drawer.Title>
 
-            <button
-              onClick={async () => {
-                const res = await removeWorkout(
-                  workoutToRemove.id,
-                  workoutToRemove.title,
-                );
+            <div className="flex flex-col">
+              <button
+                onClick={async () => {
+                  const res = await archiveWorkout(
+                    workoutToRemove.id,
+                    workoutToRemove.title,
+                  );
 
-                setOpen(false);
+                  setOpen(false);
 
-                if (res.status === "success") {
-                  showToast(res.message, "success");
-                } else {
-                  showToast(res.message, "error");
-                }
-              }}
-              className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
-            >
-              Remove {workoutToRemove.title}
-            </button>
+                  if (res.status === "success") {
+                    showToast(res.message, "success");
+                  } else {
+                    showToast(res.message, "error");
+                  }
+                }}
+                className="border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
+              >
+                Archive {workoutToRemove.title}
+              </button>
+
+              <button
+                onClick={async () => {
+                  const res = await removeWorkout(
+                    workoutToRemove.id,
+                    workoutToRemove.title,
+                  );
+
+                  setOpen(false);
+
+                  if (res.status === "success") {
+                    showToast(res.message, "success");
+                  } else {
+                    showToast(res.message, "error");
+                  }
+                }}
+                className="rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
+              >
+                Remove {workoutToRemove.title}
+              </button>
+            </div>
           </div>
 
           <button
