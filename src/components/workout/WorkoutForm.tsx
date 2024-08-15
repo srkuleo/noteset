@@ -1,15 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import debounce from "lodash.debounce";
+import { useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
-import { ThemeButton } from "../ThemeButton";
 import { ArrowLeftIcon } from "../icons/arrows";
 import { AddIcon } from "../icons/user/modify";
 
 import type { FetchedWorkout } from "@/db/schema";
 import type { ExerciseType, WorkoutType } from "@/util/types";
+
+type CurrWorkoutType = Omit<WorkoutType, "status" | "userId" | "doneAt">;
+
+const format = (time: number) => {
+  let hours: string | number = Math.floor((time / 60 / 60) % 24);
+  let minutes: string | number = Math.floor((time / 60) % 60);
+  let seconds: string | number = Math.floor(time % 60);
+
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  return `${hours}:${minutes}:${seconds}`;
+};
 
 export const WorkoutForm = ({
   fetchedWorkout,
@@ -19,59 +33,85 @@ export const WorkoutForm = ({
   const [fetchedExercises, setFetchedExercises] = useState(
     fetchedWorkout.exercises,
   );
-  const [currWorkout, setCurrWorkout] = useState<WorkoutType>({
+  const [currWorkout, setCurrWorkout] = useState<CurrWorkoutType>({
     id: fetchedWorkout.id,
-    userId: fetchedWorkout.userId,
     title: fetchedWorkout.title,
     description: fetchedWorkout.description,
-    exercises: [...fetchedWorkout.exercises],
-    status: "done",
-    timeElapsed: "",
+    exercises: fetchedWorkout.exercises.map((exercise): ExerciseType => {
+      return {
+        ...exercise,
+        reps: exercise.reps.map(() => ""),
+        weights: exercise.weights.map(() => ""),
+      };
+    }),
+    timeElapsed: 0,
   });
+  const [time, setTime] = useState(0);
+  const [counting, setCounting] = useState(true);
+  const timerRef = useRef<NodeJS.Timeout>();
 
-  function handleRepsInput(
-    event: React.ChangeEvent<HTMLInputElement>,
-    exerciseId: string,
-    inputIndex: number,
-  ) {
-    const modifiedExercises = currWorkout.exercises.map(
-      (exercise): ExerciseType =>
-        exercise.id === exerciseId
-          ? {
-              ...exercise,
-              reps: exercise.reps.toSpliced(inputIndex, 1, event.target.value),
-            }
-          : exercise,
-    );
+  useEffect(() => {
+    if (counting) {
+      timerRef.current = setInterval(() => {
+        setTime((prev) => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [counting]);
 
-    setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedExercises };
-    });
-  }
+  const handleRepsInput = debounce(
+    (
+      event: React.ChangeEvent<HTMLInputElement>,
+      exerciseId: string,
+      inputIndex: number,
+    ) => {
+      const modifiedExercises = currWorkout.exercises.map(
+        (exercise): ExerciseType =>
+          exercise.id === exerciseId
+            ? {
+                ...exercise,
+                reps: exercise.reps.toSpliced(
+                  inputIndex,
+                  1,
+                  event.target.value,
+                ),
+              }
+            : exercise,
+      );
 
-  function handleWeightInput(
-    event: React.ChangeEvent<HTMLInputElement>,
-    exerciseId: string,
-    inputIndex: number,
-  ) {
-    const modifiedExercises = currWorkout.exercises.map(
-      (exercise): ExerciseType =>
-        exercise.id === exerciseId
-          ? {
-              ...exercise,
-              weights: exercise.weights.toSpliced(
-                inputIndex,
-                1,
-                event.target.value,
-              ),
-            }
-          : exercise,
-    );
+      setCurrWorkout((prev) => {
+        return { ...prev, exercises: modifiedExercises };
+      });
+    },
+    200,
+  );
 
-    setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedExercises };
-    });
-  }
+  const handleWeightInput = debounce(
+    (
+      event: React.ChangeEvent<HTMLInputElement>,
+      exerciseId: string,
+      inputIndex: number,
+    ) => {
+      const modifiedExercises = currWorkout.exercises.map(
+        (exercise): ExerciseType =>
+          exercise.id === exerciseId
+            ? {
+                ...exercise,
+                weights: exercise.weights.toSpliced(
+                  inputIndex,
+                  1,
+                  event.target.value,
+                ),
+              }
+            : exercise,
+      );
+
+      setCurrWorkout((prev) => {
+        return { ...prev, exercises: modifiedExercises };
+      });
+    },
+    200,
+  );
 
   function addNewSet(exerciseId: string) {
     const modifiedFetchedExercises = fetchedExercises.map(
@@ -104,20 +144,21 @@ export const WorkoutForm = ({
     });
   }
 
-  console.log(currWorkout.exercises);
-
   return (
     <form
       action={() => {
         console.log("submited");
+        console.log(currWorkout.timeElapsed);
       }}
       className="flex h-full flex-col"
     >
       <header className="bg-gradient-to-r from-green-600 from-20% to-violet-600 pt-safe-top dark:from-green-700 dark:to-violet-700">
-        <div className="flex items-center gap-3 px-4 py-3 font-manrope">
+        <div className="flex items-center gap-3 px-4 py-3">
           <BackButton />
-          <p className="text-xl uppercase text-white">{currWorkout.title}</p>
-          <ThemeButton />
+
+          <p className="font-manrope text-xl uppercase text-white">
+            {currWorkout.title}
+          </p>
         </div>
       </header>
 
@@ -195,10 +236,17 @@ export const WorkoutForm = ({
           </div>
         ))}
       </main>
-      <footer className="flex items-center justify-between border-t border-slate-300/80 px-8 pb-7 pt-3 dark:border-slate-800">
-        <p>Timer</p>
+      <footer className="flex items-center justify-between border-t border-slate-300/80 px-8 pb-8 pt-3 dark:border-slate-800">
+        <p className="font-manrope text-lg font-semibold">{format(time)}</p>
         <button
           type="submit"
+          onClick={() => {
+            setCounting(false);
+            setCurrWorkout((prev) => {
+              return { ...prev, timeElapsed: time };
+            });
+            console.log(time);
+          }}
           className="font-manrope text-xl font-extrabold text-green-500 dark:text-green-600"
         >
           Done
@@ -229,7 +277,8 @@ const BackButton = () => {
         >
           <div className="flex flex-col gap-3 rounded-modal bg-slate-50/90 text-center dark:bg-slate-700/70">
             <Drawer.Title className="px-2 pb-2 pt-5 text-sm font-semibold">
-              Are you sure you want to leave? Any provided data will be lost.
+              Are you sure you want to leave? Your workout and any provided data
+              won&apos;t be saved.
             </Drawer.Title>
 
             <Link
