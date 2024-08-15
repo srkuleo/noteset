@@ -4,12 +4,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { EmptyIcon } from "../icons/user/warning";
 import { RemoveWorkoutModal } from "./RemoveWorkoutModal";
+import { StatusIndicator } from "../StatusIndicator";
 import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
 
-import type { Workout } from "@/db/schema";
+import type { FetchedWorkout } from "@/db/schema";
 
-export const WorkoutCards = ({ workouts }: { workouts: Workout[] }) => {
+export const WorkoutCards = ({ workouts }: { workouts: FetchedWorkout[] }) => {
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
   const [workoutToRemove, setWorkoutToRemove] = useState({ title: "", id: 0 });
 
@@ -30,9 +31,13 @@ export const WorkoutCards = ({ workouts }: { workouts: Workout[] }) => {
             className="flex w-full flex-col gap-4 rounded-xl border border-slate-300/80 bg-white px-4 py-6 shadow-md dark:border-slate-700/60 dark:bg-slate-800/80"
           >
             <div className="space-y-1.5 px-1">
-              <p className="text-pretty font-manrope text-lg font-bold uppercase dark:text-slate-300">
-                {workout.title}
-              </p>
+              <div className="flex justify-between gap-4">
+                <p className="text-pretty font-manrope text-lg font-bold uppercase dark:text-slate-300">
+                  {workout.title}
+                </p>
+
+                <StatusIndicator status={workout.status} />
+              </div>
               <p className="text-pretty text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60">
                 {workout.description}
               </p>
@@ -45,9 +50,9 @@ export const WorkoutCards = ({ workouts }: { workouts: Workout[] }) => {
 
               <Link
                 href={`/workout?id=${workout.id}`}
-                className="flex items-center rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-manrope text-xs text-white shadow-md transition active:scale-95 dark:from-violet-500 dark:to-violet-600"
+                className="flex items-center rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-bold text-white shadow-md transition active:scale-90 active:from-violet-300 active:to-violet-400 dark:from-violet-500 dark:to-violet-600 dark:active:from-violet-700 dark:active:to-violet-800"
               >
-                Let&apos;s begin
+                Start
                 <p className="sr-only">Start this workout</p>
               </Link>
 
