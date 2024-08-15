@@ -5,6 +5,7 @@ import { useWorkouts } from "@/util/hooks";
 import { editWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { WorkoutFormHeader } from "./WorkoutFormHeader";
+import { FormToolTip } from "./FormTooltip";
 import { InputFieldError } from "./InputFieldError";
 import { ExercisesList } from "./ExercisesList";
 
@@ -17,9 +18,11 @@ export const EditWorkoutForm = ({
 }) => {
   const {
     workout,
-    actionRes,
     setWorkout,
+    actionRes,
     setActionRes,
+    handleTitleInput,
+    handleDescriptionInput,
     updateExercises,
     editExercises,
     removeExercise,
@@ -28,9 +31,9 @@ export const EditWorkoutForm = ({
   async function clientAction() {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    const { title, id, userId } = fetchedWorkout;
+    const { title: originalTitle, id: workoutId } = fetchedWorkout;
 
-    const res = await editWorkout(workout, id, title, userId);
+    const res = await editWorkout(workout, workoutId, originalTitle);
 
     setActionRes({ ...res });
 
@@ -46,14 +49,14 @@ export const EditWorkoutForm = ({
       <fieldset disabled={actionRes.status === "pending"} className="group">
         <WorkoutFormHeader
           heading="Edit workout"
-          formId="edit-form"
+          formId="edit"
           updateExercises={updateExercises}
         />
       </fieldset>
 
-      <main className="overflow-y-auto overscroll-contain scroll-smooth px-8 pb-4 pt-6">
+      <main className="relative overflow-y-auto overscroll-contain scroll-smooth px-8 py-4">
         <form
-          id="edit-form"
+          id="edit"
           action={clientAction}
           onSubmit={() => setActionRes({ ...actionRes, status: "pending" })}
         >
@@ -61,6 +64,8 @@ export const EditWorkoutForm = ({
             disabled={actionRes.status === "pending"}
             className="group space-y-4"
           >
+            <FormToolTip />
+
             <div className="flex flex-col gap-2 px-4 group-disabled:opacity-50">
               <label
                 htmlFor="title"
@@ -69,13 +74,12 @@ export const EditWorkoutForm = ({
                 Title
               </label>
               <input
+                required={!workout.title}
                 id="title"
                 name="workoutTitle"
                 type="text"
-                defaultValue={workout.title}
-                onChange={(e) =>
-                  setWorkout({ ...workout, title: e.target.value })
-                }
+                placeholder={workout.title ? workout.title : "e.g. Upper 1"}
+                onChange={(e) => handleTitleInput(e)}
                 className={twMerge(
                   "input-field",
                   actionRes.errors?.title && "ring-red-500 dark:ring-red-500",
@@ -101,10 +105,12 @@ export const EditWorkoutForm = ({
                 id="description"
                 name="workoutDescription"
                 type="text"
-                defaultValue={workout.description}
-                onChange={(e) =>
-                  setWorkout({ ...workout, description: e.target.value })
+                placeholder={
+                  workout.description
+                    ? workout.description
+                    : "e.g. Workout for the upper body"
                 }
+                onChange={(e) => handleDescriptionInput(e)}
                 className="input-field"
               />
             </div>
