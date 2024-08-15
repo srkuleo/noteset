@@ -14,8 +14,8 @@ export const showToast = debounce(
   (message: string, type: ToastType, path?: string, linkText?: string) =>
     toast.custom((t) => (
       <div className="select-none pb-3">
-        <div className="flex items-center justify-between gap-2 rounded-lg bg-white p-4 shadow-lg ring-[1.5px] ring-slate-400/55 dark:bg-slate-900 dark:shadow-black dark:ring-slate-800">
-          <div className="flex items-center gap-1.5">
+        <div className="flex items-center justify-between rounded-lg bg-white p-4 shadow-lg ring-[1.5px] ring-slate-400/55 dark:bg-slate-900 dark:shadow-black dark:ring-slate-800">
+          <div className="flex max-w-[75%] items-center gap-1.5">
             {type === "success" ? (
               <SuccessIcon />
             ) : type === "error" ? (
