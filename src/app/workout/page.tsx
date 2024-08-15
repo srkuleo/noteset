@@ -15,9 +15,9 @@ export default async function WorkoutPage({
   }
 
   const coercedId = Number(searchParams.id);
-  const workout = await getWorkoutById(coercedId, user.id);
+  const fetchedWorkout = await getWorkoutById(coercedId, user.id);
 
-  if (!workout) notFound();
+  if (!fetchedWorkout) notFound();
 
-  return <WorkoutForm fetchedWorkout={workout} />;
+  return <WorkoutForm fetchedWorkout={fetchedWorkout} />;
 }

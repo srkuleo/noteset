@@ -14,7 +14,7 @@ import type { FetchedWorkout } from "@/db/schema";
 export const EditWorkoutForm = ({
   fetchedWorkout,
 }: {
-  fetchedWorkout: FetchedWorkout;
+  fetchedWorkout: Omit<FetchedWorkout, "status">;
 }) => {
   const {
     workout,

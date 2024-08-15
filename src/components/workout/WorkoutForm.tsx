@@ -28,7 +28,7 @@ const format = (time: number) => {
 export const WorkoutForm = ({
   fetchedWorkout,
 }: {
-  fetchedWorkout: FetchedWorkout;
+  fetchedWorkout: Omit<FetchedWorkout, "status">;
 }) => {
   const [fetchedExercises, setFetchedExercises] = useState(
     fetchedWorkout.exercises,
