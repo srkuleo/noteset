@@ -1,13 +1,10 @@
 "use server";
 
-import { unstable_noStore as noStore } from "next/cache";
 import { and, eq } from "drizzle-orm";
 import { db } from ".";
 import { workouts } from "./schema";
 
 export async function getUserWorkouts(userId: string) {
-  noStore();
-
   try {
     const userWorkouts = await db
       .select({
@@ -15,6 +12,7 @@ export async function getUserWorkouts(userId: string) {
         title: workouts.title,
         description: workouts.description,
         exercises: workouts.exercises,
+        status: workouts.status,
       })
       .from(workouts)
       .where(and(eq(workouts.userId, userId), eq(workouts.status, "current")))
@@ -30,8 +28,6 @@ export async function getUserWorkouts(userId: string) {
 }
 
 export async function getWorkoutById(workoutId: number, userId: string) {
-  noStore();
-
   try {
     const workout = await db.query.workouts.findFirst({
       where: and(eq(workouts.userId, userId), eq(workouts.id, workoutId)),
@@ -39,7 +35,6 @@ export async function getWorkoutById(workoutId: number, userId: string) {
         id: true,
         title: true,
         description: true,
-        userId: true,
         exercises: true,
       },
     });
