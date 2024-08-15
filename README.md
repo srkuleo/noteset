@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Finish UI and logic for workout and postworkout page._
+- _Finish UI and logic for workout and postworkout page. Option to add new exercise if workout is started._
 
 - _Modify profile and logs page to have an actual content._
 
