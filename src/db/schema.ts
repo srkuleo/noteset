@@ -13,7 +13,7 @@ import {
 
 import type { ExerciseType } from "@/util/types";
 
-export const workoutStatus = ["current", "done", "arhived"] as const;
+export const workoutStatus = ["current", "done", "archived"] as const;
 export const statusEnum = pgEnum("status", workoutStatus);
 
 export const users = pgTable(
