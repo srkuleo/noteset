@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 import { ArrowLeftIcon } from "../icons/arrows";
-import { CheckmarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
+import { CheckMarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
 
 import type { ExerciseType } from "@/util/types";
 
@@ -40,7 +40,7 @@ export const WorkoutFormHeader = ({
           form={formId}
           className="inline-flex rounded-full bg-green-500 p-2 text-white shadow-sm active:scale-95 dark:bg-green-600"
         >
-          <CheckmarkIcon className="size-[22px] group-disabled:opacity-0" />
+          <CheckMarkIcon className="size-[22px] group-disabled:opacity-0" />
           <ThreeDotIcon className="absolute size-[22px] group-enabled:opacity-0" />
         </button>
       </div>
