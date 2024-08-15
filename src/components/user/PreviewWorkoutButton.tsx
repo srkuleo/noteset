@@ -2,9 +2,13 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 
-import type { Workout } from "@/db/schema";
+import type { FetchedWorkout } from "@/db/schema";
 
-export const PreviewWorkoutButton = ({ workout }: { workout: Workout }) => {
+export const PreviewWorkoutButton = ({
+  workout,
+}: {
+  workout: FetchedWorkout;
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
