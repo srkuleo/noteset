@@ -38,12 +38,12 @@ export const UserPagesNavBar = () => {
           href={link.href}
           className={twJoin(
             "relative px-2 py-2 active:rounded-full active:bg-slate-200 dark:active:bg-slate-700",
-            path.includes(link.href) && "text-green-500 dark:text-white",
+            path === link.href && "text-green-500 dark:text-white",
           )}
         >
           {link.icon}
 
-          {path.includes(link.href) && (
+          {path === link.href && (
             <motion.div
               layoutId="active-page"
               className="absolute bottom-0 h-[3px] w-8 rounded-full bg-green-500"
