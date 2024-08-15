@@ -2,14 +2,20 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { InputFieldError } from "./InputFieldError";
 
+import type { DebouncedFunc } from "lodash";
+
 export const NameInput = ({
   name,
   nameError,
   handleNameInput,
+  form,
 }: {
   name: string;
   nameError: string[] | undefined;
-  handleNameInput: (input: string) => void;
+  handleNameInput: DebouncedFunc<
+    (eventValue: React.ChangeEvent<HTMLInputElement>) => void
+  >;
+  form?: "edit" | "add";
 }) => {
   return (
     <div className="flex flex-col gap-2">
@@ -20,11 +26,12 @@ export const NameInput = ({
         Name
       </label>
       <input
+        required={form === "add"}
+        autoFocus={form === "add"}
         id="name"
-        value={name}
         type="text"
-        placeholder="e.g. Bench press"
-        onChange={(e) => handleNameInput(e.target.value)}
+        placeholder={name ? name : "e.g. Bench press"}
+        onChange={(e) => handleNameInput(e)}
         className={twMerge(
           "input-field",
           "py-2",
@@ -116,8 +123,10 @@ export const RepsInputs = ({
 }: {
   reps: string[];
   repsError: string[] | undefined;
-  handleRepsInput: (eventValue: string, index: number) => void;
-  form: "edit" | "add";
+  handleRepsInput: DebouncedFunc<
+    (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  >;
+  form?: "edit" | "add";
 }) => {
   return (
     <div className="flex flex-col gap-1">
@@ -133,14 +142,13 @@ export const RepsInputs = ({
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
         {reps.map((rep, index) => (
           <input
-            required
+            required={form === "add"}
             key={`Rep: ${index + 1}`}
             id={`rep ${index + 1}`}
-            value={rep}
             type="text"
-            placeholder={`Rep ${index + 1}`}
+            placeholder={rep ? rep : `Rep ${index + 1}`}
             autoFocus={form === "add" && index === 0}
-            onChange={(e) => handleRepsInput(e.target.value, index)}
+            onChange={(e) => handleRepsInput(e, index)}
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
@@ -160,10 +168,14 @@ export const WeightInputs = ({
   weights,
   weightsError,
   handleWeightInput,
+  form,
 }: {
   weights: string[];
   weightsError: string[] | undefined;
-  handleWeightInput: (eventValue: string, index: number) => void;
+  handleWeightInput: DebouncedFunc<
+    (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
+  >;
+  form?: "edit" | "add";
 }) => {
   return (
     <div className="flex flex-col gap-1">
@@ -179,14 +191,13 @@ export const WeightInputs = ({
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
         {weights.map((weight, index) => (
           <input
-            required
+            required={form === "add"}
             key={`Weight: ${index + 1}`}
             id={`weight ${index + 1}`}
-            value={weight}
             type="text"
             inputMode="decimal"
-            placeholder={`Weight ${index + 1}`}
-            onChange={(e) => handleWeightInput(e.target.value, index)}
+            placeholder={weight ? weight : `Weight ${index + 1}`}
+            onChange={(e) => handleWeightInput(e, index)}
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
