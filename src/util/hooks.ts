@@ -1,8 +1,9 @@
+import debounce from "lodash.debounce";
 import { useState } from "react";
 
 import type {
   ExerciseType,
-  WorkoutWithoutIds,
+  CreateWorkoutType,
   ExerciseActionResponse,
   WorkoutActionResponse,
 } from "./types";
@@ -16,28 +17,55 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   const [tempExercise, setTempExercise] = useState(initExercise);
   const [exerciseFormErrors, setExerciseFormErrors] = useState(initErrors);
 
-  function handleNameInput(input: string) {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        name: input,
-      };
-    });
-  }
+  const handleNameInput = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const name = event.target.value;
+
+      setTempExercise((prev) => {
+        return {
+          ...prev,
+          name: name,
+        };
+      });
+    },
+    500,
+  );
 
   function handleSetsInput(input: string | number) {
-    const sets = Number(input);
-    const reps = Array.from({ length: sets }, () => "");
-    const weights = Array.from({ length: sets }, () => "");
+    const newSets = Number(input);
+    const currSets = tempExercise.sets;
 
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        sets: sets,
-        reps: reps,
-        weights: weights,
-      };
-    });
+    if (newSets > currSets) {
+      const reps = [
+        ...tempExercise.reps,
+        ...Array(newSets - currSets).fill(""),
+      ];
+      const weights = [
+        ...tempExercise.weights,
+        ...Array(newSets - currSets).fill(""),
+      ];
+
+      setTempExercise((prev) => {
+        return {
+          ...prev,
+          sets: newSets,
+          reps: reps,
+          weights: weights,
+        };
+      });
+    } else if (newSets < currSets) {
+      const reps = tempExercise.reps.slice(0, newSets);
+      const weights = tempExercise.weights.slice(0, newSets);
+
+      setTempExercise((prev) => {
+        return {
+          ...prev,
+          sets: newSets,
+          reps: reps,
+          weights: weights,
+        };
+      });
+    }
 
     if (
       exerciseFormErrors.errors?.sets &&
@@ -55,31 +83,41 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     }
   }
 
-  function handleRepsInput(eventValue: string, index: number) {
-    const modifiedReps = tempExercise.reps.toSpliced(index, 1, eventValue);
+  const handleRepsInput = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      const modifiedReps = tempExercise.reps.toSpliced(
+        index,
+        1,
+        event.target.value,
+      );
 
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        reps: modifiedReps,
-      };
-    });
-  }
+      setTempExercise((prev) => {
+        return {
+          ...prev,
+          reps: modifiedReps,
+        };
+      });
+    },
+    300,
+  );
 
-  function handleWeightInput(eventValue: string, index: number) {
-    const modifiedWeights = tempExercise.weights.toSpliced(
-      index,
-      1,
-      eventValue,
-    );
+  const handleWeightInput = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      const modifiedWeights = tempExercise.weights.toSpliced(
+        index,
+        1,
+        event.target.value,
+      );
 
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        weights: modifiedWeights,
-      };
-    });
-  }
+      setTempExercise((prev) => {
+        return {
+          ...prev,
+          weights: modifiedWeights,
+        };
+      });
+    },
+    300,
+  );
 
   return {
     tempExercise,
@@ -92,7 +130,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   };
 };
 
-export const emptyWorkout: WorkoutWithoutIds = {
+export const emptyWorkout: CreateWorkoutType = {
   title: "",
   description: "",
   exercises: [],
@@ -114,9 +152,33 @@ Contains:
 
 */
 
-export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
+export const useWorkouts = (initWorkout: CreateWorkoutType) => {
   const [workout, setWorkout] = useState(initWorkout);
   const [actionRes, setActionRes] = useState(emptyRes);
+
+  const handleTitleInput = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setWorkout((prev) => {
+        return {
+          ...prev,
+          title: event.target.value,
+        };
+      });
+    },
+    500,
+  );
+
+  const handleDescriptionInput = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setWorkout((prev) => {
+        return {
+          ...prev,
+          description: event.target.value,
+        };
+      });
+    },
+    500,
+  );
 
   function updateExercises(newExercise: ExerciseType) {
     setWorkout((prev) => {
@@ -168,9 +230,11 @@ export const useWorkouts = (initWorkout: WorkoutWithoutIds) => {
 
   return {
     workout,
-    actionRes,
     setWorkout,
+    actionRes,
     setActionRes,
+    handleTitleInput,
+    handleDescriptionInput,
     updateExercises,
     editExercises,
     removeExercise,
