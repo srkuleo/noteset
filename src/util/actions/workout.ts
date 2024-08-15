@@ -4,17 +4,23 @@ import { revalidatePath } from "next/cache";
 import { and, eq, ilike, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { workouts } from "@/db/schema";
+import { getAuth } from "./auth";
 
 import {
   CreateWorkoutSchema,
   type WorkoutActionResponse,
-  type WorkoutWithoutIds,
+  type CreateWorkoutType,
 } from "../types";
 
 export async function createWorkout(
-  workout: WorkoutWithoutIds,
-  userId: string,
+  workout: CreateWorkoutType,
 ): Promise<WorkoutActionResponse> {
+  const { user } = await getAuth();
+
+  if (!user) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
   const isValidWorkout = CreateWorkoutSchema.safeParse(workout);
 
   if (!isValidWorkout.success) {
@@ -29,7 +35,7 @@ export async function createWorkout(
 
   try {
     const existingWorkout = await db.query.workouts.findFirst({
-      where: and(ilike(workouts.title, title), eq(workouts.userId, userId)),
+      where: and(ilike(workouts.title, title), eq(workouts.userId, user.id)),
     });
 
     if (existingWorkout) {
@@ -45,7 +51,7 @@ export async function createWorkout(
     }
 
     await db.insert(workouts).values({
-      userId: userId,
+      userId: user.id,
       title: title,
       description: description ? description : "Description not provided.",
       exercises: exercises,
@@ -69,11 +75,16 @@ export async function createWorkout(
 }
 
 export async function editWorkout(
-  editedWorkout: WorkoutWithoutIds,
+  editedWorkout: CreateWorkoutType,
   workoutId: number,
   initTitle: string,
-  userId: string,
 ): Promise<WorkoutActionResponse> {
+  const { user } = await getAuth();
+
+  if (!user) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
   const isValidWorkout = CreateWorkoutSchema.safeParse(editedWorkout);
 
   if (!isValidWorkout.success) {
@@ -90,7 +101,7 @@ export async function editWorkout(
     const alreadyExistWorkout = await db.query.workouts.findFirst({
       where: and(
         ilike(workouts.title, title),
-        eq(workouts.userId, userId),
+        eq(workouts.userId, user.id),
         ne(workouts.id, workoutId),
       ),
     });
@@ -151,6 +162,33 @@ export async function removeWorkout(
     return {
       status: "error",
       message: "Database Error: Workout could not be removed",
+    };
+  }
+}
+
+export async function archiveWorkout(
+  workoutId: number,
+  workoutTitle: string,
+): Promise<WorkoutActionResponse> {
+  try {
+    await db
+      .update(workouts)
+      .set({ status: "arhived" })
+      .where(eq(workouts.id, workoutId));
+
+    console.log("Workout archived!");
+
+    revalidatePath("/workouts");
+
+    return {
+      status: "success",
+      message: `"${workoutTitle}" workout archived`,
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      status: "error",
+      message: "Database Error: Workout could not be archived",
     };
   }
 }
