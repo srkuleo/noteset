@@ -173,7 +173,7 @@ export async function archiveWorkout(
   try {
     await db
       .update(workouts)
-      .set({ status: "arhived" })
+      .set({ status: "archived" })
       .where(eq(workouts.id, workoutId));
 
     console.log("Workout archived!");
