@@ -9,5 +9,5 @@ export default async function CreateWorkoutPage() {
     redirect("/login");
   }
 
-  return <CreateWorkoutForm userId={user.id} />;
+  return <CreateWorkoutForm />;
 }
