@@ -20,7 +20,7 @@ export const SubmitFormButton = ({
       type="submit"
       disabled={pending}
       className={twMerge(
-        "rounded-lg bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600",
+        "rounded-lg bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 active:bg-green-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:active:bg-green-800",
         className,
       )}
     >
