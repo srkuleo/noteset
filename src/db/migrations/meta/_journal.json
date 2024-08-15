@@ -5,57 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1718389167645,
-      "tag": "0000_tired_the_executioner",
+      "when": 1723651619665,
+      "tag": "0000_busy_thaddeus_ross",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1718389387756,
-      "tag": "0001_giant_darkhawk",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1719699377686,
-      "tag": "0002_unusual_adam_warlock",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1719774229413,
-      "tag": "0003_familiar_morlocks",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1719777239989,
-      "tag": "0004_wooden_risque",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "7",
-      "when": 1719851418790,
-      "tag": "0005_mighty_ares",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "7",
-      "when": 1720290089025,
-      "tag": "0006_parallel_toro",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "7",
-      "when": 1721209534437,
-      "tag": "0007_bouncy_valkyrie",
+      "when": 1723653958876,
+      "tag": "0001_dusty_warbound",
       "breakpoints": true
     }
   ]

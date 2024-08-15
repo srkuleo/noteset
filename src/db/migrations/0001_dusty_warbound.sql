@@ -1,0 +1,1 @@
+ALTER TABLE "workouts" ALTER COLUMN "status" SET NOT NULL;

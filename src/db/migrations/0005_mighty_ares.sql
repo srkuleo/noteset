@@ -1,1 +1,0 @@
-ALTER TABLE "users" ADD COLUMN "is_verified_email" boolean DEFAULT false;
