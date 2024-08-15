@@ -9,7 +9,7 @@ import {
 } from "./ExerciseInputs";
 import { SubmitFormButton } from "../SubmitButtons";
 
-import { AddExerciseSchema, type ExerciseType } from "@/util/types";
+import { ExerciseSchema, type ExerciseType } from "@/util/types";
 
 export const EditExerciseDrawer = ({
   isOpen,
@@ -77,8 +77,12 @@ const EditExerciseForm = ({
     handleWeightInput,
   } = useExerciseForm(initExercise);
 
-  function editExercise() {
-    const isValidExercise = AddExerciseSchema.safeParse({ ...tempExercise });
+  async function editExercise(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
+    const isValidExercise = ExerciseSchema.safeParse({ ...tempExercise });
 
     if (!isValidExercise.success) {
       setExerciseFormErrors({
@@ -94,7 +98,7 @@ const EditExerciseForm = ({
   }
 
   return (
-    <form action={editExercise} className="space-y-6 px-8 py-4">
+    <form onSubmit={editExercise} className="space-y-6 px-8 py-4">
       <div className="space-y-3">
         <NameInput
           name={tempExercise.name}
@@ -103,14 +107,13 @@ const EditExerciseForm = ({
         />
         <SetsInput
           sets={tempExercise.sets}
-          handleSetsInput={handleSetsInput}
           setsError={exerciseFormErrors.errors?.sets}
+          handleSetsInput={handleSetsInput}
         />
       </div>
 
       <div className="space-y-3">
         <RepsInputs
-          form="edit"
           reps={tempExercise.reps}
           repsError={exerciseFormErrors.errors?.reps}
           handleRepsInput={handleRepsInput}

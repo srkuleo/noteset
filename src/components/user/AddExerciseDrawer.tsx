@@ -12,7 +12,7 @@ import {
 } from "./ExerciseInputs";
 import { SubmitFormButton } from "../SubmitButtons";
 
-import { type ExerciseType, AddExerciseSchema } from "@/util/types";
+import { type ExerciseType, ExerciseSchema } from "@/util/types";
 
 const initExercise: ExerciseType = {
   id: "",
@@ -87,12 +87,17 @@ const AddExerciseForm = ({
     handleWeightInput,
   } = useExerciseForm(initExercise);
 
-  function createExercise() {
+  async function createExercise(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
     const exerciseWithId: ExerciseType = {
       ...tempExercise,
       id: generateIdFromEntropySize(10),
     };
-    const isValidExercise = AddExerciseSchema.safeParse(exerciseWithId);
+    const isValidExercise = ExerciseSchema.safeParse(exerciseWithId);
 
     if (!isValidExercise.success) {
       setExerciseFormErrors({
@@ -108,9 +113,10 @@ const AddExerciseForm = ({
   }
 
   return (
-    <form action={createExercise} className="space-y-6 px-8 py-4">
+    <form onSubmit={createExercise} className="space-y-6 px-8 py-4">
       <div className="space-y-3">
         <NameInput
+          form="add"
           name={tempExercise.name}
           nameError={exerciseFormErrors.errors?.name}
           handleNameInput={handleNameInput}
@@ -138,6 +144,7 @@ const AddExerciseForm = ({
               handleRepsInput={handleRepsInput}
             />
             <WeightInputs
+              form="add"
               weights={tempExercise.weights}
               weightsError={exerciseFormErrors.errors?.weights}
               handleWeightInput={handleWeightInput}
