@@ -27,7 +27,7 @@ import {
   RemoveExerciseIcon,
 } from "../icons/user/modify";
 
-import type { ExerciseType, WorkoutWithoutIds } from "@/util/types";
+import type { ExerciseType, CreateWorkoutType } from "@/util/types";
 
 export const ExercisesList = ({
   workout,
@@ -37,10 +37,10 @@ export const ExercisesList = ({
   editExercises,
   removeExercise,
 }: {
-  workout: WorkoutWithoutIds;
+  workout: CreateWorkoutType;
   isErroring: boolean;
   editForm?: boolean;
-  setWorkout: (workout: WorkoutWithoutIds) => void;
+  setWorkout: (workout: CreateWorkoutType) => void;
   editExercises: (editedExercise: ExerciseType) => void;
   removeExercise: (id: string) => void;
 }) => {
