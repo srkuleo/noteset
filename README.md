@@ -8,7 +8,11 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Finish UI and logic for workout and postworkout page. Option to add new exercise if workout is started._
+- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note._
+
+- _Make post workout page with proper UI structure and way to modify current default workout if needed._
+
+- _Make logs page UI, add search and filter option and display workouts with status: done or archived._
 
 - _Modify profile and logs page to have an actual content._
 
