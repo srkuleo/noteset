@@ -1,7 +1,7 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { QuestionMarkIcon } from "../icons/user/question-mark";
 
-export const FormToolTip = () => {
+export const FormTooltip = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger className="absolute right-12 top-8 text-slate-400/80 focus:outline-none dark:text-slate-500">
@@ -14,11 +14,27 @@ export const FormToolTip = () => {
         <Dialog.Content className="absolute right-[50px] top-52 z-10 max-w-[75%] pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up sm:max-w-sm">
           <div className="flex flex-col gap-4 rounded-modal bg-white/75 p-6 ring-1 ring-slate-400/80 dark:bg-slate-800/85 dark:text-slate-400 dark:ring-slate-700">
             <Dialog.Title className="text-lg text-slate-800 dark:text-white sm:text-xl">
-              Form tips
+              Good to Know
             </Dialog.Title>
 
             <Dialog.Description asChild>
               <ul className="list-disc space-y-2 text-pretty pl-4 text-sm sm:text-base">
+                <li>
+                  Tap{" "}
+                  <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
+                    plus
+                  </span>{" "}
+                  button to add a new exercise.
+                </li>
+
+                <li>
+                  When done with adding or editing your workout, tap{" "}
+                  <span className="font-bold uppercase text-green-500 dark:text-green-600">
+                    check mark
+                  </span>{" "}
+                  button to submit the form.
+                </li>
+
                 <li>
                   Fields with &quot;e.g.&quot; or &quot;Rep 1, Weight 1&quot;
                   don&apos;t carry any value.{" "}
@@ -26,15 +42,13 @@ export const FormToolTip = () => {
                     Those must be provided with data.
                   </span>
                 </li>
+
                 <li>
-                  On edit page, you will see inputs having dimmed colour values
-                  - both workout and exercise forms.{" "}
-                  <span className="font-bold text-slate-800 dark:text-white">
-                    Only populate input fields that you intend to edit
-                  </span>
-                  , others (dimmed ones - excluding expections from the previous
-                  paragraph) will automatically be populated for you with
-                  previously provided values.
+                  You need to add{" "}
+                  <span className="font-bold uppercase text-slate-800 dark:text-white">
+                    at least one exercise
+                  </span>{" "}
+                  before submitting the form otherwise it will result in error.
                 </li>
               </ul>
             </Dialog.Description>
