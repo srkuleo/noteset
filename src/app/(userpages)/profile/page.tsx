@@ -26,7 +26,7 @@ export default async function ProfilePage() {
       <main className="space-y-4 px-6 py-2">
         <p className="">Username: {user.username}</p>
         <p>Email: {user.email}</p>
-        <p>Verified: {user.isVerifiedEmail ? "Yes" : "No"}</p>
+        <p>Verified: {user.isVerified ? "Yes" : "No"}</p>
         <p>Joined: {userJoined}</p>
       </main>
     </>
