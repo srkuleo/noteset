@@ -10,7 +10,7 @@ export const WorkoutsPageContent = async () => {
     redirect("/login");
   }
 
-  const workouts = await getUserWorkouts(user.id);
+  const workouts = await getUserWorkouts();
 
   return <WorkoutCards workouts={workouts} />;
 };
