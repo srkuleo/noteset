@@ -1,4 +1,3 @@
-import debounce from "lodash.debounce";
 import { useState } from "react";
 
 import type {
@@ -17,19 +16,23 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
   const [tempExercise, setTempExercise] = useState(initExercise);
   const [exerciseFormErrors, setExerciseFormErrors] = useState(initErrors);
 
-  const handleNameInput = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const name = event.target.value;
+  function handleNameInput(event: React.ChangeEvent<HTMLInputElement>) {
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        name: event.target.value,
+      };
+    });
+  }
 
-      setTempExercise((prev) => {
-        return {
-          ...prev,
-          name: name,
-        };
-      });
-    },
-    500,
-  );
+  function handleNoteInput(event: React.ChangeEvent<HTMLInputElement>) {
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        note: event.target.value,
+      };
+    });
+  }
 
   function handleSetsInput(input: string | number) {
     const newSets = Number(input);
@@ -83,47 +86,48 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     }
   }
 
-  const handleRepsInput = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const modifiedReps = tempExercise.reps.toSpliced(
-        index,
-        1,
-        event.target.value,
-      );
+  function handleRepsInput(
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) {
+    const modifiedReps = tempExercise.reps.toSpliced(
+      index,
+      1,
+      event.target.value,
+    );
 
-      setTempExercise((prev) => {
-        return {
-          ...prev,
-          reps: modifiedReps,
-        };
-      });
-    },
-    300,
-  );
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        reps: modifiedReps,
+      };
+    });
+  }
 
-  const handleWeightInput = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
-      const modifiedWeights = tempExercise.weights.toSpliced(
-        index,
-        1,
-        event.target.value,
-      );
+  function handleWeightInput(
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) {
+    const modifiedWeights = tempExercise.weights.toSpliced(
+      index,
+      1,
+      event.target.value,
+    );
 
-      setTempExercise((prev) => {
-        return {
-          ...prev,
-          weights: modifiedWeights,
-        };
-      });
-    },
-    300,
-  );
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        weights: modifiedWeights,
+      };
+    });
+  }
 
   return {
     tempExercise,
     exerciseFormErrors,
     setExerciseFormErrors,
     handleNameInput,
+    handleNoteInput,
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
@@ -156,29 +160,23 @@ export const useWorkouts = (initWorkout: CreateWorkoutType) => {
   const [workout, setWorkout] = useState(initWorkout);
   const [actionRes, setActionRes] = useState(emptyRes);
 
-  const handleTitleInput = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setWorkout((prev) => {
-        return {
-          ...prev,
-          title: event.target.value,
-        };
-      });
-    },
-    500,
-  );
+  function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
+    setWorkout((prev) => {
+      return {
+        ...prev,
+        title: event.target.value,
+      };
+    });
+  }
 
-  const handleDescriptionInput = debounce(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setWorkout((prev) => {
-        return {
-          ...prev,
-          description: event.target.value,
-        };
-      });
-    },
-    500,
-  );
+  function handleDescriptionInput(event: React.ChangeEvent<HTMLInputElement>) {
+    setWorkout((prev) => {
+      return {
+        ...prev,
+        description: event.target.value,
+      };
+    });
+  }
 
   function updateExercises(newExercise: ExerciseType) {
     setWorkout((prev) => {
