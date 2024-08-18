@@ -16,7 +16,7 @@ const config: Config = {
       },
       gridTemplateColumns: {
         // exercise: "2fr 1fr 1fr",
-        preview: "max-content 10px max-content 10px max-content",
+        preview: "max-content max-content max-content",
       },
       borderRadius: {
         modal: "10px",
