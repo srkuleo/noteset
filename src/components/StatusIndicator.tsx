@@ -1,4 +1,4 @@
-import type { WorkoutType } from "@/util/types";
+import type { WorkoutType } from "@/db/schema";
 
 export const StatusIndicator = ({ status }: Pick<WorkoutType, "status">) => {
   return (
