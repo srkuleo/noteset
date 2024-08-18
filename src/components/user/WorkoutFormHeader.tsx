@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useState } from "react";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 import { ArrowLeftIcon } from "../icons/arrows";
 import { CheckMarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
@@ -15,8 +14,6 @@ export const WorkoutFormHeader = ({
   formId: string;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
-  const [openAddDrawer, setOpenAddDrawer] = useState(false);
-
   return (
     <div className="flex items-center gap-3 border-b border-slate-300 px-6 py-4 dark:border-slate-800">
       <Link
@@ -30,8 +27,7 @@ export const WorkoutFormHeader = ({
 
       <div className="flex flex-1 items-center justify-end gap-3 group-disabled:pointer-events-none group-disabled:opacity-50">
         <AddExerciseDrawer
-          isOpen={openAddDrawer}
-          setIsOpen={setOpenAddDrawer}
+          className="text-violet-400 dark:text-violet-400"
           updateExercises={updateExercises}
         />
 
