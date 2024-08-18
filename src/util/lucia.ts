@@ -18,7 +18,7 @@ export const lucia = new Lucia(adapter, {
       username: attributes.username,
       email: attributes.email,
       createdAt: attributes.createdAt,
-      isVerifiedEmail: attributes.isVerifiedEmail,
+      isVerified: attributes.isVerified,
     };
   },
 });
@@ -34,6 +34,6 @@ interface DatabaseUserAttributes {
   id: string;
   username: string;
   email: string;
+  isVerified: boolean;
   createdAt: string;
-  isVerifiedEmail: boolean;
 }
