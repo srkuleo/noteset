@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AnimatePresence, motion } from "framer-motion";
@@ -6,6 +8,7 @@ import { useExerciseForm } from "@/util/hooks";
 import { AddIcon } from "../icons/user/modify";
 import {
   NameInput,
+  NoteInput,
   RepsInputs,
   SetsInput,
   WeightInputs,
@@ -23,14 +26,14 @@ const initExercise: ExerciseType = {
 };
 
 export const AddExerciseDrawer = ({
-  isOpen,
-  setIsOpen,
+  className,
   updateExercises,
 }: {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  className: string;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Drawer.Root
       open={isOpen}
@@ -38,7 +41,12 @@ export const AddExerciseDrawer = ({
       direction="top"
       noBodyStyles
     >
-      <Drawer.Trigger className="rounded-full p-2 text-violet-400 focus:outline-none active:bg-slate-200 dark:text-violet-400 active:dark:bg-slate-700">
+      <Drawer.Trigger
+        className={twMerge(
+          "dark:text-violet rounded-full p-2 focus:outline-none active:bg-slate-200 active:dark:bg-slate-700",
+          className,
+        )}
+      >
         <AddIcon size={26} strokeWidth={2} />
         <span className="sr-only">Add Exercise</span>
       </Drawer.Trigger>
@@ -82,15 +90,13 @@ const AddExerciseForm = ({
     exerciseFormErrors,
     setExerciseFormErrors,
     handleNameInput,
+    handleNoteInput,
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
   } = useExerciseForm(initExercise);
 
-  async function createExercise(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    e.stopPropagation();
-
+  async function createExercise() {
     await new Promise((resolve) => setTimeout(resolve, 250));
 
     const exerciseWithId: ExerciseType = {
@@ -113,7 +119,7 @@ const AddExerciseForm = ({
   }
 
   return (
-    <form onSubmit={createExercise} className="space-y-6 px-8 py-4">
+    <form action={createExercise} className="space-y-6 px-8 py-4">
       <div className="space-y-3">
         <NameInput
           form="add"
@@ -121,12 +127,16 @@ const AddExerciseForm = ({
           nameError={exerciseFormErrors.errors?.name}
           handleNameInput={handleNameInput}
         />
+
+        <NoteInput note={tempExercise.note} handleNoteInput={handleNoteInput} />
+
         <SetsInput
           sets={tempExercise.sets}
           setsError={exerciseFormErrors.errors?.sets}
           handleSetsInput={handleSetsInput}
         />
       </div>
+
       <AnimatePresence>
         {tempExercise.sets !== 0 && (
           <motion.div
@@ -143,8 +153,8 @@ const AddExerciseForm = ({
               repsError={exerciseFormErrors.errors?.reps}
               handleRepsInput={handleRepsInput}
             />
+
             <WeightInputs
-              form="add"
               weights={tempExercise.weights}
               weightsError={exerciseFormErrors.errors?.weights}
               handleWeightInput={handleWeightInput}
@@ -164,6 +174,7 @@ const AddExerciseForm = ({
         >
           Cancel
         </button>
+
         <SubmitFormButton
           label="Add"
           loading="Adding..."
