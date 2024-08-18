@@ -7,7 +7,6 @@ import {
   varchar,
   pgEnum,
   boolean,
-  date,
   integer,
 } from "drizzle-orm/pg-core";
 
@@ -53,14 +52,17 @@ export const workouts = pgTable(
   {
     id: serial("id").primaryKey(),
     title: varchar("title", { length: 30 }).notNull(),
-    description: varchar("description", { length: 80 }).notNull(),
+    description: varchar("description", { length: 80 }),
     exercises: json("exercises").$type<ExerciseType[]>().notNull(),
     status: statusEnum("status").default("current").notNull(),
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    doneAt: date("done_at", { mode: "string" }),
-    timeElapsed: integer("time_elapsed"),
+    doneAt: timestamp("done_at", {
+      withTimezone: true,
+      mode: "date",
+    }),
+    duration: integer("duration"),
   },
   (table) => {
     return {
@@ -71,7 +73,9 @@ export const workouts = pgTable(
   },
 );
 
-export type FetchedWorkout = Pick<
-  typeof workouts.$inferSelect,
-  "id" | "title" | "description" | "exercises" | "status"
+export type WorkoutType = Omit<typeof workouts.$inferSelect, "userId">;
+export type PartialWorkoutType = Omit<WorkoutType, "duration" | "doneAt">;
+export type QueriedByIdWorkoutType = Omit<
+  WorkoutType,
+  "status" | "duration" | "doneAt"
 >;
