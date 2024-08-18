@@ -3,6 +3,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useExerciseForm } from "@/util/hooks";
 import {
   NameInput,
+  NoteInput,
   RepsInputs,
   SetsInput,
   WeightInputs,
@@ -72,14 +73,13 @@ const EditExerciseForm = ({
     exerciseFormErrors,
     setExerciseFormErrors,
     handleNameInput,
+    handleNoteInput,
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
   } = useExerciseForm(initExercise);
 
-  async function editExercise(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    e.stopPropagation();
+  async function editExercise() {
     await new Promise((resolve) => setTimeout(resolve, 250));
 
     const isValidExercise = ExerciseSchema.safeParse({ ...tempExercise });
@@ -98,13 +98,23 @@ const EditExerciseForm = ({
   }
 
   return (
-    <form onSubmit={editExercise} className="space-y-6 px-8 py-4">
+    <form
+      id="edit-exercise-form"
+      action={editExercise}
+      onSubmit={(e) => {
+        e.stopPropagation();
+      }}
+      className="space-y-6 px-8 py-4"
+    >
       <div className="space-y-3">
         <NameInput
           name={tempExercise.name}
           nameError={exerciseFormErrors.errors?.name}
           handleNameInput={handleNameInput}
         />
+
+        <NoteInput note={tempExercise.note} handleNoteInput={handleNoteInput} />
+
         <SetsInput
           sets={tempExercise.sets}
           setsError={exerciseFormErrors.errors?.sets}
@@ -118,6 +128,7 @@ const EditExerciseForm = ({
           repsError={exerciseFormErrors.errors?.reps}
           handleRepsInput={handleRepsInput}
         />
+
         <WeightInputs
           weights={tempExercise.weights}
           weightsError={exerciseFormErrors.errors?.weights}
@@ -136,7 +147,9 @@ const EditExerciseForm = ({
         >
           Cancel
         </button>
+
         <SubmitFormButton
+          form="edit-exercise-form"
           label="Add"
           loading="Adding..."
           className="w-full rounded-xl font-nunito"
