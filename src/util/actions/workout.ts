@@ -53,7 +53,7 @@ export async function createWorkout(
     await db.insert(workouts).values({
       userId: user.id,
       title: title,
-      description: description ? description : "Description not provided.",
+      description: description,
       exercises: exercises,
     });
 
@@ -120,7 +120,7 @@ export async function editWorkout(
       .update(workouts)
       .set({
         title: title,
-        description: description ? description : "Description not provided.",
+        description: description,
         exercises: exercises,
       })
       .where(eq(workouts.id, workoutId));
@@ -189,6 +189,57 @@ export async function archiveWorkout(
     return {
       status: "error",
       message: "Database Error: Workout could not be archived",
+    };
+  }
+}
+
+export async function submitDoneWorkout(
+  doneWorkout: CreateWorkoutType,
+  duration: number,
+): Promise<WorkoutActionResponse> {
+  console.log("Adding to db:");
+  console.log("Duration: ", duration);
+
+  const { user } = await getAuth();
+
+  if (!user) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
+  //Need new schema since fields can be left unpopulated
+
+  // const isValidWorkout = CreateWorkoutSchema.safeParse(doneWorkout);
+
+  // if (!isValidWorkout.success) {
+  //   return "Invalid workout";
+  // }
+
+  const { title, description, exercises } = doneWorkout;
+
+  try {
+    await db.insert(workouts).values({
+      userId: user.id,
+      title: title,
+      description: description,
+      exercises: exercises,
+      status: "done",
+      duration: duration,
+      doneAt: new Date(),
+    });
+
+    console.log("Workout submitted!");
+
+    revalidatePath("/logs");
+
+    return {
+      status: "success-redirect",
+      message: "Workout added to the database!",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: "error",
+      message: "Workout couldnt be added to the database!",
     };
   }
 }
