@@ -32,11 +32,7 @@ export const ExerciseSchema = z.object({
       message: "Weight must be positve or decimal number.",
     }),
   ),
-  comment: z
-    .string()
-    .trim()
-    .max(80, { message: "Comment is too long" })
-    .optional(),
+  note: z.string().trim().max(80, { message: "Note is too long" }).optional(),
 });
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
@@ -63,17 +59,15 @@ export const WorkoutSchema = z.object({
     .string()
     .trim()
     .max(80, { message: "Too long. Keep it less than 80 characters." })
-    .optional(),
+    .nullable(),
   exercises: z
     .array(ExerciseSchema)
     .min(1, { message: "Please add at least one exercise." }),
   status: z.enum(workoutStatus),
   userId: z.string(),
-  doneAt: z.date(),
-  timeElapsed: z.number(),
+  doneAt: z.date().nullable(),
+  duration: z.number().nullable(),
 });
-
-export type WorkoutType = z.infer<typeof WorkoutSchema>;
 
 export const CreateWorkoutSchema = WorkoutSchema.pick({
   title: true,
