@@ -8,9 +8,13 @@ import { StatusIndicator } from "../StatusIndicator";
 import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
 import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
 
-import type { FetchedWorkout } from "@/db/schema";
+import type { PartialWorkoutType } from "@/db/schema";
 
-export const WorkoutCards = ({ workouts }: { workouts: FetchedWorkout[] }) => {
+export const WorkoutCards = ({
+  workouts,
+}: {
+  workouts: PartialWorkoutType[];
+}) => {
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
   const [workoutToRemove, setWorkoutToRemove] = useState({ title: "", id: 0 });
 
@@ -38,8 +42,11 @@ export const WorkoutCards = ({ workouts }: { workouts: FetchedWorkout[] }) => {
 
                 <StatusIndicator status={workout.status} />
               </div>
+
               <p className="text-pretty text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60">
-                {workout.description}
+                {workout.description
+                  ? workout.description
+                  : "Description not provided"}
               </p>
             </div>
 
@@ -49,7 +56,7 @@ export const WorkoutCards = ({ workouts }: { workouts: FetchedWorkout[] }) => {
               <PreviewWorkoutButton workout={workout} />
 
               <Link
-                href={`/workout?id=${workout.id}`}
+                href={`/workout-to-do?id=${workout.id}`}
                 className="flex items-center rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-bold text-white shadow-md transition active:scale-90 active:from-violet-300 active:to-violet-400 dark:from-violet-500 dark:to-violet-600 dark:active:from-violet-700 dark:active:to-violet-800"
               >
                 Start
