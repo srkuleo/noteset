@@ -2,8 +2,6 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { InputFieldError } from "./InputFieldError";
 
-import type { DebouncedFunc } from "lodash";
-
 export const NameInput = ({
   name,
   nameError,
@@ -12,25 +10,24 @@ export const NameInput = ({
 }: {
   name: string;
   nameError: string[] | undefined;
-  handleNameInput: DebouncedFunc<
-    (eventValue: React.ChangeEvent<HTMLInputElement>) => void
-  >;
+  handleNameInput: (eventValue: React.ChangeEvent<HTMLInputElement>) => void;
   form?: "edit" | "add";
 }) => {
   return (
     <div className="flex flex-col gap-2">
       <label
         htmlFor="name"
-        className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+        className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Name
       </label>
       <input
-        required={form === "add"}
+        required
         autoFocus={form === "add"}
         id="name"
+        value={name ? name : ""}
         type="text"
-        placeholder={name ? name : "e.g. Bench press"}
+        placeholder="e.g. Bench press"
         onChange={(e) => handleNameInput(e)}
         className={twMerge(
           "input-field",
@@ -39,6 +36,36 @@ export const NameInput = ({
         )}
       />
       <InputFieldError errorArr={nameError} className="gap-3" />
+    </div>
+  );
+};
+
+export const NoteInput = ({
+  note,
+  handleNoteInput,
+}: {
+  note: string | undefined;
+  handleNoteInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}) => {
+  return (
+    <div className="flex flex-col gap-2">
+      <label
+        htmlFor="note"
+        className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+      >
+        Note
+        <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
+          (optional)
+        </span>
+      </label>
+      <input
+        id="note"
+        type="text"
+        value={note ? note : ""}
+        placeholder="Leave a note..."
+        onChange={(e) => handleNoteInput(e)}
+        className={twMerge("input-field", "py-2")}
+      />
     </div>
   );
 };
@@ -59,7 +86,7 @@ export const SetsInput = ({
     <div className="flex flex-col gap-2">
       <label
         htmlFor={needMoreSets ? "setsInput" : "Set 1"}
-        className="pl-1 text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+        className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Sets
       </label>
@@ -69,10 +96,10 @@ export const SetsInput = ({
             autoFocus
             id="setsInput"
             name="sets"
+            value={sets === 0 ? "" : sets}
             type="number"
             inputMode="numeric"
             placeholder="More..."
-            value={sets === 0 ? "" : sets}
             className={twMerge("input-field", "max-w-[40%] py-2")}
             onChange={(e) => handleSetsInput(e.target.value)}
           />
@@ -123,16 +150,17 @@ export const RepsInputs = ({
 }: {
   reps: string[];
   repsError: string[] | undefined;
-  handleRepsInput: DebouncedFunc<
-    (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
-  >;
+  handleRepsInput: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void;
   form?: "edit" | "add";
 }) => {
   return (
     <div className="flex flex-col gap-1">
       <label
         htmlFor="rep 1"
-        className="flex items-center gap-2 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+        className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Reps
         <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
@@ -142,11 +170,12 @@ export const RepsInputs = ({
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
         {reps.map((rep, index) => (
           <input
-            required={form === "add"}
+            required
             key={`Rep: ${index + 1}`}
             id={`rep ${index + 1}`}
+            value={rep}
             type="text"
-            placeholder={rep ? rep : `Rep ${index + 1}`}
+            placeholder={`Rep ${index + 1}`}
             autoFocus={form === "add" && index === 0}
             onChange={(e) => handleRepsInput(e, index)}
             className={twMerge(
@@ -168,35 +197,35 @@ export const WeightInputs = ({
   weights,
   weightsError,
   handleWeightInput,
-  form,
 }: {
   weights: string[];
   weightsError: string[] | undefined;
-  handleWeightInput: DebouncedFunc<
-    (event: React.ChangeEvent<HTMLInputElement>, index: number) => void
-  >;
-  form?: "edit" | "add";
+  handleWeightInput: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => void;
 }) => {
   return (
     <div className="flex flex-col gap-1">
       <label
         htmlFor="weight 1"
-        className="flex items-center gap-2 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+        className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
         Weights
         <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
-          (e.g. 25, 2,5)
+          (only numbers, for decimal use comma)
         </span>
       </label>
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
         {weights.map((weight, index) => (
           <input
-            required={form === "add"}
+            required
             key={`Weight: ${index + 1}`}
             id={`weight ${index + 1}`}
+            value={weight}
             type="text"
             inputMode="decimal"
-            placeholder={weight ? weight : `Weight ${index + 1}`}
+            placeholder={`Weight ${index + 1}`}
             onChange={(e) => handleWeightInput(e, index)}
             className={twMerge(
               "input-field",
