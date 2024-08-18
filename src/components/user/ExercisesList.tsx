@@ -21,6 +21,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { EditExerciseDrawer } from "./EditExerciseDrawer";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
+import { InputFieldError } from "./InputFieldError";
 import {
   DragExerciseIcon,
   EditExerciseIcon,
@@ -31,14 +32,14 @@ import type { ExerciseType, CreateWorkoutType } from "@/util/types";
 
 export const ExercisesList = ({
   workout,
-  isErroring,
+  exercisesError,
   editForm,
   setWorkout,
   editExercises,
   removeExercise,
 }: {
   workout: CreateWorkoutType;
-  isErroring: boolean;
+  exercisesError: string[] | undefined;
   editForm?: boolean;
   setWorkout: (workout: CreateWorkoutType) => void;
   editExercises: (editedExercise: ExerciseType) => void;
@@ -102,7 +103,7 @@ export const ExercisesList = ({
       />
 
       {workout.exercises.length === 0 ? (
-        <ExerciseShell isErroring={isErroring} />
+        <ExerciseShell exercisesError={exercisesError} />
       ) : (
         <DndContext
           sensors={sensors}
@@ -132,21 +133,34 @@ export const ExercisesList = ({
   );
 };
 
-const ExerciseShell = ({ isErroring }: { isErroring: boolean }) => {
+const ExerciseShell = ({
+  exercisesError,
+}: {
+  exercisesError: string[] | undefined;
+}) => {
   return (
-    <div className="pt-6 group-disabled:opacity-50">
+    <div className="space-y-2 pt-6 group-disabled:opacity-50">
       <div
         className={twMerge(
           "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center dark:border-slate-700 dark:bg-slate-900",
-          isErroring && "border-red-500 dark:border-red-500",
+          exercisesError && "border-red-500 dark:border-red-500",
         )}
       >
         <h3>Exercises not added yet</h3>
 
         <p className="text-sm text-slate-500">
-          Press the plus button to add one
+          Press the{" "}
+          <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
+            plus
+          </span>{" "}
+          button to add one
         </p>
       </div>
+
+      <InputFieldError
+        errorArr={exercisesError}
+        className="justify-center py-4 group-disabled:opacity-50"
+      />
     </div>
   );
 };
@@ -176,7 +190,7 @@ const ExerciseCard = ({
       style={style}
       className="flex w-full flex-col gap-3 rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-900 dark:ring-slate-700"
     >
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-4 dark:border-slate-700/70 [&>*:nth-child(2)]:mr-auto">
+      <div className="flex items-center gap-2 border-b border-slate-200 pb-3 dark:border-slate-700/70 [&>*:nth-child(2)]:mr-auto">
         <button
           {...attributes}
           {...listeners}
@@ -215,21 +229,25 @@ const ExerciseCard = ({
         </button>
       </div>
 
-      <div className="flex justify-center gap-4 text-sm">
+      <div className="flex justify-center gap-4 divide-x divide-slate-200 text-sm dark:divide-slate-700/70">
         <div className="flex flex-col gap-3 dark:text-slate-200">
           {exercise.reps.map((rep, i) => (
             <p key={`Rep: ${i + 1}`}>{rep}</p>
           ))}
         </div>
 
-        <div className="w-[1px] bg-slate-200 dark:bg-slate-700/70" />
-
-        <div className="flex flex-col gap-3 dark:text-slate-200">
+        <div className="flex flex-col gap-3 pl-4 dark:text-slate-200">
           {exercise.weights.map((weight, i) => (
             <p key={`Weight: ${i + 1}`}>{weight} kg</p>
           ))}
         </div>
       </div>
+
+      {exercise.note && (
+        <p className="border-t border-slate-200 pl-1 pt-3 text-sm italic text-slate-400 dark:border-slate-700/70 dark:text-slate-500">
+          {exercise.note}
+        </p>
+      )}
     </div>
   );
 };
