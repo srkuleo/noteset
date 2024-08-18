@@ -21,9 +21,9 @@ export default async function EditWorkoutPage({
   }
 
   const coercedWorkoutId = Number(searchParams.id);
-  const fetchedWorkout = await getWorkoutById(coercedWorkoutId, user.id);
+  const workoutToEdit = await getWorkoutById(coercedWorkoutId);
 
-  if (!fetchedWorkout) notFound();
+  if (!workoutToEdit) notFound();
 
-  return <EditWorkoutForm fetchedWorkout={fetchedWorkout} />;
+  return <EditWorkoutForm workoutToEdit={workoutToEdit} />;
 }
