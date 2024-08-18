@@ -22,6 +22,20 @@
       "when": 1723691784404,
       "tag": "0002_salty_forge",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1723915277977,
+      "tag": "0003_wandering_violations",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1723938027065,
+      "tag": "0004_purple_songbird",
+      "breakpoints": true
     }
   ]
 }
