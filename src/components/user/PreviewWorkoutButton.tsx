@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 
-import type { FetchedWorkout } from "@/db/schema";
+import type { PartialWorkoutType } from "@/db/schema";
 
 export const PreviewWorkoutButton = ({
   workout,
 }: {
-  workout: FetchedWorkout;
+  workout: PartialWorkoutType;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -34,9 +34,9 @@ export const PreviewWorkoutButton = ({
               </Drawer.Title>
             </div>
 
-            <div className="flex flex-col px-4 py-8">
-              <div className="grid grid-cols-preview gap-4 overflow-x-scroll pb-8 no-scrollbar md:justify-center">
-                <div className="flex flex-col gap-4 rounded-xl bg-slate-50/70 px-4 pt-4 shadow-sm dark:bg-slate-800/45">
+            <div className="flex flex-col px-6 py-8">
+              <div className="grid grid-cols-preview gap-3 divide-x-2 divide-slate-100 overflow-x-scroll pb-8 text-sm dark:divide-slate-800 md:justify-center">
+                <div className="flex flex-col gap-4">
                   {workout.exercises.map((exercise) => (
                     <p key={exercise.name} className="pb-4 font-bold">
                       {exercise.name}
@@ -44,36 +44,28 @@ export const PreviewWorkoutButton = ({
                   ))}
                 </div>
 
-                <div className="w-0.5 bg-slate-100 dark:bg-slate-800" />
-
-                <div className="flex flex-col gap-4 px-4 pt-4">
+                <div className="flex flex-col gap-4 pl-3">
                   {workout.exercises.map((exercise) => (
-                    <div key={exercise.name} className="flex pb-4">
+                    <div
+                      key={exercise.name}
+                      className="flex divide-x-2 divide-slate-100 pb-4 dark:divide-slate-700"
+                    >
                       {exercise.reps.map((rep, i) => (
-                        <div key={i} className="flex gap-1">
+                        <div key={i} className="flex gap-1 px-3">
                           <p className="font-bold">{rep}</p>
                           <p>({exercise.weights[i]}kg)</p>
-                          {i < exercise.reps.length - 1 && (
-                            <div className="mx-2 w-0.5 bg-slate-100 dark:bg-slate-800" />
-                          )}
                         </div>
                       ))}
                     </div>
                   ))}
                 </div>
 
-                <div className="w-0.5 bg-slate-100 dark:bg-slate-800" />
-
-                <div className="flex flex-col gap-4 px-4 pt-4">
-                  {workout.exercises.map((exercise, i) =>
-                    exercise.comment ? (
-                      <p key={i} className="pb-4 font-semibold">
-                        {exercise.comment}
-                      </p>
-                    ) : (
-                      <div key={i} className="h-10" />
-                    ),
-                  )}
+                <div className="flex flex-col gap-4 pl-3">
+                  {workout.exercises.map((exercise, i) => (
+                    <p key={i} className="pb-4 font-semibold">
+                      {exercise.note ? exercise.note : "/"}
+                    </p>
+                  ))}
                 </div>
               </div>
 
