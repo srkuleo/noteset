@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { InputFieldError } from "./InputFieldError";
+import { ErrorComponent } from "../ErrorComponent";
 
 export const NameInput = ({
   name,
@@ -35,7 +35,7 @@ export const NameInput = ({
           nameError && "ring-red-500 dark:ring-red-500",
         )}
       />
-      <InputFieldError errorArr={nameError} className="gap-3" />
+      <ErrorComponent errorArr={nameError} className="gap-3" />
     </div>
   );
 };
@@ -137,7 +137,7 @@ export const SetsInput = ({
           </button>
         </div>
       )}
-      <InputFieldError errorArr={setsError} className="gap-3" />
+      <ErrorComponent errorArr={setsError} className="gap-3" />
     </div>
   );
 };
@@ -181,14 +181,14 @@ export const RepsInputs = ({
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
-              repsError && !/^(?:\d+|\d+-\d+)$/.test(rep)
+              repsError && !/^(?:\d+|\d+-\d+|\d+\+\d+)$/.test(rep)
                 ? "ring-red-500 dark:ring-red-500"
                 : "",
             )}
           />
         ))}
       </div>
-      <InputFieldError errorArr={repsError} className="gap-3" />
+      <ErrorComponent errorArr={repsError} className="gap-3" />
     </div>
   );
 };
@@ -213,7 +213,7 @@ export const WeightInputs = ({
       >
         Weights
         <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
-          (only numbers, for decimal use comma)
+          (e.g. 25, 50,5, 25.5)
         </span>
       </label>
       <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
@@ -230,14 +230,14 @@ export const WeightInputs = ({
             className={twMerge(
               "input-field",
               "max-w-[40%] px-0 py-1.5 text-center",
-              weightsError && !/^\d+(,\d+)?$/.test(weight)
+              weightsError && !/^\d+(,\d+|.\d+)?$/.test(weight)
                 ? "ring-red-500 dark:ring-red-500"
                 : "",
             )}
           />
         ))}
       </div>
-      <InputFieldError errorArr={weightsError} className="gap-3" />
+      <ErrorComponent errorArr={weightsError} className="gap-3" />
     </div>
   );
 };
