@@ -7,6 +7,7 @@ import { WorkoutFormHeader } from "./WorkoutFormHeader";
 import { FormTooltip } from "./FormTooltip";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
+import { ErrorComponent } from "../ErrorComponent";
 
 import type { QueriedByIdWorkoutType } from "@/db/schema";
 
@@ -84,6 +85,13 @@ export const EditWorkoutForm = ({
               editExercises={editExercises}
               removeExercise={removeExercise}
             />
+
+            {actionRes.status === "error" && (
+              <ErrorComponent
+                message={actionRes.message}
+                className="justify-center"
+              />
+            )}
           </fieldset>
         </form>
       </main>

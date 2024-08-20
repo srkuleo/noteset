@@ -7,6 +7,7 @@ import { WorkoutFormHeader } from "./WorkoutFormHeader";
 import { FormTooltip } from "./FormTooltip";
 import { DescriptionInput, TitleInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
+import { ErrorComponent } from "../ErrorComponent";
 
 export const CreateWorkoutForm = () => {
   const {
@@ -79,6 +80,13 @@ export const CreateWorkoutForm = () => {
               editExercises={editExercises}
               removeExercise={removeExercise}
             />
+
+            {actionRes.status === "error" && (
+              <ErrorComponent
+                message={actionRes.message}
+                className="justify-center"
+              />
+            )}
           </fieldset>
         </form>
       </main>
