@@ -12,5 +12,10 @@ export const LogsPageContent = async () => {
 
   const doneWorkouts = await getUserDoneWorkouts();
 
-  return <DoneWorkoutCards doneWorkouts={doneWorkouts} />;
+  return (
+    <DoneWorkoutCards
+      doneWorkouts={doneWorkouts}
+      timeFormatPreference={user.preferences.timeFormat}
+    />
+  );
 };
