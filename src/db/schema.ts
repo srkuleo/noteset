@@ -10,7 +10,7 @@ import {
   integer,
 } from "drizzle-orm/pg-core";
 
-import type { ExerciseType } from "@/util/types";
+import type { ExerciseType, UserPreferences } from "@/util/types";
 
 export const workoutStatus = ["current", "done", "archived"] as const;
 export const statusEnum = pgEnum("status", workoutStatus);
@@ -25,8 +25,9 @@ export const users = pgTable(
     isVerified: boolean("is_verified").default(false),
     createdAt: timestamp("created_at", {
       withTimezone: true,
-      mode: "string",
+      mode: "date",
     }).defaultNow(),
+    preferences: json("preferences").$type<UserPreferences>(),
   },
   (table) => {
     return {
