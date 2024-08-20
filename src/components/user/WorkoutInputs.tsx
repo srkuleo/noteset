@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { InputFieldError } from "./InputFieldError";
+import { ErrorComponent } from "../ErrorComponent";
 
 export const TitleInput = ({
   title,
@@ -30,7 +30,7 @@ export const TitleInput = ({
           titleError && "ring-red-500 dark:ring-red-500",
         )}
       />
-      <InputFieldError
+      <ErrorComponent
         errorArr={titleError}
         className="pl-1 group-disabled:opacity-50"
       />
