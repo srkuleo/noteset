@@ -35,7 +35,11 @@ export async function createWorkout(
 
   try {
     const existingWorkout = await db.query.workouts.findFirst({
-      where: and(ilike(workouts.title, title), eq(workouts.userId, user.id)),
+      where: and(
+        ilike(workouts.title, title),
+        eq(workouts.userId, user.id),
+        eq(workouts.status, "current"),
+      ),
     });
 
     if (existingWorkout) {
@@ -102,6 +106,7 @@ export async function editWorkout(
       where: and(
         ilike(workouts.title, title),
         eq(workouts.userId, user.id),
+        eq(workouts.status, "current"),
         ne(workouts.id, workoutId),
       ),
     });
