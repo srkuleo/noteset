@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { AnimatePresence, motion } from "framer-motion";
@@ -32,24 +31,26 @@ export const AddExerciseDrawer = ({
   className: string;
   updateExercises: (newExercise: ExerciseType) => void;
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Drawer.Root
-      open={isOpen}
-      onOpenChange={setIsOpen}
+      open={open}
+      onOpenChange={setOpen}
       direction="top"
       noBodyStyles
     >
-      <Drawer.Trigger
-        className={twMerge(
-          "dark:text-violet rounded-full p-2 focus:outline-none active:bg-slate-200 active:dark:bg-slate-700",
-          className,
-        )}
+      <button
+        type="button"
+        onClick={async () => {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          setOpen(true);
+        }}
+        className={className}
       >
         <AddIcon size={26} strokeWidth={2} />
         <span className="sr-only">Add Exercise</span>
-      </Drawer.Trigger>
+      </button>
 
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
@@ -58,14 +59,14 @@ export const AddExerciseDrawer = ({
           aria-describedby={undefined}
           className="fixed inset-x-0 top-0 z-[9999] px-2 focus:outline-none"
         >
-          <div className="rounded-b-modal bg-slate-200 pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+          <div className="rounded-b-modal bg-slate-100 pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <VisuallyHidden asChild>
               <Drawer.Title>Adding new exercise</Drawer.Title>
             </VisuallyHidden>
 
             <AddExerciseForm
               updateExercises={updateExercises}
-              closeDrawer={() => setIsOpen(false)}
+              closeDrawer={() => setOpen(false)}
             />
             <Drawer.Handle
               preventCycle

@@ -37,7 +37,7 @@ export const EditExerciseDrawer = ({
           aria-describedby={undefined}
           className="fixed inset-x-0 top-0 z-[9999] px-2 focus:outline-none"
         >
-          <div className="rounded-b-modal bg-slate-200 pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
+          <div className="rounded-b-modal bg-slate-100 pb-2 pt-safe-top dark:bg-slate-800 dark:ring-1 dark:ring-slate-700/80">
             <VisuallyHidden asChild>
               <Drawer.Title>Adding new exercise</Drawer.Title>
             </VisuallyHidden>
