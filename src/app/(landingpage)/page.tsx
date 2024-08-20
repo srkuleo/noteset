@@ -17,9 +17,9 @@ export default async function LandingPage() {
         Note<span className="font-bold">Set</span>
       </h1>
 
-      <h2 className="text-pretty pb-12 text-center text-lg font-semibold leading-snug dark:text-slate-400 md:text-balance">
-        Personalized workout tracking PWA, aimed to replace a notebook in the
-        gym.
+      <h2 className="text-pretty pb-12 text-center text-lg font-semibold leading-snug text-slate-500/90 dark:text-slate-400 md:text-balance">
+        A personalized and minimalistic PWA designed to replace a notebook in
+        the gym
       </h2>
 
       <div className="flex justify-center gap-4">
@@ -29,7 +29,7 @@ export default async function LandingPage() {
 
         <Link
           href="/login"
-          className="flex items-center gap-1 rounded-full px-4 py-2 font-manrope font-semibold text-slate-600 active:bg-slate-200 dark:text-slate-300 active:dark:bg-slate-800"
+          className="flex items-center gap-1 rounded-full border-l border-slate-300 px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-slate-50 dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
         >
           Join {ArrowRightIcon}
         </Link>
