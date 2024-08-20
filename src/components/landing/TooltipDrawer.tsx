@@ -8,9 +8,16 @@ export const TooltipDrawer = () => {
 
   return (
     <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
-      <Drawer.Trigger className="rounded-full px-6 py-2 font-manrope font-semibold text-slate-600 shadow-md ring-1 ring-slate-400/40 dark:text-white dark:ring-slate-400">
+      <button
+        type="button"
+        onClick={async () => {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          setOpen(true);
+        }}
+        className="rounded-full px-6 py-2 font-manrope font-semibold text-slate-600 shadow-md ring-1 ring-slate-400/40 active:scale-95 active:bg-slate-50 dark:text-white dark:ring-slate-400 dark:active:bg-slate-800"
+      >
         Tooltip
-      </Drawer.Trigger>
+      </button>
 
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
