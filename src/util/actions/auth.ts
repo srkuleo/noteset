@@ -87,6 +87,9 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
       username: username,
       email: email,
       hashedPassword: hashedPassword,
+      preferences: {
+        timeFormat: "default",
+      },
     });
   } catch (error) {
     console.error(error);
