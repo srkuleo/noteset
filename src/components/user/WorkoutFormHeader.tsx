@@ -1,6 +1,5 @@
-import Link from "next/link";
+import { BackButtonModal } from "../BackButtonModal";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
-import { ArrowLeftIcon } from "../icons/arrows";
 import { CheckMarkIcon, ThreeDotIcon } from "../icons/user/submit-button";
 
 import type { ExerciseType } from "@/util/types";
@@ -16,18 +15,13 @@ export const WorkoutFormHeader = ({
 }) => {
   return (
     <div className="flex items-center gap-3 border-b border-slate-300 px-6 py-4 dark:border-slate-800">
-      <Link
-        href="/workouts"
-        className="text-slate-400 group-disabled:pointer-events-none group-disabled:opacity-50 dark:text-slate-500"
-      >
-        {ArrowLeftIcon}
-      </Link>
+      <BackButtonModal className="rounded-full p-1.5 active:bg-slate-200 dark:active:bg-slate-700" />
 
       <h2 className="text-2xl">{heading}</h2>
 
       <div className="flex flex-1 items-center justify-end gap-3 group-disabled:pointer-events-none group-disabled:opacity-50">
         <AddExerciseDrawer
-          className="text-violet-400 dark:text-violet-400"
+          className="rounded-full p-1.5 text-violet-400 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
           updateExercises={updateExercises}
         />
 
