@@ -25,12 +25,18 @@ export const ExerciseSchema = z.object({
   reps: z.array(
     z
       .string()
-      .regex(/^(?:\d+|\d+-\d+)$/, { message: "Reps must be number or range." }),
+      .trim()
+      .regex(/^(?:\d+|\d+-\d+|\d+\+\d+)$/, {
+        message: "Reps must be number or range.",
+      }),
   ),
   weights: z.array(
-    z.string().regex(/^\d+(,\d+)?$/, {
-      message: "Weight must be positve or decimal number.",
-    }),
+    z
+      .string()
+      .trim()
+      .regex(/^\d+(,\d+|.\d+)?$/, {
+        message: "Weight must be whole or decimal number.",
+      }),
   ),
   note: z.string().trim().max(80, { message: "Note is too long" }).optional(),
 });
@@ -159,3 +165,15 @@ export const loginSchema = z.object({
     }
   }),
 });
+
+export const timeFormatValues = [
+  "Hours and minutes",
+  "Minutes only",
+  "default",
+] as const;
+
+export type TimeFormatType = (typeof timeFormatValues)[number];
+
+export type UserPreferences = {
+  timeFormat: TimeFormatType;
+};
