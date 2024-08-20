@@ -5,7 +5,7 @@ import { useState } from "react";
 import { EmptyIcon } from "../icons/user/warning";
 import { RemoveWorkoutModal } from "./RemoveWorkoutModal";
 import { StatusIndicator } from "../StatusIndicator";
-import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
+import { PreviewWorkoutButtonDrawer } from "../PreviewWorkoutButtonDrawer";
 import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
 
 import type { PartialWorkoutType } from "@/db/schema";
@@ -53,7 +53,7 @@ export const WorkoutCards = ({
             <div className="h-[1px] bg-green-200 dark:bg-green-900/70" />
 
             <div className="flex gap-2 px-1 [&>*:nth-child(2)]:mr-auto">
-              <PreviewWorkoutButton workout={workout} />
+              <PreviewWorkoutButtonDrawer workout={workout} />
 
               <Link
                 href={`/workout-to-do?id=${workout.id}`}
@@ -65,18 +65,20 @@ export const WorkoutCards = ({
 
               <Link
                 href={`/workouts/edit?id=${workout.id}`}
-                className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-900 dark:ring-slate-600"
+                className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
               >
                 {EditWorkoutIcon}
                 <span className="sr-only">Edit workout</span>
               </Link>
 
               <button
-                onClick={() => {
+                type="button"
+                onClick={async () => {
+                  await new Promise((resolve) => setTimeout(resolve, 100));
                   setWorkoutToRemove({ id: workout.id, title: workout.title });
                   setOpenRemoveModal(true);
                 }}
-                className="rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:text-red-400 dark:shadow-slate-900 dark:ring-slate-600"
+                className="rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:text-red-400 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
               >
                 {RemoveWorkoutIcon}
                 <span className="sr-only">Remove workout</span>
