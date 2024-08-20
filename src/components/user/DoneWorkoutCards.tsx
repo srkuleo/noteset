@@ -1,15 +1,19 @@
 "use client";
 
+import { formatDuration } from "@/util/func";
 import { EmptyIcon } from "../icons/user/warning";
 import { StatusIndicator } from "../StatusIndicator";
-import { PreviewWorkoutButton } from "./PreviewWorkoutButton";
+import { PreviewWorkoutButtonDrawer } from "../PreviewWorkoutButtonDrawer";
 
 import type { WorkoutType } from "@/db/schema";
+import type { TimeFormatType } from "@/util/types";
 
 export const DoneWorkoutCards = ({
   doneWorkouts,
+  timeFormatPreference,
 }: {
   doneWorkouts: WorkoutType[];
+  timeFormatPreference: TimeFormatType;
 }) => {
   return (
     <>
@@ -39,17 +43,19 @@ export const DoneWorkoutCards = ({
 
             <div className="h-[1px] bg-green-200 dark:bg-green-900/70" />
 
-            <div className="flex justify-between px-2">
+            <div className="flex justify-between px-2 text-sm">
               <div className="space-y-2">
-                <p>
+                <p suppressHydrationWarning>
                   {doneWorkout.doneAt
                     ?.toLocaleDateString()
                     .replaceAll("/", "-")}
                 </p>
-                <p>{doneWorkout.duration} min</p>
+                <p>
+                  {formatDuration(timeFormatPreference, doneWorkout.duration)}
+                </p>
               </div>
 
-              <PreviewWorkoutButton workout={doneWorkout} />
+              <PreviewWorkoutButtonDrawer workout={doneWorkout} />
             </div>
           </div>
         ))
