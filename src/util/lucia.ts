@@ -1,5 +1,6 @@
 import { Lucia, TimeSpan } from "lucia";
 import { adapter } from "@/db";
+import type { UserPreferences } from "./types";
 
 export const lucia = new Lucia(adapter, {
   sessionExpiresIn: new TimeSpan(30, "d"),
@@ -19,6 +20,7 @@ export const lucia = new Lucia(adapter, {
       email: attributes.email,
       createdAt: attributes.createdAt,
       isVerified: attributes.isVerified,
+      preferences: attributes.preferences,
     };
   },
 });
@@ -35,5 +37,6 @@ interface DatabaseUserAttributes {
   username: string;
   email: string;
   isVerified: boolean;
-  createdAt: string;
+  createdAt: Date;
+  preferences: UserPreferences;
 }
