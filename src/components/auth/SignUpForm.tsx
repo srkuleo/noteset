@@ -5,25 +5,15 @@ import { twMerge } from "tailwind-merge";
 import { signUp } from "@/util/actions/auth";
 import { showToast } from "../Toasts";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
-import { InputFieldError } from "../user/InputFieldError";
+import { ErrorComponent } from "../ErrorComponent";
 import { SubmitFormButton } from "../SubmitButtons";
 
 import type { AuthActionResponse } from "@/util/types";
 
 export const SignUpForm = () => {
   const [actionRes, setActionRes] = useState<AuthActionResponse>({});
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [show, setShow] = useState({ password: false, confirmPassword: false });
   const formRef = useRef<HTMLFormElement>(null);
-
-  function togglePasswordVisibility(field: "password" | "confirmPassword") {
-    if (field === "password") {
-      setShowPassword(!showPassword);
-    } else {
-      setShowConfirmPassword(!showConfirmPassword);
-    }
-  }
 
   async function clientSignUp(formData: FormData) {
     const res = await signUp(formData);
@@ -51,7 +41,7 @@ export const SignUpForm = () => {
           actionRes.errors?.username && "ring-red-500 dark:ring-red-500",
         )}
       />
-      <InputFieldError errorArr={actionRes.errors?.username} className="pl-1" />
+      <ErrorComponent errorArr={actionRes.errors?.username} className="pl-1" />
 
       <input
         id="email"
@@ -66,13 +56,13 @@ export const SignUpForm = () => {
           actionRes.errors?.email && "ring-red-500 dark:ring-red-500",
         )}
       />
-      <InputFieldError errorArr={actionRes.errors?.email} className="pl-1" />
+      <ErrorComponent errorArr={actionRes.errors?.email} className="pl-1" />
 
       <div className="relative">
         <input
           id="password"
           name="password"
-          type={showPassword ? "text" : "password"}
+          type={show.password ? "text" : "password"}
           placeholder="Password"
           autoComplete="new-password"
           required
@@ -84,23 +74,30 @@ export const SignUpForm = () => {
         />
         <button
           type="button"
-          onClick={() => togglePasswordVisibility("password")}
+          onClick={() =>
+            setShow((prev) => {
+              return {
+                ...prev,
+                password: !prev.password,
+              };
+            })
+          }
           className="absolute inset-y-0 right-0 px-3 py-2"
         >
-          {showPassword ? (
+          {show.password ? (
             <HideIcon className="size-6" />
           ) : (
             <ShowIcon className="size-6" />
           )}
         </button>
       </div>
-      <InputFieldError errorArr={actionRes.errors?.password} className="pl-1" />
+      <ErrorComponent errorArr={actionRes.errors?.password} className="pl-1" />
 
       <div className="relative">
         <input
           id="confirmPassword"
           name="confirmPassword"
-          type={showConfirmPassword ? "text" : "password"}
+          type={show.confirmPassword ? "text" : "password"}
           placeholder="Confirm password"
           autoComplete="new-password"
           required
@@ -113,23 +110,30 @@ export const SignUpForm = () => {
         />
         <button
           type="button"
-          onClick={() => togglePasswordVisibility("confirmPassword")}
+          onClick={() =>
+            setShow((prev) => {
+              return {
+                ...prev,
+                confirmPassword: !prev.confirmPassword,
+              };
+            })
+          }
           className="absolute inset-y-0 right-0 px-3 py-2"
         >
-          {showConfirmPassword ? (
+          {show.confirmPassword ? (
             <HideIcon className="size-6" />
           ) : (
             <ShowIcon className="size-6" />
           )}
         </button>
       </div>
-      <InputFieldError
+      <ErrorComponent
         errorArr={actionRes.errors?.confirmPassword}
         className="pl-1"
       />
 
       {actionRes.status === "error" && (
-        <InputFieldError message={actionRes.message} />
+        <ErrorComponent message={actionRes.message} />
       )}
 
       <SubmitFormButton
