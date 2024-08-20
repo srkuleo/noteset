@@ -21,7 +21,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import { EditExerciseDrawer } from "./EditExerciseDrawer";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
-import { InputFieldError } from "./InputFieldError";
+import { ErrorComponent } from "../ErrorComponent";
 import {
   DragExerciseIcon,
   EditExerciseIcon,
@@ -157,7 +157,7 @@ const ExerciseShell = ({
         </p>
       </div>
 
-      <InputFieldError
+      <ErrorComponent
         errorArr={exercisesError}
         className="justify-center py-4 group-disabled:opacity-50"
       />
