@@ -4,7 +4,7 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { login } from "@/util/actions/auth";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
-import { InputFieldError } from "../user/InputFieldError";
+import { ErrorComponent } from "../ErrorComponent";
 import { SubmitFormButton } from "../SubmitButtons";
 
 import type { AuthActionResponse } from "@/util/types";
@@ -12,10 +12,6 @@ import type { AuthActionResponse } from "@/util/types";
 export const LoginForm = () => {
   const [actionRes, setActionRes] = useState<AuthActionResponse>({});
   const [showPassword, setShowPassword] = useState(false);
-
-  function togglePasswordVisibility() {
-    setShowPassword(!showPassword);
-  }
 
   async function clientLogin(formData: FormData) {
     const res = await login(formData);
@@ -37,7 +33,7 @@ export const LoginForm = () => {
           actionRes.errors?.username && "ring-red-500 dark:ring-red-500",
         )}
       />
-      <InputFieldError errorArr={actionRes.errors?.username} className="pl-1" />
+      <ErrorComponent errorArr={actionRes.errors?.username} className="pl-1" />
 
       <div className="relative">
         <input
@@ -55,7 +51,9 @@ export const LoginForm = () => {
         />
         <button
           type="button"
-          onClick={togglePasswordVisibility}
+          onClick={() => {
+            setShowPassword(!showPassword);
+          }}
           className="absolute inset-y-0 right-0 px-3 py-2"
         >
           {showPassword ? (
@@ -65,9 +63,9 @@ export const LoginForm = () => {
           )}
         </button>
       </div>
-      <InputFieldError errorArr={actionRes.errors?.password} className="pl-1" />
+      <ErrorComponent errorArr={actionRes.errors?.password} className="pl-1" />
 
-      <InputFieldError message={actionRes.message} />
+      <ErrorComponent message={actionRes.message} />
 
       <SubmitFormButton
         label="Login"
