@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { getAuth } from "@/util/actions/auth";
 import { getWorkoutByIdWithoutId } from "@/db/query";
-import { WorkoutToDoForm } from "@/components/workout/WorkoutToDoForm";
+import { WorkoutToDoForm } from "@/components/workout-to-do/WorkoutToDoForm";
 
 export default async function WorkoutToDoPage({
   searchParams,
