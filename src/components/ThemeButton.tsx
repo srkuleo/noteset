@@ -21,15 +21,25 @@ export const ThemeButton = () => {
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger className="focus:outline-none dark:text-slate-400">
+      <button
+        type="button"
+        onClick={async () => {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          setOpen(true);
+        }}
+        className={twMerge(
+          "relative rounded-full p-1.5 active:scale-95 active:bg-slate-200 dark:text-slate-400 dark:active:bg-slate-700",
+          open && "z-30 text-white dark:text-white",
+        )}
+      >
         {ThemeIcon}
         <p className="sr-only">Toggle theme</p>
-      </Dialog.Trigger>
+      </button>
 
       <Dialog.Portal>
         <Dialog.Overlay
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-10 bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45"
+          className="fixed inset-0 z-20 bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45"
         />
 
         <Dialog.Content
@@ -37,7 +47,7 @@ export const ThemeButton = () => {
           onOpenAutoFocus={(e) => {
             e.preventDefault();
           }}
-          className="absolute right-20 top-16 z-10 pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up"
+          className="absolute right-[86px] top-16 z-20 pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up"
         >
           <VisuallyHidden asChild>
             <Dialog.Title>Choose a colour theme</Dialog.Title>
@@ -52,7 +62,7 @@ export const ThemeButton = () => {
               )}
             >
               {SystemIcon}
-              <p className="text-sm font-semibold uppercase">System</p>
+              <p className="font-manrope font-semibold">System</p>
 
               {theme === "system" && (
                 <CheckMarkIcon className="size-5 text-green-500" />
@@ -68,7 +78,7 @@ export const ThemeButton = () => {
               )}
             >
               {MoonIcon}
-              <p className="text-sm font-semibold uppercase">Dark</p>
+              <p className="font-manrope font-semibold">Dark</p>
 
               {theme === "dark" && (
                 <CheckMarkIcon className="size-5 text-green-500" />
@@ -84,7 +94,7 @@ export const ThemeButton = () => {
               )}
             >
               {SunIcon}
-              <p className="text-sm font-semibold uppercase">Light</p>
+              <p className="font-manrope font-semibold">Light</p>
 
               {theme === "light" && (
                 <CheckMarkIcon className="size-5 text-green-500" />
