@@ -117,3 +117,63 @@ export async function getWorkoutByIdWithoutId(workoutId: number) {
     throw new Error("Failed to retrive selected workout.");
   }
 }
+
+export async function getLastSubmittedWorkout(title: string) {
+  const { user } = await getAuth();
+
+  if (!user) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
+  try {
+    const submittedWorkout = await db.query.workouts.findFirst({
+      where: and(
+        eq(workouts.userId, user.id),
+        eq(workouts.title, title),
+        eq(workouts.status, "done"),
+      ),
+      orderBy: (workouts, { desc }) => desc(workouts.id),
+      columns: {
+        userId: false,
+      },
+    });
+
+    console.log("Workout retrived.");
+
+    return submittedWorkout;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("Failed to retrive selected workout.");
+  }
+}
+
+export async function getCurrentWorkoutByTitle(title: string) {
+  const { user } = await getAuth();
+
+  if (!user) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
+  try {
+    const currentWorkout = await db.query.workouts.findFirst({
+      where: and(
+        eq(workouts.userId, user.id),
+        eq(workouts.title, title),
+        eq(workouts.status, "current"),
+      ),
+      columns: {
+        id: true,
+        title: true,
+        description: true,
+        exercises: true,
+      },
+    });
+
+    console.log("Current workout retrived.");
+
+    return currentWorkout;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("Failed to retrive current workout.");
+  }
+}
