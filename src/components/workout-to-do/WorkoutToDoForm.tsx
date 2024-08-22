@@ -13,6 +13,7 @@ import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 
 import type { CreateWorkoutType, ExerciseType } from "@/util/types";
 import { ThemeButton } from "../ThemeButton";
+import { showToast } from "../Toasts";
 
 type TimeType = { start: Date | null; end: Date | null };
 type NoteType = { add: boolean; onExercise: string };
@@ -190,7 +191,11 @@ export const WorkoutToDoForm = ({
     const res = await submitDoneWorkout(currWorkout, duration);
 
     if (res.status === "success-redirect") {
-      redirect("/workouts");
+      redirect(`/post-workout?workoutTitle=${currWorkout.title}`);
+    }
+
+    if (res.status === "error") {
+      showToast(res.message, "error");
     }
   }
 
