@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { and, eq, ilike, ne } from "drizzle-orm";
 import { db } from "@/db";
-import { workouts } from "@/db/schema";
+import { workouts, type QueriedByIdWorkoutType } from "@/db/schema";
 import { getAuth } from "./auth";
 
 import {
@@ -238,13 +238,46 @@ export async function submitDoneWorkout(
 
     return {
       status: "success-redirect",
-      message: "Workout added to the database!",
+      message: "Workout completed",
     };
   } catch (error) {
     console.log(error);
     return {
       status: "error",
-      message: "Workout couldnt be added to the database!",
+      message: "Workout not completed",
+    };
+  }
+}
+
+export async function updateCurrentWorkout(
+  updatedCurrentWorkout: Omit<QueriedByIdWorkoutType, "id">,
+  workoutId: number,
+): Promise<WorkoutActionResponse> {
+  const { user } = await getAuth();
+
+  if (!user) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
+  try {
+    await db
+      .update(workouts)
+      .set({ exercises: [...updatedCurrentWorkout.exercises] })
+      .where(and(eq(workouts.id, workoutId), eq(workouts.status, "current")));
+
+    console.log("Workout successfully updated.");
+
+    revalidatePath("/workouts");
+
+    return {
+      status: "success-redirect",
+      message: `${updatedCurrentWorkout.title} workout successfully updated`,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      status: "error",
+      message: "Database Error: Workout could not be updated",
     };
   }
 }
