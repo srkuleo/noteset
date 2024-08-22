@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note. Find a way to remove added set. Implement not doing today bolean checkbutton on exercises you wont be doing that day. See if there is a way to subscribe to users touch actions on mobile._
+- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note. See if there is a way to subscribe to users touch actions on mobile. Fix date on profile page. Add option to remove sets. Set main colour to slate-50 and add shadow on all the navbars, set body above md to width 75%. Final change to the toast notif. See scale on buttons when modal opens. Refactor dnd and add simple animations with autoanimate._
 
 - _Make post workout page with proper UI structure and way to modify current default workout if needed._
 
