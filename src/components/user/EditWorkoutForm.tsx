@@ -6,7 +6,7 @@ import { showToast } from "../Toasts";
 import { WorkoutFormHeader } from "./WorkoutFormHeader";
 import { FormTooltip } from "./FormTooltip";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
-import { ExercisesList } from "./ExercisesList";
+import { ExercisesList } from "../ExercisesList";
 import { ErrorComponent } from "../ErrorComponent";
 
 import type { QueriedByIdWorkoutType } from "@/db/schema";

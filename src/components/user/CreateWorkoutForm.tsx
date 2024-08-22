@@ -6,7 +6,7 @@ import { showToast } from "../Toasts";
 import { WorkoutFormHeader } from "./WorkoutFormHeader";
 import { FormTooltip } from "./FormTooltip";
 import { DescriptionInput, TitleInput } from "./WorkoutInputs";
-import { ExercisesList } from "./ExercisesList";
+import { ExercisesList } from "../ExercisesList";
 import { ErrorComponent } from "../ErrorComponent";
 
 export const CreateWorkoutForm = () => {
