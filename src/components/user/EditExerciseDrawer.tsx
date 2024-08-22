@@ -150,8 +150,8 @@ const EditExerciseForm = ({
 
         <SubmitFormButton
           form="edit-exercise-form"
-          label="Add"
-          loading="Adding..."
+          label="Save"
+          loading="Saving..."
           className="w-full rounded-xl font-nunito"
         />
       </div>
