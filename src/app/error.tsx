@@ -29,10 +29,10 @@ export default function Error({
 
         <div className="flex flex-col items-center gap-4">
           <Link
-            href="/workouts"
+            href="/home"
             className="rounded-xl bg-violet-500 px-8 py-2 font-semibold text-white shadow-sm active:scale-95 dark:bg-violet-600"
           >
-            Back to homepage
+            Return Home
           </Link>
 
           <button

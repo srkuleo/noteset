@@ -20,10 +20,10 @@ export default function NotFound() {
         </div>
 
         <Link
-          href="/login"
+          href="/home"
           className="rounded-xl bg-violet-500 px-3 py-2 font-semibold text-white shadow-sm dark:bg-violet-600"
         >
-          Go to Login page
+          Go to Home page
         </Link>
       </main>
     </div>
