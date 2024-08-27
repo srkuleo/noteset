@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { Drawer } from "vaul";
@@ -35,10 +37,10 @@ export const BackButtonModal = ({ className }: { className: string }) => {
             </Drawer.Title>
 
             <Link
-              href="/workouts"
+              href="/home"
               className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-green-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-green-500/75 dark:border-slate-600 active:dark:bg-slate-600/90 disabled:dark:bg-slate-900/75 disabled:dark:text-green-800"
             >
-              Back to Home page
+              Go to Home page
             </Link>
           </div>
 
