@@ -1,13 +1,18 @@
 import { useState } from "react";
 import { Drawer } from "vaul";
-import { HideIcon, ShowIcon } from "./icons/user/preview";
+import { HideIcon, ShowIcon } from "../icons/user/preview";
 
 import type { PartialWorkoutType } from "@/db/schema";
+import { twMerge } from "tailwind-merge";
 
 export const PreviewWorkoutButtonDrawer = ({
   workout,
+  className,
+  size,
 }: {
   workout: PartialWorkoutType;
+  className?: string;
+  size: number | string;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -19,9 +24,12 @@ export const PreviewWorkoutButtonDrawer = ({
           await new Promise((resolve) => setTimeout(resolve, 100));
           setOpen(true);
         }}
-        className="rounded-lg px-2 py-1 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
+        className={twMerge(
+          "rounded-lg shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700",
+          className,
+        )}
       >
-        <ShowIcon className="size-5" />
+        <ShowIcon className={`size-${size}`} />
         <p className="sr-only">Preview workout</p>
       </button>
 
@@ -58,9 +66,14 @@ export const PreviewWorkoutButtonDrawer = ({
                       className="flex divide-x-2 divide-slate-100 pb-4 dark:divide-slate-700"
                     >
                       {exercise.reps.map((rep, i) => (
-                        <div key={i} className="flex gap-1 px-3">
+                        <div
+                          key={i}
+                          className="flex min-w-24 justify-center gap-1 px-3"
+                        >
                           <p className="font-bold">{rep}</p>
-                          <p>({exercise.weights[i]}kg)</p>
+                          {exercise.weights[i] && (
+                            <p>({exercise.weights[i]}kg)</p>
+                          )}
                         </div>
                       ))}
                     </div>
