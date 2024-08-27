@@ -1,5 +1,4 @@
-import { notFound, redirect } from "next/navigation";
-import { getAuth } from "@/util/actions/auth";
+import { notFound } from "next/navigation";
 import { getWorkoutById } from "@/db/query";
 import { EditWorkoutForm } from "@/components/user/EditWorkoutForm";
 
@@ -14,12 +13,6 @@ export default async function EditWorkoutPage({
 }: {
   searchParams: { id: string };
 }) {
-  const { user } = await getAuth();
-
-  if (!user) {
-    redirect("/login");
-  }
-
   const coercedWorkoutId = Number(searchParams.id);
   const workoutToEdit = await getWorkoutById(coercedWorkoutId);
 

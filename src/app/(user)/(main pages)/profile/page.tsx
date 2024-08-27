@@ -1,7 +1,11 @@
 import { redirect } from "next/navigation";
 import { getAuth } from "@/util/actions/auth";
-import { UserPagesHeadingText } from "@/components/user/UserPagesHeadingText";
+import {
+  UserPagesSubHeadingWrapper,
+  UserPagesSubHeadingText,
+} from "@/components/user/UserPagesHeader";
 import { ProfileDropDownMenu } from "@/components/user/profile/ProfileDropDownMenu";
+import { FormatDate } from "@/components/Formatting";
 
 import type { Metadata } from "next";
 
@@ -18,16 +22,23 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <div className="flex justify-between border-b border-slate-300/80 px-6 py-4 dark:border-slate-800">
-        <UserPagesHeadingText label="Profile page" />
+      <UserPagesSubHeadingWrapper>
+        <UserPagesSubHeadingText label="Profile page" />
 
         <ProfileDropDownMenu preferences={user.preferences} />
-      </div>
+      </UserPagesSubHeadingWrapper>
 
+      {/* Potentially needs overflow-y-auto later on if more things are being rendered */}
       <main className="space-y-4">
-        {!user.isVerified && (
+        {user.isVerified ? (
+          <p className="bg-green-500 py-2 text-center text-lg font-semibold text-white dark:bg-green-600">
+            Account verified
+          </p>
+        ) : (
           <div className="flex justify-center gap-2 bg-amber-400 py-2 dark:bg-amber-600">
-            <p className="text-lg text-white">You are not verified.</p>
+            <p className="text-lg font-semibold text-white">
+              You are not verified.
+            </p>
             <button className="text-sm text-violet-500 dark:text-violet-800">
               Send verification email
             </button>
@@ -44,12 +55,7 @@ export default async function ProfilePage() {
 
           <div className="flex gap-2">
             <p className="font-semibold dark:text-slate-300">Member since:</p>
-            <p className="font-bold">
-              {user.createdAt
-                .toLocaleDateString()
-                .replaceAll(". ", "-")
-                .replace(".", "")}
-            </p>
+            <FormatDate date={user.createdAt} className="font-bold" />
           </div>
         </div>
       </main>
