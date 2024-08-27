@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { getAuth } from "@/util/actions/auth";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 import type { Metadata } from "next";
@@ -10,12 +8,6 @@ export const metadata: Metadata = {
 };
 
 export default async function LoginPage() {
-  const { user } = await getAuth();
-
-  if (user) {
-    redirect("/workouts");
-  }
-
   return (
     <div className="space-y-6 px-7 pt-24 sm:px-[150px] md:px-[200px] lg:px-[300px] xl:px-[450px] 2xl:px-[500px]">
       <h2 className="text-[26px] font-semibold">Hey, welcome back!</h2>

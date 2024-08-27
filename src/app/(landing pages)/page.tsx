@@ -1,16 +1,8 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { getAuth } from "@/util/actions/auth";
 import { TooltipDrawer } from "@/components/landing/TooltipDrawer";
 import { ArrowRightIcon } from "@/components/icons/arrows";
 
 export default async function LandingPage() {
-  const { user } = await getAuth();
-
-  if (user) {
-    redirect("/workouts");
-  }
-
   return (
     <div className="flex h-full flex-col items-center justify-center pb-28 md:pb-36">
       <h1 className="bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pb-6 text-7xl font-extrabold text-transparent dark:to-violet-600">

@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { getAuth } from "@/util/actions/auth";
 import { LandingPageBar } from "@/components/landing/LandingPageBar";
 
 export default async function LandingPageLayout({
@@ -5,6 +7,12 @@ export default async function LandingPageLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { user } = await getAuth();
+
+  if (user) {
+    redirect("/home");
+  }
+
   return (
     <div className="flex h-full flex-col pt-safe-top">
       <LandingPageBar />
