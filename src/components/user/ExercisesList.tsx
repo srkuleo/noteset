@@ -19,14 +19,14 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
-import { EditExerciseDrawer } from "./user/EditExerciseDrawer";
-import { RemoveExerciseModal } from "./user/RemoveExerciseModal";
-import { ErrorComponent } from "./ErrorComponent";
+import { EditExerciseDrawer } from "./EditExerciseDrawer";
+import { RemoveExerciseModal } from "./RemoveExerciseModal";
+import { ErrorComponent } from "../ErrorComponent";
 import {
   DragExerciseIcon,
   EditExerciseIcon,
   RemoveExerciseIcon,
-} from "./icons/user/modify";
+} from "../icons/user/modify";
 
 import type { ExerciseType, CreateWorkoutType } from "@/util/types";
 
@@ -139,16 +139,16 @@ const ExerciseShell = ({
   exercisesError: string[] | undefined;
 }) => {
   return (
-    <div className="space-y-2 pt-6 group-disabled:opacity-50">
+    <div className="space-y-2 pt-6">
       <div
         className={twMerge(
-          "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center dark:border-slate-700 dark:bg-slate-900",
+          "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center group-disabled:opacity-30 dark:border-slate-700 dark:bg-slate-900",
           exercisesError && "border-red-500 dark:border-red-500",
         )}
       >
-        <h3>Exercises not added yet</h3>
+        <h3 className="font-manrope">Exercises not added yet</h3>
 
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-400/80 dark:text-slate-500">
           Press the{" "}
           <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
             plus
