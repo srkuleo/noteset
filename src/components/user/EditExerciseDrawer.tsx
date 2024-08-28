@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useExerciseForm } from "@/util/hooks";
@@ -8,7 +9,7 @@ import {
   SetsInput,
   WeightInputs,
 } from "./ExerciseInputs";
-import { SubmitFormButton } from "../SubmitButtons";
+import { ModalSubmitButton } from "../SubmitButtons";
 
 import { ExerciseSchema, type ExerciseType } from "@/util/types";
 
@@ -67,7 +68,26 @@ const EditExerciseForm = ({
   editExercises: (editedExercise: ExerciseType) => void;
   closeDrawer: () => void;
 }) => {
-  const initExercise = { ...exercise };
+  const { mutate: editExercise, isPending } = useMutation({
+    mutationFn: async (exercise: ExerciseType) => {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      const isValidExercise = ExerciseSchema.safeParse(exercise);
+
+      if (!isValidExercise.success) {
+        setExerciseFormErrors({
+          errors: isValidExercise.error.flatten().fieldErrors,
+        });
+        throw isValidExercise.error;
+      }
+
+      return isValidExercise.data;
+    },
+    onSuccess: (validExercise) => {
+      editExercises(validExercise);
+      closeDrawer();
+    },
+  });
   const {
     tempExercise,
     exerciseFormErrors,
@@ -77,61 +97,50 @@ const EditExerciseForm = ({
     handleSetsInput,
     handleRepsInput,
     handleWeightInput,
-  } = useExerciseForm(initExercise);
-
-  async function editExercise() {
-    await new Promise((resolve) => setTimeout(resolve, 250));
-
-    const isValidExercise = ExerciseSchema.safeParse({ ...tempExercise });
-
-    if (!isValidExercise.success) {
-      setExerciseFormErrors({
-        errors: isValidExercise.error.flatten().fieldErrors,
-      });
-      return;
-    }
-
-    const validExercise = isValidExercise.data;
-
-    editExercises(validExercise);
-    closeDrawer();
-  }
+  } = useExerciseForm({ ...exercise });
 
   return (
     <form
-      id="edit-exercise-form"
-      action={editExercise}
       onSubmit={(e) => {
+        e.preventDefault();
         e.stopPropagation();
+        editExercise({ ...tempExercise });
       }}
       className="space-y-6 px-8 py-4"
     >
-      <div className="space-y-3">
-        <NameInput
-          name={tempExercise.name}
-          nameError={exerciseFormErrors.errors?.name}
-          handleNameInput={handleNameInput}
-        />
+      <fieldset disabled={isPending} className="group">
+        <div className="space-y-3 group-disabled:opacity-50">
+          <NameInput
+            name={tempExercise.name}
+            nameError={exerciseFormErrors.errors?.name}
+            handleNameInput={handleNameInput}
+          />
 
-        <NoteInput note={tempExercise.note} handleNoteInput={handleNoteInput} />
+          <NoteInput
+            note={tempExercise.note}
+            handleNoteInput={handleNoteInput}
+          />
 
-        <SetsInput
-          sets={tempExercise.sets}
-          setsError={exerciseFormErrors.errors?.sets}
-          handleSetsInput={handleSetsInput}
-        />
-      </div>
+          <SetsInput
+            sets={tempExercise.sets}
+            setsError={exerciseFormErrors.errors?.sets}
+            handleSetsInput={handleSetsInput}
+          />
+        </div>
+      </fieldset>
 
       <div className="space-y-3">
         <RepsInputs
           reps={tempExercise.reps}
           repsError={exerciseFormErrors.errors?.reps}
+          isPending={isPending}
           handleRepsInput={handleRepsInput}
         />
 
         <WeightInputs
           weights={tempExercise.weights}
           weightsError={exerciseFormErrors.errors?.weights}
+          isPending={isPending}
           handleWeightInput={handleWeightInput}
         />
       </div>
@@ -139,20 +148,20 @@ const EditExerciseForm = ({
       <div className="flex gap-2 pt-2">
         <button
           type="button"
+          disabled={isPending}
           onClick={async () => {
             await new Promise((resolve) => setTimeout(resolve, 100));
             closeDrawer();
           }}
-          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
+          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
         >
           Cancel
         </button>
 
-        <SubmitFormButton
-          form="edit-exercise-form"
+        <ModalSubmitButton
+          pending={isPending}
           label="Save"
           loading="Saving..."
-          className="w-full rounded-xl font-nunito"
         />
       </div>
     </form>
