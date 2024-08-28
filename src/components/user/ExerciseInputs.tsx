@@ -146,18 +146,23 @@ export const RepsInputs = ({
   form,
   reps,
   repsError,
+  isPending,
   handleRepsInput,
 }: {
+  form?: "edit" | "add";
   reps: string[];
   repsError: string[] | undefined;
+  isPending: boolean;
   handleRepsInput: (
     event: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => void;
-  form?: "edit" | "add";
 }) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div
+      aria-disabled={isPending}
+      className={`${isPending && "pointer-events-none opacity-50"} flex flex-col gap-1`}
+    >
       <label
         htmlFor="rep 1"
         className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
@@ -196,17 +201,22 @@ export const RepsInputs = ({
 export const WeightInputs = ({
   weights,
   weightsError,
+  isPending,
   handleWeightInput,
 }: {
   weights: string[];
   weightsError: string[] | undefined;
+  isPending: boolean;
   handleWeightInput: (
     event: React.ChangeEvent<HTMLInputElement>,
     index: number,
   ) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-1">
+    <div
+      aria-disabled={isPending}
+      className={`${isPending && "pointer-events-none opacity-50"} flex flex-col gap-1`}
+    >
       <label
         htmlFor="weight 1"
         className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
