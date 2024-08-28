@@ -4,7 +4,6 @@ import type {
   ExerciseType,
   CreateWorkoutType,
   ExerciseActionResponse,
-  WorkoutActionResponse,
 } from "./types";
 
 const initErrors: ExerciseActionResponse = {
@@ -140,17 +139,10 @@ export const emptyWorkout: CreateWorkoutType = {
   exercises: [],
 };
 
-const emptyRes: WorkoutActionResponse = {
-  status: "unset",
-  message: "",
-  errors: {},
-};
-
 /* 
 Contains:
 
 - workout state (data passed to server action)
-- actionRes state (preserve the server action response needed for rendering errors)
 - resetForm function (resets form fields if res.status is successful on workout creation)
 - three handler functions for creating, editing or removing existing exercise inside a workout 
 
@@ -158,7 +150,6 @@ Contains:
 
 export const useWorkouts = (initWorkout: CreateWorkoutType) => {
   const [workout, setWorkout] = useState(initWorkout);
-  const [actionRes, setActionRes] = useState(emptyRes);
 
   function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
     setWorkout((prev) => {
@@ -185,15 +176,6 @@ export const useWorkouts = (initWorkout: CreateWorkoutType) => {
         exercises: [...prev.exercises, newExercise],
       };
     });
-
-    if (actionRes.errors?.exercises && actionRes.errors.exercises.length > 0) {
-      setActionRes((prev) => {
-        return {
-          ...prev,
-          errors: { ...prev.errors, exercises: undefined },
-        };
-      });
-    }
   }
 
   function editExercises(editedExercise: ExerciseType) {
@@ -229,8 +211,6 @@ export const useWorkouts = (initWorkout: CreateWorkoutType) => {
   return {
     workout,
     setWorkout,
-    actionRes,
-    setActionRes,
     handleTitleInput,
     handleDescriptionInput,
     updateExercises,
