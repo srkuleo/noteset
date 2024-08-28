@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ThemeIcon, SystemIcon, MoonIcon, SunIcon } from "./icons/theme";
-import { CheckMarkIcon } from "./icons/user/submit-button";
+import { TickIcon } from "./icons/tick";
 
 type ThemeOptions = "system" | "dark" | "light";
 
@@ -65,7 +65,7 @@ export const ThemeButton = () => {
               <p className="font-manrope font-semibold">System</p>
 
               {theme === "system" && (
-                <CheckMarkIcon className="size-5 text-green-500" />
+                <TickIcon className="size-5 text-green-500" />
               )}
               <p className="sr-only">System theme</p>
             </button>
@@ -81,7 +81,7 @@ export const ThemeButton = () => {
               <p className="font-manrope font-semibold">Dark</p>
 
               {theme === "dark" && (
-                <CheckMarkIcon className="size-5 text-green-500" />
+                <TickIcon className="size-5 text-green-500" />
               )}
               <p className="sr-only">Dark theme</p>
             </button>
@@ -97,7 +97,7 @@ export const ThemeButton = () => {
               <p className="font-manrope font-semibold">Light</p>
 
               {theme === "light" && (
-                <CheckMarkIcon className="size-5 text-green-500" />
+                <TickIcon className="size-5 text-green-500" />
               )}
               <p className="sr-only">Light theme</p>
             </button>
