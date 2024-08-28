@@ -86,7 +86,7 @@ export type CreateWorkoutType = z.infer<typeof CreateWorkoutSchema>;
 //Auth types and schemas
 
 export type AuthActionResponse = {
-  status?: "success" | "error" | "success-redirect";
+  status?: "success" | "error" | "success-redirect" | "pending";
   errors?: {
     username?: string[];
     email?: string[];
