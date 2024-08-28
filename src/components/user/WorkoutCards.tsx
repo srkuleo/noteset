@@ -5,7 +5,7 @@ import { useState } from "react";
 import { EmptyIcon } from "../icons/user/warning";
 import { RemoveWorkoutModal } from "./RemoveWorkoutModal";
 import { StatusIndicator } from "../StatusIndicator";
-import { PreviewWorkoutButtonDrawer } from "../PreviewWorkoutButtonDrawer";
+import { PreviewWorkoutButtonDrawer } from "./PreviewWorkoutButtonDrawer";
 import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
 
 import type { PartialWorkoutType } from "@/db/schema";
@@ -53,7 +53,11 @@ export const WorkoutCards = ({
             <div className="h-[1px] bg-green-200 dark:bg-green-900/70" />
 
             <div className="flex gap-2 px-1 [&>*:nth-child(2)]:mr-auto">
-              <PreviewWorkoutButtonDrawer workout={workout} />
+              <PreviewWorkoutButtonDrawer
+                workout={workout}
+                className="px-2"
+                size={5}
+              />
 
               <Link
                 href={`/workout-to-do?id=${workout.id}`}
@@ -64,7 +68,7 @@ export const WorkoutCards = ({
               </Link>
 
               <Link
-                href={`/workouts/edit?id=${workout.id}`}
+                href={`/edit?id=${workout.id}`}
                 className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
               >
                 {EditWorkoutIcon}

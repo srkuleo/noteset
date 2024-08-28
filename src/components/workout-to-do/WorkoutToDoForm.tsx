@@ -2,10 +2,12 @@
 
 import debounce from "lodash.debounce";
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useFormStatus } from "react-dom";
+import { useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 import { submitDoneWorkout } from "@/util/actions/workout";
+import { showToast } from "../Toasts";
 import { BackButtonModal } from "../BackButtonModal";
 import { FormTooltip } from "./FormTooltip";
 import { AddIcon } from "../icons/user/modify";
@@ -13,7 +15,6 @@ import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 
 import type { CreateWorkoutType, ExerciseType } from "@/util/types";
 import { ThemeButton } from "../ThemeButton";
-import { showToast } from "../Toasts";
 
 type TimeType = { start: Date | null; end: Date | null };
 type NoteType = { add: boolean; onExercise: string };
@@ -23,6 +24,7 @@ export const WorkoutToDoForm = ({
 }: {
   workoutToDo: CreateWorkoutType;
 }) => {
+  const [openDoneModal, setOpenDoneModal] = useState(false);
   const [exercisesToDo, setExercisesToDo] = useState(workoutToDo.exercises);
   const [currWorkout, setCurrWorkout] = useState<CreateWorkoutType>({
     title: workoutToDo.title,
@@ -40,6 +42,7 @@ export const WorkoutToDoForm = ({
     end: null,
   });
   const [note, setNote] = useState<NoteType>({ add: false, onExercise: "" });
+  const router = useRouter();
 
   const handleRepsInput = debounce(
     (
@@ -177,7 +180,7 @@ export const WorkoutToDoForm = ({
   async function clientAction() {
     console.log("Submitting!");
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 500));
 
     let duration = 0;
 
@@ -191,19 +194,19 @@ export const WorkoutToDoForm = ({
     const res = await submitDoneWorkout(currWorkout, duration);
 
     if (res.status === "success-redirect") {
-      redirect(`/post-workout?workoutTitle=${currWorkout.title}`);
+      router.push(`/post-workout?workoutTitle=${currWorkout.title}`);
     }
 
     if (res.status === "error") {
       showToast(res.message, "error");
     }
-  }
 
-  console.log(currWorkout);
+    setOpenDoneModal(false);
+  }
 
   return (
     <form
-      id="submit-done-workout-form"
+      id="submit-done-workout"
       action={clientAction}
       className="flex h-full flex-col"
     >
@@ -266,7 +269,7 @@ export const WorkoutToDoForm = ({
                     key={`${exercise.name} - rep ${repIndex + 1}`}
                     id={`${exercise.name} - rep ${repIndex + 1}`}
                     type="text"
-                    inputMode="numeric"
+                    inputMode="tel"
                     placeholder={exercisesToDo[exerciseIndex]?.reps[repIndex]}
                     onChange={(e) => {
                       handleRepsInput(e, exercise.id, repIndex);
@@ -342,7 +345,9 @@ export const WorkoutToDoForm = ({
         />
 
         <DoneButton
-          formId="submit-done-workout-form"
+          formId="submit-done-workout"
+          open={openDoneModal}
+          setOpen={setOpenDoneModal}
           stopTimer={() =>
             setTime((prev) => {
               return {
@@ -359,12 +364,16 @@ export const WorkoutToDoForm = ({
 
 const DoneButton = ({
   formId,
+  open,
+  setOpen,
   stopTimer,
 }: {
   formId: string;
+  open: boolean;
+  setOpen: (isOpen: boolean) => void;
   stopTimer: () => void;
 }) => {
-  const [open, setOpen] = useState(false);
+  const { pending } = useFormStatus();
 
   return (
     <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
@@ -396,16 +405,13 @@ const DoneButton = ({
             <button
               type="submit"
               form={formId}
+              disabled={pending}
               onClick={async () => {
                 stopTimer();
-
-                await new Promise((resolve) => setTimeout(resolve, 100));
-
-                setOpen(false);
               }}
               className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-green-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-green-500/75 dark:border-slate-600 active:dark:bg-slate-600/90 disabled:dark:bg-slate-900/75 disabled:dark:text-green-800"
             >
-              Submit workout
+              {pending ? "Submitting..." : "Submit"}
             </button>
           </div>
 
