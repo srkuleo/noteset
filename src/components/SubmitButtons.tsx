@@ -1,30 +1,43 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
-import { twMerge } from "tailwind-merge";
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  label: string | React.ReactNode;
-  loading: string | React.ReactNode;
+  label: string;
+  loading: string;
+  pending: boolean;
 };
 
-export const SubmitFormButton = ({
+export const AuthButton = ({
   label,
   loading,
-  className,
-  form,
+  pending,
+  ...props
 }: SubmitButtonProps) => {
-  const { pending } = useFormStatus();
-
   return (
     <button
       type="submit"
-      form={form}
       disabled={pending}
-      className={twMerge(
-        "rounded-lg bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 active:bg-green-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:active:bg-green-800",
-        className,
-      )}
+      className="mt-8 rounded-full bg-green-500 px-4 py-2.5 font-manrope font-semibold text-white shadow-md active:scale-95 active:bg-green-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:active:bg-green-800"
+      {...props}
+    >
+      {pending ? loading : label}
+    </button>
+  );
+};
+
+export const ModalSubmitButton = ({
+  label,
+  loading,
+  pending,
+  ...props
+}: SubmitButtonProps) => {
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="w-full rounded-xl bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 active:bg-green-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:active:bg-green-800"
+      {...props}
     >
       {pending ? loading : label}
     </button>
