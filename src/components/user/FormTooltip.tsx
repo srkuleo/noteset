@@ -15,7 +15,7 @@ export const FormTooltip = () => {
           setOpen(true);
         }}
         className={twMerge(
-          "absolute right-11 top-[26px] rounded-full p-1 active:bg-white dark:active:bg-slate-700",
+          "absolute right-11 top-[26px] rounded-full p-1 active:bg-white group-disabled:opacity-50 dark:active:bg-slate-700",
           open && "z-20",
         )}
       >
