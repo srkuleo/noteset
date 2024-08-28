@@ -99,31 +99,20 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
     };
   }
 
-  const session = await lucia.createSession(userId, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
-
   return {
     status: "success-redirect",
     message: "Profile created successfully",
   };
 }
 
-export async function login(formData: FormData): Promise<AuthActionResponse> {
+export async function login(formData: FormData) {
   const loginRaw = loginSchema.safeParse({
     username: formData.get("username"),
     password: formData.get("password"),
   });
 
   if (!loginRaw.success) {
-    return {
-      status: "error",
-      errors: loginRaw.error.flatten().fieldErrors,
-    };
+    throw new Error("Invalid credentials");
   }
 
   const { username, password } = loginRaw.data;
@@ -133,19 +122,13 @@ export async function login(formData: FormData): Promise<AuthActionResponse> {
   });
 
   if (!user) {
-    return {
-      status: "error",
-      message: "Incorrect username or password.",
-    };
+    throw new Error("Incorrect username or password");
   }
 
   const validPassword = await bcrypt.compare(password, user.hashedPassword);
 
   if (!validPassword) {
-    return {
-      status: "error",
-      message: "Incorrect username or password.",
-    };
+    throw new Error("Incorrect username or password");
   }
 
   const session = await lucia.createSession(user.id, {});
@@ -157,7 +140,6 @@ export async function login(formData: FormData): Promise<AuthActionResponse> {
   );
 
   console.log("User validated, you are logged in!");
-  return redirect("/workouts");
 }
 
 export async function logout() {
