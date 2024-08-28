@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { and, eq, ilike, ne } from "drizzle-orm";
 import { db } from "@/db";
-import { workouts, type QueriedByIdWorkoutType } from "@/db/schema";
+import { workouts } from "@/db/schema";
 import { getAuth } from "./auth";
 
 import {
@@ -63,7 +63,7 @@ export async function createWorkout(
 
     console.log(`${title} workout created!`);
 
-    revalidatePath("/workouts");
+    revalidatePath("/home");
 
     return {
       status: "success",
@@ -132,7 +132,7 @@ export async function editWorkout(
 
     console.log(`${initTitle} workout edited.`);
 
-    revalidatePath("/workouts");
+    revalidatePath("/home");
 
     return {
       status: "success-redirect",
@@ -156,7 +156,7 @@ export async function removeWorkout(
 
     console.log("Workout deleted!");
 
-    revalidatePath("/workouts");
+    revalidatePath("/home");
 
     return {
       status: "success",
@@ -183,7 +183,7 @@ export async function archiveWorkout(
 
     console.log("Workout archived!");
 
-    revalidatePath("/workouts");
+    revalidatePath("/home");
 
     return {
       status: "success",
@@ -250,13 +250,23 @@ export async function submitDoneWorkout(
 }
 
 export async function updateCurrentWorkout(
-  updatedCurrentWorkout: Omit<QueriedByIdWorkoutType, "id">,
+  updatedCurrentWorkout: CreateWorkoutType,
   workoutId: number,
 ): Promise<WorkoutActionResponse> {
   const { user } = await getAuth();
 
   if (!user) {
     throw new Error("Unauthorized action. Please login.");
+  }
+
+  const isValidWorkout = CreateWorkoutSchema.safeParse(updatedCurrentWorkout);
+
+  if (!isValidWorkout.success) {
+    return {
+      status: "error",
+      errors: isValidWorkout.error.flatten().fieldErrors,
+      message: `${updatedCurrentWorkout.title} workout was not updated`,
+    };
   }
 
   try {
@@ -267,7 +277,7 @@ export async function updateCurrentWorkout(
 
     console.log("Workout successfully updated.");
 
-    revalidatePath("/workouts");
+    revalidatePath("/home");
 
     return {
       status: "success-redirect",
