@@ -62,7 +62,7 @@ export const PreviewWorkoutButtonDrawer = ({
                 {workout.exercises.map((exercise, index) => (
                   <Fragment key={index}>
                     <p
-                      className={`flex items-center font-bold md:pr-4 ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
+                      className={`flex items-center pr-2 font-bold ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
                       {exercise.name}
                     </p>
