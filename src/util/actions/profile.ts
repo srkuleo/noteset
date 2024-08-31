@@ -32,20 +32,20 @@ export async function updateUserTimeFormatPreference(
       .set({ preferences: { ...user.preferences, timeFormat: value } })
       .where(eq(users.id, user.id));
 
-    console.log(`Time format set to - ${value}`);
+    console.log(`Time format - ${value}`);
 
     revalidatePath("/profile");
 
     return {
       status: "success",
-      message: `Time format set to - ${value}`,
+      message: `Time format - ${value}`,
     };
   } catch (error) {
     console.log(error);
 
     return {
       status: "error",
-      message: "Database Error: Time format could not be changed",
+      message: "Failed to set new time format...",
     };
   }
 }

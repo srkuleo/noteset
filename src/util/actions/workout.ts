@@ -27,7 +27,7 @@ export async function createWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: "Workout could not be created",
+      message: "Invalid workout data",
     };
   }
 
@@ -50,7 +50,7 @@ export async function createWorkout(
         errors: {
           title: ["Workout with this title already exists."],
         },
-        message: `"${title}" workout already exists`,
+        message: `${title} workout already exists`,
       };
     }
 
@@ -66,14 +66,14 @@ export async function createWorkout(
     revalidatePath("/home");
 
     return {
-      status: "success",
+      status: "success-redirect",
       message: `${title} workout created`,
     };
   } catch (error) {
     console.log(error);
     return {
       status: "error",
-      message: "Database Error: Workout could not be created",
+      message: "Failed to create workout...",
     };
   }
 }
@@ -95,7 +95,7 @@ export async function editWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: "Workout could not be edited",
+      message: "Invalid workout data",
     };
   }
 
@@ -142,7 +142,7 @@ export async function editWorkout(
     console.log(error);
     return {
       status: "error",
-      message: "Database Error: Workout could not be edited",
+      message: "Failed to edit workout",
     };
   }
 }
@@ -166,7 +166,7 @@ export async function removeWorkout(
     console.error(err);
     return {
       status: "error",
-      message: "Database Error: Workout could not be removed",
+      message: "Failed to remove workout...",
     };
   }
 }
@@ -193,7 +193,7 @@ export async function archiveWorkout(
     console.error(err);
     return {
       status: "error",
-      message: "Database Error: Workout could not be archived",
+      message: "Failed to archive workout",
     };
   }
 }
@@ -238,13 +238,13 @@ export async function submitDoneWorkout(
 
     return {
       status: "success-redirect",
-      message: "Workout completed",
+      message: "Workout submitted",
     };
   } catch (error) {
     console.log(error);
     return {
       status: "error",
-      message: "Workout not completed",
+      message: "Failed to submit workout...",
     };
   }
 }
@@ -265,7 +265,7 @@ export async function updateCurrentWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: `${updatedCurrentWorkout.title} workout was not updated`,
+      message: `${updatedCurrentWorkout.title} was not updated`,
     };
   }
 
@@ -275,19 +275,19 @@ export async function updateCurrentWorkout(
       .set({ exercises: [...updatedCurrentWorkout.exercises] })
       .where(and(eq(workouts.id, workoutId), eq(workouts.status, "current")));
 
-    console.log("Workout successfully updated.");
+    console.log("Workout updated.");
 
     revalidatePath("/home");
 
     return {
       status: "success-redirect",
-      message: `${updatedCurrentWorkout.title} workout successfully updated`,
+      message: `${updatedCurrentWorkout.title} workout updated`,
     };
   } catch (error) {
     console.error(error);
     return {
       status: "error",
-      message: "Database Error: Workout could not be updated",
+      message: "Failed to update workout...",
     };
   }
 }
