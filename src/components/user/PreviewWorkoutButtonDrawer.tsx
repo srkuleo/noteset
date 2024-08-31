@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
+import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
+import { StatusIndicator } from "../StatusIndicator";
 
 import type { PartialWorkoutType } from "@/db/schema";
-import { twMerge } from "tailwind-merge";
 
 export const PreviewWorkoutButtonDrawer = ({
   workout,
@@ -44,31 +45,35 @@ export const PreviewWorkoutButtonDrawer = ({
             <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
               <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
 
-              <Drawer.Title className="px-4 pt-4 text-lg uppercase text-slate-800">
-                {workout.title}
-              </Drawer.Title>
+              <div className="flex items-center justify-between px-4 pt-4">
+                <Drawer.Title className="text-lg uppercase text-slate-800">
+                  {workout.title}
+                </Drawer.Title>
+
+                <StatusIndicator
+                  status={workout.status}
+                  className="bg-white py-2 dark:bg-slate-900"
+                />
+              </div>
             </div>
 
             <div className="flex flex-col px-6 py-8">
-              <div className="grid grid-cols-preview gap-3 divide-x-2 divide-slate-100 overflow-x-scroll pb-8 text-sm dark:divide-slate-800 md:justify-center">
-                <div className="flex flex-col gap-4">
-                  {workout.exercises.map((exercise) => (
-                    <p key={exercise.name} className="pb-4 font-bold">
+              <div className="grid grid-cols-preview overflow-x-scroll overscroll-x-contain pb-8 text-sm md:justify-center">
+                {workout.exercises.map((exercise, index) => (
+                  <Fragment key={index}>
+                    <p
+                      className={`flex items-center font-bold md:pr-4 ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
+                    >
                       {exercise.name}
                     </p>
-                  ))}
-                </div>
 
-                <div className="flex flex-col gap-4 pl-3">
-                  {workout.exercises.map((exercise) => (
                     <div
-                      key={exercise.name}
-                      className="flex divide-x-2 divide-slate-100 pb-4 dark:divide-slate-700"
+                      className={`flex items-center border-x-2 border-slate-100 px-2 dark:border-slate-800 ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
                       {exercise.reps.map((rep, i) => (
                         <div
                           key={i}
-                          className="flex min-w-24 justify-center gap-1 px-3"
+                          className="flex min-w-28 justify-center gap-1 border-r-2 border-slate-100 last:border-r-0 dark:border-slate-800"
                         >
                           <p className="font-bold">{rep}</p>
                           {exercise.weights[i] && (
@@ -77,16 +82,14 @@ export const PreviewWorkoutButtonDrawer = ({
                         </div>
                       ))}
                     </div>
-                  ))}
-                </div>
 
-                <div className="flex flex-col gap-4 pl-3">
-                  {workout.exercises.map((exercise, i) => (
-                    <p key={i} className="pb-4 font-semibold">
+                    <p
+                      className={`flex items-center pl-4 font-semibold ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
+                    >
                       {exercise.note ? exercise.note : "/"}
                     </p>
-                  ))}
-                </div>
+                  </Fragment>
+                ))}
               </div>
 
               <button
