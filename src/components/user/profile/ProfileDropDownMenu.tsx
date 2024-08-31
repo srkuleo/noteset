@@ -3,7 +3,6 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useState } from "react";
-import { twMerge } from "tailwind-merge";
 import { ProfileDropDownMenuIcon } from "@/components/icons/user/profile/dropdown-menu-icon";
 import { TimeFormat } from "./TimeFormat";
 import { Logout } from "./LogOut";
@@ -25,10 +24,7 @@ export const ProfileDropDownMenu = ({
           await new Promise((resolve) => setTimeout(resolve, 100));
           setOpen(true);
         }}
-        className={twMerge(
-          "relative rounded-full p-1.5 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700",
-          open && "z-30 text-white",
-        )}
+        className={`relative rounded-full p-1.5 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700 ${open && "z-30 scale-125 text-white transition-all"}`}
       >
         {ProfileDropDownMenuIcon}
 
