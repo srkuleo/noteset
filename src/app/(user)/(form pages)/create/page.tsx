@@ -9,7 +9,7 @@ import {
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
 import { BackButtonModal } from "@/components/BackButtonModal";
-import { FormTooltip } from "@/components/user/FormTooltip";
+import { AddOrEditWorkoutTooltip } from "@/components/Tooltips";
 import { TitleInput, DescriptionInput } from "@/components/user/WorkoutInputs";
 import { ExercisesList } from "@/components/user/ExercisesList";
 import { ErrorComponent } from "@/components/ErrorComponent";
@@ -31,11 +31,11 @@ export default function CreatePage() {
       return res;
     },
     onSuccess: (res) => {
-      if (res.status === "success") {
+      if (res.status === "success-redirect") {
         resetWorkoutForm();
-        showToast(res.message, "success");
+        showToast(res.message, "/home", "View workouts");
       } else {
-        showToast(res.message, "error");
+        showToast(res.message);
       }
     },
   });
@@ -55,13 +55,13 @@ export default function CreatePage() {
       <UserPagesSubHeadingWrapper className="justify-start gap-3 px-4">
         <BackButtonModal className="rounded-full p-1.5 active:bg-slate-200 dark:active:bg-slate-700" />
         <UserPagesSubHeadingText label="Create workout" className="text-2xl" />
+
+        <AddOrEditWorkoutTooltip />
       </UserPagesSubHeadingWrapper>
 
       <main className="relative overflow-y-auto overscroll-contain scroll-smooth px-8 py-4">
         <form id="create-workout-form" action={() => clientAction(workout)}>
           <fieldset disabled={isPending} className="group space-y-4">
-            <FormTooltip />
-
             <TitleInput
               title={workout.title}
               titleError={actionRes && actionRes.errors?.title}
