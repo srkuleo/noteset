@@ -49,12 +49,9 @@ export const TimeFormat = ({
                   await new Promise((resolve) => setTimeout(resolve, 100));
                   const res = await updateUserTimeFormatPreference(value);
 
-                  if (res.status === "success" && res.message) {
-                    showToast(res.message, "success");
-                  }
-
-                  closeProfileDropDownMenu();
                   setOpen(false);
+                  closeProfileDropDownMenu();
+                  showToast(res.message);
                 }}
                 className={twMerge(
                   "p-3 font-manrope text-lg font-semibold text-blue-500 active:bg-slate-200 dark:border-slate-600 dark:text-blue-500 active:dark:bg-slate-600/90",
