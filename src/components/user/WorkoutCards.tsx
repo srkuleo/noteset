@@ -6,7 +6,7 @@ import { EmptyIcon } from "../icons/user/warning";
 import { RemoveWorkoutModal } from "./RemoveWorkoutModal";
 import { StatusIndicator } from "../StatusIndicator";
 import { PreviewWorkoutButtonDrawer } from "./PreviewWorkoutButtonDrawer";
-import { EditWorkoutIcon, RemoveWorkoutIcon } from "../icons/user/modify";
+import { EditWorkoutIcon, TrashBinIcon } from "../icons/user/modify";
 
 import type { PartialWorkoutType } from "@/db/schema";
 
@@ -84,7 +84,7 @@ export const WorkoutCards = ({
                 }}
                 className="rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:text-red-400 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
               >
-                {RemoveWorkoutIcon}
+                <TrashBinIcon className="size-5" strokeWidth={1.2} />
                 <span className="sr-only">Remove workout</span>
               </button>
             </div>
