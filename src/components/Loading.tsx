@@ -65,8 +65,7 @@ export const LoadingWorkoutToDoSkeleton = () => {
         <div className="flex items-center gap-3 px-4 py-3.5 opacity-50">
           <div className="h-8 w-8 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
           <div className="h-8 flex-1 animate-pulse rounded bg-slate-300 dark:bg-slate-800" />
-          <div className="h-8 w-8 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
-          <div className="h-8 w-8 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
+          <div className="mr-1.5 size-7 animate-pulse rounded-full bg-slate-300 p-1.5 dark:bg-slate-800" />
         </div>
       </header>
 
@@ -111,24 +110,21 @@ export const LoadingWorkoutToDoSkeleton = () => {
   );
 };
 
-export const LoadingEditWorkoutPagekeleton = () => {
+export const LoadingEditWorkoutPageSkeleton = () => {
   return (
     <>
       <main className="relative overflow-y-auto overscroll-contain scroll-smooth px-8 py-4">
         <div className="space-y-4">
-          {/* Tooltip */}
-          <div className="absolute right-11 top-[26px] h-8 w-8 animate-pulse rounded-full bg-slate-200 p-2 dark:bg-slate-800" />
-
           {/* Title Input */}
           <div className="space-y-2 px-4">
-            <div className="h-4 w-20 animate-pulse bg-slate-200 dark:bg-slate-800" />
-            <div className="h-10 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
+            <div className="h-4 w-20 animate-pulse bg-slate-200 dark:bg-slate-900" />
+            <div className="h-10 animate-pulse rounded-md bg-slate-200 dark:bg-slate-900" />
           </div>
 
           {/* Description Input */}
           <div className="space-y-2 px-4">
-            <div className="h-4 w-32 animate-pulse bg-slate-200 dark:bg-slate-800" />
-            <div className="h-10 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
+            <div className="h-4 w-32 animate-pulse bg-slate-200 dark:bg-slate-900" />
+            <div className="h-10 animate-pulse rounded-md bg-slate-200 dark:bg-slate-900" />
           </div>
 
           {/* Exercises List */}
@@ -136,28 +132,28 @@ export const LoadingEditWorkoutPagekeleton = () => {
             {[1, 2, 3, 4].map((skeleton) => (
               <div
                 key={skeleton}
-                className="animate-pulse rounded-lg bg-slate-200 p-4 dark:bg-slate-800"
+                className="animate-pulse rounded-lg bg-slate-200 p-4 dark:bg-slate-900"
               >
                 <div className="flex items-center gap-2 border-b border-slate-300 pb-3 dark:border-slate-700/70 [&>*:nth-child(2)]:mr-auto">
-                  <div className="h-[26px] w-[36px] rounded-md bg-slate-300 dark:bg-slate-700" />
-                  <div className="h-[26px] w-[70px] rounded-md bg-slate-300 dark:bg-slate-700" />
-                  <div className="h-[26px] w-[36px] rounded-md bg-slate-300 dark:bg-slate-700" />
-                  <div className="h-[26px] w-[36px] rounded-md bg-slate-300 dark:bg-slate-700" />
+                  <div className="h-[26px] w-[36px] rounded-md bg-slate-300 dark:bg-slate-800" />
+                  <div className="h-[26px] w-[70px] rounded-md bg-slate-300 dark:bg-slate-800" />
+                  <div className="h-[26px] w-[36px] rounded-md bg-slate-300 dark:bg-slate-800" />
+                  <div className="h-[26px] w-[36px] rounded-md bg-slate-300 dark:bg-slate-800" />
                 </div>
 
                 <div className="flex justify-center gap-4 divide-x divide-slate-300 p-4 dark:divide-slate-700/70">
                   <div className="flex flex-col gap-3">
-                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-700" />
-                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-700" />
+                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-800" />
+                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-800" />
                   </div>
                   <div className="flex flex-col gap-3 pl-4">
-                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-700" />
-                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-700" />
+                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-800" />
+                    <div className="h-5 w-12 rounded-lg bg-slate-300 dark:bg-slate-800" />
                   </div>
                 </div>
 
                 <div className="border-t border-slate-300 pt-3 dark:border-slate-700/70">
-                  <div className="h-[26px] w-[140px] rounded-md bg-slate-300 dark:bg-slate-700" />
+                  <div className="h-[26px] w-[140px] rounded-md bg-slate-300 dark:bg-slate-800" />
                 </div>
               </div>
             ))}
@@ -165,15 +161,13 @@ export const LoadingEditWorkoutPagekeleton = () => {
         </div>
       </main>
 
-      <div className="group">
-        <footer className="flex items-center justify-between border-t border-slate-300/80 px-6 pb-6 pt-2 dark:border-slate-800">
-          {/* Add Exercise Button */}
-          <div className="h-10 w-10 animate-pulse rounded-full bg-slate-200 p-2 dark:bg-slate-800" />
+      <footer className="flex items-center justify-between border-t border-slate-300/80 px-6 pb-6 pt-2 dark:border-slate-800">
+        {/* Add Exercise Button */}
+        <div className="h-10 w-10 animate-pulse rounded-full bg-slate-200 p-2 dark:bg-slate-800" />
 
-          {/* Submit Button */}
-          <div className="h-10 w-24 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
-        </footer>
-      </div>
+        {/* Submit Button */}
+        <div className="h-10 w-24 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
+      </footer>
     </>
   );
 };
