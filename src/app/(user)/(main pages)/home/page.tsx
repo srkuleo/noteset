@@ -9,6 +9,7 @@ import { LoadingWorkoutsSkeleton } from "@/components/Loading";
 import { HomePageContent } from "@/components/user/HomePageContent";
 
 import type { Metadata } from "next";
+import { HomePageTooltip } from "@/components/Tooltips";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -20,13 +21,16 @@ export default async function HomePage() {
       <UserPagesSubHeadingWrapper>
         <UserPagesSubHeadingText label="Workouts" />
 
-        <Link
-          href="/create"
-          className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-600"
-        >
-          <AddIcon size={24} strokeWidth={2} />
-          <p className="sr-only">Add a new workout</p>
-        </Link>
+        <div className="flex gap-1">
+          <HomePageTooltip />
+          <Link
+            href="/create"
+            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-600"
+          >
+            <AddIcon size={24} strokeWidth={2} />
+            <p className="sr-only">Add a new workout</p>
+          </Link>
+        </div>
       </UserPagesSubHeadingWrapper>
 
       <main className="space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-6 py-4">
