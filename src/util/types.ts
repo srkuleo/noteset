@@ -46,7 +46,7 @@ export type ExerciseType = z.infer<typeof ExerciseSchema>;
 //Workout types and schemas
 
 export type WorkoutActionResponse = {
-  status: "success" | "success-redirect" | "error" | "unset" | "pending";
+  status: "success" | "success-redirect" | "error" | "unset";
   errors?: {
     title?: string[];
     exercises?: string[];
