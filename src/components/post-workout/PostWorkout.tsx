@@ -39,17 +39,12 @@ export const PostWorkout = ({
     },
     onSuccess: (res) => {
       if (res.status === "success-redirect" && res.message) {
-        showToast(
-          res.message,
-          "success-redirect",
-          "/workouts",
-          "View workouts",
-        );
+        showToast(res.message, "/home", "View workouts");
         setEditMode(false);
       }
 
       if (res.status === "error") {
-        showToast(res.message, "error");
+        showToast(res.message);
       }
     },
   });
@@ -99,13 +94,13 @@ export const PostWorkout = ({
                 {editMode ? "Close edit mode" : "Yes, edit"}
               </button>
 
-              <div className="w-[1px] bg-slate-300 dark:bg-slate-700/80" />
+              <div className="w-[1px] bg-slate-300/60 dark:bg-slate-800" />
 
               <Link
                 href="/logs"
-                className="flex items-center gap-1 rounded-full border-l border-slate-300 px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-white dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
+                className="flex items-center gap-1 rounded-full border-l border-slate-300/70 px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-white dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
               >
-                View Logs {ArrowRightIcon}
+                View logs {ArrowRightIcon}
               </Link>
             </div>
 

@@ -4,7 +4,6 @@ import { useMutation } from "@tanstack/react-query";
 import { useWorkouts } from "@/util/hooks";
 import { editWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
-import { FormTooltip } from "./FormTooltip";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
 import { ErrorComponent } from "../ErrorComponent";
@@ -33,9 +32,11 @@ export const EditWorkoutForm = ({
     },
     onSuccess: (res) => {
       if (res.status === "success-redirect") {
-        showToast(res.message, res.status, "/home", "View workouts");
-      } else if (res.status === "success" || res.status === "error") {
-        showToast(res.message, res.status);
+        showToast(res.message, "/home", "View workouts");
+      }
+
+      if (res.status === "error") {
+        showToast(res.message);
       }
     },
   });
@@ -55,8 +56,6 @@ export const EditWorkoutForm = ({
       <main className="relative overflow-y-auto overscroll-contain scroll-smooth px-8 py-4">
         <form id="edit-workout-form" action={() => clientAction()}>
           <fieldset disabled={isPending} className="group space-y-4">
-            <FormTooltip />
-
             <TitleInput
               title={workout.title}
               titleError={actionRes && actionRes.errors?.title}

@@ -9,7 +9,7 @@ import { Drawer } from "vaul";
 import { submitDoneWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { BackButtonModal } from "../BackButtonModal";
-import { FormTooltip } from "./FormTooltip";
+import { WorkoutToDoTooltip } from "../Tooltips";
 import { AddIcon } from "../icons/user/modify";
 import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 
@@ -180,8 +180,6 @@ export const WorkoutToDoForm = ({
   async function clientAction() {
     console.log("Submitting!");
 
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-
     let duration = 0;
 
     if (time.start && time.end) {
@@ -198,7 +196,7 @@ export const WorkoutToDoForm = ({
     }
 
     if (res.status === "error") {
-      showToast(res.message, "error");
+      showToast(res.message);
     }
 
     setOpenDoneModal(false);
@@ -218,7 +216,7 @@ export const WorkoutToDoForm = ({
             {currWorkout.title}
           </p>
           <ThemeButton />
-          <FormTooltip />
+          <WorkoutToDoTooltip />
         </div>
       </header>
 

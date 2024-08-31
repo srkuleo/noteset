@@ -41,12 +41,7 @@ export const RemoveWorkoutModal = ({
                   );
 
                   setOpen(false);
-
-                  if (res.status === "success") {
-                    showToast(res.message, "success");
-                  } else {
-                    showToast(res.message, "error");
-                  }
+                  showToast(res.message);
                 }}
                 className="border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
               >
@@ -61,12 +56,7 @@ export const RemoveWorkoutModal = ({
                   );
 
                   setOpen(false);
-
-                  if (res.status === "success") {
-                    showToast(res.message, "success");
-                  } else {
-                    showToast(res.message, "error");
-                  }
+                  showToast(res.message);
                 }}
                 className="rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
               >

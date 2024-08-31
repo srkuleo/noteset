@@ -18,7 +18,7 @@ export const SignUpForm = () => {
     mutationFn: signUp,
     onSuccess: (actionRes) => {
       if (actionRes.message && actionRes.status === "success-redirect") {
-        showToast(actionRes.message, actionRes.status, "/login", "Log in");
+        showToast(actionRes.message, "/login", "Log in");
         formRef.current?.reset();
       }
     },
