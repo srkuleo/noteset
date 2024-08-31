@@ -17,11 +17,11 @@ export default async function LandingPage() {
       <div className="flex justify-center gap-4">
         <TooltipDrawer />
 
-        <div className="w-[1px] bg-slate-300 dark:bg-slate-700/80" />
+        <div className="w-[1px] bg-slate-300/60 dark:bg-slate-800" />
 
         <Link
           href="/login"
-          className="flex items-center gap-1 rounded-full border-l border-slate-300 px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-slate-50 dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
+          className="flex items-center gap-1 rounded-full border-l border-slate-300/70 px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-slate-50 dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
         >
           Join {ArrowRightIcon}
         </Link>
