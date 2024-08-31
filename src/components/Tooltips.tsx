@@ -24,18 +24,19 @@ export const HomePageTooltip = () => {
         <Dialog.Overlay className="fixed inset-0 z-10 bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45" />
 
         <Dialog.Content className="absolute right-[82px] top-32 z-10 max-w-[75%] pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up sm:max-w-sm">
-          <div className="flex flex-col gap-4 rounded-modal bg-white/75 p-6 ring-1 ring-slate-400/80 dark:bg-slate-800/85 dark:text-slate-400 dark:ring-slate-700">
+          <div className="flex flex-col gap-4 rounded-modal bg-white/75 p-6 ring-1 ring-slate-400/80 dark:bg-slate-800/85 dark:ring-slate-700">
             <Dialog.Title className="text-lg text-slate-800 dark:text-white sm:text-xl">
               Good to Know
             </Dialog.Title>
 
             <Dialog.Description asChild>
               <div className="flex-1 space-y-2 overflow-scroll overscroll-contain pb-2">
-                <p className="text-sm font-semibold italic">
+                <p className="text-sm font-semibold italic text-slate-700 dark:text-slate-200 sm:text-base">
                   Each status has its own meaning and knowing them will improve
                   the way you use the app.
                 </p>
-                <ul className="space-y-2 text-pretty pl-2 text-sm sm:text-base">
+
+                <ul className="space-y-2 text-pretty pl-2 text-sm dark:text-slate-300 sm:text-base">
                   <li>
                     <span className="font-bold uppercase text-blue-400 dark:text-blue-500">
                       current -
