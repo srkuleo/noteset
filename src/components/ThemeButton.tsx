@@ -29,7 +29,7 @@ export const ThemeButton = () => {
         }}
         className={twMerge(
           "relative rounded-full p-1.5 active:scale-95 active:bg-slate-200 dark:text-slate-400 dark:active:bg-slate-700",
-          open && "z-30 text-white dark:text-white",
+          open && "z-30 scale-125 text-white transition-all dark:text-white",
         )}
       >
         {ThemeIcon}
@@ -47,7 +47,7 @@ export const ThemeButton = () => {
           onOpenAutoFocus={(e) => {
             e.preventDefault();
           }}
-          className="absolute right-[86px] top-16 z-20 pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up"
+          className="fixed right-[86px] top-16 z-20 pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up"
         >
           <VisuallyHidden asChild>
             <Dialog.Title>Choose a colour theme</Dialog.Title>
