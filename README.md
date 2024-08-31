@@ -8,10 +8,10 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Add option to remove sets. Render both reps and weights inside one div with key equal to index and when removing remove both from the exercise object via index._
+- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note, add zod schema to filter out empty strings in reps and weights before submitting. If possible remove conditional render on reps and weights in preview modal._
 
-- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note. Set body above md to width 75%. Refactor dnd and add simple animations with autoanimate._
+- _Refactor dnd and add simple animations with autoanimate to reps and weight on workout to do page, exercises inside edit, creat and post workout page, workouts on home page. Add animation to delete sets buttons and note input._
 
-- _Finish profile and logs page UI - add search and filter option to display workouts with status: done or archived._
+- _Finish logs page UI - add search and filter option to display workouts with status: done or archived._
 
-- _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
+- _Complete profile UI, add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
