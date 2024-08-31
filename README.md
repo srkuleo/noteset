@@ -8,8 +8,10 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note. Add option to remove sets. Set main colour to slate-50 and add shadow on all the navbars, set body above md to width 75%. Final change to the toast notif. See scale on buttons when modal opens. Refactor dnd and add simple animations with autoanimate._
+- _Add option to remove sets. Render both reps and weights inside one div with key equal to index and when removing remove both from the exercise object via index._
+
+- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note. Set body above md to width 75%. Refactor dnd and add simple animations with autoanimate._
 
 - _Finish profile and logs page UI - add search and filter option to display workouts with status: done or archived._
 
-- _Add email verification and password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets"._
+- _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
