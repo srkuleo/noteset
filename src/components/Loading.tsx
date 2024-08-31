@@ -103,7 +103,11 @@ export const LoadingWorkoutToDoSkeleton = () => {
       </main>
 
       <footer className="flex items-center justify-between border-t border-slate-300/80 px-6 pb-6 pt-2 text-end opacity-50 dark:border-slate-800">
-        <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
+        <div className="flex gap-4">
+          <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
+          <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
+        </div>
+
         <div className="h-10 w-24 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
       </footer>
     </div>
