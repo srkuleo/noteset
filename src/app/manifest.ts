@@ -5,6 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     short_name: "Noteset",
     name: "Noteset - personalized workout tracker",
     display: "standalone",
+    orientation: "portrait-primary",
     id: "/home",
     start_url: "/home",
     scope: "/",
