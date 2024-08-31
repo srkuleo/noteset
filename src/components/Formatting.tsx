@@ -24,7 +24,7 @@ export const FormatWorkoutDuration = ({
 
     return (
       <p className="">
-        <span className="text-lg font-bold">{hours}</span> h
+        <span className="text-lg font-bold">{hours}</span> h{" "}
         <span className="text-lg font-bold">{minutes}</span> min
       </p>
     );
