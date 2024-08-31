@@ -1,50 +1,45 @@
 import Link from "next/link";
 import debounce from "lodash.debounce";
 import { toast } from "sonner";
-import { ErrorIcon, SuccessIcon } from "./icons/user/toasts";
 
-type ToastType = "error" | "success" | "success-redirect";
-
-// Accepts 2-4 args
+// Accepts 1-3 args
 // - message to be rendered inside toast
-// - type of toast (error, success, redirect) - different colours and design
-// - path to which redirect button redirects user after clicking
-// -linkText - text to be rendered as a redirect button
+//   Optional - if toast should redirect:
+// - path - user is being redirected to after clicking the button inside toast
+// - linkText - text to be rendered as the redirect button
+
 export const showToast = debounce(
-  (message: string, type: ToastType, path?: string, linkText?: string) =>
-    toast.custom((t) => (
-      <div className="select-none pb-3">
-        <div className="flex items-center justify-between rounded-lg bg-white p-4 shadow-lg ring-[1.5px] ring-slate-400/55 dark:bg-slate-900 dark:shadow-black dark:ring-slate-800">
-          <div className="flex max-w-[75%] items-center gap-1.5">
-            {type === "success" ? (
-              <SuccessIcon />
-            ) : type === "error" ? (
-              <ErrorIcon />
-            ) : null}
+  (message: string, path?: string, linkText?: string) =>
+    toast.custom(
+      (t) => (
+        <div className="select-none pb-8">
+          <div className="flex items-center justify-between rounded-lg bg-white p-4 text-sm shadow-lg ring-[1.5px] ring-slate-400/55 dark:bg-slate-900 dark:shadow-black dark:ring-slate-800">
+            <div className="flex max-w-[75%] items-center gap-1.5">
+              <p className="font-manrope text-slate-600 dark:text-slate-200">
+                {message}
+              </p>
+            </div>
 
-            <p className="font-manrope text-sm text-slate-800 dark:text-slate-200">
-              {message}
-            </p>
+            {path && linkText ? (
+              <Link
+                href={path}
+                onClick={() => toast.dismiss(t)}
+                className="text-center font-semibold text-green-500"
+              >
+                {linkText}
+              </Link>
+            ) : (
+              <button
+                onClick={() => toast.dismiss(t)}
+                className="text-center font-semibold text-green-500"
+              >
+                Close
+              </button>
+            )}
           </div>
-
-          {path && linkText ? (
-            <Link
-              href={path}
-              onClick={() => toast.dismiss(t)}
-              className="text-center font-bold text-green-500"
-            >
-              {linkText}
-            </Link>
-          ) : (
-            <button
-              onClick={() => toast.dismiss(t)}
-              className="text-center font-bold text-green-500"
-            >
-              Close
-            </button>
-          )}
         </div>
-      </div>
-    )),
+      ),
+      { unstyled: true },
+    ),
   250,
 );
