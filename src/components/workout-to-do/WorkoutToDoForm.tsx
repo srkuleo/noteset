@@ -582,10 +582,10 @@ export const WorkoutToDoForm = ({
               }}
               className="flex items-center justify-between"
             >
-              <div className="space-x-4">
+              <div className="flex items-center gap-4">
                 <AddExerciseDrawer
                   updateExercises={updateExercises}
-                  className="rounded-full p-2 text-green-500 active:scale-95 active:bg-slate-200 dark:text-green-600 dark:active:bg-slate-700"
+                  className="rounded-full p-2 text-slate-400 active:scale-95 active:bg-slate-200 dark:text-slate-300 dark:active:bg-slate-700"
                 />
 
                 <button
@@ -597,7 +597,7 @@ export const WorkoutToDoForm = ({
                   }}
                   className="rounded-full p-2 text-red-500 active:bg-slate-200 dark:active:bg-slate-700"
                 >
-                  <TrashBinIcon className="size-6" strokeWidth={1.5} />
+                  <TrashBinIcon className="size-6" strokeWidth={1.8} />
                   <p className="sr-only">Enter Remove mode</p>
                 </button>
               </div>
