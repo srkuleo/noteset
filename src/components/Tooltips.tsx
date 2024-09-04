@@ -2,7 +2,7 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
-import { QuestionMarkIcon } from "./icons/user/question-mark";
+import { InformationIcon } from "./icons/user/information";
 
 export const HomePageTooltip = () => {
   const [open, setOpen] = useState(false);
@@ -17,7 +17,7 @@ export const HomePageTooltip = () => {
         }}
         className={`ml-auto mr-1.5 rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700 ${open && "z-20 scale-125 text-white transition-all dark:text-white"}`}
       >
-        <QuestionMarkIcon className="size-7" />
+        <InformationIcon className="size-7" />
       </button>
 
       <Dialog.Portal>
@@ -98,7 +98,7 @@ export const AddOrEditWorkoutTooltip = () => {
         }}
         className={`ml-auto mr-1.5 rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700 ${open && "z-20 scale-125 text-white transition-all dark:text-white"}`}
       >
-        <QuestionMarkIcon className="size-7" />
+        <InformationIcon className="size-7" />
       </button>
 
       <Dialog.Portal>
@@ -176,69 +176,89 @@ export const WorkoutToDoTooltip = () => {
         }}
         className={`rounded-full p-1.5 text-white ${open && "z-20 scale-125 text-white transition-all"}`}
       >
-        <QuestionMarkIcon className="size-7" />
+        <InformationIcon className="size-7" />
       </button>
 
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-10 bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45" />
 
-        <Dialog.Content className="absolute right-6 top-[52px] z-10 max-w-[75%] pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up sm:max-w-sm">
-          <div className="flex flex-col gap-4 rounded-modal bg-white/75 p-6 ring-1 ring-slate-400/80 dark:bg-slate-800/85 dark:text-slate-400 dark:ring-slate-700">
+        <Dialog.Content className="absolute right-7 top-[52px] z-10 max-w-[75%] pt-safe-top data-[state=closed]:animate-dropdown-menu-scale-down data-[state=open]:animate-dropdown-menu-scale-up sm:max-w-sm">
+          <div className="flex h-[500px] flex-col gap-4 rounded-modal bg-white/75 p-6 ring-1 ring-slate-400/80 dark:bg-slate-800/85 dark:text-slate-400 dark:ring-slate-700">
             <Dialog.Title className="text-lg text-slate-800 dark:text-white sm:text-xl">
               Good to Know
             </Dialog.Title>
 
             <Dialog.Description asChild>
-              <ul className="list-disc space-y-2 text-pretty pl-4 text-sm sm:text-base">
-                <li>
-                  <span className="font-bold text-slate-800 dark:text-white">
-                    You don&apos;t have to populate all the exercise fields
-                  </span>
-                  , only those that you have done.
-                </li>
+              <div className="flex-1 space-y-2 overflow-scroll overscroll-contain pb-2">
+                <ul className="list-disc space-y-2 text-wrap pl-4 text-sm sm:text-base">
+                  <li>
+                    <span className="font-bold text-slate-800 dark:text-white">
+                      You don&apos;t have to populate all the exercise fields
+                    </span>
+                    , only those that you have done.
+                  </li>
 
-                <li>
-                  <span className="font-bold uppercase text-slate-800 dark:text-white">
-                    Add set
-                  </span>{" "}
-                  button allows you to add additional set for the selected
-                  exercise.
-                </li>
+                  <li>
+                    <span className="font-bold uppercase text-slate-800 dark:text-white">
+                      Add set
+                    </span>{" "}
+                    button allows you to add additional set for the selected
+                    exercise.
+                  </li>
 
-                <li>
-                  <span className="font-bold uppercase text-slate-800 dark:text-white">
-                    Add note
-                  </span>{" "}
-                  button lets you leave a note regarding selected exercise. Use
-                  it to leave useful tips for the next workout - e.g. 5-7 24kg
-                  next workout.
-                </li>
+                  <li>
+                    <span className="font-bold uppercase text-slate-800 dark:text-white">
+                      Add note
+                    </span>{" "}
+                    button lets you leave a note regarding selected exercise.
+                    Use it to leave useful tips for the next workout - e.g. 5-7
+                    24kg next workout.
+                  </li>
 
-                <li>
-                  Workout duration is being{" "}
-                  <span className="font-bold text-slate-800 dark:text-white">
-                    tracked in the background.
-                  </span>{" "}
-                  You will be able to see the exact duration on the post-workout
-                  page.
-                </li>
+                  <li>
+                    Workout duration is being{" "}
+                    <span className="font-bold text-slate-800 dark:text-white">
+                      tracked in the background.
+                    </span>{" "}
+                    You will be able to see the exact duration on the
+                    post-workout page.
+                  </li>
 
-                <li>
-                  Tap{" "}
-                  <span className="font-bold uppercase text-green-500 dark:text-green-600">
-                    plus
-                  </span>{" "}
-                  button to add a new exercise.
-                </li>
+                  <li>
+                    Tap{" "}
+                    <span className="font-bold uppercase text-green-500 dark:text-green-600">
+                      plus
+                    </span>{" "}
+                    button to add a new exercise.
+                  </li>
 
-                <li>
-                  When done with working out, tap{" "}
-                  <span className="font-bold uppercase text-green-500 dark:text-green-600">
-                    Done
-                  </span>{" "}
-                  button to submit the form.
-                </li>
-              </ul>
+                  <li>
+                    Tap{" "}
+                    <span className="font-bold uppercase text-red-500">
+                      trash bin
+                    </span>{" "}
+                    button to enter remove mode. In this mode you can remove any
+                    set from any exercise.
+                    <br />
+                    <span className="text-base font-bold text-green-500 dark:text-green-600">
+                      Save
+                    </span>{" "}
+                    button - applies all the changes. <br />
+                    <span className="text-base text-slate-500 dark:text-slate-300">
+                      Close
+                    </span>{" "}
+                    button - exit remove mode without making any changes.
+                  </li>
+
+                  <li>
+                    When done with working out, tap{" "}
+                    <span className="font-bold uppercase text-green-500 dark:text-green-600">
+                      Done
+                    </span>{" "}
+                    button to submit the form.
+                  </li>
+                </ul>
+              </div>
             </Dialog.Description>
 
             <button
@@ -271,7 +291,7 @@ export const PostWorkoutTooltip = () => {
         }}
         className={`ml-auto mr-1.5 rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700 ${open && "z-20 scale-125 text-white transition-all dark:text-white"}`}
       >
-        <QuestionMarkIcon className="size-7" />
+        <InformationIcon className="size-7" />
       </button>
 
       <Dialog.Portal>
