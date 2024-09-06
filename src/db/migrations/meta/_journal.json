@@ -43,6 +43,13 @@
       "when": 1724100827174,
       "tag": "0005_mysterious_master_mold",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1725542250772,
+      "tag": "0006_breezy_the_watchers",
+      "breakpoints": true
     }
   ]
 }
