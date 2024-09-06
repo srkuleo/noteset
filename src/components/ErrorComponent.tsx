@@ -28,28 +28,21 @@ export const ErrorComponent = ({
   }
 
   if (errorArr.length > 1) {
-    const prevError = "";
+    const uniqueErrors = [...new Set(errorArr)];
 
-    errorArr.map((currError, i) => {
-      if (currError !== prevError) {
-        prevError === currError;
-
-        return (
-          <div
-            key={i}
-            className={twMerge("flex items-center gap-1.5 pt-1", className)}
-          >
+    return (
+      <div className={twMerge("space-y-2", className)}>
+        {uniqueErrors.map((error, i) => (
+          <div key={i} className="flex items-center gap-1.5 pt-1">
             <ErrorTriangleIcon size={5} />
 
             <p className="text-sm font-semibold leading-tight text-red-500 dark:text-white">
-              {currError}
+              {error}
             </p>
           </div>
-        );
-      }
-
-      return <></>;
-    });
+        ))}
+      </div>
+    );
   }
 
   return (
