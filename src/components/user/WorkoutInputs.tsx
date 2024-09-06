@@ -11,7 +11,7 @@ export const TitleInput = ({
   handleTitleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-2 px-4 group-disabled:opacity-50">
+    <div className="space-y-2 px-4 group-disabled:opacity-50">
       <label
         htmlFor="title"
         className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
@@ -27,6 +27,7 @@ export const TitleInput = ({
         onChange={(e) => handleTitleInput(e)}
         className={twMerge(
           "input-field",
+          "w-full",
           titleError && "ring-red-500 dark:ring-red-500",
         )}
       />
@@ -46,7 +47,7 @@ export const DescriptionInput = ({
   handleDescriptionInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-2 px-4 group-disabled:opacity-50">
+    <div className="space-y-2 px-4 group-disabled:opacity-50">
       <label
         htmlFor="description"
         className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
@@ -62,7 +63,7 @@ export const DescriptionInput = ({
         type="text"
         placeholder="e.g. Workout for the upper body"
         onChange={(e) => handleDescriptionInput(e)}
-        className="input-field"
+        className={twMerge("input-field", "w-full")}
       />
     </div>
   );
