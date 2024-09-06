@@ -7,38 +7,37 @@ export type ExerciseActionResponse = {
   errors?: {
     name?: string[] | undefined;
     sets?: string[] | undefined;
-    reps?: string[] | undefined;
-    weights?: string[] | undefined;
-    comment?: string[] | undefined;
+    note?: string[] | undefined;
   };
   message?: string;
 };
+
+const SetSchema = z.object({
+  id: z.string(),
+  reps: z
+    .string()
+    .trim()
+    .regex(/^\d+(?:[-+]\d+)?$/, {
+      message: "Reps must be number or range.",
+    }),
+  weight: z
+    .string()
+    .trim()
+    .regex(/^\d+(,\d+|\.\d+)?$/, {
+      message: "Weight must be whole or decimal number.",
+    }),
+});
+export type SetType = z.infer<typeof SetSchema>;
 
 export const ExerciseSchema = z.object({
   id: z.string(),
   name: z
     .string()
     .trim()
-    .min(2, { message: "Exercise name must be at least 2 characters long." })
+    .min(2, { message: "Must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
-  sets: z.number().min(1, { message: "Please choose the number of sets." }),
-  reps: z.array(
-    z
-      .string()
-      .trim()
-      .regex(/^(?:\d+|\d+-\d+|\d+\+\d+)$/, {
-        message: "Reps must be number or range.",
-      }),
-  ),
-  weights: z.array(
-    z
-      .string()
-      .trim()
-      .regex(/^\d+(,\d+|.\d+)?$/, {
-        message: "Weight must be whole or decimal number.",
-      }),
-  ),
-  note: z.string().trim().max(80, { message: "Note is too long" }).optional(),
+  sets: z.array(SetSchema).min(1, { message: "Please add at least one set." }),
+  note: z.string().trim().max(80, { message: "Note is too long" }).nullable(),
 });
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
