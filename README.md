@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Extract logic for both timer and handling workout in 2 separate custom hooks. Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note, add zod schema to filter out empty strings in reps and weights before submitting. If possible remove conditional render on reps and weights in preview modal._
+- _Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note, add zod schema to filter out empty strings in reps and weights before submitting. If possible, remove conditional render on weights in preview modal. Make animations that repeat reusable._
 
 - _Refactor dnd and add simple animations with autoanimate to reps and weight on workout to do page, exercises inside edit, creat and post workout page, workouts on home page. Add animation to delete sets buttons and note input._
 
