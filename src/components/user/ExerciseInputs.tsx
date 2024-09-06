@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { AnimatePresence, motion } from "framer-motion";
 import { ErrorComponent } from "../ErrorComponent";
+
+import type { SetType } from "@/util/types";
 
 export const NameInput = ({
   name,
@@ -14,7 +17,7 @@ export const NameInput = ({
   form?: "edit" | "add";
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="space-y-2 group-disabled:pointer-events-none group-disabled:opacity-50">
       <label
         htmlFor="name"
         className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
@@ -31,7 +34,7 @@ export const NameInput = ({
         onChange={(e) => handleNameInput(e)}
         className={twMerge(
           "input-field",
-          "py-2",
+          "w-full py-2",
           nameError && "ring-red-500 dark:ring-red-500",
         )}
       />
@@ -44,11 +47,11 @@ export const NoteInput = ({
   note,
   handleNoteInput,
 }: {
-  note: string | undefined;
+  note: string;
   handleNoteInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="space-y-2 group-disabled:pointer-events-none group-disabled:opacity-50">
       <label
         htmlFor="note"
         className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
@@ -58,196 +61,222 @@ export const NoteInput = ({
           (optional)
         </span>
       </label>
+
       <input
         id="note"
         type="text"
-        value={note ? note : ""}
+        value={note}
         placeholder="Leave a note..."
         onChange={(e) => handleNoteInput(e)}
-        className={twMerge("input-field", "py-2")}
+        className={twMerge("input-field", "w-full py-2")}
       />
     </div>
   );
 };
 
-export const SetsInput = ({
+export const SelectSetsInput = ({
   sets,
-  setsError,
-  handleSetsInput,
+  createSets,
 }: {
   sets: number;
   setsError: string[] | undefined;
-  handleSetsInput: (input: string | number) => void;
+  createSets: (input: string | number) => void;
 }) => {
-  const chooseSets = [1, 2, 3, 4] as const;
+  const chooseSetCount = [1, 2, 3] as const;
   const [needMoreSets, setNeedMoreSets] = useState(false);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="space-y-1 group-disabled:pointer-events-none group-disabled:opacity-50">
       <label
         htmlFor={needMoreSets ? "setsInput" : "Set 1"}
         className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
       >
-        Sets
+        Select number of sets
       </label>
-      {needMoreSets ? (
-        <div className="space-x-4 pb-[6px]">
-          <input
-            autoFocus
-            id="setsInput"
-            name="sets"
-            value={sets === 0 ? "" : sets}
-            type="number"
-            inputMode="numeric"
-            placeholder="More..."
-            className={twMerge("input-field", "max-w-[40%] py-2")}
-            onChange={(e) => handleSetsInput(e.target.value)}
-          />
-          <button
-            type="button"
-            className="text-sm font-semibold"
-            onClick={() => setNeedMoreSets(false)}
+
+      <AnimatePresence mode="wait" initial={false}>
+        {needMoreSets ? (
+          <motion.div
+            key="more-sets"
+            initial={{ opacity: 0, x: 16 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 0.3,
+                ease: [0.36, 0.66, 0.04, 1],
+              },
+            }}
+            exit={{
+              opacity: 0,
+              x: -16,
+              transition: {
+                duration: 0.15,
+                ease: [0.36, 0.66, 0.04, 1],
+              },
+            }}
           >
-            Back
-          </button>
-        </div>
-      ) : (
-        <div className="flex items-center gap-2 overflow-x-scroll p-1 no-scrollbar">
-          {chooseSets.map((cS) => (
-            <button
-              key={cS}
-              id={`Set ${cS}`}
-              type="button"
-              onClick={() => handleSetsInput(cS)}
-              className={twMerge(
-                "rounded-xl bg-white px-6 py-2 font-manrope text-sm font-semibold ring-1 ring-slate-400/40 dark:bg-slate-900/80 dark:ring-slate-700",
-                sets === cS &&
-                  "bg-green-500 text-white dark:bg-green-600 dark:ring-slate-50",
-              )}
-            >
-              {cS}
-            </button>
-          ))}
-          <button
-            type="button"
-            onClick={() => setNeedMoreSets(true)}
-            className="min-w-fit pl-2 text-sm font-semibold"
+            <div className="flex max-w-[400px] items-center gap-2 px-1 py-0.5">
+              <input
+                autoFocus
+                id="setsInput"
+                name="sets"
+                value={sets === 0 ? "" : sets}
+                type="number"
+                inputMode="numeric"
+                placeholder="More..."
+                onChange={(e) => createSets(e.target.value)}
+                className="w-3/5 rounded-none border-b-2 border-violet-500 bg-transparent py-0.5 font-semibold placeholder-slate-400/80 caret-violet-500 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:outline-none dark:text-white dark:placeholder-slate-500 dark:focus:placeholder-slate-700"
+              />
+
+              <button
+                type="button"
+                onClick={async () => {
+                  await new Promise((resolve) => setTimeout(resolve, 100));
+
+                  setNeedMoreSets(false);
+                }}
+                className="w-1/5 rounded-lg py-2 font-manrope font-bold text-blue-400 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:bg-slate-800"
+              >
+                Back
+              </button>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="choose-sets"
+            initial={{ opacity: 0, x: 16 }}
+            animate={{
+              opacity: 1,
+              x: 0,
+              transition: {
+                duration: 0.3,
+                ease: [0.36, 0.66, 0.04, 1],
+              },
+            }}
+            exit={{
+              opacity: 0,
+              x: -16,
+              transition: {
+                duration: 0.15,
+                ease: [0.36, 0.66, 0.04, 1],
+              },
+            }}
           >
-            More sets
-          </button>
-        </div>
+            <div className="flex max-w-[400px] items-center gap-2 p-1">
+              {chooseSetCount.map((setCount) => (
+                <button
+                  key={setCount}
+                  id={`Set ${setCount}`}
+                  type="button"
+                  onClick={() => createSets(setCount)}
+                  className={twMerge(
+                    "w-1/6 rounded-xl bg-white py-2 font-manrope text-sm font-semibold ring-1 ring-slate-400/40 dark:bg-slate-900/80 dark:ring-slate-700",
+                    sets === setCount &&
+                      "bg-green-500 text-white dark:bg-green-600 dark:ring-slate-50",
+                  )}
+                >
+                  {setCount}
+                </button>
+              ))}
+
+              <button
+                type="button"
+                onClick={async () => {
+                  await new Promise((resolve) => setTimeout(resolve, 100));
+
+                  setNeedMoreSets(true);
+                }}
+                className="w-1/5 rounded-lg py-1.5 font-manrope font-bold text-blue-400 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:bg-slate-800"
+              >
+                More
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export const RepsAndWeightInputs = ({
+  sets,
+  setsErrors,
+  isPending,
+  modifySets,
+}: {
+  sets: SetType[];
+  setsErrors: string[] | undefined;
+  isPending: boolean;
+  modifySets: (e: React.ChangeEvent<HTMLInputElement>, setId: string) => void;
+}) => {
+  return (
+    <AnimatePresence>
+      {sets.length !== 0 && (
+        <motion.div
+          initial={{ height: 0 }}
+          animate={{
+            height: "auto",
+            transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
+          }}
+        >
+          <div
+            className={`${isPending && "pointer-events-non opacity-50"} flex flex-col gap-2 overflow-hidden`}
+          >
+            <div className="flex gap-4 overflow-x-scroll p-1 no-scrollbar">
+              {sets.map((set, setIndex) => (
+                <div key={set.id} className="flex w-1/3 flex-col gap-2">
+                  <label
+                    htmlFor={`rep ${setIndex + 1}`}
+                    className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+                  >
+                    Set {setIndex + 1}
+                  </label>
+
+                  <input
+                    required
+                    id={`rep ${setIndex + 1}`}
+                    name="reps"
+                    value={set.reps}
+                    type="text"
+                    placeholder={`Rep ${setIndex + 1}`}
+                    onChange={(e) => modifySets(e, set.id)}
+                    className={twMerge(
+                      "input-field",
+                      "px-0 py-1.5 text-center placeholder:text-xs",
+                      setsErrors && !/^\d+(?:[-+]\d+)?$/.test(set.reps)
+                        ? "ring-red-500 dark:ring-red-500"
+                        : "",
+                    )}
+                  />
+
+                  <input
+                    required
+                    id={`weight ${setIndex + 1}`}
+                    name="weight"
+                    value={set.weight}
+                    type="text"
+                    inputMode="decimal"
+                    placeholder={`Weight ${setIndex + 1}`}
+                    onChange={(e) => modifySets(e, set.id)}
+                    className={twMerge(
+                      "input-field",
+                      "px-0 py-1.5 text-center placeholder:text-xs",
+                      setsErrors && !/^\d+(,\d+|\.\d+)?$/.test(set.weight)
+                        ? "ring-red-500 dark:ring-red-500"
+                        : "",
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <p className="pl-1 text-xs italic text-slate-400 dark:text-slate-500">
+              (reps: 8-10, 6, 5+2 weight: 27,5, 10, 20.5)
+            </p>
+          </div>
+        </motion.div>
       )}
-      <ErrorComponent errorArr={setsError} className="gap-3" />
-    </div>
-  );
-};
-
-export const RepsInputs = ({
-  form,
-  reps,
-  repsError,
-  isPending,
-  handleRepsInput,
-}: {
-  form?: "edit" | "add";
-  reps: string[];
-  repsError: string[] | undefined;
-  isPending: boolean;
-  handleRepsInput: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void;
-}) => {
-  return (
-    <div
-      aria-disabled={isPending}
-      className={`${isPending && "pointer-events-none opacity-50"} flex flex-col gap-1`}
-    >
-      <label
-        htmlFor="rep 1"
-        className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
-      >
-        Reps
-        <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
-          (e.g. 6-8, 10)
-        </span>
-      </label>
-      <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
-        {reps.map((rep, index) => (
-          <input
-            required
-            key={`Rep: ${index + 1}`}
-            id={`rep ${index + 1}`}
-            value={rep}
-            type="text"
-            placeholder={`Rep ${index + 1}`}
-            autoFocus={form === "add" && index === 0}
-            onChange={(e) => handleRepsInput(e, index)}
-            className={twMerge(
-              "input-field",
-              "max-w-[40%] px-0 py-1.5 text-center",
-              repsError && !/^(?:\d+|\d+-\d+|\d+\+\d+)$/.test(rep)
-                ? "ring-red-500 dark:ring-red-500"
-                : "",
-            )}
-          />
-        ))}
-      </div>
-      <ErrorComponent errorArr={repsError} className="gap-3" />
-    </div>
-  );
-};
-
-export const WeightInputs = ({
-  weights,
-  weightsError,
-  isPending,
-  handleWeightInput,
-}: {
-  weights: string[];
-  weightsError: string[] | undefined;
-  isPending: boolean;
-  handleWeightInput: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => void;
-}) => {
-  return (
-    <div
-      aria-disabled={isPending}
-      className={`${isPending && "pointer-events-none opacity-50"} flex flex-col gap-1`}
-    >
-      <label
-        htmlFor="weight 1"
-        className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
-      >
-        Weights
-        <span className="text-xs lowercase italic text-slate-400 dark:text-slate-500">
-          (e.g. 25, 50,5, 25.5)
-        </span>
-      </label>
-      <div className="flex snap-x snap-proximity gap-2 overflow-x-scroll p-1 no-scrollbar">
-        {weights.map((weight, index) => (
-          <input
-            required
-            key={`Weight: ${index + 1}`}
-            id={`weight ${index + 1}`}
-            value={weight}
-            type="text"
-            inputMode="decimal"
-            placeholder={`Weight ${index + 1}`}
-            onChange={(e) => handleWeightInput(e, index)}
-            className={twMerge(
-              "input-field",
-              "max-w-[40%] px-0 py-1.5 text-center",
-              weightsError && !/^\d+(,\d+|.\d+)?$/.test(weight)
-                ? "ring-red-500 dark:ring-red-500"
-                : "",
-            )}
-          />
-        ))}
-      </div>
-      <ErrorComponent errorArr={weightsError} className="gap-3" />
-    </div>
+    </AnimatePresence>
   );
 };
