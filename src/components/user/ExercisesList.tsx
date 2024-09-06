@@ -50,9 +50,8 @@ export const ExercisesList = ({
   const [currentExercise, setCurrentExercise] = useState<ExerciseType>({
     id: "",
     name: "",
-    sets: 0,
-    reps: [],
-    weights: [],
+    sets: [],
+    note: "",
   });
 
   const sensors = useSensors(
@@ -229,18 +228,19 @@ const ExerciseCard = ({
         </button>
       </div>
 
-      <div className="flex justify-center gap-4 divide-x divide-slate-200 text-sm dark:divide-slate-700/70">
-        <div className="flex flex-col gap-3 dark:text-slate-200">
-          {exercise.reps.map((rep, i) => (
-            <p key={`Rep: ${i + 1}`}>{rep}</p>
-          ))}
-        </div>
+      <div className="flex flex-col items-center gap-2">
+        {exercise.sets.map((set) => (
+          <div
+            key={set.id}
+            className="flex w-full justify-center gap-3 text-sm"
+          >
+            <p className="w-1/5 text-right">{set.reps}</p>
 
-        <div className="flex flex-col gap-3 pl-4 dark:text-slate-200">
-          {exercise.weights.map((weight, i) => (
-            <p key={`Weight: ${i + 1}`}>{weight} kg</p>
-          ))}
-        </div>
+            <div className="w-[1px] bg-slate-200 dark:bg-slate-700/70" />
+
+            <p className="w-1/5 text-left">{set.weight} kg</p>
+          </div>
+        ))}
       </div>
 
       {exercise.note && (
