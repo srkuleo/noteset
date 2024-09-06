@@ -60,7 +60,7 @@ export const PreviewWorkoutButtonDrawer = ({
             <div className="flex flex-col px-6 py-8">
               <div className="grid grid-cols-preview overflow-x-scroll overscroll-x-contain pb-8 text-sm md:justify-center">
                 {workout.exercises.map((exercise, index) => (
-                  <Fragment key={index}>
+                  <Fragment key={exercise.id}>
                     <p
                       className={`flex items-center pr-2 font-bold ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
@@ -70,15 +70,13 @@ export const PreviewWorkoutButtonDrawer = ({
                     <div
                       className={`flex items-center border-x-2 border-slate-100 px-2 dark:border-slate-800 ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
-                      {exercise.reps.map((rep, i) => (
+                      {exercise.sets.map((set) => (
                         <div
-                          key={i}
+                          key={set.id}
                           className="flex min-w-28 justify-center gap-1 border-r-2 border-slate-100 last:border-r-0 dark:border-slate-800"
                         >
-                          <p className="font-bold">{rep}</p>
-                          {exercise.weights[i] && (
-                            <p>({exercise.weights[i]}kg)</p>
-                          )}
+                          <p className="font-bold">{set.reps}</p>
+                          {set.weight && <p>({set.weight}kg)</p>}
                         </div>
                       ))}
                     </div>
