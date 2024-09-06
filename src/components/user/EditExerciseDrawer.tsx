@@ -5,10 +5,10 @@ import { useExerciseForm } from "@/util/hooks";
 import {
   NameInput,
   NoteInput,
-  RepsInputs,
-  SetsInput,
-  WeightInputs,
+  SelectSetsInput,
+  RepsAndWeightInputs,
 } from "./ExerciseInputs";
+import { ErrorComponent } from "../ErrorComponent";
 import { ModalSubmitButton } from "../SubmitButtons";
 
 import { ExerciseSchema, type ExerciseType } from "@/util/types";
@@ -50,7 +50,7 @@ export const EditExerciseDrawer = ({
             />
             <Drawer.Handle
               preventCycle
-              className="bg-slate-400/60 dark:bg-slate-600"
+              className="mt-2 bg-slate-300 dark:bg-slate-600"
             />
           </div>
         </Drawer.Content>
@@ -68,18 +68,23 @@ const EditExerciseForm = ({
   editExercises: (editedExercise: ExerciseType) => void;
   closeDrawer: () => void;
 }) => {
-  const { mutate: editExercise, isPending } = useMutation({
+  const { mutate: modifyExercise, isPending } = useMutation({
     mutationFn: async (exercise: ExerciseType) => {
       await new Promise((resolve) => setTimeout(resolve, 300));
+
+      console.log(exercise);
 
       const isValidExercise = ExerciseSchema.safeParse(exercise);
 
       if (!isValidExercise.success) {
+        console.log(isValidExercise.error.flatten().fieldErrors);
         setExerciseFormErrors({
           errors: isValidExercise.error.flatten().fieldErrors,
         });
         throw isValidExercise.error;
       }
+
+      console.log("Valid data!");
 
       return isValidExercise.data;
     },
@@ -94,9 +99,8 @@ const EditExerciseForm = ({
     setExerciseFormErrors,
     handleNameInput,
     handleNoteInput,
-    handleSetsInput,
-    handleRepsInput,
-    handleWeightInput,
+    createSets,
+    modifySets,
   } = useExerciseForm({ ...exercise });
 
   return (
@@ -104,46 +108,40 @@ const EditExerciseForm = ({
       onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        editExercise({ ...tempExercise });
+        modifyExercise(tempExercise);
       }}
-      className="space-y-6 px-8 py-4"
+      className="space-y-6 px-8 py-2"
     >
-      <fieldset disabled={isPending} className="group">
-        <div className="space-y-3 group-disabled:opacity-50">
-          <NameInput
-            name={tempExercise.name}
-            nameError={exerciseFormErrors.errors?.name}
-            handleNameInput={handleNameInput}
-          />
+      <fieldset disabled={isPending} className="group flex flex-col space-y-3">
+        <NameInput
+          name={tempExercise.name}
+          nameError={exerciseFormErrors.errors?.name}
+          handleNameInput={handleNameInput}
+        />
 
-          <NoteInput
-            note={tempExercise.note}
-            handleNoteInput={handleNoteInput}
-          />
+        <NoteInput
+          note={tempExercise.note ?? ""}
+          handleNoteInput={handleNoteInput}
+        />
 
-          <SetsInput
-            sets={tempExercise.sets}
-            setsError={exerciseFormErrors.errors?.sets}
-            handleSetsInput={handleSetsInput}
-          />
-        </div>
+        <SelectSetsInput
+          sets={tempExercise.sets.length}
+          createSets={createSets}
+          setsError={exerciseFormErrors.errors?.sets}
+        />
       </fieldset>
 
-      <div className="space-y-3">
-        <RepsInputs
-          reps={tempExercise.reps}
-          repsError={exerciseFormErrors.errors?.reps}
-          isPending={isPending}
-          handleRepsInput={handleRepsInput}
-        />
+      <RepsAndWeightInputs
+        sets={tempExercise.sets}
+        setsErrors={exerciseFormErrors.errors?.sets}
+        isPending={isPending}
+        modifySets={modifySets}
+      />
 
-        <WeightInputs
-          weights={tempExercise.weights}
-          weightsError={exerciseFormErrors.errors?.weights}
-          isPending={isPending}
-          handleWeightInput={handleWeightInput}
-        />
-      </div>
+      <ErrorComponent
+        errorArr={exerciseFormErrors.errors?.sets}
+        className={`${isPending && "opacity-50"} pl-1`}
+      />
 
       <div className="flex gap-2 pt-2">
         <button
@@ -153,7 +151,7 @@ const EditExerciseForm = ({
             await new Promise((resolve) => setTimeout(resolve, 100));
             closeDrawer();
           }}
-          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-200 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 active:dark:bg-slate-300"
+          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-300/80 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 dark:active:bg-slate-300"
         >
           Cancel
         </button>
