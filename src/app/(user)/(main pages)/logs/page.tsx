@@ -4,7 +4,7 @@ import {
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
 import { LoadingWorkoutsSkeleton } from "@/components/Loading";
-import { LogsPageContent } from "@/components/user/LogsPageContent";
+import { LogsPageDataFetcher } from "@/components/user/LogsPageDataFetcher";
 
 import type { Metadata } from "next";
 
@@ -21,11 +21,9 @@ export default async function LogsPage() {
 
       {/* Add search bar and filter button */}
 
-      <main className="space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-6 py-4">
-        <Suspense fallback={<LoadingWorkoutsSkeleton />}>
-          <LogsPageContent />
-        </Suspense>
-      </main>
+      <Suspense fallback={<LoadingWorkoutsSkeleton />}>
+        <LogsPageDataFetcher />
+      </Suspense>
     </>
   );
 }

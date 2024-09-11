@@ -14,12 +14,16 @@ export default async function LandingPageLayout({
   }
 
   return (
-    <div className="flex h-full flex-col pt-safe-top">
-      <LandingPageBar />
-      <UiMessage />
+    <>
+      <div className="fixed inset-x-0 top-0 bg-white pt-safe-top dark:bg-slate-900">
+        <LandingPageBar />
+        <UiMessage />
+      </div>
 
-      <main className="px-8">{children}</main>
-    </div>
+      <main className="mt-safe-top flex px-8 pt-[81px] md:pt-[125px]">
+        {children}
+      </main>
+    </>
   );
 }
 

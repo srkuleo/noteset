@@ -4,12 +4,12 @@ import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
+import { HomePageTooltip } from "@/components/Tooltips";
 import { AddIcon } from "@/components/icons/user/modify";
 import { LoadingWorkoutsSkeleton } from "@/components/Loading";
-import { HomePageContent } from "@/components/user/HomePageContent";
+import { HomePageDataFetcher } from "@/components/user/HomePageDataFetcher";
 
 import type { Metadata } from "next";
-import { HomePageTooltip } from "@/components/Tooltips";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -23,9 +23,10 @@ export default async function HomePage() {
 
         <div className="flex gap-1">
           <HomePageTooltip />
+
           <Link
             href="/create"
-            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-600"
+            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-300 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800/60 dark:ring-slate-700/90 dark:active:bg-slate-600"
           >
             <AddIcon size={24} strokeWidth={2} />
             <p className="sr-only">Add a new workout</p>
@@ -33,11 +34,9 @@ export default async function HomePage() {
         </div>
       </UserPagesSubHeadingWrapper>
 
-      <main className="space-y-4 overflow-y-auto overscroll-contain scroll-smooth px-6 py-4">
-        <Suspense fallback={<LoadingWorkoutsSkeleton />}>
-          <HomePageContent />
-        </Suspense>
-      </main>
+      <Suspense fallback={<LoadingWorkoutsSkeleton />}>
+        <HomePageDataFetcher />
+      </Suspense>
     </>
   );
 }

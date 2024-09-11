@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { TooltipDrawer } from "@/components/landing/TooltipDrawer";
+import { LandingPageTooltip } from "@/components/Tooltips";
 import { ArrowRightIcon } from "@/components/icons/arrows";
 
 export default async function LandingPage() {
   return (
-    <div className="flex h-full flex-col items-center justify-center pb-28 md:pb-36">
+    <div className="flex grow flex-col items-center justify-center pb-28 md:pb-36">
       <h1 className="bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pb-6 text-7xl font-extrabold text-transparent dark:to-violet-600">
         Note<span className="font-bold">Set</span>
       </h1>
@@ -15,7 +15,7 @@ export default async function LandingPage() {
       </h2>
 
       <div className="flex justify-center gap-4">
-        <TooltipDrawer />
+        <LandingPageTooltip />
 
         <div className="w-[1px] bg-slate-300/60 dark:bg-slate-800" />
 

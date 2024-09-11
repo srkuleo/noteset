@@ -1,15 +1,15 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
+import { PostWorkoutTooltip } from "@/components/Tooltips";
 import { HomeIcon } from "@/components/icons/user/navbar";
-import { PostWorkoutPageContent } from "@/components/post-workout/PostWorkoutPageContent";
+import { LoadingPostWorkoutPageSkeleton } from "@/components/Loading";
+import { PostWorkoutPageDataFetcher } from "@/components/post-workout/PostWorkoutPageDataFetcher";
 
 import type { Metadata } from "next";
-import { Suspense } from "react";
-import { LoadingPostWorkoutPageSkeleton } from "@/components/Loading";
-import { PostWorkoutTooltip } from "@/components/Tooltips";
 
 export const metadata: Metadata = {
   title: "Post workout",
@@ -27,9 +27,10 @@ export default async function PostWorkoutPage({
 
         <div className="flex gap-1">
           <PostWorkoutTooltip />
+
           <Link
             href="/home"
-            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-600"
+            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800/60 dark:ring-slate-700/90 dark:active:bg-slate-600"
           >
             <HomeIcon className="size-6" strokeWidth={1.8} />
             <p className="sr-only">Go to Home page</p>
@@ -38,7 +39,7 @@ export default async function PostWorkoutPage({
       </UserPagesSubHeadingWrapper>
 
       <Suspense fallback={<LoadingPostWorkoutPageSkeleton />}>
-        <PostWorkoutPageContent title={searchParams.workoutTitle} />
+        <PostWorkoutPageDataFetcher title={searchParams.workoutTitle} />
       </Suspense>
     </>
   );

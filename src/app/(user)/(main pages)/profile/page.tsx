@@ -28,8 +28,7 @@ export default async function ProfilePage() {
         <ProfileDropDownMenu preferences={user.preferences} />
       </UserPagesSubHeadingWrapper>
 
-      {/* Potentially needs overflow-y-auto later on if more things are being rendered */}
-      <main className="space-y-4">
+      <main className="mt-safe-top space-y-4 pb-[91px] pt-36">
         {user.isVerified ? (
           <p className="bg-green-500 py-2 text-center text-lg font-semibold text-white dark:bg-green-600">
             Account verified

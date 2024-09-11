@@ -14,9 +14,9 @@ export default async function UserPagesLayout({
   }
 
   return (
-    <div className="flex h-full flex-col pt-safe-top">
+    <>
       <UserPagesHeader />
       {children}
-    </div>
+    </>
   );
 }
