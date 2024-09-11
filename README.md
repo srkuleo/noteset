@@ -8,9 +8,9 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Validate input inside handleNoteInput (max 80 char, show indicator), render errors for reps, weights and note, add zod schema to filter out empty strings in reps and weights before submitting. If possible, remove conditional render on weights in preview modal. Make animations that repeat reusable._
+- _Mark exercises as done and track how many of them are completed._
 
-- _Refactor dnd and add simple animations with autoanimate to reps and weight on workout to do page, exercises inside edit, creat and post workout page, workouts on home page. Add animation to delete sets buttons and note input._
+- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page._
 
 - _Finish logs page UI - add search and filter option to display workouts with status: done or archived._
 
