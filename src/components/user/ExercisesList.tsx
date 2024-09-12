@@ -110,7 +110,7 @@ export const ExercisesList = ({
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <div className="space-y-4 px-2 pb-2 pt-6 group-disabled:opacity-50">
+          <div className="relative space-y-4 px-2 pb-2 pt-6 group-disabled:opacity-50">
             <SortableContext
               items={workout.exercises}
               strategy={verticalListSortingStrategy}
@@ -194,7 +194,7 @@ const ExerciseCard = ({
           {...attributes}
           {...listeners}
           type="button"
-          className="cursor-move touch-none rounded-lg px-2 py-1 active:bg-slate-300 active:dark:bg-slate-600"
+          className="cursor-move touch-none rounded-lg px-2 py-1 active:bg-slate-200 active:dark:bg-slate-600"
         >
           {DragExerciseIcon}
         </button>
