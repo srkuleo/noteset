@@ -9,7 +9,12 @@ export const BackButtonModal = ({ className }: { className: string }) => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {

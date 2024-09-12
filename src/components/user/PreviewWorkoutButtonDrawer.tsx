@@ -18,7 +18,12 @@ export const PreviewWorkoutButtonDrawer = ({
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {
@@ -26,7 +31,7 @@ export const PreviewWorkoutButtonDrawer = ({
           setOpen(true);
         }}
         className={twMerge(
-          "rounded-lg shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700",
+          "rounded-lg shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-700 dark:active:bg-slate-800",
           className,
         )}
       >

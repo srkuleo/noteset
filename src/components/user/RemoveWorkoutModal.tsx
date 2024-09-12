@@ -13,7 +13,12 @@ export const RemoveWorkoutModal = ({
   workoutToRemove: { title: string; id: number };
 }) => {
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 

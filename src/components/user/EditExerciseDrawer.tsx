@@ -30,6 +30,7 @@ export const EditExerciseDrawer = ({
       onOpenChange={setIsOpen}
       direction="top"
       noBodyStyles
+      disablePreventScroll
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/80 backdrop-blur-xs dark:bg-slate-950/85" />
@@ -110,7 +111,7 @@ const EditExerciseForm = ({
         e.stopPropagation();
         modifyExercise(tempExercise);
       }}
-      className="space-y-6 px-8 py-2"
+      className="px-8 py-2"
     >
       <fieldset disabled={isPending} className="group flex flex-col space-y-3">
         <NameInput
@@ -143,7 +144,7 @@ const EditExerciseForm = ({
         className={`${isPending && "opacity-50"} pl-1`}
       />
 
-      <div className="flex gap-2 pt-2">
+      <div className="flex gap-2 pt-6">
         <button
           type="button"
           disabled={isPending}
