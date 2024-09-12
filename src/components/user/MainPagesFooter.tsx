@@ -30,7 +30,7 @@ export const MainPagesFooter = () => {
   const path = usePathname();
 
   return (
-    <nav className="flex justify-center gap-6 border-t border-slate-300/80 pb-7 text-slate-400 dark:border-slate-800 dark:text-slate-500">
+    <nav className="fixed inset-x-0 bottom-0 flex justify-center gap-6 border-t border-slate-300/80 bg-white pb-7 text-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-500">
       {navBarLinks.map((link) => (
         <Link
           key={link.href}
