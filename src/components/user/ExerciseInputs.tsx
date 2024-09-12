@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { AnimatePresence, motion } from "framer-motion";
+import { slideX } from "@/util/utils";
 import { ErrorComponent } from "../ErrorComponent";
 
 import type { SetType } from "@/util/types";
@@ -28,7 +29,7 @@ export const NameInput = ({
         required
         autoFocus={form === "add"}
         id="name"
-        value={name ? name : ""}
+        value={name}
         type="text"
         placeholder="e.g. Bench press"
         onChange={(e) => handleNameInput(e)}
@@ -98,23 +99,10 @@ export const SelectSetsInput = ({
         {needMoreSets ? (
           <motion.div
             key="more-sets"
-            initial={{ opacity: 0, x: 16 }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              transition: {
-                duration: 0.3,
-                ease: [0.36, 0.66, 0.04, 1],
-              },
-            }}
-            exit={{
-              opacity: 0,
-              x: -16,
-              transition: {
-                duration: 0.15,
-                ease: [0.36, 0.66, 0.04, 1],
-              },
-            }}
+            variants={slideX}
+            initial="right-hidden"
+            animate="slide-from-right"
+            exit="slide-to-left"
           >
             <div className="flex max-w-[400px] items-center gap-2 px-1 py-0.5">
               <input
@@ -145,23 +133,10 @@ export const SelectSetsInput = ({
         ) : (
           <motion.div
             key="choose-sets"
-            initial={{ opacity: 0, x: 16 }}
-            animate={{
-              opacity: 1,
-              x: 0,
-              transition: {
-                duration: 0.3,
-                ease: [0.36, 0.66, 0.04, 1],
-              },
-            }}
-            exit={{
-              opacity: 0,
-              x: -16,
-              transition: {
-                duration: 0.15,
-                ease: [0.36, 0.66, 0.04, 1],
-              },
-            }}
+            variants={slideX}
+            initial="right-hidden"
+            animate="slide-from-right"
+            exit="slide-to-left"
           >
             <div className="flex max-w-[400px] items-center gap-2 p-1">
               {chooseSetCount.map((setCount) => (
@@ -221,9 +196,9 @@ export const RepsAndWeightInputs = ({
           }}
         >
           <div
-            className={`${isPending && "pointer-events-non opacity-50"} flex flex-col gap-2 overflow-hidden`}
+            className={`${isPending && "pointer-events-non opacity-50"} flex flex-col overflow-hidden`}
           >
-            <div className="flex gap-4 overflow-x-scroll p-1 no-scrollbar">
+            <div className="flex gap-4 overflow-x-scroll px-1 py-2 no-scrollbar">
               {sets.map((set, setIndex) => (
                 <div key={set.id} className="flex w-1/3 flex-col gap-2">
                   <label
