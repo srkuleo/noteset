@@ -38,6 +38,7 @@ export const AddExerciseDrawer = ({
       onOpenChange={setOpen}
       direction="top"
       noBodyStyles
+      disablePreventScroll
     >
       <button
         type="button"
@@ -127,7 +128,7 @@ const AddExerciseForm = ({
         e.stopPropagation();
         createExercise(tempExercise);
       }}
-      className="space-y-6 px-8 py-2"
+      className="px-8 py-2"
     >
       <fieldset disabled={isPending} className="group flex flex-col space-y-3">
         <NameInput
@@ -161,7 +162,7 @@ const AddExerciseForm = ({
         className={`${isPending && "opacity-50"} pl-1`}
       />
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 pt-6">
         <button
           type="button"
           disabled={isPending}
