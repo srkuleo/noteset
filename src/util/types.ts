@@ -27,7 +27,30 @@ const SetSchema = z.object({
       message: "Weight must be whole or decimal number.",
     }),
 });
+
 export type SetType = z.infer<typeof SetSchema>;
+
+const OptionalSetSchema = z.object({
+  id: z.string(),
+  reps: z.union([
+    z
+      .string()
+      .trim()
+      .regex(/^\d+(?:[-+]\d+)?$/, {
+        message: "Reps must be a number or range.",
+      }),
+    z.literal(""),
+  ]),
+  weight: z.union([
+    z
+      .string()
+      .trim()
+      .regex(/^\d+(,\d+|\.\d+)?$/, {
+        message: "Weight must be a whole or decimal number.",
+      }),
+    z.literal(""),
+  ]),
+});
 
 export const ExerciseSchema = z.object({
   id: z.string(),
@@ -37,10 +60,20 @@ export const ExerciseSchema = z.object({
     .min(2, { message: "Must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
   sets: z.array(SetSchema).min(1, { message: "Please add at least one set." }),
-  note: z.string().trim().max(80, { message: "Note is too long" }).nullable(),
+  note: z.string().trim().nullable(),
 });
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
+
+const ExerciseWithOptionalSetsSchema = ExerciseSchema.pick({
+  id: true,
+  name: true,
+  note: true,
+}).extend({
+  sets: z
+    .array(OptionalSetSchema)
+    .transform((sets) => sets.filter((set) => set.reps)),
+});
 
 //Workout types and schemas
 
@@ -60,11 +93,7 @@ export const WorkoutSchema = z.object({
     .trim()
     .min(2, { message: "Title must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
-  description: z
-    .string()
-    .trim()
-    .max(80, { message: "Too long. Keep it less than 80 characters." })
-    .nullable(),
+  description: z.string().trim().nullable(),
   exercises: z
     .array(ExerciseSchema)
     .min(1, { message: "Please add at least one exercise." }),
@@ -81,6 +110,13 @@ export const CreateWorkoutSchema = WorkoutSchema.pick({
 });
 
 export type CreateWorkoutType = z.infer<typeof CreateWorkoutSchema>;
+
+export const WorkoutToDoSchema = WorkoutSchema.pick({
+  title: true,
+  description: true,
+}).extend({
+  exercises: z.array(ExerciseWithOptionalSetsSchema),
+});
 
 //Auth types and schemas
 
