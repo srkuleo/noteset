@@ -21,7 +21,7 @@ export const TitleInput = ({
       <input
         required
         id="title"
-        value={title ? title : ""}
+        value={title}
         type="text"
         placeholder="e.g. Upper 1"
         onChange={(e) => handleTitleInput(e)}
@@ -59,7 +59,7 @@ export const DescriptionInput = ({
       </label>
       <input
         id="description"
-        value={description ? description : ""}
+        value={description ?? ""}
         type="text"
         placeholder="e.g. Workout for the upper body"
         onChange={(e) => handleDescriptionInput(e)}
