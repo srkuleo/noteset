@@ -13,7 +13,10 @@ export const showToast = debounce(
     toast.custom(
       (t) => (
         <div className="select-none pb-8">
-          <div className="flex items-center justify-between rounded-lg bg-white p-4 text-sm shadow-lg ring-[1.5px] ring-slate-400/55 dark:bg-slate-900 dark:shadow-black dark:ring-slate-800">
+          <div
+            onClick={() => toast.dismiss(t)}
+            className="flex items-center justify-between rounded-lg bg-white p-4 text-sm shadow-lg ring-[1.5px] ring-slate-400/55 dark:bg-slate-900 dark:shadow-black dark:ring-slate-800"
+          >
             <div className="flex max-w-[75%] items-center gap-1.5">
               <p className="font-manrope text-slate-600 dark:text-slate-200">
                 {message}
