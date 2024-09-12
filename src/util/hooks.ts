@@ -261,6 +261,21 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     });
   }
 
+  function resetNoteInput(exerciseId: string) {
+    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+      exercise.id === exerciseId
+        ? {
+            ...exercise,
+            note: "",
+          }
+        : exercise,
+    );
+
+    setCurrWorkout((prev) => {
+      return { ...prev, exercises: modifiedCurrExercises };
+    });
+  }
+
   const handleSetsInput = debounce(
     (
       e: React.ChangeEvent<HTMLInputElement>,
@@ -405,6 +420,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     placeholderExercises,
     removeMode,
     handleNoteInput,
+    resetNoteInput,
     handleSetsInput,
     addNewSet,
     removeSet,
