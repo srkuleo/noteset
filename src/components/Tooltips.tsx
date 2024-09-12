@@ -8,7 +8,12 @@ export const LandingPageTooltip = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen} noBodyStyles>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {
@@ -58,7 +63,12 @@ export const HomePageTooltip = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {
@@ -114,7 +124,12 @@ export const AddOrEditWorkoutTooltip = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {
@@ -175,7 +190,12 @@ export const WorkoutToDoTooltip = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {
@@ -267,7 +287,12 @@ export const PostWorkoutTooltip = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Drawer.Root open={open} onOpenChange={setOpen}>
+    <Drawer.Root
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
       <button
         type="button"
         onClick={async () => {
