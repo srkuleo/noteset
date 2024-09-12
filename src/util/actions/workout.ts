@@ -8,6 +8,7 @@ import { getAuth } from "./auth";
 
 import {
   CreateWorkoutSchema,
+  WorkoutToDoSchema,
   type WorkoutActionResponse,
   type CreateWorkoutType,
 } from "../types";
@@ -202,24 +203,22 @@ export async function submitDoneWorkout(
   doneWorkout: CreateWorkoutType,
   duration: number,
 ): Promise<WorkoutActionResponse> {
-  console.log("Adding to db:");
-  console.log("Duration: ", duration);
-
   const { user } = await getAuth();
 
   if (!user) {
     throw new Error("Unauthorized action. Please login.");
   }
 
-  //Need new schema since fields can be left unpopulated
+  const isValidWorkout = WorkoutToDoSchema.safeParse(doneWorkout);
 
-  // const isValidWorkout = CreateWorkoutSchema.safeParse(doneWorkout);
+  if (!isValidWorkout.success) {
+    return {
+      status: "error",
+      message: "Invalid workout data",
+    };
+  }
 
-  // if (!isValidWorkout.success) {
-  //   return "Invalid workout";
-  // }
-
-  const { title, description, exercises } = doneWorkout;
+  const { title, description, exercises } = isValidWorkout.data;
 
   try {
     await db.insert(workouts).values({
@@ -265,7 +264,7 @@ export async function updateCurrentWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: `${updatedCurrentWorkout.title} was not updated`,
+      message: "Invalid workout data",
     };
   }
 
