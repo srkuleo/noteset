@@ -4,8 +4,10 @@ import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
-import { ProfileDropDownMenu } from "@/components/user/profile/ProfileDropDownMenu";
 import { FormatDate } from "@/components/Formatting";
+import { Theme } from "@/components/user/profile/Theme";
+import { TimeFormat } from "@/components/user/profile/TimeFormat";
+import { Logout } from "@/components/user/profile/LogOut";
 
 import type { Metadata } from "next";
 
@@ -22,13 +24,11 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <UserPagesSubHeadingWrapper>
+      <UserPagesSubHeadingWrapper className="pb-[17px]">
         <UserPagesSubHeadingText label="Profile page" />
-
-        <ProfileDropDownMenu preferences={user.preferences} />
       </UserPagesSubHeadingWrapper>
 
-      <main className="mt-safe-top space-y-4 pb-[91px] pt-36">
+      <main className="mt-safe-top space-y-8 pb-[91px] pt-[142px]">
         {user.isVerified ? (
           <p className="bg-green-500 py-2 text-center text-lg font-semibold text-white dark:bg-green-600">
             Account verified
@@ -44,7 +44,7 @@ export default async function ProfilePage() {
           </div>
         )}
 
-        <div className="space-y-8 px-6 pb-4">
+        <div className="space-y-8 px-6">
           <div>
             <p className="font-manrope text-3xl font-semibold">
               {user.username}
@@ -57,6 +57,13 @@ export default async function ProfilePage() {
             <FormatDate date={user.createdAt} className="font-bold" />
           </div>
         </div>
+
+        <div className="mx-6 space-y-4 border-y border-slate-300 py-8 dark:border-slate-700">
+          <Theme />
+          <TimeFormat selected={user.preferences.timeFormat} />
+        </div>
+
+        <Logout />
       </main>
     </>
   );

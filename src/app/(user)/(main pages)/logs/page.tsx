@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default async function LogsPage() {
   return (
     <>
-      <UserPagesSubHeadingWrapper>
+      <UserPagesSubHeadingWrapper className="pb-[17px]">
         <UserPagesSubHeadingText label="Logs" />
       </UserPagesSubHeadingWrapper>
 
