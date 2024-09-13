@@ -202,7 +202,7 @@ export const WorkoutToDoTooltip = () => {
           await new Promise((resolve) => setTimeout(resolve, 100));
           setOpen(true);
         }}
-        className={`rounded-full p-1.5 text-white ${open && "z-20 scale-125 text-white transition-all"}`}
+        className="rounded-full p-1.5 text-white"
       >
         <InformationIcon className="size-7" />
       </button>
