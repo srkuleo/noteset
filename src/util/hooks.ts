@@ -7,6 +7,8 @@ import type {
   CreateWorkoutType,
   ExerciseActionResponse,
   SetType,
+  WorkoutToDoType,
+  ExerciseToDoType,
 } from "./types";
 
 const initErrors: ExerciseActionResponse = {
@@ -223,10 +225,10 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     placeholderExercisesBeforeRemoveMode,
     setPlaceholderExercisesBeforeRemoveMode,
   ] = useState([...placeholderExercises]);
-  const [currWorkout, setCurrWorkout] = useState<CreateWorkoutType>({
+  const [currWorkout, setCurrWorkout] = useState<WorkoutToDoType>({
     title: initWorkout.title,
     description: initWorkout.description,
-    exercises: initWorkout.exercises.map((exercise): ExerciseType => {
+    exercises: initWorkout.exercises.map((exercise): ExerciseToDoType => {
       return {
         ...exercise,
         sets: exercise.sets.map((set) => ({
@@ -234,6 +236,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
           reps: "",
           weight: "",
         })),
+        done: false,
       };
     }),
   });
@@ -243,11 +246,29 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
 
   const [removeMode, setRemoveMode] = useState(false);
 
+  function toggleExerciseDoneState(exerciseId: string) {
+    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+      exercise.id === exerciseId
+        ? {
+            ...exercise,
+            done: !exercise.done,
+          }
+        : exercise,
+    );
+
+    setCurrWorkout((prev) => {
+      return {
+        ...prev,
+        exercises: modifiedCurrExercises,
+      };
+    });
+  }
+
   function handleNoteInput(
     event: React.ChangeEvent<HTMLInputElement>,
     exerciseId: string,
   ) {
-    const modifiedExercises = currWorkout.exercises.map((exercise) =>
+    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
@@ -257,7 +278,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     );
 
     setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedExercises };
+      return { ...prev, exercises: modifiedCurrExercises };
     });
   }
 
@@ -419,6 +440,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     currWorkout,
     placeholderExercises,
     removeMode,
+    toggleExerciseDoneState,
     handleNoteInput,
     resetNoteInput,
     handleSetsInput,
