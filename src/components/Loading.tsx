@@ -1,6 +1,6 @@
 export const LoadingWorkoutsSkeleton = () => {
   return (
-    <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-40">
+    <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
       {[1, 2, 3, 4].map((skeleton) => (
         <div
           key={skeleton}
@@ -32,7 +32,7 @@ export const LoadingWorkoutsSkeleton = () => {
 export const LoadingPostWorkoutPageSkeleton = () => {
   return (
     <>
-      <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-40">
+      <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
         <div className="space-y-2 pt-4 text-center opacity-50">
           <div className="mx-auto h-8 w-3/4 animate-pulse rounded bg-slate-300 dark:bg-slate-700" />
           <div className="mx-auto h-6 w-2/3 animate-pulse rounded bg-slate-300 dark:bg-slate-700" />
@@ -119,7 +119,7 @@ export const LoadingWorkoutToDoSkeleton = () => {
 export const LoadingEditWorkoutPageSkeleton = () => {
   return (
     <>
-      <main className="mt-safe-top px-8 py-4 pb-[89px] pt-40">
+      <main className="mt-safe-top px-8 py-4 pb-[89px] pt-[158px]">
         <div className="space-y-4">
           {/* Title Input */}
           <div className="space-y-2 px-4">
