@@ -1,10 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import { Drawer } from "vaul";
 import { twMerge } from "tailwind-merge";
 import { useWorkoutToDo, useWorkoutDuration } from "@/util/hooks";
 import { submitDoneWorkout } from "@/util/actions/workout";
@@ -18,6 +17,7 @@ import {
   TrashBinIcon,
 } from "../icons/user/modify";
 import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
+import { SubmitDoneWorkoutButton } from "../SubmitButtons";
 
 import type { CreateWorkoutType, ExerciseType } from "@/util/types";
 
@@ -42,26 +42,30 @@ export const WorkoutToDoForm = ({
     resetChangesInRemoveMode,
     saveChangesInRemoveMode,
   } = useWorkoutToDo(workoutToDo);
+  const { mutate: clientAction, isPending } = useMutation({
+    mutationFn: async () => {
+      const workoutDuration = calcWorkoutDuration();
+
+      const res = await submitDoneWorkout(currWorkout, workoutDuration);
+
+      return res;
+    },
+    onSuccess: (res) => {
+      if (res.status === "success-redirect") {
+        router.push(`/post-workout?workoutTitle=${currWorkout.title}`);
+      }
+
+      if (res.status === "error") {
+        showToast(res.message);
+      }
+
+      setOpenDoneModal(false);
+    },
+  });
   const { endWorkout, calcWorkoutDuration } = useWorkoutDuration();
   const [note, setNote] = useState<NoteType>({ add: false, onExercise: "" });
   const [openDoneModal, setOpenDoneModal] = useState(false);
   const router = useRouter();
-
-  async function clientAction() {
-    const workoutDuration = calcWorkoutDuration();
-
-    const res = await submitDoneWorkout(currWorkout, workoutDuration);
-
-    if (res.status === "success-redirect") {
-      router.push(`/post-workout?workoutTitle=${currWorkout.title}`);
-    }
-
-    if (res.status === "error") {
-      showToast(res.message);
-    }
-
-    setOpenDoneModal(false);
-  }
 
   return (
     <>
@@ -80,7 +84,7 @@ export const WorkoutToDoForm = ({
       <main className="mt-safe-top flex flex-col px-6 pb-[73px] pt-14">
         <form
           id="submit-done-workout"
-          action={clientAction}
+          action={() => clientAction()}
           className="divide-y divide-slate-300 dark:divide-slate-800"
         >
           {currWorkout.exercises.map((exercise, exerciseIndex) => (
@@ -300,8 +304,9 @@ export const WorkoutToDoForm = ({
                 </button>
               </div>
 
-              <DoneButton
+              <SubmitDoneWorkoutButton
                 formId="submit-done-workout"
+                pending={isPending}
                 open={openDoneModal}
                 setOpen={setOpenDoneModal}
                 endWorkout={endWorkout}
@@ -339,7 +344,7 @@ const NoteInputField = ({
       exit="slide-to-left"
       className="flex gap-2"
     >
-      <div className="relative w-full border-b-2 border-violet-500 py-0.5">
+      <div className="relative w-full border-b-2 border-violet-500 py-1.5">
         <input
           autoFocus
           id="note"
@@ -359,22 +364,24 @@ const NoteInputField = ({
 
             resetNoteInput(exercise.id);
           }}
-          className="absolute inset-y-0 right-0 z-10 text-slate-500 active:text-slate-300 dark:text-slate-400 dark:active:text-slate-200"
+          className="absolute inset-y-0 right-0 z-10"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-            />
-          </svg>
+          <div className="rounded-full bg-slate-400 p-[3px] text-slate-100 active:bg-slate-300 dark:bg-slate-500 dark:text-slate-900 dark:active:bg-slate-700">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="size-[14px]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18 18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
         </button>
       </div>
 
@@ -412,7 +419,7 @@ const EditNote = ({
       exit="slide-to-left"
       className="flex items-center justify-between gap-2"
     >
-      <p className="py-0.5 font-semibold italic text-slate-400 dark:text-slate-400">
+      <p className="py-1.5 font-semibold italic text-slate-400 dark:text-slate-400">
         {exercise.note}
       </p>
 
@@ -456,82 +463,10 @@ const AddNote = ({
 
           showNoteInput();
         }}
-        className="rounded-lg px-4 py-[7px] font-manrope font-bold leading-none text-green-500 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-green-600 dark:active:bg-slate-800"
+        className="rounded-lg px-4 py-[11px] font-manrope font-bold leading-none text-green-500 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-green-600 dark:active:bg-slate-800"
       >
         Add note
       </button>
     </motion.div>
-  );
-};
-
-const DoneButton = ({
-  formId,
-  open,
-  setOpen,
-  endWorkout,
-}: {
-  formId: string;
-  open: boolean;
-  setOpen: (isOpen: boolean) => void;
-  endWorkout: () => void;
-}) => {
-  const { pending } = useFormStatus();
-
-  return (
-    <Drawer.Root
-      open={open}
-      onOpenChange={setOpen}
-      noBodyStyles
-      disablePreventScroll
-    >
-      <button
-        type="button"
-        onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-          setOpen(true);
-        }}
-        className="rounded-lg px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:bg-slate-200 dark:text-green-600 dark:active:bg-slate-700"
-      >
-        Done
-        <p className="sr-only">Done button</p>
-      </button>
-
-      <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
-
-        <Drawer.Content
-          aria-describedby={undefined}
-          data-vaul-no-drag
-          className="fixed inset-x-0 bottom-0 z-[9999] select-none space-y-4 px-4 pb-12 focus:outline-none"
-        >
-          <div className="flex flex-col gap-3 rounded-modal bg-white/90 text-center dark:bg-slate-700/70">
-            <Drawer.Title className="px-2 pb-2 pt-5 text-sm font-semibold">
-              Are you sure you want to submit workout?
-            </Drawer.Title>
-
-            <button
-              type="submit"
-              form={formId}
-              disabled={pending}
-              onClick={endWorkout}
-              className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-green-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-green-500/75 dark:border-slate-600 active:dark:bg-slate-600/90 disabled:dark:bg-slate-900/75 disabled:dark:text-green-800"
-            >
-              {pending ? "Submitting..." : "Submit"}
-            </button>
-          </div>
-
-          <button
-            onClick={async () => {
-              await new Promise((resolve) => setTimeout(resolve, 100));
-
-              setOpen(false);
-            }}
-            className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
-          >
-            Cancel
-          </button>
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer.Root>
   );
 };
