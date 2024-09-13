@@ -20,7 +20,7 @@ export const LogsPageContent = ({
       {doneWorkouts.length === 0 ? (
         <EmptyPage />
       ) : (
-        <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-40">
+        <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
           {doneWorkouts.map((doneWorkout) => (
             <div
               key={doneWorkout.id}

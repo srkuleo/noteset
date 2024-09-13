@@ -29,7 +29,7 @@ export const HomePageContent = ({
       {workouts.length === 0 ? (
         <EmptyPage />
       ) : (
-        <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-40">
+        <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
           {workouts.map((workout) => (
             <div
               key={workout.id}
@@ -104,7 +104,7 @@ export const HomePageContent = ({
 
 const EmptyPage = () => {
   return (
-    <main className="mt-safe-top flex flex-col justify-center px-6 pb-[91px] pt-40">
+    <main className="mt-safe-top flex flex-col justify-center px-6 pb-[91px] pt-[158px]">
       <div className="flex flex-col items-center gap-8 pb-18">
         <div className="text-slate-400/60 dark:text-slate-700/80">
           {EmptyIcon}
