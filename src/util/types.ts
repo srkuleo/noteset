@@ -91,7 +91,7 @@ export const WorkoutSchema = z.object({
   title: z
     .string()
     .trim()
-    .min(2, { message: "Title must be at least 2 characters long." })
+    .min(2, { message: "Must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
   description: z.string().trim().nullable(),
   exercises: z
