@@ -73,7 +73,10 @@ const ExerciseWithOptionalSetsSchema = ExerciseSchema.pick({
   sets: z
     .array(OptionalSetSchema)
     .transform((sets) => sets.filter((set) => set.reps)),
+  done: z.boolean().optional(),
 });
+
+export type ExerciseToDoType = z.infer<typeof ExerciseWithOptionalSetsSchema>;
 
 //Workout types and schemas
 
@@ -117,6 +120,8 @@ export const WorkoutToDoSchema = WorkoutSchema.pick({
 }).extend({
   exercises: z.array(ExerciseWithOptionalSetsSchema),
 });
+
+export type WorkoutToDoType = z.infer<typeof WorkoutToDoSchema>;
 
 //Auth types and schemas
 
