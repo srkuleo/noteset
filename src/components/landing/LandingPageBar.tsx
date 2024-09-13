@@ -4,7 +4,7 @@ import { GitHubButton } from "../GitHubButton";
 
 export const LandingPageBar = () => {
   return (
-    <header className="border-b border-slate-400/40 bg-white px-6 py-2 dark:border-slate-800/90 dark:bg-slate-950">
+    <header className="border-b border-slate-400/40 px-6 py-2 dark:border-slate-800/90 md:border-b-0">
       <div className="flex items-center justify-between">
         <Link href="/">{Logo}</Link>
 
