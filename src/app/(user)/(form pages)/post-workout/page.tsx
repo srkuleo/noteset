@@ -7,7 +7,7 @@ import {
 import { PostWorkoutTooltip } from "@/components/Tooltips";
 import { HomeIcon } from "@/components/icons/user/navbar";
 import { LoadingPostWorkoutPageSkeleton } from "@/components/Loading";
-import { PostWorkoutPageDataFetcher } from "@/components/post-workout/PostWorkoutPageDataFetcher";
+import { PostWorkoutPageDataFetcher } from "@/components/user/PostWorkoutPageDataFetcher";
 
 import type { Metadata } from "next";
 
