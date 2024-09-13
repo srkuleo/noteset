@@ -7,6 +7,7 @@ import { showToast } from "../Toasts";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
 import { ErrorComponent } from "../ErrorComponent";
+import { FormPagesFooterWrapper } from "./FormPagesFooterWrapper";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 
 import type { QueriedByIdWorkoutType } from "@/db/schema";
@@ -53,7 +54,7 @@ export const EditWorkoutForm = ({
 
   return (
     <>
-      <main className="mt-safe-top px-8 py-4 pb-[89px] pt-40">
+      <main className="mt-safe-top px-8 py-4 pb-[89px] pt-[158px]">
         <form id="edit-workout-form" action={() => clientAction()}>
           <fieldset disabled={isPending} className="group space-y-4">
             <TitleInput
@@ -86,25 +87,20 @@ export const EditWorkoutForm = ({
         </form>
       </main>
 
-      <fieldset
-        disabled={isPending}
-        className="group fixed inset-x-0 bottom-0 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-950"
-      >
-        <footer className="flex items-center justify-between group-disabled:pointer-events-none group-disabled:opacity-50">
-          <AddExerciseDrawer
-            className="rounded-full p-1.5 text-violet-400 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
-            updateExercises={updateExercises}
-          />
+      <FormPagesFooterWrapper disabled={isPending}>
+        <AddExerciseDrawer
+          className="rounded-full p-1.5 text-violet-400 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
+          updateExercises={updateExercises}
+        />
 
-          <button
-            type="submit"
-            form="edit-workout-form"
-            className="rounded-lg px-3 py-1.5 text-xl font-extrabold text-green-500 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700"
-          >
-            {isPending ? "Saving..." : "Save"}
-          </button>
-        </footer>
-      </fieldset>
+        <button
+          type="submit"
+          form="edit-workout-form"
+          className="rounded-lg px-3 py-1.5 text-xl font-extrabold text-green-500 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700"
+        >
+          {isPending ? "Saving..." : "Save"}
+        </button>
+      </FormPagesFooterWrapper>
     </>
   );
 };
