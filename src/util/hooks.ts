@@ -213,7 +213,7 @@ Contains:
 - temporary placeholders (placeholderExercisesBeforeRemoveMode and exercisesBeforeRemoveMode) which are used to easily revert changes
 - removeMode state which enables and disables removeMode, in which user is able to remove certain sets from the exercise
 - bunch of handlers which are used to apply logic (adding and remove sets, adding new exercise, 
-editing note, handling sets inputs, etc.)
+editing note, handling sets inputs, toggle done state on exercise etc.)
 
 */
 
