@@ -1,7 +1,9 @@
 import "@/styles/globals.css";
-import type { Metadata, Viewport } from "next";
 import { manrope, nunito } from "@/styles/fonts";
 import { Providers } from "@/context/Providers";
+import { Analytics } from "@vercel/analytics/react";
+
+import type { Metadata, Viewport } from "next";
 
 export const viewport: Viewport = {
   userScalable: false,
@@ -60,6 +62,7 @@ export default function RootLayout({
     >
       <body className="select-none scroll-smooth bg-white font-nunito text-slate-500 dark:bg-slate-950 dark:text-white">
         <Providers>{children}</Providers>
+        <Analytics />
       </body>
     </html>
   );
