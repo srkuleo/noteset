@@ -1,11 +1,10 @@
 export const ThemeIcon = (
   <svg
     viewBox="0 0 512 512"
-    height={36}
-    width={36}
     stroke="currentColor"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
+    className="size-6"
   >
     <g id="Sun_and_moon">
       <circle cx="185.6708" cy="183.8122" r="65.625" />

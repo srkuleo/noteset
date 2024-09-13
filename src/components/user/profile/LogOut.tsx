@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { Drawer } from "vaul";
 import { logout } from "@/util/actions/auth";
@@ -17,12 +19,13 @@ export const Logout = () => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await new Promise((resolve) => setTimeout(resolve, 150));
+
           setOpen(true);
         }}
-        className="flex w-full items-center justify-between rounded-b-modal px-4 py-2 focus:outline-none active:bg-slate-200 dark:active:bg-slate-700"
+        className="mx-auto flex items-center gap-2 rounded-lg px-4 py-2 focus:outline-none active:bg-slate-200 dark:active:bg-slate-700"
       >
-        <p>Log Out</p>
+        <p className="font-bold uppercase">Log Out</p>
 
         {LogoutIcon}
 
