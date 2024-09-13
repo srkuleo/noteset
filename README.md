@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Mark exercises as done and track how many of them are completed. SelectTheme to be drawer instead of dropdown menu._
+- _Mark exercises as done and track how many of them are completed._
 
 - _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page._
 
