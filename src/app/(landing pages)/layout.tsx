@@ -15,7 +15,7 @@ export default async function LandingPageLayout({
 
   return (
     <>
-      <div className="fixed inset-x-0 top-0 bg-white pt-safe-top dark:bg-slate-900">
+      <div className="fixed inset-x-0 top-0 bg-white pt-safe-top dark:bg-slate-950">
         <LandingPageBar />
         <UiMessage />
       </div>
