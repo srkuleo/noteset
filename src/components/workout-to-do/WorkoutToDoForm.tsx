@@ -32,6 +32,7 @@ export const WorkoutToDoForm = ({
     currWorkout,
     placeholderExercises,
     removeMode,
+    toggleExerciseDoneState,
     handleNoteInput,
     resetNoteInput,
     handleSetsInput,
@@ -89,7 +90,21 @@ export const WorkoutToDoForm = ({
         >
           {currWorkout.exercises.map((exercise, exerciseIndex) => (
             <div key={exercise.id} className="flex flex-col py-6">
-              <p className="pb-1 text-2xl font-bold">{exercise.name}</p>
+              <div className="flex items-center justify-between">
+                <p className="pb-1 text-2xl font-bold">{exercise.name}</p>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 100));
+
+                    toggleExerciseDoneState(exercise.id);
+                  }}
+                  className={`rounded-lg px-2 py-1.5 text-xs font-bold italic active:scale-95 active:bg-slate-200 dark:active:bg-slate-800 ${exercise.done ? "text-blue-400" : "text-violet-400"}`}
+                >
+                  {exercise.done ? "Unmark" : "Mark as Done"}
+                </button>
+              </div>
 
               <AnimatePresence mode="wait" initial={false}>
                 {note.add && note.onExercise === exercise.id ? (
@@ -178,6 +193,8 @@ export const WorkoutToDoForm = ({
                             !/^\d+(?:[-+]\d+)?$/.test(set.reps) &&
                               set.reps !== "" &&
                               "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                            exercise.done &&
+                              "pointer-events-none bg-green-100 italic dark:bg-green-900",
                           )}
                         />
 
@@ -198,6 +215,8 @@ export const WorkoutToDoForm = ({
                             !/^\d+(,\d+|\.\d+)?$/.test(set.weight) &&
                               set.weight !== "" &&
                               "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                            exercise.done &&
+                              "pointer-events-none bg-green-100 italic dark:bg-green-900",
                           )}
                         />
                         <AnimatePresence>
@@ -234,7 +253,7 @@ export const WorkoutToDoForm = ({
 
               <button
                 type="button"
-                disabled={removeMode}
+                disabled={removeMode || exercise.done}
                 onClick={async () => {
                   await new Promise((resolve) => setTimeout(resolve, 100));
 
@@ -303,14 +322,26 @@ export const WorkoutToDoForm = ({
                   <p className="sr-only">Enter Remove mode</p>
                 </button>
               </div>
+              <div className="flex items-center gap-4">
+                <div className="flex gap-1 text-sm font-bold text-slate-400 dark:text-slate-300">
+                  <p>
+                    {
+                      currWorkout.exercises.filter((exercise) => exercise.done)
+                        .length
+                    }
+                  </p>
+                  <p>/</p>
+                  <p>{currWorkout.exercises.length}</p>
+                </div>
 
-              <SubmitDoneWorkoutButton
-                formId="submit-done-workout"
-                pending={isPending}
-                open={openDoneModal}
-                setOpen={setOpenDoneModal}
-                endWorkout={endWorkout}
-              />
+                <SubmitDoneWorkoutButton
+                  formId="submit-done-workout"
+                  pending={isPending}
+                  open={openDoneModal}
+                  setOpen={setOpenDoneModal}
+                  endWorkout={endWorkout}
+                />
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -366,14 +397,14 @@ const NoteInputField = ({
           }}
           className="absolute inset-y-0 right-0 z-10"
         >
-          <div className="rounded-full bg-slate-400 p-[3px] text-slate-100 active:bg-slate-300 dark:bg-slate-500 dark:text-slate-900 dark:active:bg-slate-700">
+          <div className="rounded-full bg-slate-400/70 p-[3px] text-slate-100 active:bg-slate-300 dark:bg-slate-600 dark:text-slate-900 dark:active:bg-slate-700">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={2}
               stroke="currentColor"
-              className="size-[14px]"
+              className="size-4"
             >
               <path
                 strokeLinecap="round"
@@ -419,7 +450,7 @@ const EditNote = ({
       exit="slide-to-left"
       className="flex items-center justify-between gap-2"
     >
-      <p className="py-1.5 font-semibold italic text-slate-400 dark:text-slate-400">
+      <p className="font-semibold italic text-slate-400 dark:text-slate-400">
         {exercise.note}
       </p>
 
@@ -431,7 +462,7 @@ const EditNote = ({
 
           showNoteInput();
         }}
-        className="rounded-lg px-4 py-[3px] font-manrope font-bold text-green-500 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-green-600 dark:active:bg-slate-800"
+        className="rounded-lg px-4 py-[7px] font-manrope font-bold text-green-500 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-green-600 dark:active:bg-slate-800"
       >
         Edit
       </button>
@@ -453,7 +484,6 @@ const AddNote = ({
       initial="right-hidden"
       animate="slide-from-right"
       exit="slide-to-left"
-      className="flex justify-end"
     >
       <button
         type="button"
@@ -463,9 +493,9 @@ const AddNote = ({
 
           showNoteInput();
         }}
-        className="rounded-lg px-4 py-[11px] font-manrope font-bold leading-none text-green-500 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-green-600 dark:active:bg-slate-800"
+        className="rounded-lg py-[9px] font-manrope text-sm font-semibold italic text-slate-400/70 active:text-slate-300 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-600 dark:active:text-slate-500"
       >
-        Add note
+        Add note...
       </button>
     </motion.div>
   );
