@@ -194,7 +194,7 @@ export const WorkoutToDoForm = ({
                               set.reps !== "" &&
                               "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
                             exercise.done &&
-                              "pointer-events-none bg-green-100 italic dark:bg-green-900",
+                              "pointer-events-none bg-green-100 italic dark:bg-green-950",
                           )}
                         />
 
@@ -216,7 +216,7 @@ export const WorkoutToDoForm = ({
                               set.weight !== "" &&
                               "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
                             exercise.done &&
-                              "pointer-events-none bg-green-100 italic dark:bg-green-900",
+                              "pointer-events-none bg-green-100 italic dark:bg-green-950",
                           )}
                         />
                         <AnimatePresence>
@@ -237,8 +237,9 @@ export const WorkoutToDoForm = ({
                             >
                               <button
                                 type="button"
+                                disabled={exercise.done}
                                 onClick={() => removeSet(exercise.id, set.id)}
-                                className="rounded-full bg-red-500 p-1.5 text-white"
+                                className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
                               >
                                 {RemoveExerciseIcon}
                               </button>
@@ -269,7 +270,7 @@ export const WorkoutToDoForm = ({
         </form>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-950">
+      <footer className="fixed inset-x-0 bottom-0 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
         <AnimatePresence mode="wait" initial={false}>
           {removeMode ? (
             <motion.div
@@ -375,7 +376,7 @@ const NoteInputField = ({
       exit="slide-to-left"
       className="flex gap-2"
     >
-      <div className="relative w-full border-b-2 border-violet-500 py-1.5">
+      <div className="flex w-full gap-1 border-b-2 border-violet-500">
         <input
           autoFocus
           id="note"
@@ -384,7 +385,7 @@ const NoteInputField = ({
           value={exercise.note ?? ""}
           placeholder="Leave a note..."
           onChange={(e) => handleNoteInput(e, exercise.id)}
-          className="w-[90%] rounded-none bg-transparent font-semibold placeholder-slate-400/80 caret-violet-500 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-white dark:placeholder-slate-500 dark:focus:placeholder-slate-700"
+          className="flex-1 rounded-none bg-transparent py-1.5 font-semibold placeholder-slate-400/80 caret-violet-500 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-white dark:placeholder-slate-500 dark:focus:placeholder-slate-700"
         />
 
         <button
@@ -395,7 +396,6 @@ const NoteInputField = ({
 
             resetNoteInput(exercise.id);
           }}
-          className="absolute inset-y-0 right-0 z-10"
         >
           <div className="rounded-full bg-slate-400/70 p-[3px] text-slate-100 active:bg-slate-300 dark:bg-slate-600 dark:text-slate-900 dark:active:bg-slate-700">
             <svg
@@ -493,7 +493,7 @@ const AddNote = ({
 
           showNoteInput();
         }}
-        className="rounded-lg py-[9px] font-manrope text-sm font-semibold italic text-slate-400/70 active:text-slate-300 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-600 dark:active:text-slate-500"
+        className="w-full rounded-lg py-[9px] text-left font-manrope text-sm font-semibold italic text-slate-400/70 active:text-slate-300 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-600 dark:active:text-slate-500"
       >
         Add note...
       </button>
