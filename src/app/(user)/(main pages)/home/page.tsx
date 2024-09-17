@@ -26,7 +26,7 @@ export default async function HomePage() {
 
           <Link
             href="/create"
-            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-300 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800/60 dark:ring-slate-700/90 dark:active:bg-slate-600"
+            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-300 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-600 dark:active:bg-slate-600"
           >
             <AddIcon size={24} strokeWidth={2} />
             <p className="sr-only">Add a new workout</p>

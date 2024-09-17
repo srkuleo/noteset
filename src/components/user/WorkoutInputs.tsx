@@ -27,7 +27,7 @@ export const TitleInput = ({
         onChange={(e) => handleTitleInput(e)}
         className={twMerge(
           "input-field",
-          "w-full",
+          "w-full dark:bg-slate-800 dark:ring-slate-600",
           titleError && "ring-red-500 dark:ring-red-500",
         )}
       />
@@ -63,7 +63,10 @@ export const DescriptionInput = ({
         type="text"
         placeholder="e.g. Workout for the upper body"
         onChange={(e) => handleDescriptionInput(e)}
-        className={twMerge("input-field", "w-full")}
+        className={twMerge(
+          "input-field",
+          "w-full dark:bg-slate-800 dark:ring-slate-600",
+        )}
       />
     </div>
   );

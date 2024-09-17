@@ -141,13 +141,13 @@ const ExerciseShell = ({
     <div className="space-y-2 pt-6">
       <div
         className={twMerge(
-          "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center group-disabled:opacity-30 dark:border-slate-700 dark:bg-slate-900",
+          "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center group-disabled:opacity-30 dark:border-slate-600 dark:bg-slate-800",
           exercisesError && "border-red-500 dark:border-red-500",
         )}
       >
         <h3 className="font-manrope">Exercises not added yet</h3>
 
-        <p className="text-sm text-slate-400/80 dark:text-slate-500">
+        <p className="text-sm text-slate-400/80 dark:text-slate-400">
           Press the{" "}
           <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
             plus
@@ -187,9 +187,9 @@ const ExerciseCard = ({
     <div
       ref={setNodeRef}
       style={style}
-      className="flex w-full flex-col gap-3 rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-900 dark:ring-slate-700"
+      className="flex w-full flex-col gap-3 rounded-lg bg-white p-4 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-800 dark:ring-slate-600"
     >
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-3 dark:border-slate-700/70 [&>*:nth-child(2)]:mr-auto">
+      <div className="flex items-center gap-2 border-b border-slate-200 pb-3 dark:border-slate-700 [&>*:nth-child(2)]:mr-auto">
         <button
           {...attributes}
           {...listeners}
@@ -209,7 +209,7 @@ const ExerciseCard = ({
             setCurrentExercise({ ...exercise });
             openEditDrawer();
           }}
-          className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-950 dark:ring-slate-600"
+          className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:shadow-slate-900 dark:ring-slate-600"
         >
           {EditExerciseIcon}
           <span className="sr-only">Edit exercise</span>
@@ -221,7 +221,7 @@ const ExerciseCard = ({
             setCurrentExercise({ ...exercise });
             openRemoveModal();
           }}
-          className="rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:text-red-400 dark:shadow-slate-950 dark:ring-slate-600"
+          className="rounded-full p-1.5 text-red-500 shadow-md ring-1 ring-inset ring-slate-300 transition focus:outline-none active:scale-95 dark:text-red-400 dark:shadow-slate-900 dark:ring-slate-600"
         >
           {RemoveExerciseIcon}
           <span className="sr-only">Remove exercise</span>
@@ -236,7 +236,7 @@ const ExerciseCard = ({
           >
             <p className="w-1/5 text-right">{set.reps}</p>
 
-            <div className="w-[1px] bg-slate-200 dark:bg-slate-700/70" />
+            <div className="w-[1px] bg-slate-200 dark:bg-slate-700" />
 
             <p className="w-1/5 text-left">{set.weight} kg</p>
           </div>
@@ -244,7 +244,7 @@ const ExerciseCard = ({
       </div>
 
       {exercise.note && (
-        <p className="border-t border-slate-200 pl-1 pt-3 text-sm italic text-slate-400 dark:border-slate-700/70 dark:text-slate-500">
+        <p className="border-t border-slate-200 pl-1 pt-3 text-sm italic text-slate-400 dark:border-slate-700 dark:text-slate-500">
           {exercise.note}
         </p>
       )}

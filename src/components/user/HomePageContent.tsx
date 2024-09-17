@@ -33,7 +33,7 @@ export const HomePageContent = ({
           {workouts.map((workout) => (
             <div
               key={workout.id}
-              className="flex w-full flex-col gap-4 rounded-xl border border-slate-300/80 bg-white px-4 py-6 shadow-md dark:border-slate-700 dark:bg-slate-900"
+              className="flex w-full flex-col gap-4 rounded-xl border border-slate-300/80 bg-white px-4 py-6 shadow-md dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="space-y-1.5 px-1">
                 <div className="flex justify-between gap-4">
