@@ -26,34 +26,38 @@ export const LandingPageTooltip = () => {
       </button>
 
       <TooltipDrawer closeDrawer={() => setOpen(false)}>
-        <p className="text-lg text-slate-500 dark:text-slate-300">
-          For better user experience
-        </p>
-
-        <div className="space-y-2 py-2 pl-4">
-          <p className="font-bold text-slate-800 dark:text-white">
-            <span className="text-xs font-semibold uppercase text-slate-400">
-              android:
-            </span>{" "}
-            install PWA
+        <div className="space-y-6">
+          <p className="text-lg text-slate-500 dark:text-slate-300">
+            For better user experience
           </p>
 
-          <p className="font-bold text-slate-800 dark:text-white">
-            <span className="text-xs font-semibold uppercase text-slate-400">
-              iphone:
-            </span>{" "}
-            add website to Home Screen
-          </p>
+          <div className="space-y-2 pl-4">
+            <p className="font-bold text-slate-800 dark:text-white">
+              <span className="text-xs font-semibold uppercase text-slate-400">
+                android:
+              </span>{" "}
+              install PWA
+            </p>
+
+            <p className="font-bold text-slate-800 dark:text-white">
+              <span className="text-xs font-semibold uppercase text-slate-400">
+                iphone:
+              </span>{" "}
+              add website to Home Screen
+            </p>
+          </div>
+
+          <div className="space-y-2 pb-8">
+            <p className="text-slate-500 dark:text-slate-300">
+              You don&apos;t have to login here. Do it in the PWA.
+            </p>
+
+            <p className="text-slate-500 dark:text-slate-300">
+              Installing or adding to Home screen will save workouts page as
+              startup page.
+            </p>
+          </div>
         </div>
-
-        <p className="pb-2 pt-4 text-slate-500 dark:text-slate-300">
-          You don&apos;t have to login here. Do it in the PWA.
-        </p>
-
-        <p className="pb-8 text-slate-500 dark:text-slate-300">
-          Installing or adding to Home screen will save workouts page as startup
-          page.
-        </p>
       </TooltipDrawer>
     </Drawer.Root>
   );
