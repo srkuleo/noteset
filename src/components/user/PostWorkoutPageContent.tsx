@@ -108,6 +108,7 @@ export const PostWorkoutPageContent = ({
                   <p className="font-manrope text-lg font-semibold">Date:</p>
                   <FormatDate
                     date={submittedWorkout.doneAt}
+                    withDayOfTheWeek
                     className="text-lg font-bold"
                   />
                 </div>
@@ -163,26 +164,28 @@ export const PostWorkoutPageContent = ({
                 action={() => clientAction()}
                 className="pb-2 pt-4"
               >
-                <div className="flex items-center justify-between px-2">
-                  <h3 className="dark:text-slate-100">Edit mode</h3>
+                <fieldset disabled={isPending} className="group">
+                  <div className="flex items-center justify-between px-2 group-disabled:pointer-events-none group-disabled:opacity-50">
+                    <h3 className="dark:text-slate-100">Edit mode</h3>
 
-                  <button
-                    type="button"
-                    onClick={() => setPageStatus("initial")}
-                    className="rounded-full px-6 py-2 font-manrope text-sm font-semibold text-slate-600 shadow-md ring-1 ring-slate-400/40 transition-all active:scale-95 active:bg-white dark:text-white dark:ring-slate-400 dark:active:bg-slate-800"
-                  >
-                    Close
-                  </button>
-                </div>
+                    <button
+                      type="button"
+                      onClick={() => setPageStatus("initial")}
+                      className="rounded-full px-6 py-2 font-manrope text-sm font-semibold text-slate-600 shadow-md ring-1 ring-slate-400/40 transition-all active:scale-95 active:bg-white dark:text-white dark:ring-slate-400 dark:active:bg-slate-800"
+                    >
+                      Close
+                    </button>
+                  </div>
 
-                <ExercisesList
-                  workout={workout}
-                  setWorkout={setWorkout}
-                  editExercises={editExercises}
-                  removeExercise={removeExercise}
-                  exercisesError={res && res.errors?.exercises}
-                  editForm
-                />
+                  <ExercisesList
+                    workout={workout}
+                    setWorkout={setWorkout}
+                    editExercises={editExercises}
+                    removeExercise={removeExercise}
+                    exercisesError={res && res.errors?.exercises}
+                    editForm
+                  />
+                </fieldset>
               </form>
             </motion.div>
           ) : (
@@ -252,7 +255,7 @@ export const PostWorkoutPageContent = ({
               <div className="flex items-center gap-3">
                 <PreviewWorkoutButtonDrawer
                   workout={submittedWorkout}
-                  className="px-2 py-1.5 dark:bg-slate-900"
+                  className="px-2 py-1.5 dark:bg-slate-950"
                   size={6}
                 />
 

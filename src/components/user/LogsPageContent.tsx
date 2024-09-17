@@ -52,6 +52,7 @@ export const LogsPageContent = ({
                   />
                   <FormatDate
                     date={doneWorkout.doneAt}
+                    withDayOfTheWeek
                     className="text-lg font-bold"
                   />
                 </div>
