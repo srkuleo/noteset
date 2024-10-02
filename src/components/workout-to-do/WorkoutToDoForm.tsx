@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -21,8 +21,6 @@ import { SubmitDoneWorkoutButton } from "../SubmitButtons";
 
 import type { CreateWorkoutType, ExerciseType } from "@/util/types";
 
-type NoteType = { add: boolean; onExercise: string };
-
 export const WorkoutToDoForm = ({
   workoutToDo,
 }: {
@@ -34,7 +32,6 @@ export const WorkoutToDoForm = ({
     removeMode,
     toggleExerciseDoneState,
     handleNoteInput,
-    resetNoteInput,
     handleSetsInput,
     addNewSet,
     removeSet,
@@ -64,7 +61,6 @@ export const WorkoutToDoForm = ({
     },
   });
   const { endWorkout, calcWorkoutDuration } = useWorkoutDuration();
-  const [note, setNote] = useState<NoteType>({ add: false, onExercise: "" });
   const [openDoneModal, setOpenDoneModal] = useState(false);
   const router = useRouter();
 
@@ -90,7 +86,7 @@ export const WorkoutToDoForm = ({
         >
           {currWorkout.exercises.map((exercise, exerciseIndex) => (
             <div key={exercise.id} className="flex flex-col py-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <p className="pb-1 text-2xl font-bold">{exercise.name}</p>
 
                 <button
@@ -100,40 +96,17 @@ export const WorkoutToDoForm = ({
 
                     toggleExerciseDoneState(exercise.id);
                   }}
-                  className={`rounded-lg px-2 py-1.5 text-xs font-bold italic active:scale-95 active:bg-slate-200 dark:active:bg-slate-800 ${exercise.done ? "text-blue-400" : "text-violet-400"}`}
+                  className={`text-xs font-bold italic active:scale-95 ${exercise.done ? "text-blue-400 active:text-blue-600" : "text-violet-400 active:text-violet-600"}`}
                 >
                   {exercise.done ? "Unmark" : "Mark as Done"}
                 </button>
               </div>
 
-              <AnimatePresence mode="wait" initial={false}>
-                {note.add && note.onExercise === exercise.id ? (
-                  <NoteInputField
-                    exercise={exercise}
-                    removeMode={removeMode}
-                    handleNoteInput={handleNoteInput}
-                    resetNoteInput={resetNoteInput}
-                    closeNoteInput={() =>
-                      setNote({ add: false, onExercise: "" })
-                    }
-                  />
-                ) : exercise.note ? (
-                  <EditNote
-                    exercise={exercise}
-                    removeMode={removeMode}
-                    showNoteInput={() =>
-                      setNote({ add: true, onExercise: exercise.id })
-                    }
-                  />
-                ) : (
-                  <AddNote
-                    removeMode={removeMode}
-                    showNoteInput={() =>
-                      setNote({ add: true, onExercise: exercise.id })
-                    }
-                  />
-                )}
-              </AnimatePresence>
+              <NoteInputField
+                exercise={exercise}
+                removeMode={removeMode}
+                handleNoteInput={handleNoteInput}
+              />
 
               <div className="py-8">
                 <div className="flex justify-evenly pb-3 text-center">
@@ -284,7 +257,7 @@ export const WorkoutToDoForm = ({
               <button
                 type="button"
                 onClick={resetChangesInRemoveMode}
-                className="rounded-lg px-3 py-1.5 text-lg font-semibold active:scale-95 active:bg-slate-200 dark:text-slate-300 dark:active:bg-slate-700"
+                className="px-3 py-1.5 text-lg font-semibold active:scale-95 active:text-slate-300 dark:active:text-slate-400"
               >
                 Close
                 <p className="sr-only">Close Remove mode</p>
@@ -293,7 +266,7 @@ export const WorkoutToDoForm = ({
               <button
                 type="button"
                 onClick={saveChangesInRemoveMode}
-                className="rounded-lg px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:bg-slate-200 dark:text-green-600 dark:active:bg-slate-700"
+                className="px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:text-green-400 dark:text-green-600 dark:active:text-green-800"
               >
                 Save
                 <p className="sr-only">Save changes in Remove mode</p>
@@ -355,148 +328,32 @@ const NoteInputField = ({
   exercise,
   removeMode,
   handleNoteInput,
-  resetNoteInput,
-  closeNoteInput,
 }: {
   exercise: ExerciseType;
   removeMode: boolean;
   handleNoteInput: (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLTextAreaElement>,
     exerciseId: string,
   ) => void;
-  resetNoteInput: (exerciseId: string) => void;
-  closeNoteInput: () => void;
 }) => {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (textAreaRef.current !== null) {
+      textAreaRef.current.style.height = "auto";
+      textAreaRef.current.style.height =
+        textAreaRef.current.scrollHeight + "px";
+    }
+  }, [exercise.note]);
+
   return (
-    <motion.div
-      key="editing-note"
-      variants={slideX}
-      initial="right-hidden"
-      animate="slide-from-right"
-      exit="slide-to-left"
-      className="flex gap-2"
-    >
-      <div className="flex w-full gap-1 border-b-2 border-violet-500">
-        <input
-          autoFocus
-          id="note"
-          type="text"
-          disabled={removeMode}
-          value={exercise.note ?? ""}
-          placeholder="Leave a note..."
-          onChange={(e) => handleNoteInput(e, exercise.id)}
-          className="flex-1 rounded-none bg-transparent py-1.5 font-semibold placeholder-slate-400/80 caret-violet-500 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-white dark:placeholder-slate-500 dark:focus:placeholder-slate-700"
-        />
-
-        <button
-          type="button"
-          disabled={removeMode}
-          onClick={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 150));
-
-            resetNoteInput(exercise.id);
-          }}
-        >
-          <div className="rounded-full bg-slate-400/70 p-[3px] text-slate-100 active:bg-slate-300 dark:bg-slate-600 dark:text-slate-900 dark:active:bg-slate-700">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="size-4"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-          </div>
-        </button>
-      </div>
-
-      <button
-        type="button"
-        disabled={removeMode}
-        onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-
-          closeNoteInput();
-        }}
-        className="rounded-lg px-4 font-manrope font-bold text-blue-400 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:bg-slate-800"
-      >
-        Done
-      </button>
-    </motion.div>
-  );
-};
-
-const EditNote = ({
-  exercise,
-  removeMode,
-  showNoteInput,
-}: {
-  exercise: ExerciseType;
-  removeMode: boolean;
-  showNoteInput: () => void;
-}) => {
-  return (
-    <motion.div
-      key="edit-note"
-      variants={slideX}
-      initial="right-hidden"
-      animate="slide-from-right"
-      exit="slide-to-left"
-      className="flex items-center justify-between gap-2"
-    >
-      <p className="font-semibold italic text-slate-400 dark:text-slate-400">
-        {exercise.note}
-      </p>
-
-      <button
-        type="button"
-        disabled={removeMode}
-        onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-
-          showNoteInput();
-        }}
-        className="rounded-lg px-4 py-[7px] font-manrope font-bold text-green-500 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-green-600 dark:active:bg-slate-800"
-      >
-        Edit
-      </button>
-    </motion.div>
-  );
-};
-
-const AddNote = ({
-  removeMode,
-  showNoteInput,
-}: {
-  removeMode: boolean;
-  showNoteInput: () => void;
-}) => {
-  return (
-    <motion.div
-      key="add-note"
-      variants={slideX}
-      initial="right-hidden"
-      animate="slide-from-right"
-      exit="slide-to-left"
-    >
-      <button
-        type="button"
-        disabled={removeMode}
-        onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-
-          showNoteInput();
-        }}
-        className="w-full rounded-lg py-[9px] text-left font-manrope text-sm font-semibold italic text-slate-400/70 active:text-slate-300 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-600 dark:active:text-slate-500"
-      >
-        Add note...
-      </button>
-    </motion.div>
+    <textarea
+      ref={textAreaRef}
+      disabled={removeMode}
+      placeholder="Leave a note..."
+      rows={1}
+      onChange={(e) => handleNoteInput(e, exercise.id)}
+      className="rounded-none bg-transparent py-1.5 font-semibold placeholder-slate-400/80 caret-violet-500 no-scrollbar placeholder:text-sm placeholder:italic focus:rounded-lg focus:border focus:border-violet-300 focus:bg-slate-50 focus:px-1.5 focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-white dark:placeholder-slate-500 dark:focus:border-violet-500 dark:focus:bg-slate-900 dark:focus:placeholder-slate-700"
+    />
   );
 };
