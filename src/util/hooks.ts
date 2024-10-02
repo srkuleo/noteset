@@ -38,8 +38,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     });
   }
 
-  function createSets(input: string | number) {
-    const newSetCount = Number(input);
+  function createSets(newSetCount: number) {
     const currSets = tempExercise.sets;
 
     if (newSetCount > currSets.length) {
@@ -265,7 +264,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
   }
 
   function handleNoteInput(
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLTextAreaElement>,
     exerciseId: string,
   ) {
     const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
@@ -273,21 +272,6 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
         ? {
             ...exercise,
             note: event.target.value,
-          }
-        : exercise,
-    );
-
-    setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedCurrExercises };
-    });
-  }
-
-  function resetNoteInput(exerciseId: string) {
-    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
-      exercise.id === exerciseId
-        ? {
-            ...exercise,
-            note: "",
           }
         : exercise,
     );
@@ -442,7 +426,6 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     removeMode,
     toggleExerciseDoneState,
     handleNoteInput,
-    resetNoteInput,
     handleSetsInput,
     addNewSet,
     removeSet,
