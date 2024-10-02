@@ -101,7 +101,7 @@ export default function CreatePage() {
         <button
           type="submit"
           form="create-workout-form"
-          className="rounded-lg px-3 py-1.5 text-xl font-extrabold text-green-500 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700"
+          className="px-3 py-1.5 text-xl font-extrabold text-green-500 active:scale-95 active:text-green-400 dark:text-green-600 dark:active:text-green-800"
         >
           {isPending ? "Creating..." : "Create"}
         </button>

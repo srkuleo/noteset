@@ -83,7 +83,7 @@ export const SubmitDoneWorkoutButton = ({
           await new Promise((resolve) => setTimeout(resolve, 100));
           setOpen(true);
         }}
-        className="rounded-lg px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:bg-slate-200 dark:text-green-600 dark:active:bg-slate-700"
+        className="px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:text-green-400 dark:text-green-600 dark:active:text-green-800"
       >
         Done
         <p className="sr-only">Done button</p>

@@ -74,7 +74,7 @@ const ChangeTheme = ({
 
           setOpen(true);
         }}
-        className="rounded-lg px-3 py-1.5 text-sm text-violet-500 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700"
+        className="px-3 py-1.5 text-sm font-semibold text-violet-500 active:scale-95 active:text-violet-300 dark:text-violet-400 dark:active:text-violet-600"
       >
         Change
         <p className="sr-only">Change theme</p>
