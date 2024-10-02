@@ -27,7 +27,9 @@ export const HomePageContent = ({
       />
 
       {workouts.length === 0 ? (
-        <EmptyPage />
+        <main className="mt-safe-top flex flex-col justify-center px-6 pb-[91px] pt-[158px]">
+          <EmptyPage />
+        </main>
       ) : (
         <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
           {workouts.map((workout) => (
@@ -104,19 +106,17 @@ export const HomePageContent = ({
 
 const EmptyPage = () => {
   return (
-    <main className="mt-safe-top flex flex-col justify-center px-6 pb-[91px] pt-[158px]">
-      <div className="flex flex-col items-center gap-8 pb-18">
-        <div className="text-slate-400/60 dark:text-slate-700/80">
-          {EmptyIcon}
-        </div>
-
-        <div className="space-y-4 text-center">
-          <h3>Seems like you haven&apos;t created any workout yet</h3>
-          <p className="font-semibold italic text-slate-400/85">
-            Tap the plus button to create one
-          </p>
-        </div>
+    <div className="flex flex-col items-center gap-8 pb-18">
+      <div className="text-slate-400/60 dark:text-slate-700/80">
+        {EmptyIcon}
       </div>
-    </main>
+
+      <div className="space-y-4 text-center">
+        <h3>Seems like you haven&apos;t created any workout yet</h3>
+        <p className="font-semibold italic text-slate-400/85">
+          Tap the plus button to create one
+        </p>
+      </div>
+    </div>
   );
 };
