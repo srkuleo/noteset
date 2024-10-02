@@ -1,3 +1,5 @@
+import { AddIcon } from "./icons/user/modify";
+
 export const LoadingWorkoutsSkeleton = () => {
   return (
     <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
@@ -121,19 +123,16 @@ export const LoadingEditWorkoutPageSkeleton = () => {
     <>
       <main className="mt-safe-top px-8 py-4 pb-[89px] pt-[158px]">
         <div className="space-y-4">
-          {/* Title Input */}
           <div className="space-y-2 px-4">
             <div className="h-4 w-20 animate-pulse bg-slate-200 dark:bg-slate-900" />
             <div className="h-10 animate-pulse rounded-md bg-slate-200 dark:bg-slate-900" />
           </div>
 
-          {/* Description Input */}
           <div className="space-y-2 px-4">
             <div className="h-4 w-32 animate-pulse bg-slate-200 dark:bg-slate-900" />
             <div className="h-10 animate-pulse rounded-md bg-slate-200 dark:bg-slate-900" />
           </div>
 
-          {/* Exercises List */}
           <div className="space-y-4 px-2 pb-2 pt-6">
             {[1, 2, 3, 4].map((skeleton) => (
               <div
@@ -167,13 +166,17 @@ export const LoadingEditWorkoutPageSkeleton = () => {
         </div>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 flex items-center justify-between border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-950">
-        {/* Add Exercise Button */}
-        <div className="h-10 w-10 animate-pulse rounded-full bg-slate-200 p-2 dark:bg-slate-800" />
+      <fieldset className="group fixed inset-x-0 bottom-0 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-900">
+        <footer className="flex items-center justify-between opacity-70">
+          <div className="rounded-full p-1.5 text-violet-400 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700">
+            <AddIcon size={26} strokeWidth={2} />
+          </div>
 
-        {/* Submit Button */}
-        <div className="h-10 w-24 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
-      </footer>
+          <div className="rounded-lg px-3 py-1.5 text-xl font-extrabold text-green-500 active:scale-95 active:bg-slate-200 dark:active:bg-slate-700">
+            Save
+          </div>
+        </footer>
+      </fieldset>
     </>
   );
 };
