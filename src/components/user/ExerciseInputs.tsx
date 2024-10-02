@@ -81,10 +81,11 @@ export const SelectSetsInput = ({
 }: {
   sets: number;
   setsError: string[] | undefined;
-  createSets: (input: string | number) => void;
+  createSets: (newSetsCount: number) => void;
 }) => {
   const chooseSetCount = [1, 2, 3] as const;
   const [needMoreSets, setNeedMoreSets] = useState(false);
+  const [setsCount, setSetsCount] = useState(sets);
 
   return (
     <div className="space-y-1 group-disabled:pointer-events-none group-disabled:opacity-50">
@@ -104,30 +105,45 @@ export const SelectSetsInput = ({
             animate="slide-from-right"
             exit="slide-to-left"
           >
-            <div className="flex max-w-[400px] items-center gap-2 px-1 py-0.5">
+            <div className="flex max-w-[400px] justify-between px-1 py-0.5">
               <input
                 autoFocus
                 id="setsInput"
                 name="sets"
-                value={sets === 0 ? "" : sets}
+                value={setsCount === 0 ? "" : setsCount}
                 type="number"
                 inputMode="numeric"
-                placeholder="More..."
-                onChange={(e) => createSets(e.target.value)}
-                className="w-3/5 rounded-none border-b-2 border-violet-500 bg-transparent py-0.5 font-semibold placeholder-slate-400/80 caret-violet-500 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:outline-none dark:text-white dark:placeholder-slate-500 dark:focus:placeholder-slate-700"
+                placeholder="Sets count"
+                onChange={(e) => setSetsCount(Number(e.target.value))}
+                className="w-1/3 rounded-none border-b-2 border-violet-500 bg-transparent py-0.5 text-center font-semibold placeholder-slate-400/80 caret-violet-500 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:outline-none dark:text-white dark:placeholder-slate-500 dark:focus:placeholder-slate-700"
               />
 
-              <button
-                type="button"
-                onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 100));
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 100));
 
-                  setNeedMoreSets(false);
-                }}
-                className="w-1/5 rounded-lg py-2 font-manrope font-bold text-blue-400 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:bg-slate-800"
-              >
-                Back
-              </button>
+                    createSets(setsCount);
+                    setNeedMoreSets(false);
+                  }}
+                  className="py-2 font-manrope font-bold text-blue-400 active:text-blue-600 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:text-blue-700"
+                >
+                  Done
+                </button>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 100));
+
+                    setNeedMoreSets(false);
+                  }}
+                  className="py-2 font-manrope font-bold text-slate-400 active:text-slate-300 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-500 dark:active:text-slate-700"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </motion.div>
         ) : (
@@ -144,7 +160,10 @@ export const SelectSetsInput = ({
                   key={setCount}
                   id={`Set ${setCount}`}
                   type="button"
-                  onClick={() => createSets(setCount)}
+                  onClick={() => {
+                    createSets(setCount);
+                    setSetsCount(setCount);
+                  }}
                   className={twMerge(
                     "w-1/6 rounded-xl bg-white py-2 font-manrope text-sm font-semibold ring-1 ring-slate-400/40 dark:bg-slate-900/80 dark:ring-slate-700",
                     sets === setCount &&
@@ -155,6 +174,12 @@ export const SelectSetsInput = ({
                 </button>
               ))}
 
+              {sets > 3 && (
+                <div className="w-1/6 rounded-xl bg-green-500 py-2 text-center font-manrope text-sm font-semibold text-white ring-1 ring-slate-400/40 dark:bg-green-600 dark:ring-slate-50">
+                  {sets}
+                </div>
+              )}
+
               <button
                 type="button"
                 onClick={async () => {
@@ -162,9 +187,9 @@ export const SelectSetsInput = ({
 
                   setNeedMoreSets(true);
                 }}
-                className="w-1/5 rounded-lg py-1.5 font-manrope font-bold text-blue-400 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:bg-slate-800"
+                className="py-1.5 font-manrope font-bold text-blue-400 active:text-blue-600 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:text-blue-700"
               >
-                More
+                Other
               </button>
             </div>
           </motion.div>
