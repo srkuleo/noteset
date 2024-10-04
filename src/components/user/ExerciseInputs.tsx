@@ -187,7 +187,7 @@ export const SelectSetsInput = ({
 
                   setNeedMoreSets(true);
                 }}
-                className="py-1.5 font-manrope font-bold text-blue-400 active:text-blue-600 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:text-blue-700"
+                className="py-1.5 pl-2 font-manrope font-bold text-blue-400 active:text-blue-600 disabled:pointer-events-none disabled:opacity-30 dark:text-blue-500 dark:active:text-blue-700"
               >
                 Other
               </button>
@@ -203,11 +203,13 @@ export const RepsAndWeightInputs = ({
   sets,
   setsErrors,
   isPending,
+  markSetAsWarmup,
   modifySets,
 }: {
   sets: SetType[];
   setsErrors: string[] | undefined;
   isPending: boolean;
+  markSetAsWarmup: (setId: string) => void;
   modifySets: (e: React.ChangeEvent<HTMLInputElement>, setId: string) => void;
 }) => {
   return (
@@ -217,7 +219,10 @@ export const RepsAndWeightInputs = ({
           initial={{ height: 0 }}
           animate={{
             height: "auto",
-            transition: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
+            transition: {
+              duration: 0.3,
+              ease: [0.36, 0.66, 0.04, 1],
+            },
           }}
         >
           <div
@@ -225,13 +230,31 @@ export const RepsAndWeightInputs = ({
           >
             <div className="flex gap-4 overflow-x-scroll px-1 py-2 no-scrollbar">
               {sets.map((set, setIndex) => (
-                <div key={set.id} className="flex w-1/3 flex-col gap-2">
-                  <label
-                    htmlFor={`rep ${setIndex + 1}`}
-                    className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
-                  >
-                    Set {setIndex + 1}
-                  </label>
+                <div key={set.id} className="flex max-w-[50%] flex-col gap-2">
+                  <div className="flex justify-between pb-2">
+                    <label
+                      htmlFor={`rep ${setIndex + 1}`}
+                      className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
+                    >
+                      Set {setIndex + 1}
+                    </label>
+
+                    <div className="flex items-center gap-0.5">
+                      <label
+                        htmlFor={`warmup set ${setIndex + 1}`}
+                        className="text-xs"
+                      >
+                        Warmup
+                      </label>
+
+                      <input
+                        id={`warmup set ${setIndex + 1}`}
+                        type="checkbox"
+                        onChange={() => markSetAsWarmup(set.id)}
+                        className="accent-green-500"
+                      />
+                    </div>
+                  </div>
 
                   <input
                     required
@@ -243,7 +266,7 @@ export const RepsAndWeightInputs = ({
                     onChange={(e) => modifySets(e, set.id)}
                     className={twMerge(
                       "input-field",
-                      "px-0 py-1.5 text-center placeholder:text-xs",
+                      "mx-auto max-w-[75%] px-0 py-1.5 text-center placeholder:text-xs",
                       setsErrors && !/^\d+(?:[-+]\d+)?$/.test(set.reps)
                         ? "ring-red-500 dark:ring-red-500"
                         : "",
@@ -261,7 +284,7 @@ export const RepsAndWeightInputs = ({
                     onChange={(e) => modifySets(e, set.id)}
                     className={twMerge(
                       "input-field",
-                      "px-0 py-1.5 text-center placeholder:text-xs",
+                      "mx-auto max-w-[75%] px-0 py-1.5 text-center placeholder:text-xs",
                       setsErrors && !/^\d+(,\d+|\.\d+)?$/.test(set.weight)
                         ? "ring-red-500 dark:ring-red-500"
                         : "",
@@ -271,7 +294,7 @@ export const RepsAndWeightInputs = ({
               ))}
             </div>
 
-            <p className="pl-1 text-xs italic text-slate-400 dark:text-slate-500">
+            <p className="pl-1 pt-2 text-xs italic text-slate-400 dark:text-slate-500">
               (reps: 8-10, 6, 5+2 weight: 27,5, 10, 20.5)
             </p>
           </div>
