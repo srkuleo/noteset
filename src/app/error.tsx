@@ -1,21 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect } from "react";
+import { useTransition } from "react";
 import { LandingPageBar } from "@/components/landing/LandingPageBar";
 import { SadIcon } from "@/components/icons/user/warning";
+import { useRouter } from "next/navigation";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
-  useEffect(() => {
-    console.error(error);
-  }, [error]);
-
+export default function Error({ reset }: { reset: () => void }) {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <>
       <div className="fixed inset-x-0 top-0 bg-white pt-safe-top dark:bg-slate-900">
@@ -30,24 +22,18 @@ export default function Error({
             Sorry, something went wrong...
           </h3>
 
-          <div className="flex flex-col items-center gap-4">
-            <Link
-              href="/home"
-              className="rounded-xl bg-violet-500 px-4 py-2 font-semibold text-white shadow-sm transition active:scale-90 active:bg-violet-400 dark:bg-violet-600 dark:active:bg-violet-800"
-            >
-              Go to Home page
-            </Link>
-
-            <button
-              className="rounded-xl px-4 py-2 text-sm font-semibold active:bg-slate-300 dark:text-slate-300 active:dark:bg-slate-800"
-              onClick={
-                // Attempt to recover by trying to re-render the segment
-                () => reset()
-              }
-            >
-              Try again!
-            </button>
-          </div>
+          <button
+            disabled={isPending}
+            onClick={() => {
+              startTransition(() => {
+                router.refresh();
+                reset();
+              });
+            }}
+            className="rounded-lg bg-violet-500 px-5 py-2 font-semibold text-white shadow-sm transition active:scale-90 active:bg-violet-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-violet-600 dark:active:bg-violet-800"
+          >
+            {isPending ? "Recovering..." : "Try again"}
+          </button>
         </div>
       </main>
     </>
