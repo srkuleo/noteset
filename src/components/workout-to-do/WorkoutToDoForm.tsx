@@ -26,12 +26,15 @@ export const WorkoutToDoForm = ({
 }: {
   workoutToDo: CreateWorkoutType;
 }) => {
+  const router = useRouter();
+  const [openDoneModal, setOpenDoneModal] = useState(false);
   const {
     currWorkout,
     placeholderExercises,
     removeMode,
     toggleExerciseDoneState,
     handleNoteInput,
+    resetNoteInput,
     handleSetsInput,
     addNewSet,
     removeSet,
@@ -40,6 +43,7 @@ export const WorkoutToDoForm = ({
     resetChangesInRemoveMode,
     saveChangesInRemoveMode,
   } = useWorkoutToDo(workoutToDo);
+  const { endWorkout, calcWorkoutDuration } = useWorkoutDuration();
   const { mutate: clientAction, isPending } = useMutation({
     mutationFn: async () => {
       const workoutDuration = calcWorkoutDuration();
@@ -60,9 +64,6 @@ export const WorkoutToDoForm = ({
       setOpenDoneModal(false);
     },
   });
-  const { endWorkout, calcWorkoutDuration } = useWorkoutDuration();
-  const [openDoneModal, setOpenDoneModal] = useState(false);
-  const router = useRouter();
 
   return (
     <>
@@ -106,6 +107,7 @@ export const WorkoutToDoForm = ({
                 exercise={exercise}
                 removeMode={removeMode}
                 handleNoteInput={handleNoteInput}
+                resetNoteInput={resetNoteInput}
               />
 
               <div className="py-8">
@@ -328,6 +330,7 @@ const NoteInputField = ({
   exercise,
   removeMode,
   handleNoteInput,
+  resetNoteInput,
 }: {
   exercise: ExerciseType;
   removeMode: boolean;
@@ -335,8 +338,10 @@ const NoteInputField = ({
     event: React.ChangeEvent<HTMLTextAreaElement>,
     exerciseId: string,
   ) => void;
+  resetNoteInput: (exerciseId: string) => void;
 }) => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [isFocused, setIsFocused] = useState(false);
 
   useEffect(() => {
     if (textAreaRef.current !== null) {
@@ -347,13 +352,46 @@ const NoteInputField = ({
   }, [exercise.note]);
 
   return (
-    <textarea
-      ref={textAreaRef}
-      disabled={removeMode}
-      placeholder="Leave a note..."
-      rows={1}
-      onChange={(e) => handleNoteInput(e, exercise.id)}
-      className="rounded-none bg-transparent py-1.5 font-semibold placeholder-slate-400/80 caret-violet-500 no-scrollbar placeholder:text-sm placeholder:italic focus:rounded-lg focus:border focus:border-violet-300 focus:bg-slate-50 focus:px-1.5 focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-white dark:placeholder-slate-500 dark:focus:border-violet-500 dark:focus:bg-slate-900 dark:focus:placeholder-slate-700"
-    />
+    <div
+      className={`relative w-full pt-2 ${isFocused && "rounded-lg border border-violet-300 bg-slate-50 px-2 dark:border-violet-500 dark:bg-slate-900"}`}
+    >
+      <textarea
+        ref={textAreaRef}
+        disabled={removeMode}
+        value={exercise.note ? exercise.note : ""}
+        placeholder="Leave a note..."
+        rows={1}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onChange={(e) => handleNoteInput(e, exercise.id)}
+        className="w-full rounded-none bg-transparent pr-6 font-semibold text-slate-500/85 placeholder-slate-400 caret-violet-500 no-scrollbar placeholder:text-sm placeholder:italic focus:text-slate-500 focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-slate-300 dark:placeholder-slate-500 dark:focus:text-white dark:focus:placeholder-slate-600"
+      />
+
+      {exercise.note && isFocused && (
+        <button
+          type="button"
+          onMouseDown={(e) => {
+            e.preventDefault();
+            resetNoteInput(exercise.id);
+          }}
+          className="absolute right-2 top-2 text-slate-400 dark:text-slate-500"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.8}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      )}
+    </div>
   );
 };
