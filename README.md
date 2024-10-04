@@ -8,8 +8,8 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page._
+- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page. Add "warmup set" section in exercise card and workout to do form._
 
-- _Finish logs page UI - add search and filter option to display workouts with status: done or archived._
+- _Finish logs page UI - add search and filter option to display workouts with status: done or archived. Make a design similar to Barbers logs._
 
 - _Complete profile UI, add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
