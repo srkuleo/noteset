@@ -24,7 +24,7 @@ export default function NotFound() {
 
           <Link
             href="/home"
-            className="rounded-xl bg-violet-500 px-4 py-2 font-semibold text-white shadow-sm transition active:scale-90 active:bg-violet-400 dark:bg-violet-600 dark:active:bg-violet-800"
+            className="rounded-lg bg-violet-500 px-4 py-2 font-semibold text-white shadow-sm transition active:scale-90 active:bg-violet-400 dark:bg-violet-600 dark:active:bg-violet-800"
           >
             Go to Home page
           </Link>
