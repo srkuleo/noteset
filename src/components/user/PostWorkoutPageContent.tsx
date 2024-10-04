@@ -114,7 +114,7 @@ export const PostWorkoutPageContent = ({
                 </div>
               </div>
 
-              <p className="px-4 pb-4 text-center text-lg font-semibold text-slate-500/90 dark:text-slate-300">
+              <p className="px-4 pb-6 text-center text-lg font-semibold text-slate-500/90 dark:text-slate-300">
                 Would you like to edit your next {workout.title} workout?
               </p>
 
