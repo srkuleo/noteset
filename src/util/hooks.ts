@@ -51,6 +51,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
               id: generateIdFromEntropySize(10),
               reps: "",
               weight: "",
+              warmup: false,
             }),
           ),
       ];
@@ -88,6 +89,19 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     }
   }
 
+  function markSetAsWarmup(setId: string) {
+    const modifiedSets = tempExercise.sets.map((set) =>
+      set.id === setId ? { ...set, warmup: !set.warmup } : set,
+    );
+
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        sets: modifiedSets,
+      };
+    });
+  }
+
   function modifySets(e: React.ChangeEvent<HTMLInputElement>, setId: string) {
     const modifiedSets = tempExercise.sets.map((set) =>
       set.id === setId ? { ...set, [e.target.name]: e.target.value } : set,
@@ -108,6 +122,7 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     handleNameInput,
     handleNoteInput,
     createSets,
+    markSetAsWarmup,
     modifySets,
   };
 };
@@ -281,6 +296,21 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     });
   }
 
+  function resetNoteInput(exerciseId: string) {
+    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+      exercise.id === exerciseId
+        ? {
+            ...exercise,
+            note: "",
+          }
+        : exercise,
+    );
+
+    setCurrWorkout((prev) => {
+      return { ...prev, exercises: modifiedCurrExercises };
+    });
+  }
+
   const handleSetsInput = debounce(
     (
       e: React.ChangeEvent<HTMLInputElement>,
@@ -426,6 +456,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     removeMode,
     toggleExerciseDoneState,
     handleNoteInput,
+    resetNoteInput,
     handleSetsInput,
     addNewSet,
     removeSet,
