@@ -101,6 +101,7 @@ const EditExerciseForm = ({
     handleNameInput,
     handleNoteInput,
     createSets,
+    markSetAsWarmup,
     modifySets,
   } = useExerciseForm({ ...exercise });
 
@@ -136,6 +137,7 @@ const EditExerciseForm = ({
         sets={tempExercise.sets}
         setsErrors={exerciseFormErrors.errors?.sets}
         isPending={isPending}
+        markSetAsWarmup={markSetAsWarmup}
         modifySets={modifySets}
       />
 

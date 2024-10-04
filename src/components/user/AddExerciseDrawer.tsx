@@ -118,8 +118,11 @@ const AddExerciseForm = ({
     handleNameInput,
     handleNoteInput,
     createSets,
+    markSetAsWarmup,
     modifySets,
   } = useExerciseForm(initExercise);
+
+  console.log(tempExercise.sets);
 
   return (
     <form
@@ -154,6 +157,7 @@ const AddExerciseForm = ({
         sets={tempExercise.sets}
         setsErrors={exerciseFormErrors.errors?.sets}
         isPending={isPending}
+        markSetAsWarmup={markSetAsWarmup}
         modifySets={modifySets}
       />
 
