@@ -26,6 +26,7 @@ const SetSchema = z.object({
     .regex(/^\d+(,\d+|\.\d+)?$/, {
       message: "Weight must be whole or decimal number.",
     }),
+  warmup: z.boolean().optional(),
 });
 
 export type SetType = z.infer<typeof SetSchema>;
