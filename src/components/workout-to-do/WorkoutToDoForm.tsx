@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,15 +11,13 @@ import { biggerSlideX, slideX } from "@/util/utils";
 import { showToast } from "../Toasts";
 import { BackButtonModal } from "../BackButtonModal";
 import { WorkoutToDoTooltip } from "../Tooltips";
-import {
-  AddIcon,
-  RemoveExerciseIcon,
-  TrashBinIcon,
-} from "../icons/user/modify";
+import { NoteInputField } from "./NoteInputField";
+import { AddNewSetButton } from "./AddNewSetButton";
+import { RemoveExerciseIcon, TrashBinIcon } from "../icons/user/modify";
 import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 import { SubmitDoneWorkoutButton } from "../SubmitButtons";
 
-import type { CreateWorkoutType, ExerciseType } from "@/util/types";
+import type { CreateWorkoutType } from "@/util/types";
 
 export const WorkoutToDoForm = ({
   workoutToDo,
@@ -110,136 +108,267 @@ export const WorkoutToDoForm = ({
                 resetNoteInput={resetNoteInput}
               />
 
-              <div className="py-8">
-                <div className="flex justify-evenly pb-3 text-center">
-                  <label
-                    htmlFor={`${exercise.name} - rep 1`}
-                    className="w-1/3 font-manrope text-xs font-semibold uppercase dark:text-slate-300"
-                  >
-                    Reps
-                  </label>
+              <div className="space-y-6 py-8">
+                {exercise.sets.some((set) => set.warmup) && (
+                  <div>
+                    <p className="pb-3 text-center font-manrope text-xs font-semibold uppercase text-slate-500/90 dark:text-slate-300">
+                      Warmup sets
+                    </p>
 
-                  <label
-                    htmlFor={`${exercise.name} - weight 1`}
-                    className="w-1/3 font-manrope text-xs font-semibold uppercase dark:text-slate-300"
-                  >
-                    Weights - kg
-                  </label>
-                </div>
-
-                <AnimatePresence initial={false}>
-                  {exercise.sets.map((set, setIndex) => (
-                    <motion.div
-                      key={set.id}
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{
-                        opacity: 1,
-                        height: "auto",
-                      }}
-                      exit={{
-                        opacity: 0,
-                        height: 0,
-                      }}
-                      transition={{
-                        opacity: { duration: 0.3, ease: [0.36, 0.66, 0.04, 1] },
-                        height: {
-                          duration: 0.5,
-                          ease: [0.36, 0.66, 0.04, 1],
-                        },
-                      }}
-                    >
-                      <div
-                        className={`flex items-center justify-evenly ${setIndex !== exercise.sets.length - 1 ? "pb-3" : "pb-0"}`}
-                      >
-                        <input
-                          type="text"
-                          name="reps"
-                          disabled={removeMode}
-                          inputMode="tel"
-                          placeholder={
-                            placeholderExercises[exerciseIndex]?.sets[setIndex]
-                              ?.reps
-                          }
-                          onChange={(e) => {
-                            handleSetsInput(e, exercise.id, set.id);
-                          }}
-                          className={twMerge(
-                            "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
-                            !/^\d+(?:[-+]\d+)?$/.test(set.reps) &&
-                              set.reps !== "" &&
-                              "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
-                            exercise.done &&
-                              "pointer-events-none bg-green-100 italic dark:bg-green-950",
-                          )}
-                        />
-
-                        <input
-                          type="text"
-                          name="weight"
-                          disabled={removeMode}
-                          inputMode="decimal"
-                          placeholder={
-                            placeholderExercises[exerciseIndex]?.sets[setIndex]
-                              ?.weight
-                          }
-                          onChange={(e) => {
-                            handleSetsInput(e, exercise.id, set.id);
-                          }}
-                          className={twMerge(
-                            "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
-                            !/^\d+(,\d+|\.\d+)?$/.test(set.weight) &&
-                              set.weight !== "" &&
-                              "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
-                            exercise.done &&
-                              "pointer-events-none bg-green-100 italic dark:bg-green-950",
-                          )}
-                        />
-                        <AnimatePresence>
-                          {removeMode && (
-                            <motion.div
-                              key={`remove-set-btn-${set.id}`}
-                              variants={slideX}
-                              initial="right-hidden"
-                              animate="slide-from-right"
-                              exit={{
-                                opacity: 0,
-                                x: 16,
-                                transition: {
-                                  duration: 0.15,
-                                  ease: [0.36, 0.66, 0.04, 1],
-                                },
-                              }}
+                    <AnimatePresence initial={false}>
+                      {exercise.sets
+                        .filter((set) => set.warmup)
+                        .map((warmupSet, warmupSetIndex, warmupSets) => (
+                          <motion.div
+                            key={warmupSet.id}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{
+                              opacity: 1,
+                              height: "auto",
+                            }}
+                            exit={{
+                              opacity: 0,
+                              height: 0,
+                            }}
+                            transition={{
+                              opacity: {
+                                duration: 0.3,
+                                ease: [0.36, 0.66, 0.04, 1],
+                              },
+                              height: {
+                                duration: 0.5,
+                                ease: [0.36, 0.66, 0.04, 1],
+                              },
+                            }}
+                          >
+                            <div
+                              className={`flex items-center justify-evenly ${warmupSetIndex !== warmupSets.length - 1 ? "pb-3" : "pb-0"}`}
                             >
-                              <button
-                                type="button"
-                                disabled={exercise.done}
-                                onClick={() => removeSet(exercise.id, set.id)}
-                                className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
-                              >
-                                {RemoveExerciseIcon}
-                              </button>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
+                              <input
+                                type="text"
+                                name="reps"
+                                disabled={removeMode}
+                                inputMode="tel"
+                                placeholder={
+                                  placeholderExercises[
+                                    exerciseIndex
+                                  ]?.sets.filter(
+                                    (set) => set.id === warmupSet.id,
+                                  )[0]?.reps
+                                }
+                                onChange={(e) => {
+                                  handleSetsInput(e, exercise.id, warmupSet.id);
+                                }}
+                                className={twMerge(
+                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                  !/^\d+(?:[-+]\d+)?$/.test(warmupSet.reps) &&
+                                    warmupSet.reps !== "" &&
+                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                  exercise.done &&
+                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
+                                )}
+                              />
+
+                              <input
+                                type="text"
+                                name="weight"
+                                disabled={removeMode}
+                                inputMode="decimal"
+                                placeholder={
+                                  placeholderExercises[
+                                    exerciseIndex
+                                  ]?.sets.filter(
+                                    (set) => set.id === warmupSet.id,
+                                  )[0]?.weight
+                                }
+                                onChange={(e) => {
+                                  handleSetsInput(e, exercise.id, warmupSet.id);
+                                }}
+                                className={twMerge(
+                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                  !/^\d+(,\d+|\.\d+)?$/.test(
+                                    warmupSet.weight,
+                                  ) &&
+                                    warmupSet.weight !== "" &&
+                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                  exercise.done &&
+                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
+                                )}
+                              />
+
+                              <AnimatePresence>
+                                {removeMode && (
+                                  <motion.div
+                                    key={`remove-warmupSet-btn-${warmupSet.id}`}
+                                    variants={slideX}
+                                    initial="right-hidden"
+                                    animate="slide-from-right"
+                                    exit={{
+                                      opacity: 0,
+                                      x: 16,
+                                      transition: {
+                                        duration: 0.15,
+                                        ease: [0.36, 0.66, 0.04, 1],
+                                      },
+                                    }}
+                                  >
+                                    <button
+                                      type="button"
+                                      disabled={exercise.done}
+                                      onClick={() =>
+                                        removeSet(exercise.id, warmupSet.id)
+                                      }
+                                      className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
+                                    >
+                                      {RemoveExerciseIcon}
+                                    </button>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+                )}
+
+                {exercise.sets.some((set) => !set.warmup) && (
+                  <div>
+                    <p className="pb-3 text-center font-manrope text-xs font-semibold uppercase text-slate-500/90 dark:text-slate-300">
+                      Working sets
+                    </p>
+
+                    <AnimatePresence initial={false}>
+                      {exercise.sets
+                        .filter((set) => !set.warmup)
+                        .map((workingSet, workingSetIndex, workingSets) => (
+                          <motion.div
+                            key={workingSet.id}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{
+                              opacity: 1,
+                              height: "auto",
+                            }}
+                            exit={{
+                              opacity: 0,
+                              height: 0,
+                            }}
+                            transition={{
+                              opacity: {
+                                duration: 0.3,
+                                ease: [0.36, 0.66, 0.04, 1],
+                              },
+                              height: {
+                                duration: 0.5,
+                                ease: [0.36, 0.66, 0.04, 1],
+                              },
+                            }}
+                          >
+                            <div
+                              className={`flex items-center justify-evenly ${workingSetIndex !== workingSets.length - 1 ? "pb-3" : "pb-0"}`}
+                            >
+                              <input
+                                type="text"
+                                name="reps"
+                                disabled={removeMode}
+                                inputMode="tel"
+                                placeholder={
+                                  placeholderExercises[
+                                    exerciseIndex
+                                  ]?.sets.filter(
+                                    (set) => set.id === workingSet.id,
+                                  )[0]?.reps
+                                }
+                                onChange={(e) => {
+                                  handleSetsInput(
+                                    e,
+                                    exercise.id,
+                                    workingSet.id,
+                                  );
+                                }}
+                                className={twMerge(
+                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                  !/^\d+(?:[-+]\d+)?$/.test(workingSet.reps) &&
+                                    workingSet.reps !== "" &&
+                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                  exercise.done &&
+                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
+                                )}
+                              />
+
+                              <input
+                                type="text"
+                                name="weight"
+                                disabled={removeMode}
+                                inputMode="decimal"
+                                placeholder={
+                                  placeholderExercises[
+                                    exerciseIndex
+                                  ]?.sets.filter(
+                                    (set) => set.id === workingSet.id,
+                                  )[0]?.weight
+                                }
+                                onChange={(e) => {
+                                  handleSetsInput(
+                                    e,
+                                    exercise.id,
+                                    workingSet.id,
+                                  );
+                                }}
+                                className={twMerge(
+                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                  !/^\d+(,\d+|\.\d+)?$/.test(
+                                    workingSet.weight,
+                                  ) &&
+                                    workingSet.weight !== "" &&
+                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                  exercise.done &&
+                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
+                                )}
+                              />
+
+                              <AnimatePresence>
+                                {removeMode && (
+                                  <motion.div
+                                    key={`remove-workingSet-btn-${workingSet.id}`}
+                                    variants={slideX}
+                                    initial="right-hidden"
+                                    animate="slide-from-right"
+                                    exit={{
+                                      opacity: 0,
+                                      x: 16,
+                                      transition: {
+                                        duration: 0.15,
+                                        ease: [0.36, 0.66, 0.04, 1],
+                                      },
+                                    }}
+                                  >
+                                    <button
+                                      type="button"
+                                      disabled={exercise.done}
+                                      onClick={() =>
+                                        removeSet(exercise.id, workingSet.id)
+                                      }
+                                      className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
+                                    >
+                                      {RemoveExerciseIcon}
+                                    </button>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </div>
+                          </motion.div>
+                        ))}
+                    </AnimatePresence>
+                  </div>
+                )}
               </div>
 
-              <button
-                type="button"
-                disabled={removeMode || exercise.done}
-                onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 100));
-
-                  addNewSet(exercise.id);
-                }}
-                className="mx-auto flex w-fit items-center gap-1 rounded-lg px-3 py-[5px] text-sm font-bold active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-300 dark:active:bg-slate-800"
-              >
-                <AddIcon size={20} strokeWidth={1.2} />
-                <p className="font-semibold uppercase">Add set</p>
-              </button>
+              <AddNewSetButton
+                exercise={exercise}
+                removeMode={removeMode}
+                addNewSet={addNewSet}
+              />
             </div>
           ))}
         </form>
@@ -323,75 +452,5 @@ export const WorkoutToDoForm = ({
         </AnimatePresence>
       </footer>
     </>
-  );
-};
-
-const NoteInputField = ({
-  exercise,
-  removeMode,
-  handleNoteInput,
-  resetNoteInput,
-}: {
-  exercise: ExerciseType;
-  removeMode: boolean;
-  handleNoteInput: (
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-    exerciseId: string,
-  ) => void;
-  resetNoteInput: (exerciseId: string) => void;
-}) => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [isFocused, setIsFocused] = useState(false);
-
-  useEffect(() => {
-    if (textAreaRef.current !== null) {
-      textAreaRef.current.style.height = "auto";
-      textAreaRef.current.style.height =
-        textAreaRef.current.scrollHeight + "px";
-    }
-  }, [exercise.note]);
-
-  return (
-    <div
-      className={`relative w-full pt-2 ${isFocused && "rounded-lg border border-violet-300 bg-slate-50 px-2 dark:border-violet-500 dark:bg-slate-900"}`}
-    >
-      <textarea
-        ref={textAreaRef}
-        disabled={removeMode}
-        value={exercise.note ? exercise.note : ""}
-        placeholder="Leave a note..."
-        rows={1}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        onChange={(e) => handleNoteInput(e, exercise.id)}
-        className="w-full rounded-none bg-transparent pr-6 font-semibold text-slate-500/85 placeholder-slate-400 caret-violet-500 no-scrollbar placeholder:text-sm placeholder:italic focus:text-slate-500 focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-slate-300 dark:placeholder-slate-500 dark:focus:text-white dark:focus:placeholder-slate-600"
-      />
-
-      {exercise.note && isFocused && (
-        <button
-          type="button"
-          onMouseDown={(e) => {
-            e.preventDefault();
-            resetNoteInput(exercise.id);
-          }}
-          className="absolute right-2 top-2 text-slate-400 dark:text-slate-500"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.8}
-            stroke="currentColor"
-            className="size-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18 18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
-      )}
-    </div>
   );
 };
