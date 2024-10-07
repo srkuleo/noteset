@@ -12,7 +12,7 @@ export type ExerciseActionResponse = {
   message?: string;
 };
 
-const SetSchema = z.object({
+export const SetSchema = z.object({
   id: z.string(),
   reps: z
     .string()
@@ -30,9 +30,12 @@ const SetSchema = z.object({
 });
 
 export type SetType = z.infer<typeof SetSchema>;
+export type SetWithoutId = Omit<SetType, "id">;
 
-const OptionalSetSchema = z.object({
-  id: z.string(),
+const OptionalSetSchema = SetSchema.pick({
+  id: true,
+  warmup: true,
+}).extend({
   reps: z.union([
     z
       .string()
@@ -192,11 +195,21 @@ export const signUpSchema = z
   });
 
 export const loginSchema = z.object({
-  username: z
+  identifier: z
     .string()
     .trim()
-    .min(3, { message: "Invalid username." })
-    .max(32, { message: "Invalid username." }),
+    .min(3, { message: "Invalid username or email." })
+    .max(32, { message: "Invalid username or email." })
+    .refine(
+      (value) => {
+        const isUsername = /^[a-zA-Z0-9_]{3,32}$/.test(value);
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        return isUsername || isEmail;
+      },
+      {
+        message: "Must be a valid username or email.",
+      },
+    ),
   password: z.string().superRefine((password, context) => {
     if (password.length < 8 || !/[0-9]/.test(password)) {
       context.addIssue({
