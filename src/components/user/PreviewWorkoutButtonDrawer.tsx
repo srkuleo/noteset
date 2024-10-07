@@ -67,7 +67,7 @@ export const PreviewWorkoutButtonDrawer = ({
                 {workout.exercises.map((exercise, index) => (
                   <Fragment key={exercise.id}>
                     <p
-                      className={`flex items-center pr-2 font-bold ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
+                      className={`flex items-center pr-2 text-base font-bold text-slate-600 dark:text-white ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
                       {exercise.name}
                     </p>
@@ -80,14 +80,20 @@ export const PreviewWorkoutButtonDrawer = ({
                           key={set.id}
                           className="flex min-w-28 justify-center gap-1 border-r-2 border-slate-100 last:border-r-0 dark:border-slate-800"
                         >
-                          <p className="font-bold">{set.reps}</p>
-                          {set.weight && <p>({set.weight}kg)</p>}
+                          <p className="font-bold dark:text-slate-200">
+                            {set.reps}
+                          </p>
+                          {set.weight && (
+                            <p className="dark:text-slate-400">
+                              ({set.weight}kg)
+                            </p>
+                          )}
                         </div>
                       ))}
                     </div>
 
                     <p
-                      className={`flex items-center pl-4 font-semibold ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
+                      className={`flex items-center pl-4 font-semibold text-slate-600 dark:text-white ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
                       {exercise.note ? exercise.note : "/"}
                     </p>
