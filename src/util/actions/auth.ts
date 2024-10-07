@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { eq, ilike } from "drizzle-orm";
+import { eq, ilike, or } from "drizzle-orm";
 import { generateIdFromEntropySize, type Session, type User } from "lucia";
 import { db } from "@/db";
 import { users } from "@/db/schema";
@@ -107,7 +107,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
 
 export async function login(formData: FormData) {
   const loginRaw = loginSchema.safeParse({
-    username: formData.get("username"),
+    identifier: formData.get("identifier"),
     password: formData.get("password"),
   });
 
@@ -115,10 +115,10 @@ export async function login(formData: FormData) {
     throw new Error("Invalid credentials");
   }
 
-  const { username, password } = loginRaw.data;
+  const { identifier, password } = loginRaw.data;
 
   const user = await db.query.users.findFirst({
-    where: eq(users.username, username),
+    where: or(eq(users.username, identifier), eq(users.email, identifier)),
   });
 
   if (!user) {
