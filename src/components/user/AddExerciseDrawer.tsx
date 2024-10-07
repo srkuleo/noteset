@@ -68,6 +68,7 @@ export const AddExerciseDrawer = ({
               updateExercises={updateExercises}
               closeDrawer={() => setOpen(false)}
             />
+
             <Drawer.Handle
               preventCycle
               className="mt-2 bg-slate-300 dark:bg-slate-600"
@@ -121,8 +122,6 @@ const AddExerciseForm = ({
     markSetAsWarmup,
     modifySets,
   } = useExerciseForm(initExercise);
-
-  console.log(tempExercise.sets);
 
   return (
     <form
