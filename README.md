@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page. Add "warmup set" section in exercise card and workout to do form._
+- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page. Add switch button to choose between archived and current workouts on home page utilizing searchParams._
 
 - _Finish logs page UI - add search and filter option to display workouts with status: done or archived. Make a design similar to Barbers logs._
 
