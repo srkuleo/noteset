@@ -3,12 +3,13 @@ import { useState } from "react";
 import { generateIdFromEntropySize } from "lucia";
 
 import type {
-  ExerciseType,
   CreateWorkoutType,
+  ExerciseType,
+  ExerciseToDoType,
   ExerciseActionResponse,
   SetType,
+  SetWithoutId,
   WorkoutToDoType,
-  ExerciseToDoType,
 } from "./types";
 
 const initErrors: ExerciseActionResponse = {
@@ -175,7 +176,6 @@ export const useWorkouts = (initWorkout: CreateWorkoutType) => {
 
   function editExercises(editedExercise: ExerciseType) {
     const modifiedExercises = workout.exercises.map((exercise) => {
-      console.log("Iterating: ", exercise.id, editedExercise.id);
       if (exercise.id === editedExercise.id) {
         return editedExercise;
       } else {
@@ -247,6 +247,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
         ...exercise,
         sets: exercise.sets.map((set) => ({
           id: set.id,
+          warmup: set.warmup,
           reps: "",
           weight: "",
         })),
@@ -340,18 +341,27 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     200,
   );
 
-  function addNewSet(exerciseId: string) {
+  function addNewSet(exerciseId: string, setData: SetWithoutId) {
     const newSet: SetType = {
       id: generateIdFromEntropySize(10),
-      reps: "",
-      weight: "",
+      reps: setData.reps,
+      weight: setData.weight,
+      warmup: setData.warmup,
     };
 
     const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
-            sets: [...exercise.sets, newSet],
+            sets: [
+              ...exercise.sets,
+              {
+                id: newSet.id,
+                reps: "",
+                weight: "",
+                warmup: newSet.warmup,
+              },
+            ],
           }
         : exercise,
     );
