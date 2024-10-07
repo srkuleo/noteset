@@ -228,19 +228,52 @@ const ExerciseCard = ({
         </button>
       </div>
 
-      <div className="flex flex-col items-center gap-2">
-        {exercise.sets.map((set) => (
-          <div
-            key={set.id}
-            className="flex w-full justify-center gap-3 text-sm"
-          >
-            <p className="w-1/5 text-right">{set.reps}</p>
+      <div className="flex flex-col gap-6">
+        {exercise.sets.some((set) => set.warmup) && (
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-xs font-semibold uppercase text-slate-400/90 dark:text-slate-400">
+              Warmup sets
+            </p>
 
-            <div className="w-[1px] bg-slate-200 dark:bg-slate-700" />
+            {exercise.sets.map((set) =>
+              set.warmup ? (
+                <div
+                  key={set.id}
+                  className="flex w-full justify-center gap-3 text-sm"
+                >
+                  <p className="w-1/5 text-right">{set.reps}</p>
 
-            <p className="w-1/5 text-left">{set.weight} kg</p>
+                  <div className="w-[1px] bg-slate-200 dark:bg-slate-700" />
+
+                  <p className="w-1/5 text-left">{set.weight} kg</p>
+                </div>
+              ) : null,
+            )}
           </div>
-        ))}
+        )}
+
+        {exercise.sets.some((set) => !set.warmup) && (
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-xs font-semibold uppercase text-slate-400/90 dark:text-slate-400">
+              Working sets
+            </p>
+
+            {exercise.sets.map((set) =>
+              !set.warmup ? (
+                <div
+                  key={set.id}
+                  className="flex w-full justify-center gap-3 text-sm"
+                >
+                  <p className="w-1/5 text-right">{set.reps}</p>
+
+                  <div className="w-[1px] bg-slate-200 dark:bg-slate-700" />
+
+                  <p className="w-1/5 text-left">{set.weight} kg</p>
+                </div>
+              ) : null,
+            )}
+          </div>
+        )}
       </div>
 
       {exercise.note && (
