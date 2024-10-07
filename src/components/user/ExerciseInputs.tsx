@@ -228,7 +228,7 @@ export const RepsAndWeightInputs = ({
           <div
             className={`${isPending && "pointer-events-non opacity-50"} flex flex-col overflow-hidden`}
           >
-            <div className="flex gap-4 overflow-x-scroll px-1 py-2 no-scrollbar">
+            <div className="flex gap-6 overflow-x-scroll px-1 py-4 no-scrollbar">
               {sets.map((set, setIndex) => (
                 <div key={set.id} className="flex max-w-[50%] flex-col gap-2">
                   <div className="flex justify-between pb-2">
@@ -250,6 +250,7 @@ export const RepsAndWeightInputs = ({
                       <input
                         id={`warmup set ${setIndex + 1}`}
                         type="checkbox"
+                        checked={set.warmup}
                         onChange={() => markSetAsWarmup(set.id)}
                         className="accent-green-500"
                       />
@@ -294,7 +295,7 @@ export const RepsAndWeightInputs = ({
               ))}
             </div>
 
-            <p className="pl-1 pt-2 text-xs italic text-slate-400 dark:text-slate-500">
+            <p className="pl-1 text-xs italic text-slate-400 dark:text-slate-500">
               (reps: 8-10, 6, 5+2 weight: 27,5, 10, 20.5)
             </p>
           </div>
