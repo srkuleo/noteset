@@ -23,10 +23,10 @@ export const LoginForm = () => {
     <form action={serverAction} className="flex flex-col">
       <fieldset disabled={isPending} className="group space-y-4">
         <input
-          id="username"
-          name="username"
+          id="identifier"
+          name="identifier"
           type="text"
-          placeholder="Username"
+          placeholder="Username or email"
           autoComplete="username"
           className={twMerge(
             "input-field",
