@@ -1,6 +1,5 @@
 "use server";
 
-// import { Argon2id } from "oslo/password";
 import bcrypt from "bcrypt";
 import { cache } from "react";
 import { cookies } from "next/headers";
@@ -76,8 +75,6 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
     };
   }
 
-  //When oslo fixes an issue with NextJS use Argon2id class for hashing
-  // const hashedPassword = await new Argon2id().hash(password);
   const hashedPassword = await bcrypt.hash(password, 10);
   const userId = generateIdFromEntropySize(10);
 
