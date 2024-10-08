@@ -3,6 +3,8 @@ import { archiveWorkout, removeWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { DangerIcon } from "../icons/user/warning";
 
+import type { WorkoutStatusType } from "@/util/types";
+
 export const RemoveWorkoutModal = ({
   open,
   setOpen,
@@ -10,7 +12,7 @@ export const RemoveWorkoutModal = ({
 }: {
   open: boolean;
   setOpen: (isOpen: boolean) => void;
-  workoutToRemove: { title: string; id: number };
+  workoutToRemove: { title: string; id: number; status: WorkoutStatusType };
 }) => {
   return (
     <Drawer.Root
@@ -38,20 +40,22 @@ export const RemoveWorkoutModal = ({
             </Drawer.Title>
 
             <div className="flex flex-col">
-              <button
-                onClick={async () => {
-                  const res = await archiveWorkout(
-                    workoutToRemove.id,
-                    workoutToRemove.title,
-                  );
+              {workoutToRemove.status === "current" && (
+                <button
+                  onClick={async () => {
+                    const res = await archiveWorkout(
+                      workoutToRemove.id,
+                      workoutToRemove.title,
+                    );
 
-                  setOpen(false);
-                  showToast(res.message);
-                }}
-                className="border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
-              >
-                Archive {workoutToRemove.title}
-              </button>
+                    setOpen(false);
+                    showToast(res.message);
+                  }}
+                  className="border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
+                >
+                  Archive {workoutToRemove.title}
+                </button>
+              )}
 
               <button
                 onClick={async () => {
