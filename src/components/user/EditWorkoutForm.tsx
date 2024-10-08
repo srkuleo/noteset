@@ -33,7 +33,7 @@ export const EditWorkoutForm = ({
     },
     onSuccess: (res) => {
       if (res.status === "success-redirect") {
-        showToast(res.message, "/home", "View workouts");
+        showToast(res.message, "/home?q=current", "View workouts");
       }
 
       if (res.status === "error") {

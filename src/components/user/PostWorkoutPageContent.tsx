@@ -42,7 +42,7 @@ export const PostWorkoutPageContent = ({
     },
     onSuccess: (res) => {
       if (res.status === "success-redirect" && res.message) {
-        showToast(res.message, "/home", "View workouts");
+        showToast(res.message, "/home?q=current", "View workouts");
         setPageStatus("workout-updated");
       }
 
@@ -106,6 +106,7 @@ export const PostWorkoutPageContent = ({
 
                 <div className="flex justify-between">
                   <p className="font-manrope text-lg font-semibold">Date:</p>
+
                   <FormatDate
                     date={submittedWorkout.doneAt}
                     withDayOfTheWeek

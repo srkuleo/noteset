@@ -10,7 +10,7 @@ export default async function LandingPageLayout({
   const { user } = await getAuth();
 
   if (user) {
-    redirect("/home");
+    redirect("/home?q=current");
   }
 
   return (

@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     orientation: "portrait-primary",
     id: "/home",
-    start_url: "/home",
+    start_url: "/home?q=current",
     scope: "/",
     display_override: ["standalone", "minimal-ui", "window-controls-overlay"],
     //still waiting for the option to put prefer color schema
