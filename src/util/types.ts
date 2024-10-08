@@ -231,3 +231,5 @@ export type TimeFormatType = (typeof timeFormatValues)[number];
 export type UserPreferences = {
   timeFormat: TimeFormatType;
 };
+
+export type WorkoutStatusType = (typeof workoutStatus)[number];
