@@ -64,7 +64,7 @@ export async function createWorkout(
 
     console.log(`${title} workout created!`);
 
-    revalidatePath("/home");
+    revalidatePath("/home?q=current");
 
     return {
       status: "success-redirect",
@@ -133,7 +133,7 @@ export async function editWorkout(
 
     console.log(`${initTitle} workout edited.`);
 
-    revalidatePath("/home");
+    revalidatePath("/home?q=current");
 
     return {
       status: "success-redirect",
@@ -157,7 +157,7 @@ export async function removeWorkout(
 
     console.log("Workout deleted!");
 
-    revalidatePath("/home");
+    revalidatePath("/home?q=current");
 
     return {
       status: "success",
@@ -184,7 +184,7 @@ export async function archiveWorkout(
 
     console.log("Workout archived!");
 
-    revalidatePath("/home");
+    revalidatePath("/home?q=current");
 
     return {
       status: "success",
@@ -195,6 +195,33 @@ export async function archiveWorkout(
     return {
       status: "error",
       message: "Failed to archive workout",
+    };
+  }
+}
+
+export async function unarchiveWorkout(
+  workoutId: number,
+  workoutTitle: string,
+): Promise<WorkoutActionResponse> {
+  try {
+    await db
+      .update(workouts)
+      .set({ status: "current" })
+      .where(eq(workouts.id, workoutId));
+
+    console.log("Workout unarchived!");
+
+    revalidatePath("/home?q=current");
+
+    return {
+      status: "success-redirect",
+      message: `"${workoutTitle}" workout moved to current`,
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      status: "error",
+      message: "Failed to unarchive workout",
     };
   }
 }
@@ -276,7 +303,7 @@ export async function updateCurrentWorkout(
 
     console.log("Workout updated.");
 
-    revalidatePath("/home");
+    revalidatePath("/home?q=current");
 
     return {
       status: "success-redirect",
