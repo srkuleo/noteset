@@ -34,7 +34,7 @@ export const MainPagesFooter = () => {
       {navBarLinks.map((link) => (
         <Link
           key={link.href}
-          href={link.href}
+          href={link.href === "/home" ? "/home?q=current" : link.href}
           className={twJoin(
             "relative rounded-full px-2 py-2 active:bg-slate-200 dark:active:bg-slate-700",
             path === link.href && "text-green-500 dark:text-white",
