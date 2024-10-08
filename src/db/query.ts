@@ -5,7 +5,9 @@ import { db } from ".";
 import { workouts } from "./schema";
 import { getAuth } from "@/util/actions/auth";
 
-export async function getUserWorkouts() {
+import type { WorkoutStatusType } from "@/util/types";
+
+export async function getUserWorkouts(workoutStatus: WorkoutStatusType) {
   const { user } = await getAuth();
 
   if (!user) {
@@ -22,7 +24,9 @@ export async function getUserWorkouts() {
         status: workouts.status,
       })
       .from(workouts)
-      .where(and(eq(workouts.userId, user.id), eq(workouts.status, "current")))
+      .where(
+        and(eq(workouts.userId, user.id), eq(workouts.status, workoutStatus)),
+      )
       .orderBy(workouts.id);
 
     console.log("Workouts fetched.");
