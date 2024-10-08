@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { unarchiveWorkout } from "@/util/actions/workout";
+import { showToast } from "../Toasts";
 import { EmptyIcon } from "../icons/user/warning";
 import { RemoveWorkoutModal } from "./RemoveWorkoutModal";
 import { StatusIndicator } from "../StatusIndicator";
@@ -9,14 +11,21 @@ import { PreviewWorkoutButtonDrawer } from "./PreviewWorkoutButtonDrawer";
 import { EditWorkoutIcon, TrashBinIcon } from "../icons/user/modify";
 
 import type { PartialWorkoutType } from "@/db/schema";
+import type { WorkoutStatusType } from "@/util/types";
 
 export const HomePageContent = ({
   workouts,
+  status,
 }: {
   workouts: PartialWorkoutType[];
+  status: WorkoutStatusType;
 }) => {
   const [openRemoveModal, setOpenRemoveModal] = useState(false);
-  const [workoutToRemove, setWorkoutToRemove] = useState({ title: "", id: 0 });
+  const [workoutToRemove, setWorkoutToRemove] = useState({
+    title: "",
+    id: 0,
+    status: "current" as WorkoutStatusType,
+  });
 
   return (
     <>
@@ -28,7 +37,7 @@ export const HomePageContent = ({
 
       {workouts.length === 0 ? (
         <main className="mt-safe-top flex flex-col justify-center px-6 pb-[91px] pt-[158px]">
-          <EmptyPage />
+          <EmptyPage status={status} />
         </main>
       ) : (
         <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
@@ -62,31 +71,63 @@ export const HomePageContent = ({
                   size={5}
                 />
 
-                <Link
-                  href={`/workout-to-do?id=${workout.id}`}
-                  scroll={false}
-                  className="flex items-center rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-bold text-white shadow-md transition active:scale-90 active:from-violet-300 active:to-violet-400 dark:from-violet-500 dark:to-violet-600 dark:active:from-violet-700 dark:active:to-violet-800"
-                >
-                  Start
-                  <p className="sr-only">Start this workout</p>
-                </Link>
+                {workout.status === "current" ? (
+                  <Link
+                    href={`/workout-to-do?id=${workout.id}`}
+                    scroll={false}
+                    className="flex rounded-lg bg-gradient-to-r from-violet-400 to-violet-500 px-4 py-1 font-bold text-white shadow-md transition active:scale-90 active:from-violet-300 active:to-violet-400 dark:from-violet-500 dark:to-violet-600 dark:active:from-violet-700 dark:active:to-violet-800"
+                  >
+                    Start
+                    <p className="sr-only">Start this workout</p>
+                  </Link>
+                ) : (
+                  <form
+                    action={async () => {
+                      const res = await unarchiveWorkout(
+                        workout.id,
+                        workout.title,
+                      );
 
-                <Link
-                  href={`/edit?id=${workout.id}`}
-                  scroll={false}
-                  className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
-                >
-                  {EditWorkoutIcon}
-                  <span className="sr-only">Edit workout</span>
-                </Link>
+                      if (res.status === "success-redirect") {
+                        showToast(
+                          res.message,
+                          "/home?q=current",
+                          "See current",
+                        );
+                      } else {
+                        showToast(res.message);
+                      }
+                    }}
+                  >
+                    <button
+                      type="submit"
+                      className="flex rounded-lg bg-gradient-to-r from-blue-400 to-blue-500 px-4 py-1 font-bold text-white shadow-md transition active:scale-90 active:from-blue-300 active:to-blue-400 dark:from-blue-500 dark:to-blue-600 dark:active:from-blue-700 dark:active:to-blue-800"
+                    >
+                      Set as Current
+                    </button>
+                  </form>
+                )}
+
+                {workout.status === "current" && (
+                  <Link
+                    href={`/edit?id=${workout.id}`}
+                    scroll={false}
+                    className="rounded-full p-1.5 text-green-500 shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-600 dark:active:bg-slate-700"
+                  >
+                    {EditWorkoutIcon}
+                    <span className="sr-only">Edit workout</span>
+                  </Link>
+                )}
 
                 <button
                   type="button"
                   onClick={async () => {
                     await new Promise((resolve) => setTimeout(resolve, 100));
+
                     setWorkoutToRemove({
                       id: workout.id,
                       title: workout.title,
+                      status: workout.status,
                     });
                     setOpenRemoveModal(true);
                   }}
@@ -104,7 +145,7 @@ export const HomePageContent = ({
   );
 };
 
-const EmptyPage = () => {
+const EmptyPage = ({ status }: { status: WorkoutStatusType }) => {
   return (
     <div className="flex flex-col items-center gap-8 pb-18">
       <div className="text-slate-400/60 dark:text-slate-700/80">
@@ -112,10 +153,29 @@ const EmptyPage = () => {
       </div>
 
       <div className="space-y-4 text-center">
-        <h3>Seems like you haven&apos;t created any workout yet</h3>
-        <p className="font-semibold italic text-slate-400/85">
-          Tap the plus button to create one
-        </p>
+        {status === "archived" ? (
+          <h3>Nothing in archive</h3>
+        ) : (
+          <h3>Seems like you haven&apos;t created any workout yet</h3>
+        )}
+
+        {status === "archived" ? (
+          <p className="px-2 font-semibold italic text-slate-400/85">
+            Tap the{" "}
+            <span className="font-bold uppercase text-slate-800 dark:text-white">
+              C
+            </span>{" "}
+            button to load current workouts
+          </p>
+        ) : (
+          <p className="font-semibold italic text-slate-400/85">
+            Tap the{" "}
+            <span className="font-bold uppercase text-slate-800 dark:text-white">
+              plus
+            </span>{" "}
+            button to create one
+          </p>
+        )}
       </div>
     </div>
   );
