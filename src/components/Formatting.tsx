@@ -56,7 +56,7 @@ export const FormatDate = ({
         .toLocaleString("en", { weekday: "short" })
         .split(" ")[0];
 
-      return `${dayOfTheWeek} ${day}-${month}-${year}`;
+      return `${dayOfTheWeek}, ${day}-${month}-${year}`;
     }
 
     return `${day}-${month}-${year}`;
