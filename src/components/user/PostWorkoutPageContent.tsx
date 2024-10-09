@@ -232,10 +232,15 @@ export const PostWorkoutPageContent = ({
         {pageStatus === "editing-workout" && (
           <motion.div
             key="edit-mode-footer"
-            initial={{ opacity: 0 }}
+            initial={{
+              opacity: 0,
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
             animate={{
               opacity: 1,
-
               transition: {
                 duration: 0.4,
                 delay: 0.1,
@@ -244,7 +249,6 @@ export const PostWorkoutPageContent = ({
             }}
             exit={{
               opacity: 0,
-
               transition: {
                 delay: 0.05,
                 duration: 0.2,
