@@ -2,7 +2,7 @@
 
 import { EmptyIcon } from "../icons/user/warning";
 import { StatusIndicator } from "../StatusIndicator";
-import { FormatDate, FormatWorkoutDuration } from "../Formatting";
+import { FormatWorkoutDuration } from "../Formatting";
 import { PreviewWorkoutButtonDrawer } from "./PreviewWorkoutButtonDrawer";
 
 import type { WorkoutType } from "@/db/schema";
