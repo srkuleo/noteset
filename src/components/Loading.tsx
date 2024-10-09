@@ -31,6 +31,38 @@ export const LoadingWorkoutsSkeleton = () => {
   );
 };
 
+export const LoadingDoneWorkoutsSkeleton = () => {
+  return (
+    <main className="mt-safe-top space-y-6 px-6 pb-[91px] pt-[158px]">
+      {[1, 2, 3, 4, 5, 6].map((skeleton) => (
+        <div key={skeleton} className="flex w-full gap-3">
+          <div className="animate-pulse rounded-lg border border-slate-300/80 bg-violet-400 opacity-80 shadow-md dark:border-slate-800 dark:bg-violet-500">
+            <div className="ml-1.5 flex flex-col items-center gap-2 rounded-r-[7px] bg-white p-3 dark:bg-slate-900">
+              <div className="h-4 w-8 rounded bg-slate-200 dark:bg-slate-800" />
+
+              <div className="h-4 w-16 rounded bg-slate-200 dark:bg-slate-800" />
+
+              <div className="h-4 w-12 rounded bg-slate-200 dark:bg-slate-800" />
+            </div>
+          </div>
+
+          <div className="mr-auto flex animate-pulse flex-col justify-center gap-1 opacity-80">
+            <div className="h-6 w-20 rounded bg-slate-200 dark:bg-slate-800" />
+            <div className="h-4 w-16 rounded bg-slate-200 dark:bg-slate-800" />
+            <div className="h-4 w-24 rounded bg-slate-200 dark:bg-slate-800" />
+          </div>
+
+          <div className="flex animate-pulse flex-col items-center justify-center gap-3 border-l border-green-300 pl-3 opacity-80 dark:border-green-950">
+            <div className="h-8 w-16 rounded-full bg-slate-200 dark:bg-slate-800" />
+
+            <div className="h-8 w-10 rounded-lg bg-slate-200 dark:bg-slate-800" />
+          </div>
+        </div>
+      ))}
+    </main>
+  );
+};
+
 export const LoadingPostWorkoutPageSkeleton = () => {
   return (
     <>
