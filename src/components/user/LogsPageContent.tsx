@@ -20,46 +20,52 @@ export const LogsPageContent = ({
       {doneWorkouts.length === 0 ? (
         <EmptyPage />
       ) : (
-        <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
+        <main className="mt-safe-top space-y-6 px-6 pb-[91px] pt-[158px]">
           {doneWorkouts.map((doneWorkout) => (
-            <div
-              key={doneWorkout.id}
-              className="flex w-full flex-col gap-4 rounded-xl border border-slate-300/80 bg-white p-4 shadow-md dark:border-slate-700/60 dark:bg-slate-800/80"
-            >
-              <div className="space-y-1.5 px-1">
-                <div className="flex justify-between gap-4">
-                  <p className="text-pretty font-manrope text-lg font-bold uppercase dark:text-slate-300">
-                    {doneWorkout.title}
+            <div key={doneWorkout.id} className="flex w-full gap-3">
+              <div className="min-w-[88px] rounded-lg border border-slate-300/80 bg-violet-400 shadow-md dark:border-slate-700 dark:bg-violet-500">
+                <div className="ml-1.5 flex flex-col items-center gap-2 rounded-r-[7px] bg-white p-3 font-manrope leading-none dark:bg-slate-800">
+                  <p className="font-semibold text-slate-400">
+                    {doneWorkout.doneAt?.toLocaleString("en", {
+                      month: "short",
+                    })}
                   </p>
 
-                  <StatusIndicator status={doneWorkout.status} />
+                  <p className="font-extrabold text-slate-800 dark:text-white">
+                    {String(doneWorkout.doneAt?.getDate()).padStart(2, "0")}
+                  </p>
+
+                  <p className="font-bold dark:text-slate-300">
+                    {doneWorkout.doneAt?.getFullYear()}
+                  </p>
                 </div>
+              </div>
+
+              <div className="mr-auto flex flex-col justify-center gap-1">
+                <p className="text-pretty font-manrope text-lg font-bold uppercase leading-none dark:text-slate-300">
+                  {doneWorkout.title}
+                </p>
+
+                <FormatWorkoutDuration
+                  timeFormat={timeFormatPreference}
+                  duration={doneWorkout.duration}
+                />
 
                 <p className="text-pretty text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60">
-                  {doneWorkout.description
-                    ? doneWorkout.description
-                    : "Description not provided"}
+                  {doneWorkout.doneAt?.toLocaleString("en", {
+                    weekday: "long",
+                  })}
                 </p>
               </div>
 
-              <div className="h-[1px] bg-green-200 dark:bg-green-900/70" />
-
-              <div className="flex items-center justify-between px-2 text-sm">
-                <div className="space-y-1">
-                  <FormatWorkoutDuration
-                    timeFormat={timeFormatPreference}
-                    duration={doneWorkout.duration}
-                  />
-                  <FormatDate
-                    date={doneWorkout.doneAt}
-                    withDayOfTheWeek
-                    className="text-lg font-bold"
-                  />
-                </div>
-
+              <div className="flex flex-col items-center justify-center gap-3 border-l border-slate-300/80 pl-3 dark:border-slate-800/80">
+                <StatusIndicator
+                  status={doneWorkout.status}
+                  className="bg-white px-4 py-2 dark:bg-slate-800"
+                />
                 <PreviewWorkoutButtonDrawer
                   workout={doneWorkout}
-                  className="px-2.5 py-2"
+                  className="bg-white px-2.5 py-2 dark:bg-slate-800"
                   size={5}
                 />
               </div>
