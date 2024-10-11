@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Future updates and plans:
 
-- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page. Add swipe actions on home page workout cards. Refactor adding set to have 2 stages, first choose between warmup and working set and second is adding reps and weight._
+- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page. Add swipe actions on home page workout cards._
 
 - _Finish logs page UI - add search._
 
