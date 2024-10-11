@@ -427,6 +427,7 @@ export const WorkoutToDoForm = ({
                   <p className="sr-only">Enter Remove mode</p>
                 </button>
               </div>
+
               <div className="flex items-center gap-4">
                 <div className="flex gap-1 text-sm font-bold text-slate-400 dark:text-slate-300">
                   <p>
