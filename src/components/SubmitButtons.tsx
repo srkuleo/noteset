@@ -1,4 +1,5 @@
 import { useFormStatus } from "react-dom";
+import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -29,13 +30,17 @@ export const ModalSubmitButton = ({
   label,
   loading,
   pending,
+  className,
   ...props
 }: SubmitButtonProps) => {
   return (
     <button
       type="submit"
       disabled={pending}
-      className="w-full rounded-xl bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 active:bg-green-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:active:bg-green-800"
+      className={twMerge(
+        "w-full rounded-xl bg-green-500 px-4 py-1.5 font-manrope font-semibold text-white shadow-sm active:scale-95 active:bg-green-400 disabled:pointer-events-none disabled:opacity-50 dark:bg-green-600 dark:active:bg-green-800",
+        className,
+      )}
       {...props}
     >
       {pending ? loading : label}
