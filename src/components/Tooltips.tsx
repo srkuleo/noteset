@@ -79,9 +79,9 @@ export const HomePageTooltip = () => {
           await new Promise((resolve) => setTimeout(resolve, 100));
           setOpen(true);
         }}
-        className="ml-auto mr-1.5 rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
+        className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
       >
-        <InformationIcon className="size-7" />
+        <InformationIcon className="size-6" />
       </button>
 
       <TooltipDrawer closeDrawer={() => setOpen(false)}>
@@ -303,7 +303,7 @@ export const PostWorkoutTooltip = () => {
           await new Promise((resolve) => setTimeout(resolve, 100));
           setOpen(true);
         }}
-        className="ml-auto mr-1.5 rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
+        className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
       >
         <InformationIcon className="size-7" />
       </button>
