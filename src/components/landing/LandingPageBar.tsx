@@ -1,5 +1,8 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Logo } from "../icons/logo";
+import { LoadingLoginButtonSkeleton } from "../Loading";
+import { ProfileButton } from "../user/profile/ProfileButton";
 import { GitHubButton } from "../GitHubButton";
 
 export const LandingPageBar = () => {
@@ -8,7 +11,13 @@ export const LandingPageBar = () => {
       <div className="flex items-center justify-between">
         <Link href="/">{Logo}</Link>
 
-        <GitHubButton />
+        <div className="flex items-center gap-4">
+          <Suspense fallback={<LoadingLoginButtonSkeleton />}>
+            <ProfileButton />
+          </Suspense>
+
+          <GitHubButton />
+        </div>
       </div>
     </header>
   );
