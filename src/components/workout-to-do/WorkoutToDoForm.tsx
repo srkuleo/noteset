@@ -179,7 +179,7 @@ export const WorkoutToDoForm = ({
                                     exerciseIndex
                                   ]?.sets.filter(
                                     (set) => set.id === warmupSet.id,
-                                  )[0]?.weight
+                                  )[0]?.weight + "kg"
                                 }
                                 onChange={(e) => {
                                   handleSetsInput(e, exercise.id, warmupSet.id);
@@ -306,7 +306,7 @@ export const WorkoutToDoForm = ({
                                     exerciseIndex
                                   ]?.sets.filter(
                                     (set) => set.id === workingSet.id,
-                                  )[0]?.weight
+                                  )[0]?.weight + "kg"
                                 }
                                 onChange={(e) => {
                                   handleSetsInput(
