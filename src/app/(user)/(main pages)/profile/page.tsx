@@ -28,7 +28,7 @@ export default async function ProfilePage() {
         <UserPagesSubHeadingText label="Profile page" />
       </UserPagesSubHeadingWrapper>
 
-      <main className="mt-safe-top space-y-8 pb-[91px] pt-[142px]">
+      <main className="mt-safe-top space-y-8 pb-[100px] pt-[142px]">
         {user.isVerified ? (
           <p className="bg-green-500 py-2 text-center text-lg font-semibold text-white dark:bg-green-600">
             Account verified
