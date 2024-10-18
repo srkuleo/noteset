@@ -25,14 +25,19 @@ export default async function PostWorkoutPage({
       <UserPagesSubHeadingWrapper>
         <UserPagesSubHeadingText label="Post workout" />
 
-        <div className="flex gap-1">
+        <div className="flex">
           <PostWorkoutTooltip />
 
           <Link
             href="/home?q=current"
-            className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-200 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-600 dark:active:bg-slate-600"
+            className="rounded-full p-2 transition active:scale-95 active:bg-slate-200 dark:active:bg-slate-600"
           >
-            <HomeIcon className="size-6" strokeWidth={1.8} />
+            <HomeIcon
+              fill="currentColor"
+              strokeColor="none"
+              strokeWidth={0}
+              className="size-6"
+            />
             <p className="sr-only">Go to Home page</p>
           </Link>
         </div>
