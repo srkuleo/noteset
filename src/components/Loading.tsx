@@ -1,8 +1,22 @@
 import { AddIcon } from "./icons/user/modify";
 
+export const LoadingLoginButtonSkeleton = () => {
+  return (
+    <div className="h-8 w-16 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-700" />
+  );
+};
+
+export const LoadingProfileButtonSkeleton = () => {
+  return (
+    <div className="animate-pulse pr-1">
+      <div className="size-9 rounded-full bg-slate-200 dark:bg-slate-700" />
+    </div>
+  );
+};
+
 export const LoadingWorkoutsSkeleton = () => {
   return (
-    <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
+    <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
       {[1, 2, 3, 4].map((skeleton) => (
         <div
           key={skeleton}
@@ -33,7 +47,7 @@ export const LoadingWorkoutsSkeleton = () => {
 
 export const LoadingDoneWorkoutsSkeleton = () => {
   return (
-    <main className="mt-safe-top space-y-6 px-6 pb-[91px] pt-[158px]">
+    <main className="mt-safe-top space-y-6 px-6 pb-[100px] pt-[158px]">
       {[1, 2, 3, 4, 5, 6].map((skeleton) => (
         <div key={skeleton} className="flex w-full gap-3">
           <div className="animate-pulse rounded-lg border border-slate-300/80 bg-violet-400 opacity-80 shadow-md dark:border-slate-800 dark:bg-violet-500">
