@@ -10,10 +10,9 @@ import { AuthButton } from "../SubmitButtons";
 
 export const LoginForm = () => {
   const {
-    isPending,
-    isError,
-    error,
+    data: actionRes,
     mutate: serverAction,
+    isPending,
   } = useMutation({
     mutationFn: login,
   });
@@ -31,7 +30,7 @@ export const LoginForm = () => {
           className={twMerge(
             "input-field",
             "w-full bg-white group-disabled:opacity-50 dark:bg-slate-800/50",
-            isError && "ring-red-500 dark:ring-red-500",
+            actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
           )}
         />
 
@@ -46,7 +45,7 @@ export const LoginForm = () => {
             className={twMerge(
               "input-field",
               "w-full bg-white dark:bg-slate-800/50",
-              isError && "ring-red-500 dark:ring-red-500",
+              actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
             )}
           />
           <button
@@ -64,7 +63,9 @@ export const LoginForm = () => {
           </button>
         </div>
 
-        {isError && <ErrorComponent message={error?.message} />}
+        {actionRes?.status === "error" && (
+          <ErrorComponent message={actionRes?.message} />
+        )}
       </fieldset>
 
       <AuthButton

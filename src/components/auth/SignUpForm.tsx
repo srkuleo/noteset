@@ -11,9 +11,9 @@ import { AuthButton } from "../SubmitButtons";
 
 export const SignUpForm = () => {
   const {
-    isPending,
     data: actionRes,
     mutate: clientAction,
+    isPending,
   } = useMutation({
     mutationFn: signUp,
     onSuccess: (actionRes) => {
