@@ -341,7 +341,11 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     200,
   );
 
-  function addNewSet(exerciseId: string, setData: SetWithoutId) {
+  function addNewSet(
+    exerciseId: string,
+    setData: SetWithoutId,
+    setIndex: number,
+  ) {
     const newSet: SetType = {
       id: generateIdFromEntropySize(10),
       reps: setData.reps,
@@ -349,19 +353,71 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
       warmup: setData.warmup,
     };
 
+    const newSetWithoutValues = { ...newSet, reps: "", weight: "" };
+
+    const exerciseToModify = currWorkout.exercises.find(
+      (exercise) => exercise.id === exerciseId,
+    );
+
+    const placeholderExerciseToModify = placeholderExercises.find(
+      (exercise) => exercise.id === exerciseId,
+    );
+
+    if (!exerciseToModify || !placeholderExerciseToModify) return;
+
+    const warmupSets = exerciseToModify.sets.filter((set) => set.warmup);
+    const workingSets = exerciseToModify.sets.filter((set) => !set.warmup);
+
+    const placeholderWarmupSets = placeholderExerciseToModify.sets.filter(
+      (set) => set.warmup,
+    );
+    const placeholderWorkingSets = placeholderExerciseToModify.sets.filter(
+      (set) => !set.warmup,
+    );
+
+    let modifiedWarmupSets = warmupSets;
+    let modifiedWorkingSets = workingSets;
+
+    let modifiedPlaceholderWarmupSets = placeholderWarmupSets;
+    let modifiedPlaceholderWorkingSets = placeholderWorkingSets;
+
+    if (newSet.warmup) {
+      modifiedWarmupSets = [
+        ...warmupSets.slice(0, setIndex),
+        newSetWithoutValues,
+        ...warmupSets.slice(setIndex),
+      ];
+
+      modifiedPlaceholderWarmupSets = [
+        ...placeholderWarmupSets.slice(0, setIndex),
+        newSet,
+        ...placeholderWarmupSets.slice(setIndex),
+      ];
+    } else {
+      modifiedWorkingSets = [
+        ...workingSets.slice(0, setIndex),
+        newSetWithoutValues,
+        ...workingSets.slice(setIndex),
+      ];
+
+      modifiedPlaceholderWorkingSets = [
+        ...placeholderWorkingSets.slice(0, setIndex),
+        newSet,
+        ...placeholderWorkingSets.slice(setIndex),
+      ];
+    }
+
+    const updatedSets = [...modifiedWarmupSets, ...modifiedWorkingSets];
+    const updatedPlaceholderSets = [
+      ...modifiedPlaceholderWarmupSets,
+      ...modifiedPlaceholderWorkingSets,
+    ];
+
     const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
-            sets: [
-              ...exercise.sets,
-              {
-                id: newSet.id,
-                reps: "",
-                weight: "",
-                warmup: newSet.warmup,
-              },
-            ],
+            sets: updatedSets,
           }
         : exercise,
     );
@@ -370,7 +426,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
       exercise.id === exerciseId
         ? {
             ...exercise,
-            sets: [...exercise.sets, newSet],
+            sets: updatedPlaceholderSets,
           }
         : exercise,
     );
@@ -416,7 +472,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     const newExerciseForCurrWorkout: ExerciseType = {
       ...newExercise,
       sets: newExercise.sets.map((set) => {
-        return { id: set.id, reps: "", weight: "" };
+        return { id: set.id, warmup: set.warmup, reps: "", weight: "" };
       }),
     };
 
@@ -431,6 +487,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
       return [...prev, newExercise];
     });
   }
+
   async function enterRemoveMode() {
     await new Promise((resolve) => setTimeout(resolve, 100));
 
