@@ -36,11 +36,11 @@ export const HomePageContent = ({
       />
 
       {workouts.length === 0 ? (
-        <main className="mt-safe-top flex flex-col justify-center px-6 pb-[91px] pt-[158px]">
+        <main className="mt-safe-top flex flex-col justify-center px-6 pb-[100px] pt-[157px]">
           <EmptyPage status={status} />
         </main>
       ) : (
-        <main className="mt-safe-top space-y-4 px-6 pb-[91px] pt-[158px]">
+        <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
           {workouts.map((workout) => (
             <div
               key={workout.id}
