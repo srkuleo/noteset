@@ -73,19 +73,14 @@ const EditExerciseForm = ({
     mutationFn: async (exercise: ExerciseType) => {
       await new Promise((resolve) => setTimeout(resolve, 300));
 
-      console.log(exercise);
-
       const isValidExercise = ExerciseSchema.safeParse(exercise);
 
       if (!isValidExercise.success) {
-        console.log(isValidExercise.error.flatten().fieldErrors);
         setExerciseFormErrors({
           errors: isValidExercise.error.flatten().fieldErrors,
         });
         throw isValidExercise.error;
       }
-
-      console.log("Valid data!");
 
       return isValidExercise.data;
     },
