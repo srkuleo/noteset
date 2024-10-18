@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
@@ -21,7 +22,11 @@ export const AddNewSetButton = ({
 }: {
   exercise: ExerciseToDoType;
   removeMode: boolean;
-  addNewSet: (exerciseId: string, setData: SetWithoutId) => void;
+  addNewSet: (
+    exerciseId: string,
+    setData: SetWithoutId,
+    setIndex: number,
+  ) => void;
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -83,7 +88,11 @@ const AddSetForm = ({
   closeDrawer,
 }: {
   exercise: ExerciseToDoType;
-  addNewSet: (exerciseId: string, setData: SetWithoutId) => void;
+  addNewSet: (
+    exerciseId: string,
+    setData: SetWithoutId,
+    setIndex: number,
+  ) => void;
   closeDrawer: () => void;
 }) => {
   const [newSet, setNewSet] = useState<SetWithoutId>({
@@ -91,6 +100,7 @@ const AddSetForm = ({
     weight: "",
     warmup: undefined,
   });
+  const [newSetIndex, setNewSetIndex] = useState(-1);
   const [showForm, setShowForm] = useState(false);
   const {
     mutate: clientAction,
@@ -105,13 +115,25 @@ const AddSetForm = ({
         reps: true,
         weight: true,
         warmup: true,
-      }).safeParse(newSet);
+      })
+        .extend({
+          setIndex: z
+            .number()
+            .min(0, { message: "Index must be positive number" }),
+        })
+        .safeParse({ ...newSet, setIndex: newSetIndex });
 
       if (!isValidSet.success) {
         return isValidSet.error.flatten().fieldErrors;
       }
 
-      addNewSet(exercise.id, isValidSet.data);
+      const { reps, weight, setIndex, warmup } = isValidSet.data;
+
+      addNewSet(
+        exercise.id,
+        { reps: reps, weight: weight, warmup: warmup },
+        setIndex,
+      );
       closeDrawer();
     },
   });
@@ -120,7 +142,7 @@ const AddSetForm = ({
     <form id="add-new-set" action={() => clientAction()} className="p-6">
       <fieldset
         disabled={isPending}
-        className="group flex flex-col space-y-8 overflow-x-hidden p-2"
+        className="group flex flex-col space-y-8 overflow-hidden p-2"
       >
         <AnimatePresence initial={false} mode="wait">
           {!showForm ? (
@@ -149,17 +171,12 @@ const AddSetForm = ({
                   Select the type of the set:
                 </p>
 
-                <div
-                  className={twMerge(
-                    "flex justify-evenly text-slate-700 dark:text-white",
-                    newSet.warmup !== undefined && "pb-4",
-                  )}
-                >
+                <div className="flex justify-evenly text-slate-700 dark:text-white">
                   <button
                     type="button"
                     onClick={() => setNewSet({ ...newSet, warmup: true })}
                     className={twMerge(
-                      "rounded-xl px-5 py-[9px] font-manrope text-sm font-semibold uppercase shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700 dark:active:bg-slate-800",
+                      "rounded-xl px-5 py-2.5 font-manrope text-sm font-semibold uppercase shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700",
                       newSet.warmup &&
                         "bg-violet-400 text-white dark:bg-violet-500",
                     )}
@@ -171,7 +188,7 @@ const AddSetForm = ({
                     type="button"
                     onClick={() => setNewSet({ ...newSet, warmup: false })}
                     className={twMerge(
-                      "rounded-xl px-5 py-[9px] font-manrope text-sm font-semibold uppercase shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700 dark:active:bg-slate-800",
+                      "rounded-xl px-5 py-2.5 font-manrope text-sm font-semibold uppercase shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700",
                       newSet.warmup === false &&
                         "bg-violet-400 text-white dark:bg-violet-500",
                     )}
@@ -180,12 +197,12 @@ const AddSetForm = ({
                   </button>
                 </div>
 
-                <AnimatePresence initial={false}>
-                  {newSet.warmup !== undefined && (
+                <AnimatePresence initial={false} mode="wait">
+                  {newSet.warmup ? (
                     <motion.div
-                      initial={{ y: -32, opacity: 0, height: 0 }}
+                      key="warmup-order-sections"
+                      initial={{ opacity: 0, height: 0 }}
                       animate={{
-                        y: 0,
                         opacity: 1,
                         height: "auto",
                         transition: {
@@ -196,6 +213,142 @@ const AddSetForm = ({
                       }}
                       exit={{
                         opacity: 0,
+                        height: 0,
+                        transition: {
+                          duration: 0.4,
+                          ease: [0.36, 0.66, 0.04, 1],
+                        },
+                      }}
+                    >
+                      <div className="space-y-4 pb-4">
+                        <p className="text-center text-xl font-semibold text-slate-500 dark:text-slate-300">
+                          Order:
+                        </p>
+
+                        <div className="flex justify-center gap-3">
+                          {exercise.sets
+                            .filter((set) => set.warmup)
+                            .map((warmupSet, warmupSetIndex) => (
+                              <button
+                                key={warmupSet.id}
+                                type="button"
+                                onClick={() => setNewSetIndex(warmupSetIndex)}
+                                className={twMerge(
+                                  "size-12 rounded-full font-manrope font-bold shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700",
+                                  warmupSetIndex === newSetIndex &&
+                                    "bg-violet-400 text-white dark:bg-violet-500",
+                                )}
+                              >
+                                {warmupSetIndex + 1}
+                              </button>
+                            ))}
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setNewSetIndex(
+                                exercise.sets.filter((set) => set.warmup)
+                                  .length,
+                              )
+                            }
+                            className={twMerge(
+                              "size-12 rounded-full font-manrope font-bold shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700",
+                              exercise.sets.filter((set) => set.warmup)
+                                .length === newSetIndex &&
+                                "bg-violet-400 text-white dark:bg-violet-500",
+                            )}
+                          >
+                            {exercise.sets.filter((set) => set.warmup).length +
+                              1}
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ) : newSet.warmup === false ? (
+                    <motion.div
+                      key="working-order-sections"
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{
+                        opacity: 1,
+                        height: "auto",
+                        transition: {
+                          duration: 0.4,
+                          delay: 0.04,
+                          ease: [0.36, 0.66, 0.04, 1],
+                        },
+                      }}
+                      exit={{
+                        opacity: 0,
+                        height: 0,
+                        transition: {
+                          duration: 0.4,
+                          ease: [0.36, 0.66, 0.04, 1],
+                        },
+                      }}
+                    >
+                      <div className="space-y-4 pb-4">
+                        <p className="text-center text-xl font-semibold text-slate-500 dark:text-slate-300">
+                          Order:
+                        </p>
+
+                        <div className="flex justify-center gap-3">
+                          {exercise.sets
+                            .filter((set) => !set.warmup)
+                            .map((workingSet, workingSetIndex) => (
+                              <button
+                                key={workingSet.id}
+                                type="button"
+                                onClick={() => setNewSetIndex(workingSetIndex)}
+                                className={twMerge(
+                                  "size-12 rounded-full font-manrope font-bold shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700",
+                                  workingSetIndex === newSetIndex &&
+                                    "bg-violet-400 text-white dark:bg-violet-500",
+                                )}
+                              >
+                                {workingSetIndex + 1}
+                              </button>
+                            ))}
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setNewSetIndex(
+                                exercise.sets.filter((set) => !set.warmup)
+                                  .length,
+                              )
+                            }
+                            className={twMerge(
+                              "size-12 rounded-full font-manrope font-bold shadow-md ring-1 ring-slate-200 dark:shadow-slate-950 dark:ring-slate-700",
+                              exercise.sets.filter((set) => !set.warmup)
+                                .length === newSetIndex &&
+                                "bg-violet-400 text-white dark:bg-violet-500",
+                            )}
+                          >
+                            {exercise.sets.filter((set) => !set.warmup).length +
+                              1}
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+
+                <AnimatePresence initial={false}>
+                  {newSetIndex >= 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{
+                        opacity: 1,
+                        height: "auto",
+                        transition: {
+                          duration: 0.4,
+                          delay: 0.04,
+                          ease: [0.36, 0.66, 0.04, 1],
+                        },
+                      }}
+                      exit={{
+                        opacity: 0,
+                        height: 0,
                         transition: {
                           duration: 0.4,
                           ease: [0.36, 0.66, 0.04, 1],
@@ -303,12 +456,14 @@ const AddSetForm = ({
                   />
                 </div>
 
-                {(error?.reps || error?.weight) && (
+                {(error?.reps || error?.weight || error?.setIndex) && (
                   <div className="space-y-2 pb-4">
                     <ErrorComponent errorArr={error?.reps} />
                     <ErrorComponent errorArr={error?.weight} />
+                    <ErrorComponent errorArr={error?.setIndex} />
                   </div>
                 )}
+
                 <div className="flex gap-4">
                   <button
                     type="button"
