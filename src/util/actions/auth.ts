@@ -102,14 +102,17 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
   };
 }
 
-export async function login(formData: FormData) {
+export async function login(formData: FormData): Promise<AuthActionResponse> {
   const loginRaw = loginSchema.safeParse({
     identifier: formData.get("identifier"),
     password: formData.get("password"),
   });
 
   if (!loginRaw.success) {
-    throw new Error("Invalid credentials");
+    return {
+      status: "error",
+      message: "Invalid credentials",
+    };
   }
 
   const { identifier, password } = loginRaw.data;
@@ -119,13 +122,19 @@ export async function login(formData: FormData) {
   });
 
   if (!user) {
-    throw new Error("Incorrect username or password");
+    return {
+      status: "error",
+      message: "Incorrect username/email or password",
+    };
   }
 
   const validPassword = await bcrypt.compare(password, user.hashedPassword);
 
   if (!validPassword) {
-    throw new Error("Incorrect username or password");
+    return {
+      status: "error",
+      message: "Incorrect username/email or password",
+    };
   }
 
   const session = await lucia.createSession(user.id, {});
@@ -137,6 +146,11 @@ export async function login(formData: FormData) {
   );
 
   console.log("User validated, you are logged in!");
+
+  return {
+    status: "success",
+    message: "User validated, you are logged in!",
+  };
 }
 
 export async function logout() {
