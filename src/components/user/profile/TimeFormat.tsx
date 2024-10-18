@@ -77,7 +77,7 @@ const ChangeTimeFormat = ({ selected }: { selected: TimeFormatType }) => {
                   showToast(res.message);
                 }}
                 className={twMerge(
-                  "p-3 font-manrope text-lg font-semibold text-blue-500 first:rounded-t-modal last:rounded-b-modal active:bg-slate-200 dark:border-slate-600 dark:text-blue-500 active:dark:bg-slate-600/90",
+                  "p-3 font-manrope text-lg font-semibold text-blue-500 first:rounded-t-modal last:rounded-b-modal active:bg-slate-200 dark:border-slate-600 dark:text-blue-400 active:dark:bg-slate-600/90",
                   value === selected &&
                     "bg-white text-green-500 dark:bg-slate-900/50 dark:text-green-500",
                 )}
@@ -93,7 +93,7 @@ const ChangeTimeFormat = ({ selected }: { selected: TimeFormatType }) => {
               await new Promise((resolve) => setTimeout(resolve, 100));
               setOpen(false);
             }}
-            className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
+            className="w-full rounded-modal bg-white p-3 text-xl font-bold focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:active:bg-slate-600/90"
           >
             Cancel
           </button>
