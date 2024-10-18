@@ -1,8 +1,10 @@
 import { twMerge } from "tailwind-merge";
 import { Logo } from "../icons/logo";
+import { LoadingProfileButtonSkeleton } from "../Loading";
+import { ProfileButton } from "./profile/ProfileButton";
 import { GitHubButton } from "../GitHubButton";
 
-import type { HTMLAttributes } from "react";
+import { Suspense, type HTMLAttributes } from "react";
 
 export const UserPagesHeader = () => {
   return (
@@ -11,7 +13,13 @@ export const UserPagesHeader = () => {
         <div className="flex items-center justify-between rounded-[28px] bg-white px-4 py-2 shadow-md ring-1 ring-slate-300/80 dark:bg-slate-800 dark:ring-slate-700">
           {Logo}
 
-          <GitHubButton />
+          <div className="flex items-center gap-3">
+            <GitHubButton />
+
+            <Suspense fallback={<LoadingProfileButtonSkeleton />}>
+              <ProfileButton />
+            </Suspense>
+          </div>
         </div>
       </div>
     </header>
