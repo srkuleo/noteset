@@ -17,14 +17,14 @@ export const LogsPageContent = ({
 }) => {
   if (doneWorkouts.length === 0) {
     return (
-      <main className="mt-safe-top flex flex-col justify-center px-8 pb-[91px] pt-40">
+      <main className="mt-safe-top flex flex-col justify-center px-8 pb-[100px] pt-[158px]">
         <EmptyPage />
       </main>
     );
   }
 
   return (
-    <main className="mt-safe-top space-y-6 px-6 pb-[91px] pt-[158px]">
+    <main className="mt-safe-top space-y-6 px-6 pb-[100px] pt-[158px]">
       {doneWorkouts.map((doneWorkout) => (
         <div key={doneWorkout.id} className="flex w-full gap-3">
           <div className="min-w-[88px] rounded-lg border border-slate-300/80 bg-violet-400 shadow-md dark:border-slate-700 dark:bg-violet-500">
