@@ -9,7 +9,7 @@ export const WorkoutQuerySwitchButton = () => {
   const searchParams = useSearchParams();
 
   return (
-    <div className="ml-1.5 flex items-center rounded-full shadow-md ring-1 ring-slate-300 dark:ring-slate-700">
+    <div className="flex items-center rounded-full shadow-md ring-1 ring-slate-300 dark:ring-slate-700">
       <Link
         href={path + "?q=current"}
         className={twMerge(
