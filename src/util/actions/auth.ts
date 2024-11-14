@@ -1,14 +1,19 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import { cache } from "react";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { eq, ilike, or } from "drizzle-orm";
-import { generateIdFromEntropySize, type Session, type User } from "lucia";
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { lucia } from "../lucia";
+import { generateRandomId } from "../utils";
+import {
+  createSession,
+  deleteSessionTokenCookie,
+  generateSessionToken,
+  getAuthSession,
+  invalidateSession,
+  setSessionTokenCookie,
+} from "../session";
 
 import { type AuthActionResponse, loginSchema, signUpSchema } from "../types";
 
@@ -76,7 +81,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  const userId = generateIdFromEntropySize(10);
+  const userId = generateRandomId(16);
 
   try {
     await db.insert(users).values({
@@ -137,13 +142,9 @@ export async function login(formData: FormData): Promise<AuthActionResponse> {
     };
   }
 
-  const session = await lucia.createSession(user.id, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
+  const token = generateSessionToken();
+  const session = await createSession(token, user.id);
+  setSessionTokenCookie(token, session.expiresAt);
 
   console.log("User validated, you are logged in!");
 
@@ -154,59 +155,15 @@ export async function login(formData: FormData): Promise<AuthActionResponse> {
 }
 
 export async function logout() {
-  const { session } = await getAuth();
+  const { session } = await getAuthSession();
 
-  if (!session) {
+  if (session === null) {
     redirect("/login");
   }
 
-  await lucia.invalidateSession(session.id);
+  await invalidateSession(session.id);
 
-  const sessionCookie = lucia.createBlankSessionCookie();
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes,
-  );
+  deleteSessionTokenCookie();
 
   redirect("/login");
 }
-
-export const getAuth = cache(
-  async (): Promise<{ user: User | null; session: Session | null }> => {
-    const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
-
-    if (!sessionId) {
-      return {
-        user: null,
-        session: null,
-      };
-    }
-
-    const { user, session } = await lucia.validateSession(sessionId);
-
-    try {
-      if (session && session.fresh) {
-        const sessionCookie = lucia.createSessionCookie(session.id);
-        cookies().set(
-          sessionCookie.name,
-          sessionCookie.value,
-          sessionCookie.attributes,
-        );
-      }
-
-      if (!session) {
-        const sessionCookie = lucia.createBlankSessionCookie();
-        cookies().set(
-          sessionCookie.name,
-          sessionCookie.value,
-          sessionCookie.attributes,
-        );
-      }
-    } catch {
-      /* empty */
-    }
-
-    return { user, session };
-  },
-);
