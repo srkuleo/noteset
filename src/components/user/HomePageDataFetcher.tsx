@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { getAuthSession } from "@/util/session";
 import { getUserWorkouts } from "@/db/query";
 import { HomePageContent } from "./HomePageContent";
 
@@ -8,6 +10,12 @@ export const HomePageDataFetcher = async ({
 }: {
   queryParam: WorkoutStatusType;
 }) => {
+  const { user } = await getAuthSession();
+
+  if (user === null) {
+    redirect("/login");
+  }
+
   const workouts = await getUserWorkouts(queryParam);
 
   return <HomePageContent workouts={workouts} status={queryParam} />;
