@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { workoutStatus } from "@/db/schema";
 
+import type { ComponentProps } from "react";
+
 //Exercise types and schemas
 
 export type ExerciseActionResponse = {
@@ -219,6 +221,29 @@ export const loginSchema = z.object({
     }
   }),
 });
+
+//Util types
+
+export type PasswordInputs = {
+  password: {
+    show: boolean;
+    focus: boolean;
+  };
+  confirmPassword: {
+    show: boolean;
+    focus: boolean;
+  };
+};
+
+export interface GeneralIconProps extends ComponentProps<"svg"> {
+  className: string;
+  strokeWidth: number;
+}
+
+export interface SolidIconProps extends GeneralIconProps {
+  fill: string;
+  stroke: string;
+}
 
 export const timeFormatValues = [
   "Hours and minutes",
