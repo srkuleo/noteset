@@ -1,13 +1,13 @@
 import { Suspense } from "react";
-import { BackButtonModal } from "@/components/BackButtonModal";
 import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
+import { BackButtonModal } from "@/components/BackButtonModal";
 import { AddOrEditWorkoutTooltip } from "@/components/Tooltips";
-import { LoadingEditWorkoutPageSkeleton } from "@/components/Loading";
+import { EditAndCreateWorkoutPagesSkeleton } from "@/components/Loading";
 
-export default async function EditPageLayout({
+export default async function EditWorkoutPageLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,7 +21,7 @@ export default async function EditPageLayout({
         <AddOrEditWorkoutTooltip />
       </UserPagesSubHeadingWrapper>
 
-      <Suspense fallback={<LoadingEditWorkoutPageSkeleton />}>
+      <Suspense fallback={<EditAndCreateWorkoutPagesSkeleton />}>
         {children}
       </Suspense>
     </>
