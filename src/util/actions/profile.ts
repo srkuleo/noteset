@@ -1,7 +1,7 @@
 "use server";
 
 import { eq } from "drizzle-orm";
-import { getAuth } from "./auth";
+import { getAuthSession } from "@/util/session";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 
@@ -11,9 +11,9 @@ import { revalidatePath } from "next/cache";
 export async function updateUserTimeFormatPreference(
   value: TimeFormatType,
 ): Promise<WorkoutActionResponse> {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
