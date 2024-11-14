@@ -4,11 +4,11 @@
 
 **_If you are interested in checking functionality or design, please inspect in mobile mode._**
 
-Since I am also interested in mobile dev, I might even make a proper app using React Native instead of Next.js PWA. Going deeper and making the webapp more complex has exposed quite a few shortcomings of PWA.
+Since I am also interested in mobile dev, I might even make a proper app using React Native instead of Next.js PWA. Going deeper and making the web app more complex has exposed quite a few shortcomings of PWAs.
 
-## Future updates and plans:
+## Steps until v1:
 
-- _Refactor dnd and add simple animations with autoanimate to exercises inside edit, creat and post workout page, workouts on home page. Add swipe actions on home page workout cards._
+- _Refactor dnd and useWorkoutInForm, add simple animations with autoanimate to ExercisesList and HomePageContent._
 
 - _Finish logs page UI - add search. Finish profile page UI - add option for user to set their own pfp instead of the initials, add separate route for settings and make settings button inside ProfileButtonModal lead to it._
 
