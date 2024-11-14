@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { and, eq, ilike, ne } from "drizzle-orm";
 import { db } from "@/db";
 import { workouts } from "@/db/schema";
-import { getAuth } from "./auth";
+import { getAuthSession } from "@/util/session";
 
 import {
   CreateWorkoutSchema,
@@ -16,9 +16,9 @@ import {
 export async function createWorkout(
   workout: CreateWorkoutType,
 ): Promise<WorkoutActionResponse> {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -84,9 +84,9 @@ export async function editWorkout(
   workoutId: number,
   initTitle: string,
 ): Promise<WorkoutActionResponse> {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -230,9 +230,9 @@ export async function submitDoneWorkout(
   doneWorkout: CreateWorkoutType,
   duration: number,
 ): Promise<WorkoutActionResponse> {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -279,9 +279,9 @@ export async function updateCurrentWorkout(
   updatedCurrentWorkout: CreateWorkoutType,
   workoutId: number,
 ): Promise<WorkoutActionResponse> {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
