@@ -18,61 +18,66 @@ export const statusEnum = pgEnum("status", workoutStatus);
 export const users = pgTable(
   "users",
   {
-    id: varchar("id", { length: 255 }).primaryKey(),
-    username: varchar("username", { length: 32 }).unique().notNull(),
-    email: varchar("email", { length: 255 }).unique().notNull(),
-    hashedPassword: varchar("hashed_password", { length: 100 }).notNull(),
-    isVerified: boolean("is_verified").default(false),
-    createdAt: timestamp("created_at", {
+    id: varchar({ length: 255 }).primaryKey(),
+    username: varchar({ length: 32 }).unique().notNull(),
+    email: varchar({ length: 255 }).unique().notNull(),
+    hashedPassword: varchar({ length: 100 }).notNull(),
+    isVerified: boolean().default(false).notNull(),
+    createdAt: timestamp({
       withTimezone: true,
       mode: "date",
-    }).defaultNow(),
-    preferences: json("preferences").$type<UserPreferences>(),
+    })
+      .defaultNow()
+      .notNull(),
+    preferences: json().$type<UserPreferences>().notNull(),
   },
-  (table) => {
-    return {
-      usernameIndex: index("username_index").on(table.username),
-      emailIndex: index("email_index").on(table.email),
-    };
-  },
+  (table) => [
+    index("username_index").on(table.username),
+    index("email_index").on(table.email),
+  ],
 );
 
-export const sessions = pgTable("sessions", {
-  id: varchar("id", { length: 255 }).primaryKey(),
-  userId: varchar("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  expiresAt: timestamp("expires_at", {
-    withTimezone: true,
-    mode: "date",
-  }).notNull(),
-});
+export const sessions = pgTable(
+  "sessions",
+  {
+    id: varchar({ length: 255 }).primaryKey(),
+    userId: varchar()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    expiresAt: timestamp({
+      withTimezone: true,
+      mode: "date",
+    }).notNull(),
+  },
+  (table) => [index("expires_at_index").on(table.expiresAt)],
+);
 
 export const workouts = pgTable(
   "workouts",
   {
-    id: serial("id").primaryKey(),
-    title: varchar("title", { length: 30 }).notNull(),
-    description: varchar("description", { length: 80 }),
-    exercises: json("exercises").$type<ExerciseType[]>().notNull(),
-    status: statusEnum("status").default("current").notNull(),
-    userId: varchar("user_id", { length: 255 })
+    id: serial().primaryKey(),
+    title: varchar({ length: 30 }).notNull(),
+    description: varchar({ length: 80 }),
+    exercises: json().$type<ExerciseType[]>().notNull(),
+    status: statusEnum().default("current").notNull(),
+    userId: varchar({ length: 255 })
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    doneAt: timestamp("done_at", {
+    doneAt: timestamp({
       withTimezone: true,
       mode: "date",
     }),
-    duration: integer("duration"),
+    duration: integer(),
   },
-  (table) => {
-    return {
-      userIdIndex: index("user_id_index").on(table.userId),
-      titleIndex: index("title_index").on(table.title),
-      statusIndex: index("status_index").on(table.status),
-    };
-  },
+  (table) => [
+    index("user_id_index").on(table.userId),
+    index("title_index").on(table.title),
+    index("status_index").on(table.status),
+  ],
 );
+
+export type User = Omit<typeof users.$inferSelect, "hashedPassword">;
+export type Session = typeof sessions.$inferSelect;
 
 export type WorkoutType = Omit<typeof workouts.$inferSelect, "userId">;
 export type PartialWorkoutType = Omit<WorkoutType, "duration" | "doneAt">;
