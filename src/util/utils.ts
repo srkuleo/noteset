@@ -1,3 +1,23 @@
+import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
+
+export function generateRandomId(idLength: number): string {
+  const byteLength = Math.ceil(idLength / 1.6);
+  const bytes = new Uint8Array(byteLength);
+  crypto.getRandomValues(bytes);
+
+  const id = encodeBase32LowerCaseNoPadding(bytes).slice(0, idLength);
+
+  return id;
+}
+
+export const BUTTON_TIMEOUT = 100;
+export const SWIPE_AND_DRAWER_TIMEOUT = 300;
+export const FORM_TIMEOUT = 500;
+
+export async function timeout(ms: number) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const slideX = {
   "right-hidden": {
     opacity: 0,
