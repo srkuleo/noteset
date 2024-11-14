@@ -1,12 +1,12 @@
 import { redirect } from "next/navigation";
-import { getAuth } from "@/util/actions/auth";
+import { getAuthSession } from "@/util/session";
 import { getUserDoneWorkouts } from "@/db/query";
 import { LogsPageContent } from "./LogsPageContent";
 
 export const LogsPageDataFetcher = async () => {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     redirect("/login");
   }
 
