@@ -1,7 +1,7 @@
-import { lucia } from "@/util/lucia";
+import { deleteExpiredSessions } from "@/util/session";
 
 export async function GET() {
-  await lucia.deleteExpiredSessions();
+  await deleteExpiredSessions();
 
   return new Response("Expired sessions removed from database");
 }
