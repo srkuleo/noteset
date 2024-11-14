@@ -10,7 +10,7 @@ export const MainPagesFooter = () => {
   const path = usePathname();
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 flex items-center justify-center gap-4 border-t border-slate-300/80 bg-white pb-7 pt-1 dark:border-slate-800 dark:bg-slate-900">
+    <nav className="fixed inset-x-0 bottom-0 z-20 flex items-center justify-center gap-4 border-t border-slate-300/80 bg-white pb-7 pt-1 dark:border-slate-800 dark:bg-slate-900">
       <Link
         href="/home?q=current"
         className={twMerge(
@@ -22,7 +22,7 @@ export const MainPagesFooter = () => {
       >
         <HomeIcon
           fill={path === "/home" ? "currentColor" : "transparent"}
-          strokeColor={path === "/home" ? "transparent" : "currentColor"}
+          stroke={path === "/home" ? "transparent" : "currentColor"}
           strokeWidth={path === "/home" ? 0 : 1.2}
           className="size-6"
         />
@@ -42,10 +42,10 @@ export const MainPagesFooter = () => {
       </Link>
 
       <Link
-        href="/create"
+        href="/create-workout"
         className="flex items-center rounded-full bg-white p-2.5 shadow-md ring-1 ring-slate-300 transition active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-600 dark:active:bg-slate-600"
       >
-        <AddIcon size={28} strokeWidth={2} />
+        <AddIcon strokeWidth={2} className="size-7" />
 
         <p className="sr-only">Add a new workout</p>
       </Link>
@@ -61,7 +61,7 @@ export const MainPagesFooter = () => {
       >
         <LogsIcon
           fill={path === "/logs" ? "currentColor" : "transparent"}
-          strokeColor={path === "/logs" ? "transparent" : "currentColor"}
+          stroke={path === "/logs" ? "transparent" : "currentColor"}
           strokeWidth={path === "/logs" ? 0 : 1.2}
           className="size-6"
         />
