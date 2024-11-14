@@ -5,15 +5,14 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
-import { useWorkoutToDo, useWorkoutDuration } from "@/util/hooks";
+import { useWorkoutToDo } from "@/util/hooks/useWorkoutToDo";
+import { useWorkoutDuration } from "@/util/hooks/useWorkoutDuration";
 import { submitDoneWorkout } from "@/util/actions/workout";
-import { biggerSlideX, slideX } from "@/util/utils";
+import { biggerSlideX, BUTTON_TIMEOUT, slideX, timeout } from "@/util/utils";
 import { showToast } from "../Toasts";
-import { BackButtonModal } from "../BackButtonModal";
-import { WorkoutToDoTooltip } from "../Tooltips";
 import { NoteInputField } from "./NoteInputField";
 import { AddNewSetButton } from "./AddNewSetButton";
-import { RemoveExerciseIcon, TrashBinIcon } from "../icons/user/modify";
+import { RemoveIcon, TrashBinIcon } from "../icons/user/modify";
 import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 import { SubmitDoneWorkoutButton } from "../SubmitButtons";
 
@@ -65,18 +64,6 @@ export const WorkoutToDoForm = ({
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-20 bg-gradient-to-r from-green-600 from-20% to-violet-600 pt-safe-top dark:from-green-700 dark:to-violet-700">
-        <div className="flex items-center gap-3 px-4 py-2 [&>*:nth-child(2)]:mr-auto [&>*:nth-child(3)]:mr-2">
-          <BackButtonModal className="mr-4 rounded-full p-1.5 text-white active:bg-slate-300/60 dark:active:bg-slate-300/50" />
-
-          <p className="font-manrope text-xl uppercase text-white">
-            {currWorkout.title}
-          </p>
-
-          <WorkoutToDoTooltip />
-        </div>
-      </header>
-
       <main className="mt-safe-top flex flex-col px-6 pb-[73px] pt-14">
         <form
           id="submit-done-workout"
@@ -91,7 +78,7 @@ export const WorkoutToDoForm = ({
                 <button
                   type="button"
                   onClick={async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 100));
+                    await timeout(BUTTON_TIMEOUT);
 
                     toggleExerciseDoneState(exercise.id);
                   }}
@@ -220,7 +207,10 @@ export const WorkoutToDoForm = ({
                                       }
                                       className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
                                     >
-                                      {RemoveExerciseIcon}
+                                      <RemoveIcon
+                                        strokeWidth={3.5}
+                                        className="size-3.5"
+                                      />
                                     </button>
                                   </motion.div>
                                 )}
@@ -351,7 +341,10 @@ export const WorkoutToDoForm = ({
                                       }
                                       className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
                                     >
-                                      {RemoveExerciseIcon}
+                                      <RemoveIcon
+                                        strokeWidth={3.5}
+                                        className="size-3.5"
+                                      />
                                     </button>
                                   </motion.div>
                                 )}
@@ -415,7 +408,7 @@ export const WorkoutToDoForm = ({
               <div className="flex items-center gap-4">
                 <AddExerciseDrawer
                   updateExercises={updateExercises}
-                  className="rounded-full p-1.5 text-slate-400 active:scale-95 active:bg-slate-200 dark:text-slate-300 dark:active:bg-slate-700"
+                  className="rounded-full p-1.5 text-violet-500 active:scale-95 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
                 />
 
                 <button
