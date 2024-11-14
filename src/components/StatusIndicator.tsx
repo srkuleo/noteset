@@ -11,7 +11,7 @@ export const StatusIndicator = ({
   return (
     <div
       className={twMerge(
-        "flex items-center gap-1 rounded-full px-3 py-0.5 shadow-md ring-1 ring-inset ring-slate-300 dark:shadow-slate-900 dark:ring-slate-700",
+        "flex items-center justify-center gap-1 rounded-full shadow-md ring-1 ring-inset",
         className,
       )}
     >
