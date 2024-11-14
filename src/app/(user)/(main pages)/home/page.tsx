@@ -5,7 +5,7 @@ import {
 } from "@/components/user/UserPagesHeader";
 import { WorkoutQuerySwitchButton } from "@/components/user/WorkoutQuerySwitchButton";
 import { HomePageTooltip } from "@/components/Tooltips";
-import { LoadingWorkoutsSkeleton } from "@/components/Loading";
+import { HomePageSkeleton } from "@/components/Loading";
 import { HomePageDataFetcher } from "@/components/user/HomePageDataFetcher";
 
 import type { Metadata } from "next";
@@ -34,7 +34,7 @@ export default async function HomePage({
         </div>
       </UserPagesSubHeadingWrapper>
 
-      <Suspense fallback={<LoadingWorkoutsSkeleton />}>
+      <Suspense fallback={<HomePageSkeleton />}>
         <HomePageDataFetcher queryParam={searchParams.q} />
       </Suspense>
     </>

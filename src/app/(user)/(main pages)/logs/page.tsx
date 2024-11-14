@@ -3,7 +3,7 @@ import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
-import { LoadingDoneWorkoutsSkeleton } from "@/components/Loading";
+import { LogsPageSkeleton } from "@/components/Loading";
 import { LogsPageDataFetcher } from "@/components/user/LogsPageDataFetcher";
 
 import type { Metadata } from "next";
@@ -21,7 +21,7 @@ export default async function LogsPage() {
 
       {/* Add search bar and filter button */}
 
-      <Suspense fallback={<LoadingDoneWorkoutsSkeleton />}>
+      <Suspense fallback={<LogsPageSkeleton />}>
         <LogsPageDataFetcher />
       </Suspense>
     </>

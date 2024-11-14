@@ -6,7 +6,7 @@ import {
 } from "@/components/user/UserPagesHeader";
 import { PostWorkoutTooltip } from "@/components/Tooltips";
 import { HomeIcon } from "@/components/icons/user/navbar";
-import { LoadingPostWorkoutPageSkeleton } from "@/components/Loading";
+import { PostWorkoutPageSkeleton } from "@/components/Loading";
 import { PostWorkoutPageDataFetcher } from "@/components/user/PostWorkoutPageDataFetcher";
 
 import type { Metadata } from "next";
@@ -34,7 +34,7 @@ export default async function PostWorkoutPage({
           >
             <HomeIcon
               fill="currentColor"
-              strokeColor="none"
+              stroke="none"
               strokeWidth={0}
               className="size-6"
             />
@@ -43,7 +43,7 @@ export default async function PostWorkoutPage({
         </div>
       </UserPagesSubHeadingWrapper>
 
-      <Suspense fallback={<LoadingPostWorkoutPageSkeleton />}>
+      <Suspense fallback={<PostWorkoutPageSkeleton />}>
         <PostWorkoutPageDataFetcher title={searchParams.workoutTitle} />
       </Suspense>
     </>
