@@ -9,13 +9,13 @@ export const WorkoutQuerySwitchButton = () => {
   const searchParams = useSearchParams();
 
   return (
-    <div className="flex items-center rounded-full shadow-md ring-1 ring-slate-300 dark:ring-slate-700">
+    <div className="flex items-center gap-0.5 rounded-full shadow-md ring-1 ring-slate-300 dark:ring-slate-700">
       <Link
         href={path + "?q=current"}
+        scroll={false}
         className={twMerge(
-          "rounded-l-full px-3 py-1 active:bg-slate-200 dark:active:bg-slate-800",
-          searchParams.get("q") === "current" &&
-            "bg-blue-400 py-0.5 dark:bg-blue-500",
+          "rounded-full px-4 py-1 active:bg-slate-200 dark:active:bg-slate-800",
+          searchParams.get("q") === "current" && "bg-blue-400 dark:bg-blue-500",
         )}
       >
         <p
@@ -31,10 +31,11 @@ export const WorkoutQuerySwitchButton = () => {
 
       <Link
         href={path + "?q=archived"}
+        scroll={false}
         className={twMerge(
-          "rounded-r-full px-3 py-1 active:bg-slate-200 dark:active:bg-slate-800",
+          "rounded-full px-4 py-1 active:bg-slate-200 dark:active:bg-slate-800",
           searchParams.get("q") === "archived" &&
-            "bg-slate-500 py-0.5 dark:bg-slate-600",
+            "bg-slate-500 dark:bg-slate-600",
         )}
       >
         <p
