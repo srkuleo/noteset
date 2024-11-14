@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 import {
   MoonIcon,
   SunIcon,
@@ -43,8 +44,11 @@ export const Theme = () => {
         </div>
       ) : (
         <div className="flex items-center justify-between">
-          <div className="h-8 w-14 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
-          <div className="h-4 w-20 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800" />
+          <div className="h-6 w-20 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800/80" />
+
+          <div className="px-3 py-1.5 text-sm font-semibold text-violet-500 active:scale-95 active:text-violet-300 dark:text-violet-400 dark:active:text-violet-600">
+            Change
+          </div>
         </div>
       )}
     </div>
@@ -70,7 +74,7 @@ const ChangeTheme = ({
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 150));
+          await timeout(BUTTON_TIMEOUT);
 
           setOpen(true);
         }}
@@ -100,7 +104,7 @@ const ChangeTheme = ({
               <button
                 key={value}
                 onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 100));
+                  await timeout(BUTTON_TIMEOUT);
 
                   chooseTheme(value);
 
@@ -125,7 +129,8 @@ const ChangeTheme = ({
           <button
             type="button"
             onClick={async () => {
-              await new Promise((resolve) => setTimeout(resolve, 100));
+              await timeout(BUTTON_TIMEOUT);
+
               setOpen(false);
             }}
             className="w-full rounded-modal bg-white p-3 text-xl font-bold focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:active:bg-slate-600/90"

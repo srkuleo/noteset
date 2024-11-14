@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { twMerge } from "tailwind-merge";
+import { timeout, BUTTON_TIMEOUT } from "@/util/utils";
 import { updateUserTimeFormatPreference } from "@/util/actions/profile";
 import { TimeIcon } from "@/components/icons/user/profile/time";
 import { showToast } from "@/components/Toasts";
@@ -42,7 +43,7 @@ const ChangeTimeFormat = ({ selected }: { selected: TimeFormatType }) => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 150));
+          await timeout(BUTTON_TIMEOUT);
 
           setOpen(true);
         }}
@@ -69,7 +70,7 @@ const ChangeTimeFormat = ({ selected }: { selected: TimeFormatType }) => {
               <button
                 key={value}
                 onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 100));
+                  await timeout(BUTTON_TIMEOUT);
 
                   const res = await updateUserTimeFormatPreference(value);
 
@@ -90,7 +91,8 @@ const ChangeTimeFormat = ({ selected }: { selected: TimeFormatType }) => {
           <button
             type="button"
             onClick={async () => {
-              await new Promise((resolve) => setTimeout(resolve, 100));
+              await timeout(BUTTON_TIMEOUT);
+
               setOpen(false);
             }}
             className="w-full rounded-modal bg-white p-3 text-xl font-bold focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:active:bg-slate-600/90"

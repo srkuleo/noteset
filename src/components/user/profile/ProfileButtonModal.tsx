@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { Drawer } from "vaul";
-import { logout } from "@/util/actions/auth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { timeout, BUTTON_TIMEOUT } from "@/util/utils";
+import { logout } from "@/util/actions/auth";
 
 export const ProfileButtonModal = ({
   username,
@@ -27,11 +28,21 @@ export const ProfileButtonModal = ({
       noBodyStyles
       disablePreventScroll
     >
-      <Drawer.Trigger className="pr-1">
-        <div className="flex size-9 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-300 dark:bg-slate-600 dark:ring-slate-500">
+      <button
+        type="button"
+        onClick={async () => {
+          await timeout(BUTTON_TIMEOUT);
+
+          setOpen(true);
+        }}
+        className="pr-1"
+      >
+        <div className="flex size-9 items-center justify-center rounded-full bg-slate-100 ring-1 ring-slate-300 active:scale-95 active:bg-slate-300/50 dark:bg-slate-600 dark:ring-slate-500 dark:active:bg-slate-700">
           <span className="text-[16px] font-bold">{userInitial}</span>
         </div>
-      </Drawer.Trigger>
+
+        <p className="sr-only">Open profile modal</p>
+      </button>
 
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
@@ -53,15 +64,26 @@ export const ProfileButtonModal = ({
 
               <p className="text-xl font-bold">{username}</p>
 
-              <Drawer.Close className="ml-auto size-6 rounded-full bg-slate-100 ring-1 ring-slate-300 dark:bg-slate-600 dark:ring-slate-500">
+              <button
+                type="button"
+                onClick={async () => {
+                  await timeout(BUTTON_TIMEOUT);
+
+                  setOpen(false);
+                }}
+                className="ml-auto size-6 rounded-full bg-slate-100 ring-1 ring-slate-300 active:scale-95 active:bg-slate-300/50 dark:bg-slate-600 dark:ring-slate-500 dark:active:bg-slate-700"
+              >
                 &times;
-              </Drawer.Close>
+                <p className="sr-only">Close modal</p>
+              </button>
             </div>
 
             <button
               type="button"
               disabled={isPending}
-              onClick={() => {
+              onClick={async () => {
+                await timeout(BUTTON_TIMEOUT);
+
                 router.push("/profile");
                 setOpen(false);
               }}
@@ -73,7 +95,9 @@ export const ProfileButtonModal = ({
             <button
               type="button"
               disabled={isPending}
-              onClick={() => {
+              onClick={async () => {
+                await timeout(BUTTON_TIMEOUT);
+
                 router.push("/profile");
                 setOpen(false);
               }}

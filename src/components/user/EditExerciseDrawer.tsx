@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useExerciseForm } from "@/util/hooks";
+import { useExerciseForm } from "@/util/hooks/useExerciseForm";
 import {
   NameInput,
   NoteInput,
@@ -12,6 +12,11 @@ import { ErrorComponent } from "../ErrorComponent";
 import { ModalSubmitButton } from "../SubmitButtons";
 
 import { ExerciseSchema, type ExerciseType } from "@/util/types";
+import {
+  BUTTON_TIMEOUT,
+  SWIPE_AND_DRAWER_TIMEOUT,
+  timeout,
+} from "@/util/utils";
 
 export const EditExerciseDrawer = ({
   isOpen,
@@ -71,7 +76,7 @@ const EditExerciseForm = ({
 }) => {
   const { mutate: modifyExercise, isPending } = useMutation({
     mutationFn: async (exercise: ExerciseType) => {
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await timeout(SWIPE_AND_DRAWER_TIMEOUT);
 
       const isValidExercise = ExerciseSchema.safeParse(exercise);
 
@@ -146,7 +151,8 @@ const EditExerciseForm = ({
           type="button"
           disabled={isPending}
           onClick={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await timeout(BUTTON_TIMEOUT);
+
             closeDrawer();
           }}
           className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-300/80 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 dark:active:bg-slate-300"

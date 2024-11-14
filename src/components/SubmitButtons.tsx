@@ -1,6 +1,7 @@
 import { useFormStatus } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
+import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 
 type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string;
@@ -81,10 +82,10 @@ export const SubmitDoneWorkoutButton = ({
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
           setOpen(true);
         }}
-        className="px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:text-green-400 dark:text-green-600 dark:active:text-green-800"
+        className="px-3 py-1.5 text-xl font-extrabold text-green-500 active:scale-95 active:text-green-400 dark:text-green-600 dark:active:text-green-800"
       >
         Done
         <p className="sr-only">Done button</p>
@@ -116,7 +117,7 @@ export const SubmitDoneWorkoutButton = ({
 
           <button
             onClick={async () => {
-              await new Promise((resolve) => setTimeout(resolve, 100));
+              await timeout(BUTTON_TIMEOUT);
 
               setOpen(false);
             }}

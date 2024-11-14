@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Drawer } from "vaul";
+import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 import { InformationIcon } from "./icons/user/information";
 
 export const LandingPageTooltip = () => {
@@ -17,7 +18,7 @@ export const LandingPageTooltip = () => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
           setOpen(true);
         }}
         className="rounded-full px-6 py-2 font-manrope font-semibold text-slate-600 shadow-md ring-1 ring-slate-400/40 active:scale-95 active:bg-slate-50 dark:text-white dark:ring-slate-400 dark:active:bg-slate-800"
@@ -76,12 +77,13 @@ export const HomePageTooltip = () => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
+
           setOpen(true);
         }}
         className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
       >
-        <InformationIcon className="size-6" />
+        <InformationIcon strokeWidth={1.5} className="size-6" />
       </button>
 
       <TooltipDrawer closeDrawer={() => setOpen(false)}>
@@ -137,12 +139,13 @@ export const AddOrEditWorkoutTooltip = () => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
+
           setOpen(true);
         }}
         className="ml-auto mr-1.5 rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
       >
-        <InformationIcon className="size-7" />
+        <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
       <TooltipDrawer closeDrawer={() => setOpen(false)}>
@@ -203,12 +206,13 @@ export const WorkoutToDoTooltip = () => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
+
           setOpen(true);
         }}
-        className="rounded-full p-1.5 text-white"
+        className="mr-2 rounded-full p-1.5 text-white"
       >
-        <InformationIcon className="size-7" />
+        <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
       <TooltipDrawer closeDrawer={() => setOpen(false)}>
@@ -300,12 +304,13 @@ export const PostWorkoutTooltip = () => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
+
           setOpen(true);
         }}
         className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
       >
-        <InformationIcon className="size-7" />
+        <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
       <TooltipDrawer closeDrawer={() => setOpen(false)}>
@@ -410,7 +415,8 @@ const TooltipDrawer = ({
 
             <button
               onClick={async () => {
-                await new Promise((resolve) => setTimeout(resolve, 100));
+                await timeout(BUTTON_TIMEOUT);
+
                 closeDrawer();
               }}
               className="rounded-lg bg-slate-800 py-2 font-bold text-white active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"

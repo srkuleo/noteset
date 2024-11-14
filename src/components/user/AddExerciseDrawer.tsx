@@ -2,8 +2,13 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { generateIdFromEntropySize } from "lucia";
-import { useExerciseForm } from "@/util/hooks";
+import { useExerciseForm } from "@/util/hooks/useExerciseForm";
+import {
+  BUTTON_TIMEOUT,
+  generateRandomId,
+  SWIPE_AND_DRAWER_TIMEOUT,
+  timeout,
+} from "@/util/utils";
 import { AddIcon } from "../icons/user/modify";
 import {
   NameInput,
@@ -43,12 +48,13 @@ export const AddExerciseDrawer = ({
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
+
           setOpen(true);
         }}
         className={className}
       >
-        <AddIcon size={26} strokeWidth={2} />
+        <AddIcon strokeWidth={2} className="size-7" />
         <span className="sr-only">Add Exercise</span>
       </button>
 
@@ -89,11 +95,11 @@ const AddExerciseForm = ({
 }) => {
   const { mutate: createExercise, isPending } = useMutation({
     mutationFn: async (exercise: ExerciseType) => {
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await timeout(SWIPE_AND_DRAWER_TIMEOUT);
 
       const exerciseWithId: ExerciseType = {
         ...exercise,
-        id: generateIdFromEntropySize(10),
+        id: generateRandomId(10),
       };
 
       const isValidExercise = ExerciseSchema.safeParse(exerciseWithId);
@@ -170,7 +176,8 @@ const AddExerciseForm = ({
           type="button"
           disabled={isPending}
           onClick={async () => {
-            await new Promise((resolve) => setTimeout(resolve, 100));
+            await timeout(BUTTON_TIMEOUT);
+
             closeDrawer();
           }}
           className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-300/80 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 dark:active:bg-slate-300"

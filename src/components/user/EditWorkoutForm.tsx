@@ -1,7 +1,8 @@
 "use client";
 
 import { useMutation } from "@tanstack/react-query";
-import { useWorkouts } from "@/util/hooks";
+import { useWorkoutInForm } from "@/util/hooks/useWorkoutInForm";
+import { FORM_TIMEOUT, timeout } from "@/util/utils";
 import { editWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
@@ -23,7 +24,7 @@ export const EditWorkoutForm = ({
     isPending,
   } = useMutation({
     mutationFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await timeout(FORM_TIMEOUT);
 
       const { title: originalTitle, id: workoutId } = workoutToEdit;
 
@@ -50,7 +51,7 @@ export const EditWorkoutForm = ({
     updateExercises,
     editExercises,
     removeExercise,
-  } = useWorkouts(workoutToEdit);
+  } = useWorkoutInForm(workoutToEdit);
 
   return (
     <>
@@ -89,8 +90,8 @@ export const EditWorkoutForm = ({
 
       <FormPagesFooterWrapper disabled={isPending}>
         <AddExerciseDrawer
-          className="rounded-full p-1.5 text-violet-400 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
           updateExercises={updateExercises}
+          className="rounded-full p-1.5 text-violet-500 active:scale-95 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
         />
 
         <button

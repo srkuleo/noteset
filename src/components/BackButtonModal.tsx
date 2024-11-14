@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Drawer } from "vaul";
+import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 import { ArrowLeftIcon } from "./icons/arrows";
 
 export const BackButtonModal = ({ className }: { className: string }) => {
@@ -18,7 +19,7 @@ export const BackButtonModal = ({ className }: { className: string }) => {
       <button
         type="button"
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
           setOpen(true);
         }}
         className={className}
@@ -52,7 +53,7 @@ export const BackButtonModal = ({ className }: { className: string }) => {
           <button
             type="button"
             onClick={async () => {
-              await new Promise((resolve) => setTimeout(resolve, 100));
+              await timeout(BUTTON_TIMEOUT);
               setOpen(false);
             }}
             className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"

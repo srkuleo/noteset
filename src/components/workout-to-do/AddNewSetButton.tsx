@@ -4,6 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { Drawer } from "vaul";
 import { twMerge } from "tailwind-merge";
+import {
+  BUTTON_TIMEOUT,
+  SWIPE_AND_DRAWER_TIMEOUT,
+  timeout,
+} from "@/util/utils";
 import { AddIcon } from "../icons/user/modify";
 import { ArrowLeftIcon } from "../icons/arrows";
 import { ErrorComponent } from "../ErrorComponent";
@@ -42,12 +47,13 @@ export const AddNewSetButton = ({
         type="button"
         disabled={removeMode || exercise.done}
         onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await timeout(BUTTON_TIMEOUT);
+
           setOpen(true);
         }}
         className="mx-auto flex w-fit items-center gap-1 rounded-lg px-3 py-[5px] text-sm font-bold active:bg-slate-200 disabled:pointer-events-none disabled:opacity-30 dark:text-slate-100 dark:active:bg-slate-800"
       >
-        <AddIcon size={20} strokeWidth={1.7} />
+        <AddIcon strokeWidth={2} className="size-5" />
         <p className="font-bold uppercase">Add set</p>
       </button>
 
@@ -109,7 +115,7 @@ const AddSetForm = ({
     reset,
   } = useMutation({
     mutationFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      await timeout(SWIPE_AND_DRAWER_TIMEOUT);
 
       const isValidSet = SetSchema.pick({
         reps: true,
@@ -358,9 +364,7 @@ const AddSetForm = ({
                       <button
                         type="button"
                         onClick={async () => {
-                          await new Promise((resolve) =>
-                            setTimeout(resolve, 100),
-                          );
+                          await timeout(BUTTON_TIMEOUT);
 
                           setShowForm(true);
                         }}
@@ -468,7 +472,7 @@ const AddSetForm = ({
                   <button
                     type="button"
                     onClick={async () => {
-                      await new Promise((resolve) => setTimeout(resolve, 100));
+                      await timeout(BUTTON_TIMEOUT);
 
                       reset();
                       setShowForm(false);

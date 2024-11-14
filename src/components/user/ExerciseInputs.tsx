@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { AnimatePresence, motion } from "framer-motion";
-import { slideX } from "@/util/utils";
+import { BUTTON_TIMEOUT, slideX, timeout } from "@/util/utils";
 import { ErrorComponent } from "../ErrorComponent";
 
 import type { SetType } from "@/util/types";
@@ -122,7 +122,7 @@ export const SelectSetsInput = ({
                 <button
                   type="button"
                   onClick={async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 100));
+                    await timeout(BUTTON_TIMEOUT);
 
                     createSets(setsCount);
                     setNeedMoreSets(false);
@@ -135,7 +135,7 @@ export const SelectSetsInput = ({
                 <button
                   type="button"
                   onClick={async () => {
-                    await new Promise((resolve) => setTimeout(resolve, 100));
+                    await timeout(BUTTON_TIMEOUT);
 
                     setNeedMoreSets(false);
                   }}
@@ -183,7 +183,7 @@ export const SelectSetsInput = ({
               <button
                 type="button"
                 onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 100));
+                  await timeout(BUTTON_TIMEOUT);
 
                   setNeedMoreSets(true);
                 }}
