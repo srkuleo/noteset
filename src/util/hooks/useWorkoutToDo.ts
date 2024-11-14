@@ -1,224 +1,15 @@
 import debounce from "lodash.debounce";
 import { useState } from "react";
-import { generateIdFromEntropySize } from "lucia";
+import { BUTTON_TIMEOUT, generateRandomId, timeout } from "../utils";
 
 import type {
   CreateWorkoutType,
-  ExerciseType,
-  ExerciseToDoType,
-  ExerciseActionResponse,
-  SetType,
-  SetWithoutId,
   WorkoutToDoType,
-} from "./types";
-
-const initErrors: ExerciseActionResponse = {
-  errors: {},
-  message: "",
-};
-
-export const useExerciseForm = (initExercise: ExerciseType) => {
-  const [tempExercise, setTempExercise] = useState(initExercise);
-  const [exerciseFormErrors, setExerciseFormErrors] = useState(initErrors);
-
-  function handleNameInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        name: event.target.value,
-      };
-    });
-  }
-
-  function handleNoteInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        note: event.target.value,
-      };
-    });
-  }
-
-  function createSets(newSetCount: number) {
-    const currSets = tempExercise.sets;
-
-    if (newSetCount > currSets.length) {
-      const modifiedSets = [
-        ...currSets,
-        ...Array(newSetCount - currSets.length)
-          .fill(null)
-          .map(
-            (): SetType => ({
-              id: generateIdFromEntropySize(10),
-              reps: "",
-              weight: "",
-              warmup: false,
-            }),
-          ),
-      ];
-
-      setTempExercise((prev) => {
-        return {
-          ...prev,
-          sets: modifiedSets,
-        };
-      });
-    } else if (newSetCount < currSets.length) {
-      const modifiedSets = currSets.slice(0, newSetCount);
-
-      setTempExercise((prev) => {
-        return {
-          ...prev,
-          sets: modifiedSets,
-        };
-      });
-    }
-
-    if (
-      exerciseFormErrors.errors?.sets &&
-      exerciseFormErrors.errors.sets.length > 0
-    ) {
-      setExerciseFormErrors((prev) => {
-        return {
-          ...prev,
-          errors: {
-            ...prev.errors,
-            sets: undefined,
-          },
-        };
-      });
-    }
-  }
-
-  function markSetAsWarmup(setId: string) {
-    const modifiedSets = tempExercise.sets.map((set) =>
-      set.id === setId ? { ...set, warmup: !set.warmup } : set,
-    );
-
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        sets: modifiedSets,
-      };
-    });
-  }
-
-  function modifySets(e: React.ChangeEvent<HTMLInputElement>, setId: string) {
-    const modifiedSets = tempExercise.sets.map((set) =>
-      set.id === setId ? { ...set, [e.target.name]: e.target.value } : set,
-    );
-
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        sets: modifiedSets,
-      };
-    });
-  }
-
-  return {
-    tempExercise,
-    exerciseFormErrors,
-    setExerciseFormErrors,
-    handleNameInput,
-    handleNoteInput,
-    createSets,
-    markSetAsWarmup,
-    modifySets,
-  };
-};
-
-export const emptyWorkout: CreateWorkoutType = {
-  title: "",
-  description: "",
-  exercises: [],
-};
-
-/* 
-Contains:
-
-- workout state (data passed to server action)
-- resetForm function (resets form fields if res.status is successful on workout creation)
-- five handler functions for creating, editing or removing existing exercise inside a workout and 
-handling title and description input
-
-*/
-
-export const useWorkouts = (initWorkout: CreateWorkoutType) => {
-  const [workout, setWorkout] = useState(initWorkout);
-
-  function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        title: event.target.value,
-      };
-    });
-  }
-
-  function handleDescriptionInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        description: event.target.value,
-      };
-    });
-  }
-
-  function updateExercises(newExercise: ExerciseType) {
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: [...prev.exercises, newExercise],
-      };
-    });
-  }
-
-  function editExercises(editedExercise: ExerciseType) {
-    const modifiedExercises = workout.exercises.map((exercise) => {
-      if (exercise.id === editedExercise.id) {
-        return editedExercise;
-      } else {
-        return exercise;
-      }
-    });
-
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: modifiedExercises,
-      };
-    });
-  }
-
-  function removeExercise(id: string) {
-    const modifiedExercises = workout.exercises.filter(
-      (exercise) => exercise.id !== id,
-    );
-
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: modifiedExercises,
-      };
-    });
-  }
-
-  function resetWorkoutForm() {
-    setWorkout(initWorkout);
-  }
-
-  return {
-    workout,
-    setWorkout,
-    handleTitleInput,
-    handleDescriptionInput,
-    updateExercises,
-    editExercises,
-    removeExercise,
-    resetWorkoutForm,
-  };
-};
+  ExerciseToDoType,
+  SetWithoutId,
+  SetType,
+  ExerciseType,
+} from "../types";
 
 /* 
 Contains:
@@ -347,7 +138,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     setIndex: number,
   ) {
     const newSet: SetType = {
-      id: generateIdFromEntropySize(10),
+      id: generateRandomId(10),
       reps: setData.reps,
       weight: setData.weight,
       warmup: setData.warmup,
@@ -489,7 +280,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
   }
 
   async function enterRemoveMode() {
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await timeout(BUTTON_TIMEOUT);
 
     setExercisesBeforeRemoveMode([...currWorkout.exercises]);
     setPlaceholderExercisesBeforeRemoveMode([...placeholderExercises]);
@@ -498,7 +289,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
   }
 
   async function resetChangesInRemoveMode() {
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await timeout(BUTTON_TIMEOUT);
 
     setCurrWorkout((prev) => {
       return {
@@ -512,7 +303,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
   }
 
   async function saveChangesInRemoveMode() {
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await timeout(BUTTON_TIMEOUT);
 
     setRemoveMode(false);
   }
@@ -532,36 +323,4 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     resetChangesInRemoveMode,
     saveChangesInRemoveMode,
   };
-};
-
-type TimeType = { start: Date | null; end: Date | null };
-
-export const useWorkoutDuration = () => {
-  const [workoutTime, setWorkoutTime] = useState<TimeType>({
-    start: new Date(),
-    end: null,
-  });
-
-  function endWorkout() {
-    setWorkoutTime((prev) => {
-      return {
-        ...prev,
-        end: new Date(),
-      };
-    });
-  }
-
-  function calcWorkoutDuration() {
-    if (workoutTime.start && workoutTime.end) {
-      const durationInMili =
-        workoutTime.end.getTime() - workoutTime.start.getTime();
-      const minutes = Math.floor(durationInMili / (1000 * 60));
-
-      return minutes;
-    }
-
-    return 0;
-  }
-
-  return { endWorkout, calcWorkoutDuration };
 };
