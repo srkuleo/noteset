@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
+import { getAuthSession } from "@/util/session";
 import { getCurrentWorkoutByTitle, getLastSubmittedWorkout } from "@/db/query";
-import { getAuth } from "@/util/actions/auth";
 import { PostWorkoutPageContent } from "./PostWorkoutPageContent";
 
 export const PostWorkoutPageDataFetcher = async ({
@@ -8,15 +8,16 @@ export const PostWorkoutPageDataFetcher = async ({
 }: {
   title: string;
 }) => {
-  const [currentWorkout, submittedWorkout, { user }] = await Promise.all([
-    getCurrentWorkoutByTitle(title),
-    getLastSubmittedWorkout(title),
-    getAuth(),
-  ]);
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     redirect("/login");
   }
+
+  const [currentWorkout, submittedWorkout] = await Promise.all([
+    getCurrentWorkoutByTitle(title),
+    getLastSubmittedWorkout(title),
+  ]);
 
   if (!submittedWorkout || !currentWorkout) {
     notFound();
