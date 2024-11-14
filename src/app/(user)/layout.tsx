@@ -1,21 +1,20 @@
-import { redirect } from "next/navigation";
-import { getAuth } from "@/util/actions/auth";
+import { Suspense } from "react";
 import { UserPagesHeader } from "@/components/user/UserPagesHeader";
+import { ProfileButtonSkeleton } from "@/components/Loading";
+import { ProfileButton } from "@/components/user/profile/ProfileButton";
 
 export default async function UserPagesLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = await getAuth();
-
-  if (!user) {
-    redirect("/login");
-  }
-
   return (
     <>
-      <UserPagesHeader />
+      <UserPagesHeader>
+        <Suspense fallback={<ProfileButtonSkeleton />}>
+          <ProfileButton />
+        </Suspense>
+      </UserPagesHeader>
       {children}
     </>
   );
