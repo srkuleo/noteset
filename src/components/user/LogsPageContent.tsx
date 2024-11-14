@@ -3,7 +3,7 @@
 import { EmptyIcon } from "../icons/user/warning";
 import { StatusIndicator } from "../StatusIndicator";
 import { FormatWorkoutDuration } from "../Formatting";
-import { PreviewWorkoutButtonDrawer } from "./PreviewWorkoutButtonDrawer";
+import { PreviewWorkoutDrawerWithTrigger } from "./PreviewWorkoutDrawer";
 
 import type { WorkoutType } from "@/db/schema";
 import type { TimeFormatType } from "@/util/types";
@@ -65,13 +65,12 @@ export const LogsPageContent = ({
           <div className="flex flex-col items-center justify-center gap-3 border-l border-slate-300/80 pl-3 dark:border-slate-800/80">
             <StatusIndicator
               status={doneWorkout.status}
-              className="bg-white px-4 py-2 dark:bg-slate-800"
+              className="bg-white px-4 py-2 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700"
             />
 
-            <PreviewWorkoutButtonDrawer
+            <PreviewWorkoutDrawerWithTrigger
               workout={doneWorkout}
-              className="bg-white px-2.5 py-2 dark:bg-slate-800"
-              size={5}
+              className="bg-white px-2 py-1.5 ring-slate-300 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-900"
             />
           </div>
         </div>

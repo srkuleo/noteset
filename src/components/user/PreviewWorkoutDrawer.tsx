@@ -1,22 +1,21 @@
 import { Fragment, useState } from "react";
-import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
+import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 import { StatusIndicator } from "../StatusIndicator";
 
 import type { PartialWorkoutType } from "@/db/schema";
+import { twMerge } from "tailwind-merge";
 
-export const PreviewWorkoutButtonDrawer = ({
+export const PreviewWorkoutDrawer = ({
   workout,
-  className,
-  size,
+  open,
+  setOpen,
 }: {
   workout: PartialWorkoutType;
-  className?: string;
-  size: number | string;
+  open: boolean;
+  setOpen: (isOpen: boolean) => void;
 }) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <Drawer.Root
       open={open}
@@ -24,27 +23,12 @@ export const PreviewWorkoutButtonDrawer = ({
       noBodyStyles
       disablePreventScroll
     >
-      <button
-        type="button"
-        onClick={async () => {
-          await new Promise((resolve) => setTimeout(resolve, 100));
-          setOpen(true);
-        }}
-        className={twMerge(
-          "rounded-lg shadow-md ring-1 ring-inset ring-slate-300 active:scale-95 active:bg-slate-200 dark:shadow-slate-900 dark:ring-slate-700 dark:active:bg-slate-800",
-          className,
-        )}
-      >
-        <ShowIcon className={`size-${size}`} />
-        <p className="sr-only">Preview workout</p>
-      </button>
-
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
         <Drawer.Content
           aria-describedby={undefined}
-          className="fixed inset-x-0 bottom-0 z-[9999] select-none px-2 focus:outline-none"
+          className="fixed inset-x-0 bottom-0 z-[9999] px-2 focus:outline-none"
         >
           <div className="rounded-t-modal bg-white pb-safe-bottom ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
             <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
@@ -57,7 +41,7 @@ export const PreviewWorkoutButtonDrawer = ({
 
                 <StatusIndicator
                   status={workout.status}
-                  className="bg-white py-2 dark:bg-slate-900"
+                  className="bg-white px-4 py-2 ring-slate-300 dark:bg-slate-900 dark:ring-slate-700"
                 />
               </div>
             </div>
@@ -95,7 +79,7 @@ export const PreviewWorkoutButtonDrawer = ({
                     <p
                       className={`flex items-center pl-4 font-semibold text-slate-600 dark:text-white ${index !== workout.exercises.length - 1 ? "pb-6" : ""}`}
                     >
-                      {exercise.note ? exercise.note : "/"}
+                      {exercise.note ? exercise.note : "..."}
                     </p>
                   </Fragment>
                 ))}
@@ -103,18 +87,50 @@ export const PreviewWorkoutButtonDrawer = ({
 
               <button
                 onClick={async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 100));
+                  await timeout(BUTTON_TIMEOUT);
+
                   setOpen(false);
                 }}
                 className="flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
               >
                 Hide
-                <HideIcon className="size-[22px]" />
+                <HideIcon strokeWidth={1.5} className="size-[22px]" />
               </button>
             </div>
           </div>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
+  );
+};
+
+export const PreviewWorkoutDrawerWithTrigger = ({
+  workout,
+  className,
+}: {
+  workout: PartialWorkoutType;
+  className?: string;
+}) => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={async () => {
+          await timeout(BUTTON_TIMEOUT);
+          setOpen(true);
+        }}
+        className={twMerge(
+          "rounded-lg shadow-md ring-1 ring-inset active:scale-95",
+          className,
+        )}
+      >
+        <ShowIcon strokeWidth={1.3} className="size-6" />
+        <p className="sr-only">Preview workout</p>
+      </button>
+
+      <PreviewWorkoutDrawer workout={workout} open={open} setOpen={setOpen} />
+    </>
   );
 };
