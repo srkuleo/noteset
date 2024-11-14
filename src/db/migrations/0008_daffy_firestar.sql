@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS "expires_at_index" ON "sessions" USING btree ("expires_at");

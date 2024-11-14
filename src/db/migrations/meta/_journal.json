@@ -50,6 +50,20 @@
       "when": 1725542250772,
       "tag": "0006_breezy_the_watchers",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1730234476789,
+      "tag": "0007_chilly_toad_men",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1730329390788,
+      "tag": "0008_daffy_firestar",
+      "breakpoints": true
     }
   ]
 }
