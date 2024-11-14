@@ -7,4 +7,7 @@ export default defineConfig({
   },
   schema: "./src/db/schema.ts",
   out: "./src/db/migrations",
+  strict: true,
+  verbose: true,
+  casing: "snake_case",
 });
