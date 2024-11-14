@@ -1,3 +1,5 @@
+import type { GeneralIconProps } from "@/util/types";
+
 export const RetryIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -66,16 +68,21 @@ export const DangerIcon = (
   </svg>
 );
 
-export const ErrorTriangleIcon = ({ size }: { size: number }) => {
+export const ErrorTriangleIcon = ({
+  className,
+  strokeWidth,
+  ...rest
+}: GeneralIconProps) => {
   return (
     <div className="text-red-500">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"
-        strokeWidth={1.5}
+        strokeWidth={strokeWidth}
         stroke="currentColor"
-        className={`size-${size}`}
+        className={className}
+        {...rest}
       >
         <path
           strokeLinecap="round"

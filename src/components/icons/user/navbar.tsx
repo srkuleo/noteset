@@ -1,22 +1,21 @@
+import type { SolidIconProps } from "@/util/types";
+
 export const HomeIcon = ({
   fill,
-  strokeColor,
+  stroke,
   strokeWidth,
   className,
-}: {
-  fill: string;
-  strokeColor: string;
-  strokeWidth: number;
-  className: string;
-}) => {
+  ...rest
+}: SolidIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill={fill}
-      stroke={strokeColor}
+      stroke={stroke}
       strokeWidth={strokeWidth}
       className={className}
+      {...rest}
     >
       <path
         fillRule="evenodd"
@@ -29,23 +28,20 @@ export const HomeIcon = ({
 
 export const LogsIcon = ({
   fill,
-  strokeColor,
+  stroke,
   strokeWidth,
   className,
-}: {
-  fill: string;
-  strokeColor: string;
-  strokeWidth: number;
-  className: string;
-}) => {
+  ...rest
+}: SolidIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 20 20"
       fill={fill}
-      stroke={strokeColor}
+      stroke={stroke}
       strokeWidth={strokeWidth}
       className={className}
+      {...rest}
     >
       <path d="M2 3a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2Z" />
       <path

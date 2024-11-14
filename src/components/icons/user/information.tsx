@@ -1,12 +1,19 @@
-export const InformationIcon = ({ className }: { className: string }) => {
+import type { GeneralIconProps } from "@/util/types";
+
+export const InformationIcon = ({
+  className,
+  strokeWidth,
+  ...rest
+}: GeneralIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
+      strokeWidth={strokeWidth}
       stroke="currentColor"
       className={className}
+      {...rest}
     >
       <path
         strokeLinecap="round"
