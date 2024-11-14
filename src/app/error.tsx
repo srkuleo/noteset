@@ -1,13 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { LandingPageBar } from "@/components/landing/LandingPageBar";
 import { SadIcon } from "@/components/icons/user/warning";
-import { useRouter } from "next/navigation";
 
 export default function Error({ reset }: { reset: () => void }) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
   return (
     <>
       <div className="fixed inset-x-0 top-0 bg-white pt-safe-top dark:bg-slate-900">
@@ -18,7 +19,7 @@ export default function Error({ reset }: { reset: () => void }) {
         <div className="flex grow flex-col items-center justify-center gap-6">
           <div className="text-slate-400/70 dark:text-slate-700">{SadIcon}</div>
 
-          <h3 className="pb-8 font-manrope text-slate-600">
+          <h3 className="pb-8 text-center font-manrope text-slate-600">
             Sorry, something went wrong...
           </h3>
 
