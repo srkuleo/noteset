@@ -2,15 +2,15 @@
 
 import { and, desc, eq } from "drizzle-orm";
 import { db } from ".";
-import { workouts } from "./schema";
-import { getAuth } from "@/util/actions/auth";
+import { sessions, users, workouts, type Session } from "./schema";
+import { getAuthSession } from "@/util/session";
 
 import type { WorkoutStatusType } from "@/util/types";
 
 export async function getUserWorkouts(workoutStatus: WorkoutStatusType) {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -39,9 +39,9 @@ export async function getUserWorkouts(workoutStatus: WorkoutStatusType) {
 }
 
 export async function getUserDoneWorkouts() {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -70,9 +70,9 @@ export async function getUserDoneWorkouts() {
 }
 
 export async function getWorkoutById(workoutId: number) {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -97,9 +97,9 @@ export async function getWorkoutById(workoutId: number) {
 }
 
 export async function getWorkoutByIdWithoutId(workoutId: number) {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -123,9 +123,9 @@ export async function getWorkoutByIdWithoutId(workoutId: number) {
 }
 
 export async function getLastSubmittedWorkout(title: string) {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -152,9 +152,9 @@ export async function getLastSubmittedWorkout(title: string) {
 }
 
 export async function getCurrentWorkoutByTitle(title: string) {
-  const { user } = await getAuth();
+  const { user } = await getAuthSession();
 
-  if (!user) {
+  if (user === null) {
     throw new Error("Unauthorized action. Please login.");
   }
 
@@ -180,4 +180,50 @@ export async function getCurrentWorkoutByTitle(title: string) {
     console.error("Database error:", error);
     throw new Error("Failed to retrive current workout.");
   }
+}
+
+export async function getWorkoutTitleById(workoutId: number) {
+  const { user } = await getAuthSession();
+
+  if (user === null) {
+    throw new Error("Unauthorized action. Please login.");
+  }
+
+  try {
+    const workoutTitle = await db.query.workouts.findFirst({
+      where: and(eq(workouts.userId, user.id), eq(workouts.id, workoutId)),
+      columns: {
+        title: true,
+      },
+    });
+
+    console.log("Workout title retrived!");
+    return workoutTitle;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("Failed to retrive selected workout.");
+  }
+}
+
+export async function insertSessionInDb(session: Session) {
+  await db.insert(sessions).values(session);
+}
+
+export async function getCurrentSession(sessionId: string) {
+  const currSession = await db.query.sessions.findFirst({
+    where: eq(sessions.id, sessionId),
+  });
+
+  return currSession;
+}
+
+export async function getUserInfoWithoutPassword(session: Session) {
+  const userInfo = await db.query.users.findFirst({
+    where: eq(users.id, session.userId),
+    columns: {
+      hashedPassword: false,
+    },
+  });
+
+  return userInfo;
 }
