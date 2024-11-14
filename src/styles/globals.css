@@ -22,7 +22,7 @@
 
 @layer components {
   .input-field {
-    @apply rounded-xl bg-white px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 shadow-sm outline-none ring-1 ring-slate-400/40 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-900 dark:placeholder-slate-500 dark:caret-green-600 dark:ring-slate-700 dark:focus:placeholder-slate-600 focus:dark:ring-green-600;
+    @apply rounded-xl bg-white px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 shadow-sm outline-none ring-1 ring-slate-400/40 placeholder:text-sm placeholder:italic focus:placeholder-slate-300 focus:ring-2 focus:ring-green-500 dark:bg-slate-900 dark:placeholder-slate-500 dark:caret-green-600 dark:ring-slate-700 dark:focus:placeholder-slate-600 dark:focus:ring-green-600;
   }
 }
 
