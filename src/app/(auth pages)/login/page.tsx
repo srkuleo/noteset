@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getAuthSession } from "@/util/session";
 import { LoginForm } from "@/components/auth/LoginForm";
 
 import type { Metadata } from "next";
@@ -8,6 +10,12 @@ export const metadata: Metadata = {
 };
 
 export default async function LoginPage() {
+  const { user } = await getAuthSession();
+
+  if (user) {
+    redirect("/home?q=current");
+  }
+
   return (
     <div className="w-full space-y-6 px-7 pt-[84px] sm:px-[150px] md:px-[200px] lg:px-[300px] xl:px-[450px] 2xl:px-[550px]">
       <h2 className="text-[26px] font-semibold">Hey, welcome back!</h2>
