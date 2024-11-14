@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useWorkouts } from "@/util/hooks";
 import { AnimatePresence, motion } from "framer-motion";
+import { useWorkoutInForm } from "@/util/hooks/useWorkoutInForm";
+import { FORM_TIMEOUT, timeout } from "@/util/utils";
 import { updateCurrentWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { FormatDate, FormatWorkoutDuration } from "../Formatting";
 import { ArrowRightIcon } from "../icons/arrows";
 import { ExercisesList } from "./ExercisesList";
 import { FormPagesFooterWrapper } from "./FormPagesFooterWrapper";
-import { PreviewWorkoutButtonDrawer } from "./PreviewWorkoutButtonDrawer";
+import { PreviewWorkoutDrawerWithTrigger } from "./PreviewWorkoutDrawer";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 
 import type { QueriedByIdWorkoutType, WorkoutType } from "@/db/schema";
@@ -34,7 +35,7 @@ export const PostWorkoutPageContent = ({
     isPending,
   } = useMutation({
     mutationFn: async () => {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await timeout(FORM_TIMEOUT);
 
       const res = await updateCurrentWorkout(workout, currentWorkout.id);
 
@@ -57,7 +58,7 @@ export const PostWorkoutPageContent = ({
     updateExercises,
     editExercises,
     removeExercise,
-  } = useWorkouts(currentWorkout);
+  } = useWorkoutInForm(currentWorkout);
   const [pageStatus, setPageStatus] = useState<PageStatus>("initial");
 
   return (
@@ -86,18 +87,19 @@ export const PostWorkoutPageContent = ({
                 },
               }}
             >
-              <div className="space-y-1 pt-4 text-center">
-                <p className="text-2xl font-bold">{workout.title}</p>
-                <p className="font-manrope text-lg font-semibold text-green-500">
-                  - successfully completed -
+              <div className="flex flex-col items-center gap-2 pt-4">
+                <p className="text-2xl font-bold uppercase">{workout.title}</p>
+                <p className="rounded-xl bg-white px-3.5 py-1 font-manrope font-semibold text-green-500 shadow-md ring-1 ring-slate-200 dark:bg-slate-800/80 dark:ring-slate-700/80">
+                  completed
                 </p>
               </div>
 
-              <div className="space-y-1 py-8">
+              <div className="space-y-1 border-b border-slate-300/60 py-8 dark:border-slate-800">
                 <div className="flex justify-between">
-                  <p className="font-manrope text-lg font-semibold">
-                    Duration:
+                  <p className="font-manrope text-lg font-semibold italic text-slate-400 dark:text-slate-400">
+                    Duration
                   </p>
+
                   <FormatWorkoutDuration
                     timeFormat={timeFormatPreference}
                     duration={submittedWorkout.duration}
@@ -105,7 +107,9 @@ export const PostWorkoutPageContent = ({
                 </div>
 
                 <div className="flex justify-between">
-                  <p className="font-manrope text-lg font-semibold">Date:</p>
+                  <p className="font-manrope text-lg font-semibold italic text-slate-400 dark:text-slate-400">
+                    Date
+                  </p>
 
                   <FormatDate
                     date={submittedWorkout.doneAt}
@@ -115,7 +119,7 @@ export const PostWorkoutPageContent = ({
                 </div>
               </div>
 
-              <p className="px-4 pb-6 text-center text-lg font-semibold text-slate-500/90 dark:text-slate-300">
+              <p className="px-4 pb-6 pt-8 text-center text-lg font-semibold text-slate-500/90 dark:text-slate-300">
                 Would you like to edit your next {workout.title} workout?
               </p>
 
@@ -211,10 +215,10 @@ export const PostWorkoutPageContent = ({
                 },
               }}
             >
-              <div className="space-y-1 pt-4 text-center">
+              <div className="flex flex-col items-center gap-2 pt-4">
                 <p className="text-2xl font-bold">{workout.title}</p>
-                <p className="font-manrope text-lg font-semibold text-green-500">
-                  - successfully updated -
+                <p className="rounded-xl bg-white px-3.5 py-1 font-manrope font-semibold text-green-500 shadow-md ring-1 ring-slate-200 dark:bg-slate-800/80 dark:ring-slate-700/80">
+                  updated
                 </p>
               </div>
 
@@ -258,15 +262,14 @@ export const PostWorkoutPageContent = ({
           >
             <FormPagesFooterWrapper disabled={isPending}>
               <div className="flex items-center gap-3">
-                <PreviewWorkoutButtonDrawer
+                <PreviewWorkoutDrawerWithTrigger
                   workout={submittedWorkout}
-                  className="px-2 py-1.5 dark:bg-slate-950"
-                  size={6}
+                  className="bg-white px-2 py-1.5 ring-slate-300 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-900"
                 />
 
                 <AddExerciseDrawer
-                  className="rounded-full p-1.5 text-violet-400 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
                   updateExercises={updateExercises}
+                  className="rounded-full p-1.5 text-violet-500 active:scale-95 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
                 />
               </div>
 
