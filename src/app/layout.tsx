@@ -1,7 +1,8 @@
 import "@/styles/globals.css";
 import { manrope, nunito } from "@/styles/fonts";
 import { Providers } from "@/context/Providers";
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import type { Metadata, Viewport } from "next";
 
@@ -63,6 +64,7 @@ export default function RootLayout({
       <body className="select-none overscroll-none bg-white font-nunito text-slate-500 dark:bg-slate-900 dark:text-white">
         <Providers>{children}</Providers>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
