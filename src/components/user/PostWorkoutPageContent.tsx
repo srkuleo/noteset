@@ -239,12 +239,14 @@ export const PostWorkoutPageContent = ({
             initial={{
               opacity: 0,
               position: "fixed",
+              zIndex: 20,
               bottom: 0,
               left: 0,
               right: 0,
             }}
             animate={{
               opacity: 1,
+              zIndex: 20,
               transition: {
                 duration: 0.4,
                 delay: 0.1,
