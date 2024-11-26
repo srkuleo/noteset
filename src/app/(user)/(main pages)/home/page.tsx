@@ -3,10 +3,10 @@ import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
-import { WorkoutQuerySwitchButton } from "@/components/user/WorkoutQuerySwitchButton";
+import { WorkoutQuerySwitchButton } from "@/components/user/home/WorkoutQuerySwitchButton";
 import { HomePageTooltip } from "@/components/Tooltips";
 import { HomePageSkeleton } from "@/components/Loading";
-import { HomePageDataFetcher } from "@/components/user/HomePageDataFetcher";
+import { HomePageDataFetcher } from "@/components/user/home/HomePageDataFetcher";
 
 import type { Metadata } from "next";
 import type { WorkoutStatusType } from "@/util/types";
@@ -14,6 +14,8 @@ import type { WorkoutStatusType } from "@/util/types";
 export const metadata: Metadata = {
   title: "Home",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function HomePage({
   searchParams,
