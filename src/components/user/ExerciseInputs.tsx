@@ -223,10 +223,11 @@ export const RepsAndWeightInputs = ({
               duration: 0.3,
               ease: [0.36, 0.66, 0.04, 1],
             },
+            overflowY: "hidden",
           }}
         >
           <div
-            className={`${isPending && "pointer-events-non opacity-50"} flex flex-col overflow-hidden`}
+            className={`${isPending && "pointer-events-none opacity-50"} flex flex-col overflow-hidden`}
           >
             <div className="flex gap-6 overflow-x-scroll px-1 py-4 no-scrollbar">
               {sets.map((set, setIndex) => (
