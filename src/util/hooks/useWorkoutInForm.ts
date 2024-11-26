@@ -38,12 +38,21 @@ export const useWorkoutInForm = (initWorkout: CreateWorkoutType) => {
     });
   }
 
-  function updateExercises(newExercise: ExerciseType) {
+  function updateExercises(exercises: ExerciseType | ExerciseType[]) {
     setWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: [...prev.exercises, newExercise],
-      };
+      if (Array.isArray(exercises)) {
+        return {
+          ...prev,
+          exercises: [...exercises],
+        };
+      } else {
+        const newExercise = exercises;
+
+        return {
+          ...prev,
+          exercises: [...prev.exercises, newExercise],
+        };
+      }
     });
   }
 
@@ -83,7 +92,6 @@ export const useWorkoutInForm = (initWorkout: CreateWorkoutType) => {
 
   return {
     workout,
-    setWorkout,
     handleTitleInput,
     handleDescriptionInput,
     updateExercises,
