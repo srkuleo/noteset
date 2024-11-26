@@ -3,6 +3,11 @@ import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useExerciseForm } from "@/util/hooks/useExerciseForm";
 import {
+  BUTTON_TIMEOUT,
+  SWIPE_AND_DRAWER_TIMEOUT,
+  timeout,
+} from "@/util/utils";
+import {
   NameInput,
   NoteInput,
   SelectSetsInput,
@@ -12,12 +17,6 @@ import { ErrorComponent } from "../ErrorComponent";
 import { ModalSubmitButton } from "../SubmitButtons";
 
 import { ExerciseSchema, type ExerciseType } from "@/util/types";
-import {
-  BUTTON_TIMEOUT,
-  SWIPE_AND_DRAWER_TIMEOUT,
-  timeout,
-} from "@/util/utils";
-
 export const EditExerciseDrawer = ({
   isOpen,
   exercise,
@@ -90,7 +89,11 @@ const EditExerciseForm = ({
       return isValidExercise.data;
     },
     onSuccess: (validExercise) => {
-      editExercises(validExercise);
+      const exerciseWithLastUpdatedDate: ExerciseType = {
+        ...validExercise,
+        lastUpdated: new Date(),
+      };
+      editExercises(exerciseWithLastUpdatedDate);
       closeDrawer();
     },
   });
@@ -103,7 +106,10 @@ const EditExerciseForm = ({
     createSets,
     markSetAsWarmup,
     modifySets,
-  } = useExerciseForm({ ...exercise });
+  } = useExerciseForm({
+    ...exercise,
+    lastUpdated: exercise.lastUpdated,
+  });
 
   return (
     <form

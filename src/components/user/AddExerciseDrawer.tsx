@@ -26,6 +26,7 @@ const initExercise: ExerciseType = {
   name: "",
   sets: [],
   note: "",
+  lastUpdated: null,
 };
 
 export const AddExerciseDrawer = ({
@@ -114,7 +115,11 @@ const AddExerciseForm = ({
       return isValidExercise.data;
     },
     onSuccess: (validExercise) => {
-      updateExercises(validExercise);
+      const exerciseWithLastUpdatedDate: ExerciseType = {
+        ...validExercise,
+        lastUpdated: new Date(),
+      };
+      updateExercises(exerciseWithLastUpdatedDate);
       closeDrawer();
     },
   });
