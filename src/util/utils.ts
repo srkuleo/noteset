@@ -1,4 +1,5 @@
 import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
+import type { ExerciseType } from "./types";
 
 export function generateRandomId(idLength: number): string {
   const byteLength = Math.ceil(idLength / 1.6);
@@ -17,6 +18,76 @@ export const FORM_TIMEOUT = 500;
 export async function timeout(ms: number) {
   await new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+export const updateInterval = (lastUpdated: Date | string | null) => {
+  if (!lastUpdated) {
+    return null;
+  }
+
+  const parsedDate =
+    lastUpdated instanceof Date ? lastUpdated : new Date(lastUpdated);
+
+  const now = Date.now();
+  const diffInMs = now - parsedDate.getTime();
+  const diffInSeconds = Math.floor(diffInMs / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+
+  if (diffInSeconds < 60) {
+    return 60000; // Update in 1 minute
+  } else if (diffInMinutes < 60) {
+    return (60 - (diffInSeconds % 60)) * 1000; // Update at the next minute
+  } else if (diffInHours < 24) {
+    return (60 - (diffInMinutes % 60)) * 60 * 1000; // Update at the next hour
+  } else if (diffInDays < 31) {
+    return (24 - (diffInHours % 24)) * 60 * 60 * 1000; // Update at the next day
+  } else {
+    return null;
+  }
+};
+
+export const formatLastUpdatedDate = (date: Date | string | null) => {
+  if (!date) {
+    return null;
+  }
+
+  const parsedDate = date instanceof Date ? date : new Date(date);
+
+  const now = Date.now();
+  const diffInMs = now - parsedDate.getTime();
+  const diffInSeconds = Math.floor(diffInMs / 1000);
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  const diffInDays = Math.floor(diffInHours / 24);
+
+  if (diffInSeconds < 60) {
+    return "just now";
+  } else if (diffInMinutes < 60) {
+    return `${diffInMinutes} min${diffInMinutes > 1 ? "s" : ""} ago`;
+  } else if (diffInHours < 24) {
+    return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} ago`;
+  } else if (diffInDays < 31) {
+    return `${diffInDays} day${diffInDays > 1 ? "s" : ""} ago`;
+  } else {
+    return "few months ago";
+  }
+};
+
+export const reorderExercises = (
+  list: ExerciseType[],
+  startIndex: number,
+  endIndex: number,
+) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+
+  if (removed) {
+    result.splice(endIndex, 0, removed);
+  }
+
+  return result;
+};
 
 export const slideX = {
   "right-hidden": {
