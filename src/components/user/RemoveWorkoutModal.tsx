@@ -1,24 +1,55 @@
+import { useMutation } from "@tanstack/react-query";
+import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
-import { timeout, BUTTON_TIMEOUT } from "@/util/utils";
 import { archiveWorkout, removeWorkout } from "@/util/actions/workout";
+import { timeout, BUTTON_TIMEOUT } from "@/util/utils";
 import { showToast } from "../Toasts";
 import { DangerIcon } from "../icons/user/warning";
 
-import type { WorkoutStatusType } from "@/util/types";
+import type { PartialWorkoutType } from "@/db/schema";
 
 export const RemoveWorkoutModal = ({
   open,
-  setOpen,
-  workoutToRemove,
+  toggleModal,
+  targetedWorkout,
+  removeWorkoutOnClient,
 }: {
   open: boolean;
-  setOpen: (isOpen: boolean) => void;
-  workoutToRemove: { title: string; id: number; status: WorkoutStatusType };
+  toggleModal: () => void;
+  targetedWorkout: PartialWorkoutType;
+  removeWorkoutOnClient: (workoutId: number) => void;
 }) => {
+  const { mutate: removeWorkoutAction, isPending: isPendingRemoving } =
+    useMutation({
+      mutationFn: async (workout: PartialWorkoutType) => {
+        const res = await removeWorkout(workout.id, workout.title);
+
+        toggleModal();
+
+        if (res.status === "success") {
+          removeWorkoutOnClient(workout.id);
+        }
+        showToast(res.message);
+      },
+    });
+
+  const { mutate: archiveWorkoutAction, isPending: isPendingArchiving } =
+    useMutation({
+      mutationFn: async (workout: PartialWorkoutType) => {
+        const res = await archiveWorkout(workout.id, workout.title);
+
+        toggleModal();
+        if (res.status === "success") {
+          removeWorkoutOnClient(workout.id);
+        }
+        showToast(res.message);
+      },
+    });
+
   return (
     <Drawer.Root
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={toggleModal}
       noBodyStyles
       disablePreventScroll
     >
@@ -41,37 +72,34 @@ export const RemoveWorkoutModal = ({
             </Drawer.Title>
 
             <div className="flex flex-col">
-              {workoutToRemove.status === "current" && (
-                <button
-                  onClick={async () => {
-                    const res = await archiveWorkout(
-                      workoutToRemove.id,
-                      workoutToRemove.title,
-                    );
-
-                    setOpen(false);
-                    showToast(res.message);
-                  }}
-                  className="border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
-                >
-                  Archive {workoutToRemove.title}
-                </button>
+              {targetedWorkout.status === "current" && (
+                <form action={() => archiveWorkoutAction(targetedWorkout)}>
+                  <button
+                    type="submit"
+                    disabled={isPendingArchiving}
+                    className={twMerge(
+                      "w-full border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-200 disabled:text-opacity-50 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-600/90 dark:disabled:text-opacity-80",
+                      isPendingRemoving && "pointer-events-none",
+                    )}
+                  >
+                    {isPendingArchiving
+                      ? "Archiving..."
+                      : `Archive ${targetedWorkout.title}`}
+                  </button>
+                </form>
               )}
 
-              <button
-                onClick={async () => {
-                  const res = await removeWorkout(
-                    workoutToRemove.id,
-                    workoutToRemove.title,
-                  );
-
-                  setOpen(false);
-                  showToast(res.message);
-                }}
-                className="rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 dark:border-slate-600 active:dark:bg-slate-600/90"
-              >
-                Remove {workoutToRemove.title}
-              </button>
+              <form action={() => removeWorkoutAction(targetedWorkout)}>
+                <button
+                  type="submit"
+                  disabled={isPendingRemoving}
+                  className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-200 disabled:text-opacity-50 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-600/90 dark:disabled:text-opacity-80"
+                >
+                  {isPendingRemoving
+                    ? "Removing..."
+                    : `Remove ${targetedWorkout.title}`}
+                </button>
+              </form>
             </div>
           </div>
 
@@ -79,7 +107,7 @@ export const RemoveWorkoutModal = ({
             onClick={async () => {
               await timeout(BUTTON_TIMEOUT);
 
-              setOpen(false);
+              toggleModal();
             }}
             className="w-full rounded-modal bg-white p-3 text-xl font-bold text-violet-500 focus:outline-none active:bg-slate-200 dark:bg-slate-700 dark:text-violet-400 active:dark:bg-slate-600/90"
           >
