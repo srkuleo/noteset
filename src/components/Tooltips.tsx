@@ -173,7 +173,7 @@ export const AddOrEditWorkoutTooltip = () => {
 
             <li>
               Tap{" "}
-              <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
+              <span className="font-bold uppercase text-violet-500 dark:text-violet-400">
                 plus
               </span>{" "}
               button to add a new exercise.
@@ -255,8 +255,11 @@ export const WorkoutToDoTooltip = () => {
             </li>
 
             <li>
-              Tap <span className="font-bold uppercase">plus</span> button to
-              add a new exercise.
+              Tap{" "}
+              <span className="font-bold uppercase text-violet-500 dark:text-violet-400">
+                plus
+              </span>{" "}
+              button to add a new exercise.
             </li>
 
             <li>
@@ -367,7 +370,7 @@ export const PostWorkoutTooltip = () => {
 
             <li>
               Tap{" "}
-              <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
+              <span className="font-bold uppercase text-violet-500 dark:text-violet-400">
                 plus
               </span>{" "}
               button to add a new exercise to your next session.
@@ -396,11 +399,11 @@ const TooltipDrawer = ({
 }) => {
   return (
     <Drawer.Portal>
-      <Drawer.Overlay className="fixed inset-0 z-20 bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
+      <Drawer.Overlay className="fixed inset-0 z-[9999] bg-slate-900/40 backdrop-blur-sm dark:bg-slate-950/70" />
 
       <Drawer.Content
         aria-describedby={undefined}
-        className="fixed inset-x-0 bottom-0 z-20 select-none px-1 focus:outline-none"
+        className="fixed inset-x-0 bottom-0 z-[9999] select-none px-1 focus:outline-none"
       >
         <div className="rounded-t-modal bg-white pb-safe-bottom ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
           <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
