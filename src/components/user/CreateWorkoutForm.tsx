@@ -37,7 +37,6 @@ export const CreateWorkoutForm = () => {
   });
   const {
     workout,
-    setWorkout,
     handleTitleInput,
     handleDescriptionInput,
     updateExercises,
@@ -48,7 +47,7 @@ export const CreateWorkoutForm = () => {
 
   return (
     <>
-      <main className="mt-safe-top px-8 pb-[89px] pt-[158px]">
+      <main className="mt-safe-top px-4 pb-[73px] pt-[158px]">
         <form id="create-workout-form" action={() => clientAction(workout)}>
           <fieldset disabled={isPending} className="group space-y-4">
             <TitleInput
@@ -65,7 +64,7 @@ export const CreateWorkoutForm = () => {
             <ExercisesList
               workout={workout}
               exercisesError={actionRes && actionRes.errors?.exercises}
-              setWorkout={setWorkout}
+              updateExercises={updateExercises}
               editExercises={editExercises}
               removeExercise={removeExercise}
             />

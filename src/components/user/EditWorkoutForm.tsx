@@ -45,7 +45,6 @@ export const EditWorkoutForm = ({
 
   const {
     workout,
-    setWorkout,
     handleTitleInput,
     handleDescriptionInput,
     updateExercises,
@@ -55,7 +54,7 @@ export const EditWorkoutForm = ({
 
   return (
     <>
-      <main className="mt-safe-top px-8 py-4 pb-[89px] pt-[158px]">
+      <main className="mt-safe-top px-4 pb-[73px] pt-[158px]">
         <form id="edit-workout-form" action={() => clientAction()}>
           <fieldset disabled={isPending} className="group space-y-4">
             <TitleInput
@@ -72,7 +71,7 @@ export const EditWorkoutForm = ({
             <ExercisesList
               editForm
               workout={workout}
-              setWorkout={setWorkout}
+              updateExercises={updateExercises}
               exercisesError={actionRes && actionRes.errors?.exercises}
               editExercises={editExercises}
               removeExercise={removeExercise}
