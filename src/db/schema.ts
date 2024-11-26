@@ -8,6 +8,7 @@ import {
   pgEnum,
   boolean,
   integer,
+  text,
 } from "drizzle-orm/pg-core";
 
 import type { ExerciseType, UserPreferences } from "@/util/types";
@@ -57,7 +58,7 @@ export const workouts = pgTable(
   {
     id: serial().primaryKey(),
     title: varchar({ length: 30 }).notNull(),
-    description: varchar({ length: 80 }),
+    description: text(),
     exercises: json().$type<ExerciseType[]>().notNull(),
     status: statusEnum().default("current").notNull(),
     userId: varchar({ length: 255 })
