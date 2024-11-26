@@ -19,11 +19,13 @@ import {
   type Ref,
   type SetStateAction,
 } from "react";
-import { useSnap } from "@/util/hooks/useSnap";
+import { useSnap, type DirectionOptions } from "@/util/hooks/useSnap";
 
 export type SwipeActionsRootProps = {
   className?: string;
   children?: ReactNode;
+  //Choose whether div is draggable or not
+  direction: DirectionOptions;
 };
 
 export type SwipeActionsTriggerProps = {
@@ -57,7 +59,7 @@ export const useSwipeActionsContext = () => {
   return ctx;
 };
 
-const Root = ({ className, children }: SwipeActionsRootProps) => {
+const Root = ({ className, children, direction }: SwipeActionsRootProps) => {
   const [actionsWidth, setActionsWidth] = useState(0);
   const actionsWrapperInset = 2;
 
@@ -73,7 +75,7 @@ const Root = ({ className, children }: SwipeActionsRootProps) => {
   );
 
   const { dragProps, snapTo } = useSnap({
-    direction: "x",
+    direction: direction,
     ref: handleRef,
     snapPoints: {
       type: "constraints-box",
@@ -111,8 +113,8 @@ const Trigger = ({ children, className }: SwipeActionsTriggerProps) => {
     <motion.div
       role="button"
       tabIndex={0}
-      className={twMerge("relative z-10", className)}
       ref={triggerRef}
+      className={twMerge("relative z-10", className)}
       {...dragProps}
     >
       {children}
