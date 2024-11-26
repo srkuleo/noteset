@@ -52,13 +52,8 @@ export const PostWorkoutPageContent = ({
       }
     },
   });
-  const {
-    workout,
-    setWorkout,
-    updateExercises,
-    editExercises,
-    removeExercise,
-  } = useWorkoutInForm(currentWorkout);
+  const { workout, updateExercises, editExercises, removeExercise } =
+    useWorkoutInForm(currentWorkout);
   const [pageStatus, setPageStatus] = useState<PageStatus>("initial");
 
   return (
@@ -99,11 +94,14 @@ export const PostWorkoutPageContent = ({
                   <p className="font-manrope text-lg font-semibold italic text-slate-400 dark:text-slate-400">
                     Duration
                   </p>
-
-                  <FormatWorkoutDuration
-                    timeFormat={timeFormatPreference}
-                    duration={submittedWorkout.duration}
-                  />
+                  {submittedWorkout.duration ? (
+                    <FormatWorkoutDuration
+                      timeFormat={timeFormatPreference}
+                      duration={submittedWorkout.duration}
+                    />
+                  ) : (
+                    "..."
+                  )}
                 </div>
 
                 <div className="flex justify-between">
@@ -111,11 +109,15 @@ export const PostWorkoutPageContent = ({
                     Date
                   </p>
 
-                  <FormatDate
-                    date={submittedWorkout.doneAt}
-                    withDayOfTheWeek
-                    className="text-lg font-bold"
-                  />
+                  {submittedWorkout.doneAt ? (
+                    <FormatDate
+                      date={submittedWorkout.doneAt}
+                      withDayOfTheWeek
+                      className="text-lg font-bold"
+                    />
+                  ) : (
+                    "..."
+                  )}
                 </div>
               </div>
 
@@ -183,12 +185,12 @@ export const PostWorkoutPageContent = ({
                   </div>
 
                   <ExercisesList
+                    editForm
                     workout={workout}
-                    setWorkout={setWorkout}
+                    exercisesError={res && res.errors?.exercises}
+                    updateExercises={updateExercises}
                     editExercises={editExercises}
                     removeExercise={removeExercise}
-                    exercisesError={res && res.errors?.exercises}
-                    editForm
                   />
                 </fieldset>
               </form>
