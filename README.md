@@ -8,8 +8,6 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Steps until v1:
 
-- _Refactor dnd and useWorkoutInForm, add simple animations with autoanimate to ExercisesList and HomePageContent._
-
 - _Finish logs page UI - add search. Finish profile page UI - add option for user to set their own pfp instead of the initials, add separate route for settings and make settings button inside ProfileButtonModal lead to it._
 
 - _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
