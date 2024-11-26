@@ -67,6 +67,7 @@ export const ExerciseSchema = z.object({
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
   sets: z.array(SetSchema).min(1, { message: "Please add at least one set." }),
   note: z.string().trim().nullable(),
+  lastUpdated: z.union([z.date(), z.string()]).nullable(),
 });
 
 export type ExerciseType = z.infer<typeof ExerciseSchema>;
@@ -75,6 +76,7 @@ const ExerciseWithOptionalSetsSchema = ExerciseSchema.pick({
   id: true,
   name: true,
   note: true,
+  lastUpdated: true,
 }).extend({
   sets: z
     .array(OptionalSetSchema)
@@ -258,3 +260,11 @@ export type UserPreferences = {
 };
 
 export type WorkoutStatusType = (typeof workoutStatus)[number];
+
+export type WorkoutSwipeActions = {
+  openPreviewDrawer: () => void;
+  openRemoveModal: () => void;
+  workoutToEditId: number;
+  workoutToPreview: () => void;
+  workoutToRemove: () => void;
+};
