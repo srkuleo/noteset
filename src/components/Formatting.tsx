@@ -5,25 +5,22 @@ export const FormatWorkoutDuration = ({
   duration,
 }: {
   timeFormat: TimeFormatType;
-  duration: number | null;
+  duration: number;
 }) => {
-  if (
-    (duration && timeFormat === "Hours and minutes") ||
-    (duration && timeFormat === "default")
-  ) {
+  if (timeFormat === "Hours and minutes" || timeFormat === "default") {
     const minutes = Math.floor(duration % 60);
     const hours = Math.floor(duration / 60);
 
     if (hours === 0) {
       return (
-        <p className="">
+        <p>
           <span className="text-lg font-bold">{minutes}</span> min
         </p>
       );
     }
 
     return (
-      <p className="">
+      <p>
         <span className="text-lg font-bold">{hours}</span> h{" "}
         <span className="text-lg font-bold">{minutes}</span> min
       </p>
@@ -31,7 +28,7 @@ export const FormatWorkoutDuration = ({
   }
 
   return (
-    <p className="">
+    <p>
       <span className="text-lg font-bold">{duration}</span> min
     </p>
   );
@@ -42,7 +39,7 @@ export const FormatDate = ({
   withDayOfTheWeek,
   className,
 }: {
-  date: Date | null;
+  date: Date;
   withDayOfTheWeek?: boolean;
   className: string;
 }) => {
@@ -62,11 +59,9 @@ export const FormatDate = ({
     return `${day}-${month}-${year}`;
   };
 
-  if (date && withDayOfTheWeek) {
+  if (withDayOfTheWeek) {
     return <p className={className}>{formatDate(date, withDayOfTheWeek)}</p>;
-  } else if (date) {
-    return <p className={className}>{formatDate(date)}</p>;
   }
 
-  return <></>;
+  return <p className={className}>{formatDate(date)}</p>;
 };
