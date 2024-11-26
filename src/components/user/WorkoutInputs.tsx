@@ -11,7 +11,7 @@ export const TitleInput = ({
   handleTitleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div className="space-y-2 px-4 group-disabled:opacity-50">
+    <div className="space-y-2 px-8 group-disabled:opacity-50">
       <label
         htmlFor="title"
         className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
@@ -47,7 +47,7 @@ export const DescriptionInput = ({
   handleDescriptionInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <div className="space-y-2 px-4 group-disabled:opacity-50">
+    <div className="space-y-2 px-8 group-disabled:opacity-50">
       <label
         htmlFor="description"
         className="flex items-center gap-1 pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200"
