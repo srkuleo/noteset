@@ -64,6 +64,13 @@
       "when": 1730329390788,
       "tag": "0008_daffy_firestar",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1732446187945,
+      "tag": "0009_tranquil_zaladane",
+      "breakpoints": true
     }
   ]
 }
