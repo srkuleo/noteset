@@ -10,16 +10,16 @@ import { twMerge } from "tailwind-merge";
 export const PreviewWorkoutDrawer = ({
   workout,
   open,
-  setOpen,
+  toggleDrawer,
 }: {
   workout: PartialWorkoutType;
   open: boolean;
-  setOpen: (isOpen: boolean) => void;
+  toggleDrawer: () => void;
 }) => {
   return (
     <Drawer.Root
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={toggleDrawer}
       noBodyStyles
       disablePreventScroll
     >
@@ -89,7 +89,7 @@ export const PreviewWorkoutDrawer = ({
                 onClick={async () => {
                   await timeout(BUTTON_TIMEOUT);
 
-                  setOpen(false);
+                  toggleDrawer();
                 }}
                 className="flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
               >
@@ -113,6 +113,10 @@ export const PreviewWorkoutDrawerWithTrigger = ({
 }) => {
   const [open, setOpen] = useState(false);
 
+  function toggleDrawer() {
+    setOpen(!open);
+  }
+
   return (
     <>
       <button
@@ -130,7 +134,11 @@ export const PreviewWorkoutDrawerWithTrigger = ({
         <p className="sr-only">Preview workout</p>
       </button>
 
-      <PreviewWorkoutDrawer workout={workout} open={open} setOpen={setOpen} />
+      <PreviewWorkoutDrawer
+        workout={workout}
+        open={open}
+        toggleDrawer={toggleDrawer}
+      />
     </>
   );
 };
