@@ -40,7 +40,7 @@ export const Theme = () => {
           <p className="text-lg font-semibold italic text-slate-400 dark:text-slate-500">
             {theme}
           </p>
-          <ChangeTheme theme={theme} chooseTheme={chooseTheme} />
+          <ChangeThemeModal theme={theme} chooseTheme={chooseTheme} />
         </div>
       ) : (
         <div className="flex items-center justify-between">
@@ -55,7 +55,7 @@ export const Theme = () => {
   );
 };
 
-const ChangeTheme = ({
+const ChangeThemeModal = ({
   theme,
   chooseTheme,
 }: {
@@ -87,7 +87,7 @@ const ChangeTheme = ({
       <Drawer.Portal>
         <Drawer.Overlay
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-20 bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45"
+          className="fixed inset-0 z-[9999] bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45"
         />
 
         <Drawer.Content
