@@ -24,13 +24,13 @@ export const TimeFormat = ({ selected }: { selected: TimeFormatType }) => {
           {selected}
         </p>
 
-        <ChangeTimeFormat selected={selected} />
+        <ChangeTimeFormatModal selected={selected} />
       </div>
     </div>
   );
 };
 
-const ChangeTimeFormat = ({ selected }: { selected: TimeFormatType }) => {
+const ChangeTimeFormatModal = ({ selected }: { selected: TimeFormatType }) => {
   const [open, setOpen] = useState(false);
 
   return (
