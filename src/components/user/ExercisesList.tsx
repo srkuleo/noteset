@@ -1,133 +1,255 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-} from "@dnd-kit/core";
+  DragDropContext,
+  Draggable,
+  Droppable,
+  type DropResult,
+} from "@hello-pangea/dnd";
 import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
+  formatLastUpdatedDate,
+  reorderExercises,
+  updateInterval,
+} from "@/util/utils";
+import { useExercisesList } from "@/util/hooks/useExercisesList";
+import { SwipeAction } from "../swipe/SwipeAction";
 import { EditExerciseDrawer } from "./EditExerciseDrawer";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
 import { ErrorComponent } from "../ErrorComponent";
 import { DragExerciseIcon, EditIcon, TrashBinIcon } from "../icons/user/modify";
 
 import type { ExerciseType, CreateWorkoutType } from "@/util/types";
-import { SwipeAction } from "../swipe/SwipeAction";
 
 type ExerciseListProps = {
   workout: CreateWorkoutType;
   exercisesError: string[] | undefined;
   editForm?: boolean;
-  setWorkout: (workout: CreateWorkoutType) => void;
+  updateExercises: (exercises: ExerciseType | ExerciseType[]) => void;
   editExercises: (editedExercise: ExerciseType) => void;
   removeExercise: (id: string) => void;
 };
+
+function scrollEasing(percentage: number) {
+  return Math.pow(percentage, 2);
+}
 
 export const ExercisesList = ({
   workout,
   exercisesError,
   editForm,
-  setWorkout,
+  updateExercises,
   editExercises,
   removeExercise,
 }: ExerciseListProps) => {
-  const [openEditDrawer, setOpenEditDrawer] = useState(false);
-  const [openRemoveModal, setOpenRemoveModal] = useState(false);
-  const [currentExercise, setCurrentExercise] = useState<ExerciseType>({
-    id: "",
-    name: "",
-    sets: [],
-    note: "",
-  });
+  const {
+    openEditDrawer,
+    openRemoveModal,
+    exerciseInFocus,
+    toggleEditDrawer,
+    toggleRemoveModal,
+    keepTrackOfTheCurrExercise,
+  } = useExercisesList();
 
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor, {
-      activationConstraint: { distance: 50 },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-
-    if (over && active.id === over.id) return;
+  function handleSorting({ destination, source }: DropResult) {
+    if (!destination) return;
 
     const prevExercises = [...workout.exercises];
-    const activeIndex = prevExercises.findIndex(
-      (exercise) => exercise.id === active.id,
-    );
-    const overIndex = prevExercises.findIndex(
-      (exercise) => exercise.id === over!.id,
+
+    const reorderedExercises = reorderExercises(
+      prevExercises,
+      source.index,
+      destination.index,
     );
 
-    setWorkout({
-      ...workout,
-      exercises: arrayMove(prevExercises, activeIndex, overIndex),
-    });
+    updateExercises(reorderedExercises);
   }
 
   return (
     <>
       <EditExerciseDrawer
         isOpen={openEditDrawer}
-        setIsOpen={setOpenEditDrawer}
-        exercise={currentExercise}
+        setIsOpen={toggleEditDrawer}
+        exercise={exerciseInFocus}
         editExercises={editExercises}
       />
 
       <RemoveExerciseModal
         isOpen={openRemoveModal}
-        setIsOpen={setOpenRemoveModal}
-        exerciseName={currentExercise.name}
-        removeExercise={() => removeExercise(currentExercise.id)}
+        setIsOpen={toggleRemoveModal}
+        exerciseName={exerciseInFocus.name}
+        removeExercise={() => removeExercise(exerciseInFocus.id)}
         isEditWorkoutPage={editForm}
-        openEditDrawer={() => setOpenEditDrawer(true)}
+        openEditDrawer={toggleEditDrawer}
       />
 
       {workout.exercises.length === 0 ? (
         <ExerciseShell exercisesError={exercisesError} />
       ) : (
-        <DndContext
-          sensors={sensors}
-          modifiers={[restrictToVerticalAxis]}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
+        <DragDropContext
+          onDragEnd={handleSorting}
+          autoScrollerOptions={{
+            startFromPercentage: 0.35,
+            maxScrollAtPercentage: 0.1,
+            maxPixelScroll: 28,
+            ease: scrollEasing,
+            durationDampening: {
+              accelerateAt: 360,
+              stopDampeningAt: 1200,
+            },
+          }}
         >
-          <div className="relative space-y-4 px-2 pb-2 pt-6 group-disabled:opacity-50">
-            <SortableContext
-              items={workout.exercises}
-              strategy={verticalListSortingStrategy}
-            >
-              {workout.exercises.map((exercise) => (
-                <ExerciseCard
-                  key={exercise.id}
-                  exercise={exercise}
-                  setCurrentExercise={setCurrentExercise}
-                  openEditDrawer={() => setOpenEditDrawer(true)}
-                  openRemoveModal={() => setOpenRemoveModal(true)}
-                />
-              ))}
-            </SortableContext>
-          </div>
-        </DndContext>
+          <Droppable droppableId="exercise-list" direction="vertical">
+            {(exerciseList, snapshot) => (
+              <div
+                {...exerciseList.droppableProps}
+                ref={exerciseList.innerRef}
+                className={twMerge(
+                  "space-y-4 p-4 group-disabled:opacity-50",
+                  snapshot.isDraggingOver &&
+                    "rounded-xl bg-violet-200 dark:bg-violet-950",
+                )}
+              >
+                {workout.exercises.map((exercise, index) => (
+                  <ExerciseCard
+                    key={exercise.id}
+                    exercise={exercise}
+                    exerciseIndex={index}
+                    keepTrackOfTheCurrExercise={keepTrackOfTheCurrExercise}
+                    toggleEditDrawer={toggleEditDrawer}
+                    toggleRemoveModal={toggleRemoveModal}
+                  />
+                ))}
+                {exerciseList.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       )}
     </>
+  );
+};
+
+const ExerciseCard = ({
+  exerciseIndex,
+  exercise,
+  keepTrackOfTheCurrExercise,
+  toggleEditDrawer,
+  toggleRemoveModal,
+}: {
+  exerciseIndex: number;
+  exercise: ExerciseType;
+  keepTrackOfTheCurrExercise: (targetedExercise: ExerciseType) => void;
+  toggleEditDrawer: () => void;
+  toggleRemoveModal: () => void;
+}) => {
+  return (
+    <Draggable index={exerciseIndex} draggableId={exercise.id}>
+      {(exerciseToDrag, snapshot) => (
+        <div {...exerciseToDrag.draggableProps} ref={exerciseToDrag.innerRef}>
+          <SwipeAction.Root direction={snapshot.isDragging ? "none" : "x"}>
+            <SwipeAction.Trigger
+              className={twMerge(
+                "flex w-full items-center rounded-lg bg-white py-6 pl-6 pr-3 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-800 dark:ring-slate-600",
+                snapshot.isDragging &&
+                  "bg-green-400 ring-slate-200 dark:bg-green-700 dark:ring-slate-300",
+              )}
+            >
+              <div className="flex flex-1 flex-col gap-3">
+                <p
+                  className={twMerge(
+                    "pl-1 font-bold uppercase dark:text-slate-200",
+                    snapshot.isDragging && "text-white",
+                  )}
+                >
+                  {exercise.name}
+                </p>
+
+                <LastUpdatedDate
+                  lastUpdatedDate={exercise.lastUpdated}
+                  isDragging={snapshot.isDragging}
+                />
+              </div>
+
+              <button
+                {...exerciseToDrag.dragHandleProps}
+                type="button"
+                className="cursor-move touch-auto px-3 py-2"
+              >
+                {DragExerciseIcon}
+              </button>
+            </SwipeAction.Trigger>
+
+            <SwipeAction.Actions
+              wrapperClassName="bg-violet-100 dark:bg-violet-500 rounded-xl"
+              className="flex-col"
+            >
+              <SwipeAction.Action
+                type="button"
+                onClick={() => {
+                  keepTrackOfTheCurrExercise({ ...exercise });
+                  toggleEditDrawer();
+                }}
+                className="flex grow items-center justify-center border-b border-violet-500 px-4 text-green-500 dark:border-white dark:text-green-300"
+              >
+                <EditIcon strokeWidth={1.5} className="size-6" />
+                <span className="sr-only">Edit exercise</span>
+              </SwipeAction.Action>
+
+              <SwipeAction.Action
+                type="button"
+                onClick={() => {
+                  keepTrackOfTheCurrExercise({ ...exercise });
+                  toggleRemoveModal();
+                }}
+                className="flex grow items-center justify-center px-4 text-red-500 dark:text-red-300"
+              >
+                <TrashBinIcon strokeWidth={1.5} className="size-6" />
+                <span className="sr-only">Remove exercise</span>
+              </SwipeAction.Action>
+            </SwipeAction.Actions>
+          </SwipeAction.Root>
+        </div>
+      )}
+    </Draggable>
+  );
+};
+
+const LastUpdatedDate = ({
+  lastUpdatedDate,
+  isDragging,
+}: {
+  lastUpdatedDate: ExerciseType["lastUpdated"];
+  isDragging: boolean;
+}) => {
+  const [formattedDate, setFormattedDate] = useState(() =>
+    formatLastUpdatedDate(lastUpdatedDate),
+  );
+
+  useEffect(() => {
+    setFormattedDate(formatLastUpdatedDate(lastUpdatedDate));
+
+    const interval = updateInterval(lastUpdatedDate);
+
+    if (interval) {
+      const timer = setTimeout(
+        () => setFormattedDate(formatLastUpdatedDate(lastUpdatedDate)),
+        interval,
+      );
+
+      return () => clearTimeout(timer);
+    }
+  }, [lastUpdatedDate]);
+
+  return (
+    <p
+      className={twMerge(
+        "border-t border-slate-200 pl-1 pt-3 text-xs italic text-slate-400 dark:border-slate-700 dark:text-slate-500",
+        isDragging &&
+          "border-slate-200/60 text-white dark:border-slate-300/50 dark:text-slate-100/80",
+      )}
+    >
+      Last updated: {formattedDate ?? "..."}
+    </p>
   );
 };
 
@@ -137,7 +259,7 @@ const ExerciseShell = ({
   exercisesError: string[] | undefined;
 }) => {
   return (
-    <div className="space-y-2 pt-6">
+    <div className="space-y-2 px-4 pt-6">
       <div
         className={twMerge(
           "space-y-3 rounded-xl border-2 border-dashed border-slate-400/60 bg-white px-4 py-24 text-center group-disabled:opacity-30 dark:border-slate-600 dark:bg-slate-800",
@@ -160,81 +282,5 @@ const ExerciseShell = ({
         className="justify-center py-4 group-disabled:opacity-50"
       />
     </div>
-  );
-};
-
-const ExerciseCard = ({
-  exercise,
-  setCurrentExercise,
-  openEditDrawer,
-  openRemoveModal,
-}: {
-  exercise: ExerciseType;
-  setCurrentExercise: (exercise: ExerciseType) => void;
-  openEditDrawer: () => void;
-  openRemoveModal: () => void;
-}) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: exercise.id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  return (
-    <SwipeAction.Root>
-      <div ref={setNodeRef} style={style}>
-        <SwipeAction.Trigger className="flex items-center gap-3 rounded-lg bg-white p-6 shadow-md ring-1 ring-slate-400/40 dark:bg-slate-800 dark:ring-slate-600">
-          <div className="flex flex-1 flex-col gap-3">
-            <p className="pl-1 font-bold uppercase dark:text-slate-200">
-              {exercise.name}
-            </p>
-
-            <p className="border-t border-slate-200 pl-1 pt-3 text-sm italic text-slate-400 dark:border-slate-700 dark:text-slate-500">
-              {exercise.note ? exercise.note : "..."}
-            </p>
-          </div>
-
-          <button
-            {...attributes}
-            {...listeners}
-            type="button"
-            className="cursor-move touch-none rounded-lg px-2 py-1 active:bg-slate-200 active:dark:bg-slate-600"
-          >
-            {DragExerciseIcon}
-          </button>
-        </SwipeAction.Trigger>
-
-        <SwipeAction.Actions
-          wrapperClassName="bg-violet-100 dark:bg-violet-500 rounded-xl"
-          className="flex-col"
-        >
-          <SwipeAction.Action
-            type="button"
-            onClick={() => {
-              setCurrentExercise({ ...exercise });
-              openEditDrawer();
-            }}
-            className="flex grow items-center justify-center border-b border-violet-500 px-4 text-green-500 dark:border-white dark:text-green-300"
-          >
-            <EditIcon strokeWidth={1.5} className="size-6" />
-            <span className="sr-only">Edit exercise</span>
-          </SwipeAction.Action>
-
-          <SwipeAction.Action
-            type="button"
-            onClick={() => {
-              setCurrentExercise({ ...exercise });
-              openRemoveModal();
-            }}
-            className="flex grow items-center justify-center px-4 text-red-500 dark:text-red-300"
-          >
-            <TrashBinIcon strokeWidth={1.5} className="size-6" />
-            <span className="sr-only">Remove exercise</span>
-          </SwipeAction.Action>
-        </SwipeAction.Actions>
-      </div>
-    </SwipeAction.Root>
   );
 };
