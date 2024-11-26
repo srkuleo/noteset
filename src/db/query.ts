@@ -2,12 +2,20 @@
 
 import { and, desc, eq } from "drizzle-orm";
 import { db } from ".";
-import { sessions, users, workouts, type Session } from "./schema";
+import {
+  sessions,
+  users,
+  workouts,
+  type PartialWorkoutType,
+  type Session,
+} from "./schema";
 import { getAuthSession } from "@/util/session";
 
 import type { WorkoutStatusType } from "@/util/types";
 
-export async function getUserWorkouts(workoutStatus: WorkoutStatusType) {
+export async function getUserWorkouts(
+  workoutStatus: WorkoutStatusType,
+): Promise<PartialWorkoutType[]> {
   const { user } = await getAuthSession();
 
   if (user === null) {
@@ -20,8 +28,8 @@ export async function getUserWorkouts(workoutStatus: WorkoutStatusType) {
         id: workouts.id,
         title: workouts.title,
         description: workouts.description,
-        exercises: workouts.exercises,
         status: workouts.status,
+        exercises: workouts.exercises,
       })
       .from(workouts)
       .where(
