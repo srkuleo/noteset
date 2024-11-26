@@ -28,8 +28,10 @@ export type SnapPointsType =
       points: Point[];
     };
 
+export type DirectionOptions = "x" | "y" | "both" | "none";
+
 export type SnapOptions = {
-  direction: "x" | "y" | "both";
+  direction: DirectionOptions;
   ref: RefObject<Element>;
   snapPoints: SnapPointsType;
   springOptions?: Omit<SpringOptions, "velocity">;
@@ -63,7 +65,7 @@ export const useSnap = ({
   ref,
   springOptions = {},
   constraints,
-  dragElastic = 0.5,
+  dragElastic = 0.4,
   onDragStart,
   onDragEnd,
   onMeasureDragConstraints,
@@ -391,14 +393,14 @@ export const useSnap = ({
     }
   };
 
-  const constraintsBoxRef = useRef<BoundingBox | null>(null);
-
   const [currentSnappointIndex, setCurrentSnappointIndex] = useState<
     null | number
   >(null);
+  const constraintsBoxRef = useRef<BoundingBox | null>(null);
 
   const dragProps: Partial<MotionProps> = {
-    drag: direction === "both" ? true : direction,
+    drag:
+      direction === "both" ? true : direction === "none" ? false : direction,
     onDragStart: (event, info) => {
       setCurrentSnappointIndex(null);
       onDragStart?.(event, info);
