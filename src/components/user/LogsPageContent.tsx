@@ -50,10 +50,14 @@ export const LogsPageContent = ({
               {doneWorkout.title}
             </p>
 
-            <FormatWorkoutDuration
-              timeFormat={timeFormatPreference}
-              duration={doneWorkout.duration}
-            />
+            {doneWorkout.duration ? (
+              <FormatWorkoutDuration
+                timeFormat={timeFormatPreference}
+                duration={doneWorkout.duration}
+              />
+            ) : (
+              "..."
+            )}
 
             <p className="text-pretty text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60">
               {doneWorkout.doneAt?.toLocaleString("en", {
