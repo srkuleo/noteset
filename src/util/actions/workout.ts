@@ -11,6 +11,7 @@ import {
   WorkoutToDoSchema,
   type WorkoutActionResponse,
   type CreateWorkoutType,
+  type WorkoutToDoType,
 } from "../types";
 
 export async function createWorkout(
@@ -227,7 +228,7 @@ export async function unarchiveWorkout(
 }
 
 export async function submitDoneWorkout(
-  doneWorkout: CreateWorkoutType,
+  doneWorkout: WorkoutToDoType,
   duration: number,
 ): Promise<WorkoutActionResponse> {
   const { user } = await getAuthSession();
@@ -247,12 +248,21 @@ export async function submitDoneWorkout(
 
   const { title, description, exercises } = isValidWorkout.data;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const exercisesWithoutDoneProp = exercises.map(({ done, ...exercise }) => ({
+    ...exercise,
+    sets: exercise.sets.map(({ warmup, ...set }) => ({
+      ...set,
+      ...(warmup !== undefined && { warmup }),
+    })),
+  }));
+
   try {
     await db.insert(workouts).values({
       userId: user.id,
       title: title,
       description: description,
-      exercises: exercises,
+      exercises: exercisesWithoutDoneProp,
       status: "done",
       duration: duration,
       doneAt: new Date(),
