@@ -8,6 +8,8 @@ import { DangerIcon } from "../icons/user/warning";
 
 import type { PartialWorkoutType } from "@/db/schema";
 
+type WorkoutAction = "archive" | "remove";
+
 export const RemoveWorkoutModal = ({
   open,
   toggleModal,
@@ -19,32 +21,24 @@ export const RemoveWorkoutModal = ({
   targetedWorkout: PartialWorkoutType;
   removeWorkoutOnClient: (workoutId: number) => void;
 }) => {
-  const { mutate: removeWorkoutAction, isPending: isPendingRemoving } =
-    useMutation({
-      mutationFn: async (workout: PartialWorkoutType) => {
-        const res = await removeWorkout(workout.id, workout.title);
+  const { variables: action, mutate: handleWorkoutAction } = useMutation({
+    mutationFn: async (action: WorkoutAction) => {
+      const res =
+        action === "archive"
+          ? await archiveWorkout(targetedWorkout.id, targetedWorkout.title)
+          : await removeWorkout(targetedWorkout.id, targetedWorkout.title);
 
-        toggleModal();
+      toggleModal();
 
-        if (res.status === "success") {
-          removeWorkoutOnClient(workout.id);
-        }
-        showToast(res.message);
-      },
-    });
+      if (res.status === "success") {
+        removeWorkoutOnClient(targetedWorkout.id);
+      }
+      showToast(res.message);
+    },
+  });
 
-  const { mutate: archiveWorkoutAction, isPending: isPendingArchiving } =
-    useMutation({
-      mutationFn: async (workout: PartialWorkoutType) => {
-        const res = await archiveWorkout(workout.id, workout.title);
-
-        toggleModal();
-        if (res.status === "success") {
-          removeWorkoutOnClient(workout.id);
-        }
-        showToast(res.message);
-      },
-    });
+  const isPendingArchiving = action === "archive";
+  const isPendingRemoving = action === "remove";
 
   return (
     <Drawer.Root
@@ -73,12 +67,12 @@ export const RemoveWorkoutModal = ({
 
             <div className="flex flex-col">
               {targetedWorkout.status === "current" && (
-                <form action={() => archiveWorkoutAction(targetedWorkout)}>
+                <form action={() => handleWorkoutAction("archive")}>
                   <button
                     type="submit"
                     disabled={isPendingArchiving}
                     className={twMerge(
-                      "w-full border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-200 disabled:text-opacity-50 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-600/90 dark:disabled:text-opacity-80",
+                      "w-full border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-opacity-75 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-900/75 dark:disabled:text-opacity-75",
                       isPendingRemoving && "pointer-events-none",
                     )}
                   >
@@ -89,11 +83,14 @@ export const RemoveWorkoutModal = ({
                 </form>
               )}
 
-              <form action={() => removeWorkoutAction(targetedWorkout)}>
+              <form action={() => handleWorkoutAction("remove")}>
                 <button
                   type="submit"
                   disabled={isPendingRemoving}
-                  className="w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-200 disabled:text-opacity-50 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-600/90 dark:disabled:text-opacity-80"
+                  className={twMerge(
+                    "w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-opacity-75 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-900/75 dark:disabled:text-opacity-75",
+                    isPendingArchiving && "pointer-events-none",
+                  )}
                 >
                   {isPendingRemoving
                     ? "Removing..."
