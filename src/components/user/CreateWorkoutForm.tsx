@@ -7,7 +7,6 @@ import { timeout, FORM_TIMEOUT } from "@/util/utils";
 import { showToast } from "../Toasts";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
-import { ErrorComponent } from "../ErrorComponent";
 import { FormPagesFooterWrapper } from "./FormPagesFooterWrapper";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 
@@ -68,13 +67,6 @@ export const CreateWorkoutForm = () => {
               editExercises={editExercises}
               removeExercise={removeExercise}
             />
-
-            {actionRes && actionRes.status === "error" && (
-              <ErrorComponent
-                message={actionRes.message}
-                className="justify-center group-disabled:opacity-30"
-              />
-            )}
           </fieldset>
         </form>
       </main>
