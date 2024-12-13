@@ -22,11 +22,11 @@ import {
 
 export const AddNewSetButton = ({
   exercise,
-  removeMode,
+
   addNewSet,
 }: {
   exercise: ExerciseToDoType;
-  removeMode: boolean;
+
   addNewSet: (
     exerciseId: string,
     setData: SetWithoutId,
@@ -45,7 +45,7 @@ export const AddNewSetButton = ({
     >
       <button
         type="button"
-        disabled={removeMode || exercise.done}
+        disabled={exercise.done}
         onClick={async () => {
           await timeout(BUTTON_TIMEOUT);
 
