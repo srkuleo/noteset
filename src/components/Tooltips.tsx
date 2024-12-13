@@ -92,7 +92,7 @@ export const HomePageTooltip = () => {
             Workout statuses
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-4 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               <span className="font-bold uppercase text-blue-400 dark:text-blue-500">
                 current -
@@ -118,6 +118,28 @@ export const HomePageTooltip = () => {
                 current
               </span>{" "}
               status at any time.
+            </li>
+          </ul>
+
+          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+            Workout swipe actions
+          </p>
+
+          <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
+            <li>
+              Swipe from right to the left to select one of the three options:{" "}
+              <span className="font-bold uppercase text-red-400 dark:text-red-500">
+                remove
+              </span>
+              ,{" "}
+              <span className="font-bold uppercase text-green-500 dark:text-green-600">
+                edit
+              </span>{" "}
+              or{" "}
+              <span className="font-bold uppercase text-violet-400 dark:text-violet-500">
+                preview
+              </span>{" "}
+              workout.
             </li>
           </ul>
         </div>
@@ -169,6 +191,31 @@ export const AddOrEditWorkoutTooltip = () => {
                 at least one exercise
               </span>{" "}
               before submitting the form otherwise it will result in error.
+            </li>
+
+            <li>
+              Hold the{" "}
+              <span className="font-bold uppercase text-slate-800 dark:text-white">
+                2 dashes indicator
+              </span>{" "}
+              inside an exercise card to enter drag and drop mode, which allows
+              you{" "}
+              <span className="font-bold uppercase text-slate-800 dark:text-white">
+                to change the order of exercises
+              </span>
+              .
+            </li>
+
+            <li>
+              Swipe an exercise card from right to the left to either{" "}
+              <span className="font-bold uppercase text-green-500 dark:text-green-600">
+                edit
+              </span>{" "}
+              or{" "}
+              <span className="font-bold uppercase text-red-400 dark:text-red-500">
+                remove
+              </span>{" "}
+              that exercise.
             </li>
 
             <li>
@@ -230,19 +277,17 @@ export const WorkoutToDoTooltip = () => {
             </li>
 
             <li>
-              <span className="font-bold uppercase text-slate-800 dark:text-white">
-                Add set
-              </span>{" "}
-              button allows you to add additional set for the selected exercise.
+              Swipe any set from right to the left to{" "}
+              <span className="font-bold uppercase text-red-500">remove</span>{" "}
+              it.
             </li>
 
             <li>
               <span className="font-bold uppercase text-slate-800 dark:text-white">
-                Add note
+                Add set
               </span>{" "}
-              button lets you leave a note regarding selected exercise. Use it
-              to leave useful tips for the next workout - e.g. 5-7 24kg next
-              workout.
+              button allows you to add an additional warmup or working set to
+              the selected exercise.
             </li>
 
             <li>
@@ -260,24 +305,6 @@ export const WorkoutToDoTooltip = () => {
                 plus
               </span>{" "}
               button to add a new exercise.
-            </li>
-
-            <li>
-              Tap{" "}
-              <span className="font-bold uppercase text-red-500">
-                trash bin
-              </span>{" "}
-              button to enter remove mode, where you can delete any set from any
-              exercise.
-              <br />
-              <span className="text-base font-bold text-green-500 dark:text-green-600">
-                Save
-              </span>{" "}
-              - applies all changes. <br />
-              <span className="text-base text-slate-500 dark:text-slate-300">
-                Close
-              </span>{" "}
-              - exits remove mode without saving changes.
             </li>
 
             <li>
