@@ -7,6 +7,7 @@ import { editWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { TitleInput, DescriptionInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
+import { Spinner } from "../Loading";
 import { FormPagesFooterWrapper } from "./FormPagesFooterWrapper";
 import { AddExerciseDrawer } from "./AddExerciseDrawer";
 
@@ -75,6 +76,10 @@ export const EditWorkoutForm = ({
               editExercises={editExercises}
               removeExercise={removeExercise}
             />
+
+            <div className="fixed left-1/2 top-1/2 z-[9990] -translate-x-1/2 -translate-y-1/2 group-enabled:opacity-0">
+              <Spinner className="size-8 animate-spin text-slate-300 dark:text-slate-500" />
+            </div>
           </fieldset>
         </form>
       </main>
