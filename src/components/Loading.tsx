@@ -42,7 +42,7 @@ export const HomePageSkeleton = () => {
       {[1, 2, 3, 4].map((skeleton) => (
         <div
           key={skeleton}
-          className="flex items-center justify-between rounded-xl bg-white p-6 shadow-md dark:bg-slate-800"
+          className="flex animate-pulse items-center justify-between rounded-xl bg-white p-6 shadow-md dark:bg-slate-800"
         >
           <div className="w-3/5 space-y-2">
             <div className="h-7 w-24 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
@@ -61,7 +61,7 @@ export const HomePageSkeleton = () => {
 
 export const LogsPageSkeleton = () => {
   return (
-    <main className="mt-safe-top space-y-6 px-6 pb-[100px] pt-[158px]">
+    <main className="mt-safe-top space-y-6 px-6 pb-[100px] pt-[217px]">
       {[1, 2, 3, 4, 5, 6].map((skeleton) => (
         <div key={skeleton} className="flex w-full gap-3">
           <div className="animate-pulse rounded-lg border border-slate-300/80 bg-violet-400 opacity-80 shadow-md dark:border-slate-800 dark:bg-violet-500">
@@ -200,10 +200,7 @@ export const WorkoutToDoSkeleton = () => {
       </main>
 
       <footer className="fixed inset-x-0 bottom-0 flex items-center justify-between border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-950">
-        <div className="flex gap-4 opacity-50">
-          <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
-          <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
-        </div>
+        <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
 
         <div className="h-10 w-24 animate-pulse rounded-full bg-slate-300 opacity-50 dark:bg-slate-800" />
       </footer>
