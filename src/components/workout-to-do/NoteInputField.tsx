@@ -4,12 +4,12 @@ import type { ExerciseType } from "@/util/types";
 
 export const NoteInputField = ({
   exercise,
-  removeMode,
+
   handleNoteInput,
   resetNoteInput,
 }: {
   exercise: ExerciseType;
-  removeMode: boolean;
+
   handleNoteInput: (
     event: React.ChangeEvent<HTMLTextAreaElement>,
     exerciseId: string,
@@ -33,14 +33,13 @@ export const NoteInputField = ({
     >
       <textarea
         ref={textAreaRef}
-        disabled={removeMode}
         value={exercise.note ? exercise.note : ""}
         placeholder="Leave a note..."
         rows={1}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         onChange={(e) => handleNoteInput(e, exercise.id)}
-        className="w-full rounded-none bg-transparent pr-6 font-semibold text-slate-500/80 placeholder-slate-400 caret-violet-500 no-scrollbar placeholder:text-sm placeholder:italic focus:text-slate-500 focus:placeholder-slate-300 focus:outline-none disabled:opacity-30 dark:text-slate-400 dark:placeholder-slate-500/75 dark:caret-green-600 dark:focus:text-white dark:focus:placeholder-slate-600/80"
+        className="w-full rounded-none bg-transparent pr-6 font-semibold text-slate-500/80 placeholder-slate-400 caret-violet-500 no-scrollbar placeholder:text-sm placeholder:italic focus:text-slate-500 focus:placeholder-slate-300 focus:outline-none dark:text-slate-400 dark:placeholder-slate-500/75 dark:caret-green-600 dark:focus:text-white dark:focus:placeholder-slate-600/80"
       />
 
       {exercise.note && isFocused && (
