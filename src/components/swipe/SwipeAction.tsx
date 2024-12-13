@@ -34,8 +34,9 @@ export type SwipeActionsTriggerProps = {
 };
 
 export type SwipeActionsActionsProps = {
-  className?: string;
   wrapperClassName?: string;
+  secondaryWrapperClassName?: string;
+  className?: string;
   children?: ReactNode;
 };
 
@@ -123,9 +124,10 @@ const Trigger = ({ children, className }: SwipeActionsTriggerProps) => {
 };
 
 const Actions = ({
+  wrapperClassName,
+  secondaryWrapperClassName,
   className,
   children,
-  wrapperClassName,
 }: SwipeActionsActionsProps) => {
   const { actionsWrapperInset, setOpen, triggerHeight, setActionsWidth } =
     useSwipeActionsContext();
@@ -149,15 +151,30 @@ const Actions = ({
         inset: actionsWrapperInset,
       }}
     >
-      <motion.div
-        //Default is flex-row but it can be modified via className prop
-        className={twMerge("flex", className)}
-        ref={actionsMeasureRef}
-        onFocus={() => setOpen(true)}
-        onBlur={() => setOpen(false)}
-      >
-        {children}
-      </motion.div>
+      {secondaryWrapperClassName ? (
+        //Needed for cases when Actions div should not be of the same lenght as the Root div
+        <motion.div className={twMerge("w-full", secondaryWrapperClassName)}>
+          <motion.div
+            //Default is flex-row but it can be modified via className prop
+            ref={actionsMeasureRef}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setOpen(false)}
+            className={twMerge("flex", className)}
+          >
+            {children}
+          </motion.div>
+        </motion.div>
+      ) : (
+        <motion.div
+          //Default is flex-row but it can be modified via className prop
+          ref={actionsMeasureRef}
+          onFocus={() => setOpen(true)}
+          onBlur={() => setOpen(false)}
+          className={twMerge("flex", className)}
+        >
+          {children}
+        </motion.div>
+      )}
     </motion.div>
   );
 };
