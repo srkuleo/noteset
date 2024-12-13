@@ -1,6 +1,6 @@
 import debounce from "lodash.debounce";
 import { useState } from "react";
-import { BUTTON_TIMEOUT, generateRandomId, timeout } from "../utils";
+import { generateRandomId } from "../utils";
 
 import type {
   CreateWorkoutType,
@@ -15,8 +15,6 @@ import type {
 Contains:
 
 - currWorkout and placeholderExercises state which are needed to properly render input field
-- temporary placeholders (placeholderExercisesBeforeRemoveMode and exercisesBeforeRemoveMode) which are used to easily revert changes
-- removeMode state which enables and disables removeMode, in which user is able to remove certain sets from the exercise
 - bunch of handlers which are used to apply logic (adding and remove sets, adding new exercise, 
 editing note, handling sets inputs, toggle done state on exercise etc.)
 
@@ -26,10 +24,6 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
   const [placeholderExercises, setPlaceholderExercises] = useState(
     initWorkout.exercises,
   );
-  const [
-    placeholderExercisesBeforeRemoveMode,
-    setPlaceholderExercisesBeforeRemoveMode,
-  ] = useState([...placeholderExercises]);
   const [currWorkout, setCurrWorkout] = useState<WorkoutToDoType>({
     title: initWorkout.title,
     description: initWorkout.description,
@@ -46,11 +40,6 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
       };
     }),
   });
-  const [exercisesBeforeRemoveMode, setExercisesBeforeRemoveMode] = useState([
-    ...currWorkout.exercises,
-  ]);
-
-  const [removeMode, setRemoveMode] = useState(false);
 
   function toggleExerciseDoneState(exerciseId: string) {
     const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
@@ -279,39 +268,9 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     });
   }
 
-  async function enterRemoveMode() {
-    await timeout(BUTTON_TIMEOUT);
-
-    setExercisesBeforeRemoveMode([...currWorkout.exercises]);
-    setPlaceholderExercisesBeforeRemoveMode([...placeholderExercises]);
-
-    setRemoveMode(true);
-  }
-
-  async function resetChangesInRemoveMode() {
-    await timeout(BUTTON_TIMEOUT);
-
-    setCurrWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: [...exercisesBeforeRemoveMode],
-      };
-    });
-    setPlaceholderExercises([...placeholderExercisesBeforeRemoveMode]);
-
-    setRemoveMode(false);
-  }
-
-  async function saveChangesInRemoveMode() {
-    await timeout(BUTTON_TIMEOUT);
-
-    setRemoveMode(false);
-  }
-
   return {
     currWorkout,
     placeholderExercises,
-    removeMode,
     toggleExerciseDoneState,
     handleNoteInput,
     resetNoteInput,
@@ -319,8 +278,5 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     addNewSet,
     removeSet,
     updateExercises,
-    enterRemoveMode,
-    resetChangesInRemoveMode,
-    saveChangesInRemoveMode,
   };
 };

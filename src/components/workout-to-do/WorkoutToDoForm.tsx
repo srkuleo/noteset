@@ -8,15 +8,20 @@ import { twMerge } from "tailwind-merge";
 import { useWorkoutToDo } from "@/util/hooks/useWorkoutToDo";
 import { useWorkoutDuration } from "@/util/hooks/useWorkoutDuration";
 import { submitDoneWorkout } from "@/util/actions/workout";
-import { biggerSlideX, BUTTON_TIMEOUT, slideX, timeout } from "@/util/utils";
+import {
+  BUTTON_TIMEOUT,
+  SWIPE_AND_DRAWER_TIMEOUT,
+  timeout,
+} from "@/util/utils";
 import { showToast } from "../Toasts";
 import { NoteInputField } from "./NoteInputField";
 import { AddNewSetButton } from "./AddNewSetButton";
-import { RemoveIcon, TrashBinIcon } from "../icons/user/modify";
 import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 import { SubmitDoneWorkoutButton } from "../SubmitButtons";
 
 import type { CreateWorkoutType } from "@/util/types";
+import { SwipeAction } from "../swipe/SwipeAction";
+import { TrashBinIcon } from "../icons/user/modify";
 
 export const WorkoutToDoForm = ({
   workoutToDo,
@@ -28,7 +33,6 @@ export const WorkoutToDoForm = ({
   const {
     currWorkout,
     placeholderExercises,
-    removeMode,
     toggleExerciseDoneState,
     handleNoteInput,
     resetNoteInput,
@@ -36,9 +40,6 @@ export const WorkoutToDoForm = ({
     addNewSet,
     removeSet,
     updateExercises,
-    enterRemoveMode,
-    resetChangesInRemoveMode,
-    saveChangesInRemoveMode,
   } = useWorkoutToDo(workoutToDo);
   const { endWorkout, calcWorkoutDuration } = useWorkoutDuration();
   const { mutate: clientAction, isPending } = useMutation({
@@ -90,7 +91,6 @@ export const WorkoutToDoForm = ({
 
               <NoteInputField
                 exercise={exercise}
-                removeMode={removeMode}
                 handleNoteInput={handleNoteInput}
                 resetNoteInput={resetNoteInput}
               />
@@ -116,6 +116,7 @@ export const WorkoutToDoForm = ({
                             exit={{
                               opacity: 0,
                               height: 0,
+                              x: "-100%",
                             }}
                             transition={{
                               opacity: {
@@ -129,92 +130,92 @@ export const WorkoutToDoForm = ({
                             }}
                           >
                             <div
-                              className={`flex items-center justify-evenly ${warmupSetIndex !== warmupSets.length - 1 ? "pb-3" : "pb-0"}`}
+                              className={`flex justify-center ${warmupSetIndex !== warmupSets.length - 1 ? "pb-3" : "pb-0"}`}
                             >
-                              <input
-                                type="text"
-                                name="reps"
-                                disabled={removeMode}
-                                inputMode="tel"
-                                placeholder={
-                                  placeholderExercises[
-                                    exerciseIndex
-                                  ]?.sets.filter(
-                                    (set) => set.id === warmupSet.id,
-                                  )[0]?.reps
-                                }
-                                onChange={(e) => {
-                                  handleSetsInput(e, exercise.id, warmupSet.id);
-                                }}
-                                className={twMerge(
-                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
-                                  !/^\d+(?:[-+]\d+)?$/.test(warmupSet.reps) &&
-                                    warmupSet.reps !== "" &&
-                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
-                                  exercise.done &&
-                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
-                                )}
-                              />
-
-                              <input
-                                type="text"
-                                name="weight"
-                                disabled={removeMode}
-                                inputMode="decimal"
-                                placeholder={
-                                  placeholderExercises[
-                                    exerciseIndex
-                                  ]?.sets.filter(
-                                    (set) => set.id === warmupSet.id,
-                                  )[0]?.weight + "kg"
-                                }
-                                onChange={(e) => {
-                                  handleSetsInput(e, exercise.id, warmupSet.id);
-                                }}
-                                className={twMerge(
-                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
-                                  !/^\d+(,\d+|\.\d+)?$/.test(
-                                    warmupSet.weight,
-                                  ) &&
-                                    warmupSet.weight !== "" &&
-                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
-                                  exercise.done &&
-                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
-                                )}
-                              />
-
-                              <AnimatePresence>
-                                {removeMode && (
-                                  <motion.div
-                                    key={`remove-warmupSet-btn-${warmupSet.id}`}
-                                    variants={slideX}
-                                    initial="right-hidden"
-                                    animate="slide-from-right"
-                                    exit={{
-                                      opacity: 0,
-                                      x: 16,
-                                      transition: {
-                                        duration: 0.15,
-                                        ease: [0.36, 0.66, 0.04, 1],
-                                      },
+                              <SwipeAction.Root
+                                direction={exercise.done ? "none" : "x"}
+                                className="w-4/5"
+                              >
+                                <SwipeAction.Trigger className="flex justify-between">
+                                  <input
+                                    type="text"
+                                    name="reps"
+                                    disabled={exercise.done}
+                                    inputMode="tel"
+                                    placeholder={
+                                      placeholderExercises[
+                                        exerciseIndex
+                                      ]?.sets.filter(
+                                        (set) => set.id === warmupSet.id,
+                                      )[0]?.reps
+                                    }
+                                    onChange={(e) => {
+                                      handleSetsInput(
+                                        e,
+                                        exercise.id,
+                                        warmupSet.id,
+                                      );
                                     }}
+                                    className={twMerge(
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      !/^\d+(?:[-+]\d+)?$/.test(
+                                        warmupSet.reps,
+                                      ) &&
+                                        warmupSet.reps !== "" &&
+                                        "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                    )}
+                                  />
+
+                                  <input
+                                    type="text"
+                                    name="weight"
+                                    disabled={exercise.done}
+                                    inputMode="decimal"
+                                    placeholder={
+                                      placeholderExercises[
+                                        exerciseIndex
+                                      ]?.sets.filter(
+                                        (set) => set.id === warmupSet.id,
+                                      )[0]?.weight + "kg"
+                                    }
+                                    onChange={(e) => {
+                                      handleSetsInput(
+                                        e,
+                                        exercise.id,
+                                        warmupSet.id,
+                                      );
+                                    }}
+                                    className={twMerge(
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      !/^\d+(,\d+|\.\d+)?$/.test(
+                                        warmupSet.weight,
+                                      ) &&
+                                        warmupSet.weight !== "" &&
+                                        "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                    )}
+                                  />
+                                </SwipeAction.Trigger>
+
+                                <SwipeAction.Actions
+                                  secondaryWrapperClassName="bg-red-500 w-1/3 rounded-xl flex justify-end"
+                                  className="w-1/2"
+                                >
+                                  <SwipeAction.Action
+                                    type="button"
+                                    onClick={async () => {
+                                      await timeout(SWIPE_AND_DRAWER_TIMEOUT);
+
+                                      removeSet(exercise.id, warmupSet.id);
+                                    }}
+                                    className="flex w-full items-center justify-center"
                                   >
-                                    <button
-                                      type="button"
-                                      disabled={exercise.done}
-                                      onClick={() =>
-                                        removeSet(exercise.id, warmupSet.id)
-                                      }
-                                      className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
-                                    >
-                                      <RemoveIcon
-                                        strokeWidth={3.5}
-                                        className="size-3.5"
-                                      />
-                                    </button>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
+                                    <TrashBinIcon
+                                      strokeWidth={1.5}
+                                      className="size-5 text-white"
+                                    />
+                                  </SwipeAction.Action>
+                                </SwipeAction.Actions>
+                              </SwipeAction.Root>
                             </div>
                           </motion.div>
                         ))}
@@ -242,6 +243,7 @@ export const WorkoutToDoForm = ({
                             exit={{
                               opacity: 0,
                               height: 0,
+                              x: "-100%",
                             }}
                             transition={{
                               opacity: {
@@ -252,103 +254,99 @@ export const WorkoutToDoForm = ({
                                 duration: 0.5,
                                 ease: [0.36, 0.66, 0.04, 1],
                               },
+                              x: {
+                                duration: 0.3,
+                                ease: [0.36, 0.66, 0.04, 1],
+                              },
                             }}
                           >
                             <div
-                              className={`flex items-center justify-evenly ${workingSetIndex !== workingSets.length - 1 ? "pb-3" : "pb-0"}`}
+                              className={`flex justify-center ${workingSetIndex !== workingSets.length - 1 ? "pb-3" : "pb-0"}`}
                             >
-                              <input
-                                type="text"
-                                name="reps"
-                                disabled={removeMode}
-                                inputMode="tel"
-                                placeholder={
-                                  placeholderExercises[
-                                    exerciseIndex
-                                  ]?.sets.filter(
-                                    (set) => set.id === workingSet.id,
-                                  )[0]?.reps
-                                }
-                                onChange={(e) => {
-                                  handleSetsInput(
-                                    e,
-                                    exercise.id,
-                                    workingSet.id,
-                                  );
-                                }}
-                                className={twMerge(
-                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
-                                  !/^\d+(?:[-+]\d+)?$/.test(workingSet.reps) &&
-                                    workingSet.reps !== "" &&
-                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
-                                  exercise.done &&
-                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
-                                )}
-                              />
-
-                              <input
-                                type="text"
-                                name="weight"
-                                disabled={removeMode}
-                                inputMode="decimal"
-                                placeholder={
-                                  placeholderExercises[
-                                    exerciseIndex
-                                  ]?.sets.filter(
-                                    (set) => set.id === workingSet.id,
-                                  )[0]?.weight + "kg"
-                                }
-                                onChange={(e) => {
-                                  handleSetsInput(
-                                    e,
-                                    exercise.id,
-                                    workingSet.id,
-                                  );
-                                }}
-                                className={twMerge(
-                                  "input-field w-1/3 py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:opacity-60 dark:caret-violet-500 dark:focus:ring-violet-500",
-                                  !/^\d+(,\d+|\.\d+)?$/.test(
-                                    workingSet.weight,
-                                  ) &&
-                                    workingSet.weight !== "" &&
-                                    "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
-                                  exercise.done &&
-                                    "pointer-events-none bg-green-100 italic dark:bg-violet-950",
-                                )}
-                              />
-
-                              <AnimatePresence>
-                                {removeMode && (
-                                  <motion.div
-                                    key={`remove-workingSet-btn-${workingSet.id}`}
-                                    variants={slideX}
-                                    initial="right-hidden"
-                                    animate="slide-from-right"
-                                    exit={{
-                                      opacity: 0,
-                                      x: 16,
-                                      transition: {
-                                        duration: 0.15,
-                                        ease: [0.36, 0.66, 0.04, 1],
-                                      },
+                              <SwipeAction.Root
+                                direction={exercise.done ? "none" : "x"}
+                                className="w-4/5"
+                              >
+                                <SwipeAction.Trigger className="flex justify-between">
+                                  <input
+                                    type="text"
+                                    name="reps"
+                                    disabled={exercise.done}
+                                    inputMode="tel"
+                                    placeholder={
+                                      placeholderExercises[
+                                        exerciseIndex
+                                      ]?.sets.filter(
+                                        (set) => set.id === workingSet.id,
+                                      )[0]?.reps
+                                    }
+                                    onChange={(e) => {
+                                      handleSetsInput(
+                                        e,
+                                        exercise.id,
+                                        workingSet.id,
+                                      );
                                     }}
+                                    className={twMerge(
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      !/^\d+(?:[-+]\d+)?$/.test(
+                                        workingSet.reps,
+                                      ) &&
+                                        workingSet.reps !== "" &&
+                                        "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                    )}
+                                  />
+
+                                  <input
+                                    type="text"
+                                    name="weight"
+                                    disabled={exercise.done}
+                                    inputMode="decimal"
+                                    placeholder={
+                                      placeholderExercises[
+                                        exerciseIndex
+                                      ]?.sets.filter(
+                                        (set) => set.id === workingSet.id,
+                                      )[0]?.weight + "kg"
+                                    }
+                                    onChange={(e) => {
+                                      handleSetsInput(
+                                        e,
+                                        exercise.id,
+                                        workingSet.id,
+                                      );
+                                    }}
+                                    className={twMerge(
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      !/^\d+(,\d+|\.\d+)?$/.test(
+                                        workingSet.weight,
+                                      ) &&
+                                        workingSet.weight !== "" &&
+                                        "ring-red-500 focus:ring-red-500 dark:ring-red-500 dark:focus:ring-red-500",
+                                    )}
+                                  />
+                                </SwipeAction.Trigger>
+
+                                <SwipeAction.Actions
+                                  secondaryWrapperClassName="bg-red-500 w-1/3 rounded-xl flex justify-end"
+                                  className="w-1/2"
+                                >
+                                  <SwipeAction.Action
+                                    type="button"
+                                    onClick={async () => {
+                                      await timeout(SWIPE_AND_DRAWER_TIMEOUT);
+
+                                      removeSet(exercise.id, workingSet.id);
+                                    }}
+                                    className="flex w-full items-center justify-center"
                                   >
-                                    <button
-                                      type="button"
-                                      disabled={exercise.done}
-                                      onClick={() =>
-                                        removeSet(exercise.id, workingSet.id)
-                                      }
-                                      className="rounded-full bg-red-500 p-1.5 text-white disabled:opacity-50"
-                                    >
-                                      <RemoveIcon
-                                        strokeWidth={3.5}
-                                        className="size-3.5"
-                                      />
-                                    </button>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
+                                    <TrashBinIcon
+                                      strokeWidth={1.5}
+                                      className="size-5 text-white"
+                                    />
+                                  </SwipeAction.Action>
+                                </SwipeAction.Actions>
+                              </SwipeAction.Root>
                             </div>
                           </motion.div>
                         ))}
@@ -357,93 +355,40 @@ export const WorkoutToDoForm = ({
                 )}
               </div>
 
-              <AddNewSetButton
-                exercise={exercise}
-                removeMode={removeMode}
-                addNewSet={addNewSet}
-              />
+              <AddNewSetButton exercise={exercise} addNewSet={addNewSet} />
             </div>
           ))}
         </form>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
-        <AnimatePresence mode="wait" initial={false}>
-          {removeMode ? (
-            <motion.div
-              key="remove-mode-footer"
-              variants={biggerSlideX}
-              initial="right-hidden"
-              animate="slide-from-right"
-              exit="slide-to-left"
-              className="flex items-center justify-between"
-            >
-              <button
-                type="button"
-                onClick={resetChangesInRemoveMode}
-                className="px-3 py-1.5 text-lg font-semibold active:scale-95 active:text-slate-300 dark:active:text-slate-400"
-              >
-                Close
-                <p className="sr-only">Close Remove mode</p>
-              </button>
+      <footer className="fixed inset-x-0 bottom-0 z-[9990] border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex items-center justify-between">
+          <AddExerciseDrawer
+            updateExercises={updateExercises}
+            className="rounded-full p-1.5 text-violet-500 active:scale-95 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
+          />
 
-              <button
-                type="button"
-                onClick={saveChangesInRemoveMode}
-                className="px-3 py-1.5 text-xl font-bold text-green-500 active:scale-95 active:text-green-400 dark:text-green-600 dark:active:text-green-800"
-              >
-                Save
-                <p className="sr-only">Save changes in Remove mode</p>
-              </button>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form-footer"
-              variants={biggerSlideX}
-              initial="right-hidden"
-              animate="slide-from-right"
-              exit="slide-to-left"
-              className="flex items-center justify-between"
-            >
-              <div className="flex items-center gap-4">
-                <AddExerciseDrawer
-                  updateExercises={updateExercises}
-                  className="rounded-full p-1.5 text-violet-500 active:scale-95 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
-                />
+          <div className="flex items-center gap-4">
+            <div className="flex gap-1 text-sm font-bold text-slate-400 dark:text-slate-300">
+              <p>
+                {
+                  currWorkout.exercises.filter((exercise) => exercise.done)
+                    .length
+                }
+              </p>
+              <p>/</p>
+              <p>{currWorkout.exercises.length}</p>
+            </div>
 
-                <button
-                  type="button"
-                  onClick={enterRemoveMode}
-                  className="rounded-full p-1.5 text-red-500 active:bg-slate-200 dark:active:bg-slate-700"
-                >
-                  <TrashBinIcon className="size-6" strokeWidth={1.8} />
-                  <p className="sr-only">Enter Remove mode</p>
-                </button>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="flex gap-1 text-sm font-bold text-slate-400 dark:text-slate-300">
-                  <p>
-                    {
-                      currWorkout.exercises.filter((exercise) => exercise.done)
-                        .length
-                    }
-                  </p>
-                  <p>/</p>
-                  <p>{currWorkout.exercises.length}</p>
-                </div>
-
-                <SubmitDoneWorkoutButton
-                  formId="submit-done-workout"
-                  pending={isPending}
-                  open={openDoneModal}
-                  setOpen={setOpenDoneModal}
-                  endWorkout={endWorkout}
-                />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+            <SubmitDoneWorkoutButton
+              formId="submit-done-workout"
+              pending={isPending}
+              open={openDoneModal}
+              setOpen={setOpenDoneModal}
+              endWorkout={endWorkout}
+            />
+          </div>
+        </div>
       </footer>
     </>
   );
