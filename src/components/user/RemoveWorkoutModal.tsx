@@ -72,7 +72,7 @@ export const RemoveWorkoutModal = ({
                     type="submit"
                     disabled={isPendingArchiving}
                     className={twMerge(
-                      "w-full border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-opacity-75 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-900/75 dark:disabled:text-opacity-75",
+                      "w-full border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-blue-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-blue-500/75 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-900/75",
                       isPendingRemoving && "pointer-events-none",
                     )}
                   >
@@ -88,7 +88,7 @@ export const RemoveWorkoutModal = ({
                   type="submit"
                   disabled={isPendingRemoving}
                   className={twMerge(
-                    "w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-opacity-75 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-900/75 dark:disabled:text-opacity-75",
+                    "w-full rounded-b-modal border-t border-slate-400/40 p-3 font-manrope text-lg font-semibold text-red-500 focus:outline-none active:bg-slate-200 disabled:bg-slate-300/55 disabled:text-red-500/75 dark:border-slate-600 dark:active:bg-slate-600/90 dark:disabled:bg-slate-900/75",
                     isPendingArchiving && "pointer-events-none",
                   )}
                 >
