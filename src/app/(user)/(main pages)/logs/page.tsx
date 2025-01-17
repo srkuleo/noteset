@@ -3,6 +3,7 @@ import {
   UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
 } from "@/components/user/UserPagesHeader";
+import { LogsPageSearchBar } from "@/components/user/LogsPageSearchBar";
 import { LogsPageSkeleton } from "@/components/Loading";
 import { LogsPageDataFetcher } from "@/components/user/LogsPageDataFetcher";
 
@@ -15,11 +16,11 @@ export const metadata: Metadata = {
 export default async function LogsPage() {
   return (
     <>
-      <UserPagesSubHeadingWrapper className="pb-[17px]">
+      <UserPagesSubHeadingWrapper>
         <UserPagesSubHeadingText label="Logs" />
       </UserPagesSubHeadingWrapper>
 
-      {/* Add search bar and filter button */}
+      <LogsPageSearchBar />
 
       <Suspense fallback={<LogsPageSkeleton />}>
         <LogsPageDataFetcher />
