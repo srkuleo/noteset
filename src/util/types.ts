@@ -1,18 +1,38 @@
 import { z } from "zod";
-import { workoutStatus } from "@/db/schema";
+import { WORKOUT_STATUS_VALUES } from "@/db/schema";
 
 import type { ComponentProps } from "react";
 
-//Exercise types and schemas
+export type ActionResponse = {
+  status: "success" | "success-redirect" | "error" | "unset";
+  message: string;
+};
 
-export type ExerciseActionResponse = {
+export type ExerciseActionResponse = ActionResponse & {
   errors?: {
     name?: string[] | undefined;
     sets?: string[] | undefined;
     note?: string[] | undefined;
   };
-  message?: string;
 };
+
+export type WorkoutActionResponse = ActionResponse & {
+  errors?: {
+    title?: string[];
+    exercises?: string[];
+  };
+};
+
+export type AuthActionResponse = ActionResponse & {
+  errors?: {
+    username?: string[];
+    email?: string[];
+    password?: string[];
+    confirmPassword?: string[];
+  };
+};
+
+//Exercise types and schemas
 
 export const SetSchema = z.object({
   id: z.string(),
@@ -88,15 +108,6 @@ export type ExerciseToDoType = z.infer<typeof ExerciseWithOptionalSetsSchema>;
 
 //Workout types and schemas
 
-export type WorkoutActionResponse = {
-  status: "success" | "success-redirect" | "error" | "unset";
-  errors?: {
-    title?: string[];
-    exercises?: string[];
-  };
-  message: string;
-};
-
 export const WorkoutSchema = z.object({
   id: z.number(),
   title: z
@@ -108,7 +119,7 @@ export const WorkoutSchema = z.object({
   exercises: z
     .array(ExerciseSchema)
     .min(1, { message: "Please add at least one exercise." }),
-  status: z.enum(workoutStatus),
+  status: z.enum(WORKOUT_STATUS_VALUES),
   userId: z.string(),
   doneAt: z.date().nullable(),
   duration: z.number().nullable(),
@@ -132,17 +143,6 @@ export const WorkoutToDoSchema = WorkoutSchema.pick({
 export type WorkoutToDoType = z.infer<typeof WorkoutToDoSchema>;
 
 //Auth types and schemas
-
-export type AuthActionResponse = {
-  status?: "success" | "error" | "success-redirect" | "pending";
-  errors?: {
-    username?: string[];
-    email?: string[];
-    password?: string[];
-    confirmPassword?: string[];
-  };
-  message?: string;
-};
 
 export const signUpSchema = z
   .object({
@@ -247,19 +247,35 @@ export interface SolidIconProps extends GeneralIconProps {
   stroke: string;
 }
 
-export const timeFormatValues = [
+export const TIME_FORMAT_VALUES = [
+  "default",
   "Hours and minutes",
   "Minutes only",
-  "default",
 ] as const;
 
-export type TimeFormatType = (typeof timeFormatValues)[number];
+export type TimeFormatType = (typeof TIME_FORMAT_VALUES)[number];
+
+export const LOGS_ORDER_VALUES = [
+  "default",
+  "Newest first",
+  "Newest last",
+] as const;
+
+export type LogsOrderType = (typeof LOGS_ORDER_VALUES)[number];
 
 export type UserPreferences = {
   timeFormat: TimeFormatType;
+  logsOrder: LogsOrderType;
 };
 
-export type WorkoutStatusType = (typeof workoutStatus)[number];
+export type LogsPageSearchParams = {
+  searchParams: {
+    searchQuery: string | undefined;
+    strictMode: "on" | undefined;
+  };
+};
+
+export type WorkoutStatusType = (typeof WORKOUT_STATUS_VALUES)[number];
 
 export type WorkoutSwipeActions = {
   openPreviewDrawer: () => void;
