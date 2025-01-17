@@ -1,6 +1,6 @@
 "use server";
 
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, asc, ilike, like } from "drizzle-orm";
 import { db } from ".";
 import {
   sessions,
@@ -11,7 +11,11 @@ import {
 } from "./schema";
 import { getAuthSession } from "@/util/session";
 
-import type { WorkoutStatusType } from "@/util/types";
+import type {
+  LogsOrderType,
+  WorkoutStatusType,
+  LogsPageSearchParams,
+} from "@/util/types";
 
 export async function getUserWorkouts(
   workoutStatus: WorkoutStatusType,
@@ -46,7 +50,11 @@ export async function getUserWorkouts(
   }
 }
 
-export async function getUserDoneWorkouts() {
+export async function getUserDoneWorkouts(
+  searchQuery: string | undefined,
+  strictMode: LogsPageSearchParams["searchParams"]["strictMode"],
+  order: LogsOrderType,
+) {
   const { user } = await getAuthSession();
 
   if (user === null) {
@@ -54,7 +62,31 @@ export async function getUserDoneWorkouts() {
   }
 
   try {
-    const userWorkouts = await db
+    if (!searchQuery) {
+      const userWorkouts = await db
+        .select({
+          id: workouts.id,
+          title: workouts.title,
+          description: workouts.description,
+          exercises: workouts.exercises,
+          status: workouts.status,
+          doneAt: workouts.doneAt,
+          duration: workouts.duration,
+        })
+        .from(workouts)
+        .where(and(eq(workouts.userId, user.id), eq(workouts.status, "done")))
+        .orderBy(
+          order === "Newest first" || order === "default"
+            ? desc(workouts.id)
+            : asc(workouts.id),
+        );
+
+      console.log("Done workouts fetched.");
+
+      return userWorkouts;
+    }
+
+    const searchedWorkouts = await db
       .select({
         id: workouts.id,
         title: workouts.title,
@@ -65,12 +97,24 @@ export async function getUserDoneWorkouts() {
         duration: workouts.duration,
       })
       .from(workouts)
-      .where(and(eq(workouts.userId, user.id), eq(workouts.status, "done")))
-      .orderBy(desc(workouts.id));
+      .where(
+        and(
+          eq(workouts.userId, user.id),
+          eq(workouts.status, "done"),
+          strictMode === "on"
+            ? like(workouts.title, searchQuery)
+            : ilike(workouts.title, `%${searchQuery}%`),
+        ),
+      )
+      .orderBy(
+        order === "Newest first" || order === "default"
+          ? desc(workouts.id)
+          : asc(workouts.id),
+      );
 
-    console.log("Done workouts fetched.");
+    console.log(`${searchQuery} workouts fetched.`);
 
-    return userWorkouts;
+    return searchedWorkouts;
   } catch (error) {
     console.error("Database error:", error);
     throw new Error("Failed to retrive user's workouts.");
