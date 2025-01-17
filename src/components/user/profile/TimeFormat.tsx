@@ -4,12 +4,12 @@ import { useState } from "react";
 import { Drawer } from "vaul";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { twMerge } from "tailwind-merge";
+import { updateUserTimeFormatPreference } from "@/util/actions/preferences";
 import { timeout, BUTTON_TIMEOUT } from "@/util/utils";
-import { updateUserTimeFormatPreference } from "@/util/actions/profile";
 import { TimeIcon } from "@/components/icons/user/profile/time";
 import { showToast } from "@/components/Toasts";
 
-import { timeFormatValues, type TimeFormatType } from "@/util/types";
+import { TIME_FORMAT_VALUES, type TimeFormatType } from "@/util/types";
 
 export const TimeFormat = ({ selected }: { selected: TimeFormatType }) => {
   return (
@@ -66,7 +66,7 @@ const ChangeTimeFormatModal = ({ selected }: { selected: TimeFormatType }) => {
           </VisuallyHidden>
 
           <div className="flex flex-col divide-y divide-slate-400/40 rounded-modal bg-white/90 text-center dark:divide-slate-600 dark:bg-slate-700/70">
-            {timeFormatValues.map((value) => (
+            {TIME_FORMAT_VALUES.map((value) => (
               <button
                 key={value}
                 onClick={async () => {
