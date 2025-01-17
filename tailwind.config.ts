@@ -1,5 +1,6 @@
-import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
+
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   darkMode: "class",
@@ -10,6 +11,12 @@ const config: Config = {
   prefix: "",
   theme: {
     extend: {
+      boxShadow: {
+        "autofill-light": "0 0 0px 1000px #FFFFFF inset",
+        "autofill-dark": "0 0 0px 1000px #0f172a inset",
+        "exercise-field-light": "0 0 0px 1000px #dcfce7 inset",
+        "exercise-field-dark": "0 0 0px 1000px #2e1065 inset",
+      },
       fontFamily: {
         nunito: ["var(--font-nunito)"],
         manrope: ["var(--font-manrope)"],
@@ -53,6 +60,8 @@ const config: Config = {
     },
   },
   plugins: [
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require("tailwindcss-text-fill"),
     plugin(function ({ addUtilities }) {
       const scrollbarUtils = {
         ".no-scrollbar::-webkit-scrollbar": {
