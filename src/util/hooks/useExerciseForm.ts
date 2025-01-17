@@ -4,6 +4,7 @@ import { generateRandomId } from "../utils";
 import type { ExerciseActionResponse, ExerciseType, SetType } from "../types";
 
 const initExerciseErrors: ExerciseActionResponse = {
+  status: "unset",
   errors: {},
   message: "",
 };
