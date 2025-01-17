@@ -13,8 +13,8 @@ import {
 
 import type { ExerciseType, UserPreferences } from "@/util/types";
 
-export const workoutStatus = ["current", "done", "archived"] as const;
-export const statusEnum = pgEnum("status", workoutStatus);
+export const WORKOUT_STATUS_VALUES = ["current", "done", "archived"] as const;
+export const statusEnum = pgEnum("status", WORKOUT_STATUS_VALUES);
 
 export const users = pgTable(
   "users",
@@ -42,7 +42,7 @@ export const sessions = pgTable(
   "sessions",
   {
     id: varchar({ length: 255 }).primaryKey(),
-    userId: varchar()
+    userId: text()
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     expiresAt: timestamp({
