@@ -97,8 +97,8 @@ export const PostWorkoutPageContent = ({
                   </p>
                   {submittedWorkout.duration ? (
                     <FormatWorkoutDuration
-                      timeFormat={timeFormatPreference}
                       duration={submittedWorkout.duration}
+                      selectedFormat={timeFormatPreference}
                     />
                   ) : (
                     "..."
