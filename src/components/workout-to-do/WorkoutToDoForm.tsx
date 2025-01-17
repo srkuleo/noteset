@@ -157,7 +157,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
                                       !/^\d+(?:[-+]\d+)?$/.test(
                                         warmupSet.reps,
                                       ) &&
@@ -186,7 +186,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
                                       !/^\d+(,\d+|\.\d+)?$/.test(
                                         warmupSet.weight,
                                       ) &&
@@ -288,7 +288,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
                                       !/^\d+(?:[-+]\d+)?$/.test(
                                         workingSet.reps,
                                       ) &&
@@ -317,7 +317,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:bg-green-100 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500 dark:disabled:bg-violet-950",
+                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
                                       !/^\d+(,\d+|\.\d+)?$/.test(
                                         workingSet.weight,
                                       ) &&
