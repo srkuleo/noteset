@@ -81,7 +81,9 @@ const EditExerciseForm = ({
 
       if (!isValidExercise.success) {
         setExerciseFormErrors({
+          status: "error",
           errors: isValidExercise.error.flatten().fieldErrors,
+          message: "Exercise not edited",
         });
         throw isValidExercise.error;
       }

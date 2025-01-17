@@ -107,7 +107,9 @@ const AddExerciseForm = ({
 
       if (!isValidExercise.success) {
         setExerciseFormErrors({
+          status: "error",
           errors: isValidExercise.error.flatten().fieldErrors,
+          message: "Exercise not added",
         });
         throw isValidExercise.error;
       }
