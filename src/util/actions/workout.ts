@@ -12,6 +12,7 @@ import {
   type WorkoutActionResponse,
   type CreateWorkoutType,
   type WorkoutToDoType,
+  type ActionResponse,
 } from "../types";
 
 export async function createWorkout(
@@ -152,7 +153,7 @@ export async function editWorkout(
 export async function removeWorkout(
   workoutId: number,
   workoutTitle: string,
-): Promise<WorkoutActionResponse> {
+): Promise<ActionResponse> {
   try {
     await db.delete(workouts).where(eq(workouts.id, workoutId));
 
@@ -176,7 +177,7 @@ export async function removeWorkout(
 export async function archiveWorkout(
   workoutId: number,
   workoutTitle: string,
-): Promise<WorkoutActionResponse> {
+): Promise<ActionResponse> {
   try {
     await db
       .update(workouts)
@@ -203,7 +204,7 @@ export async function archiveWorkout(
 export async function unarchiveWorkout(
   workoutId: number,
   workoutTitle: string,
-): Promise<WorkoutActionResponse> {
+): Promise<ActionResponse> {
   try {
     await db
       .update(workouts)
@@ -230,7 +231,7 @@ export async function unarchiveWorkout(
 export async function submitDoneWorkout(
   doneWorkout: WorkoutToDoType,
   duration: number,
-): Promise<WorkoutActionResponse> {
+): Promise<ActionResponse> {
   const { user } = await getAuthSession();
 
   if (user === null) {
