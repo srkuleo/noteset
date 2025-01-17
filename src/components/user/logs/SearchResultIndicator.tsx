@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
 
-import type { LogsPageSearchParams } from "@/app/(user)/(main pages)/logs/page";
+import type { LogsPageSearchParams } from "@/util/types";
 
 export const SearchResultIndicator = ({
   searchQuery,

@@ -8,8 +8,7 @@ import { FormatWorkoutDuration } from "@/components/Formatting";
 import { PreviewWorkoutDrawerWithTrigger } from "../PreviewWorkoutDrawer";
 
 import type { WorkoutType } from "@/db/schema";
-import type { TimeFormatType } from "@/util/types";
-import type { LogsPageSearchParams } from "@/app/(user)/(main pages)/logs/page";
+import type { TimeFormatType, LogsPageSearchParams } from "@/util/types";
 
 export const LogsPageContent = ({
   doneWorkouts,

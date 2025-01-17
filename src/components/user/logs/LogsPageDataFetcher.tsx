@@ -4,7 +4,7 @@ import { getUserDoneWorkouts } from "@/db/query";
 import { LogsPageSearchBar } from "./LogsPageSearchBar";
 import { LogsPageContent } from "./LogsPageContent";
 
-import type { LogsPageSearchParams } from "@/app/(user)/(main pages)/logs/page";
+import type { LogsPageSearchParams } from "@/util/types";
 
 export const LogsPageDataFetcher = async ({
   searchParams,
