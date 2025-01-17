@@ -32,7 +32,7 @@ export const LoginForm = () => {
           autoComplete="username"
           className={twMerge(
             "input-field",
-            "w-full group-disabled:opacity-50",
+            "autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white w-full group-disabled:opacity-50",
             actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
           )}
         />
@@ -71,7 +71,7 @@ export const LoginForm = () => {
               })
             }
             className={twMerge(
-              "w-[calc(100%-48px)] rounded-l-xl bg-transparent px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:focus:placeholder-slate-600",
+              "autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white w-[calc(100%-48px)] rounded-l-xl bg-transparent px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:focus:placeholder-slate-600",
               actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
             )}
           />
