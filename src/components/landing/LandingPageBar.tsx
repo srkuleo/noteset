@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "../icons/logo";
+import { ThemeButtonDevMode } from "../ThemeButtonDevMode";
 import { GitHubButton } from "../GitHubButton";
 
 export const LandingPageBar = ({
@@ -14,6 +15,8 @@ export const LandingPageBar = ({
 
         <div className="flex items-center gap-4">
           {children}
+
+          {process.env.NODE_ENV === "development" && <ThemeButtonDevMode />}
 
           <GitHubButton />
         </div>

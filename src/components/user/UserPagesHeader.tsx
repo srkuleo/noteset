@@ -1,5 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { Logo } from "../icons/logo";
+import { ThemeButtonDevMode } from "../ThemeButtonDevMode";
 import { GitHubButton } from "../GitHubButton";
 
 import { type HTMLAttributes } from "react";
@@ -16,6 +17,8 @@ export const UserPagesHeader = ({
           {Logo}
 
           <div className="flex items-center gap-3">
+            {process.env.NODE_ENV === "development" && <ThemeButtonDevMode />}
+
             <GitHubButton />
 
             {children}
