@@ -29,6 +29,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
     return {
       status: "error",
       errors: signUpRaw.error.flatten().fieldErrors,
+      message: "Error trying to create user account",
     };
   }
 
@@ -56,6 +57,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
           username: ["Username already exists."],
           email: ["This email is already taken."],
         },
+        message: "Error trying to create user account",
       };
     } else if (duplicateUsername?.username) {
       return {
@@ -63,6 +65,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
         errors: {
           username: ["Username already exists."],
         },
+        message: "Error trying to create user account",
       };
     } else if (duplicateEmail?.email) {
       return {
@@ -70,6 +73,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
         errors: {
           email: ["This email is already taken."],
         },
+        message: "Error trying to create user account",
       };
     }
   } catch (error) {
@@ -91,6 +95,7 @@ export async function signUp(formData: FormData): Promise<AuthActionResponse> {
       hashedPassword: hashedPassword,
       preferences: {
         timeFormat: "default",
+        logsOrder: "default",
       },
     });
   } catch (error) {
