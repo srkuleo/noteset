@@ -273,7 +273,7 @@ const ExerciseShell = ({
           <span className="font-bold uppercase text-violet-400 dark:text-violet-400">
             plus
           </span>{" "}
-          button to add one
+          button in the bottom left corner to add one
         </p>
       </div>
 
