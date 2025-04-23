@@ -1,13 +1,13 @@
-import { useFormStatus } from "react-dom";
 import { twMerge } from "tailwind-merge";
 import { Drawer } from "vaul";
 import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 
-type SubmitButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+interface SubmitButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   loading: string;
   pending: boolean;
-};
+}
 
 export const AuthButton = ({
   label,
@@ -45,16 +45,6 @@ export const ModalSubmitButton = ({
       {...props}
     >
       {pending ? loading : label}
-    </button>
-  );
-};
-
-export const ConfirmLogOutButton = ({ className }: { className?: string }) => {
-  const { pending } = useFormStatus();
-
-  return (
-    <button type="submit" disabled={pending} className={className}>
-      {pending ? "Logging Out..." : "Log Out"}
     </button>
   );
 };
