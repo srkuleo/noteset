@@ -269,10 +269,8 @@ export type UserPreferences = {
 };
 
 export type LogsPageSearchParams = {
-  searchParams: {
-    searchQuery: string | undefined;
-    strictMode: "on" | undefined;
-  };
+  searchQuery: string | undefined;
+  strictMode: "on" | undefined;
 };
 
 export type WorkoutStatusType = (typeof WORKOUT_STATUS_VALUES)[number];
