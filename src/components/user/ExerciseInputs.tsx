@@ -39,7 +39,7 @@ export const NameInput = ({
           nameError && "ring-red-500 dark:ring-red-500",
         )}
       />
-      <ErrorComponent errorArr={nameError} className="gap-3" />
+      <ErrorComponent errorArr={nameError} />
     </div>
   );
 };
@@ -80,7 +80,6 @@ export const SelectSetsInput = ({
   createSets,
 }: {
   sets: number;
-  setsError: string[] | undefined;
   createSets: (newSetsCount: number) => void;
 }) => {
   const chooseSetCount = [1, 2, 3] as const;
