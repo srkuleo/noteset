@@ -161,7 +161,6 @@ const AddExerciseForm = ({
         <SelectSetsInput
           sets={tempExercise.sets.length}
           createSets={createSets}
-          setsError={exerciseFormErrors.errors?.sets}
         />
       </fieldset>
 
