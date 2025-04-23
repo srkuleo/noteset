@@ -5,11 +5,10 @@ import { redirect } from "next/navigation";
 import { eq, ilike, or } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { generateRandomId } from "../utils";
+import { generateRandomId, generateSessionToken } from "../utils";
 import {
   createSession,
   deleteSessionTokenCookie,
-  generateSessionToken,
   getAuthSession,
   invalidateSession,
   setSessionTokenCookie,
@@ -149,13 +148,13 @@ export async function login(formData: FormData): Promise<AuthActionResponse> {
 
   const token = generateSessionToken();
   const session = await createSession(token, user.id);
-  setSessionTokenCookie(token, session.expiresAt);
+  await setSessionTokenCookie(token, session.expiresAt);
 
-  console.log("User validated, you are logged in!");
+  console.log("Credentials validated, you are logged in!");
 
   return {
     status: "success",
-    message: "User validated, you are logged in!",
+    message: "Credentials validated, you are logged in!",
   };
 }
 
@@ -168,7 +167,9 @@ export async function logout() {
 
   await invalidateSession(session.id);
 
-  deleteSessionTokenCookie();
+  await deleteSessionTokenCookie();
+
+  console.log("Session deleted, you are logged out!");
 
   redirect("/login");
 }
