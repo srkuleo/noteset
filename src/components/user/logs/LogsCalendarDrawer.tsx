@@ -49,9 +49,9 @@ export const LogsCalendarDrawer = () => {
             <div className="flex flex-col px-8 pb-4 pt-2">
               <Drawer.Handle className="bg-slate-300 dark:bg-slate-500" />
 
-              <div className="py-20 text-center font-manrope text-lg italic">
+              <Drawer.Title className="py-20 text-center font-manrope text-lg italic">
                 Coming soon...
-              </div>
+              </Drawer.Title>
 
               <button
                 onClick={async () => {
