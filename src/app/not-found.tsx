@@ -15,7 +15,7 @@ export default function NotFound() {
 
           <div className="space-y-2 pb-2 text-center">
             <h3 className="font-manrope text-slate-600">
-              404 Page could not be found
+              404 - Page not found
             </h3>
             <p className="text-sm text-slate-500 dark:text-slate-400">
               Invalid URL
