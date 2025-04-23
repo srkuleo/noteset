@@ -1,5 +1,6 @@
 "use server";
 
+import { unauthorized } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { and, eq, ilike, ne } from "drizzle-orm";
 import { db } from "@/db";
@@ -21,7 +22,7 @@ export async function createWorkout(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   const isValidWorkout = CreateWorkoutSchema.safeParse(workout);
@@ -89,7 +90,7 @@ export async function editWorkout(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   const isValidWorkout = CreateWorkoutSchema.safeParse(editedWorkout);
@@ -154,6 +155,12 @@ export async function removeWorkout(
   workoutId: number,
   workoutTitle: string,
 ): Promise<ActionResponse> {
+  const { session } = await getAuthSession();
+
+  if (!session) {
+    unauthorized();
+  }
+
   try {
     await db.delete(workouts).where(eq(workouts.id, workoutId));
 
@@ -178,6 +185,12 @@ export async function archiveWorkout(
   workoutId: number,
   workoutTitle: string,
 ): Promise<ActionResponse> {
+  const { session } = await getAuthSession();
+
+  if (!session) {
+    unauthorized();
+  }
+
   try {
     await db
       .update(workouts)
@@ -189,7 +202,7 @@ export async function archiveWorkout(
     revalidatePath("/home?q=current");
 
     return {
-      status: "success",
+      status: "success-redirect",
       message: `"${workoutTitle}" workout archived`,
     };
   } catch (err) {
@@ -205,6 +218,12 @@ export async function unarchiveWorkout(
   workoutId: number,
   workoutTitle: string,
 ): Promise<ActionResponse> {
+  const { session } = await getAuthSession();
+
+  if (!session) {
+    unauthorized();
+  }
+
   try {
     await db
       .update(workouts)
@@ -217,7 +236,7 @@ export async function unarchiveWorkout(
 
     return {
       status: "success-redirect",
-      message: `"${workoutTitle}" workout moved to current`,
+      message: `"${workoutTitle}" workout unarchived`,
     };
   } catch (err) {
     console.error(err);
@@ -235,7 +254,7 @@ export async function submitDoneWorkout(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   const isValidWorkout = WorkoutToDoSchema.safeParse(doneWorkout);
@@ -293,7 +312,7 @@ export async function updateCurrentWorkout(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   const isValidWorkout = CreateWorkoutSchema.safeParse(updatedCurrentWorkout);

@@ -1,5 +1,6 @@
 "use server";
 
+import { unauthorized } from "next/navigation";
 import { and, desc, eq, asc, ilike, like } from "drizzle-orm";
 import { db } from ".";
 import {
@@ -23,7 +24,7 @@ export async function getUserWorkouts(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {
@@ -51,14 +52,14 @@ export async function getUserWorkouts(
 }
 
 export async function getUserDoneWorkouts(
-  searchQuery: string | undefined,
-  strictMode: LogsPageSearchParams["searchParams"]["strictMode"],
+  searchQuery: LogsPageSearchParams["searchQuery"],
+  strictMode: LogsPageSearchParams["strictMode"],
   order: LogsOrderType,
 ) {
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {
@@ -125,7 +126,7 @@ export async function getWorkoutById(workoutId: number) {
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {
@@ -152,7 +153,7 @@ export async function getWorkoutByIdWithoutId(workoutId: number) {
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {
@@ -178,7 +179,7 @@ export async function getLastSubmittedWorkout(title: string) {
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {
@@ -207,7 +208,7 @@ export async function getCurrentWorkoutByTitle(title: string) {
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {
@@ -238,7 +239,7 @@ export async function getWorkoutTitleById(workoutId: number) {
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   try {

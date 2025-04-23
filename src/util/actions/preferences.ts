@@ -1,10 +1,11 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { unauthorized } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { getAuthSession } from "@/util/session";
+import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
+import { getAuthSession } from "@/util/session";
 
 import type { ActionResponse, LogsOrderType, TimeFormatType } from "../types";
 
@@ -14,7 +15,7 @@ export async function updateUserTimeFormatPreference(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   if (user.preferences.timeFormat === value) {
@@ -57,7 +58,7 @@ export async function updateUserLogsOrderPreference(
   const { user } = await getAuthSession();
 
   if (user === null) {
-    throw new Error("Unauthorized action. Please login.");
+    unauthorized();
   }
 
   if (user.preferences.logsOrder === value) {
