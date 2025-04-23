@@ -32,7 +32,7 @@ export type DirectionOptions = "x" | "y" | "both" | "none";
 
 export type SnapOptions = {
   direction: DirectionOptions;
-  ref: RefObject<Element>;
+  ref: RefObject<Element | null>;
   snapPoints: SnapPointsType;
   springOptions?: Omit<SpringOptions, "velocity">;
   constraints?: Partial<BoundingBox> | RefObject<Element>;
