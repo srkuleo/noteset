@@ -1,4 +1,5 @@
 import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
+
 import type { ExerciseType } from "./types";
 
 export function generateRandomId(idLength: number): string {
@@ -11,9 +12,18 @@ export function generateRandomId(idLength: number): string {
   return id;
 }
 
+export function generateSessionToken(): string {
+  const bytes = new Uint8Array(20);
+  crypto.getRandomValues(bytes);
+  const token = encodeBase32LowerCaseNoPadding(bytes);
+
+  return token;
+}
+
 export const BUTTON_TIMEOUT = 100;
 export const SWIPE_AND_DRAWER_TIMEOUT = 300;
 export const FORM_TIMEOUT = 500;
+export const SESSION_COOKIE_NAME = "auth-session";
 
 export async function timeout(ms: number) {
   await new Promise((resolve) => setTimeout(resolve, ms));
