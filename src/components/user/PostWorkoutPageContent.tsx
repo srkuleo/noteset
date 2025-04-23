@@ -223,15 +223,19 @@ export const PostWorkoutPageContent = ({
               }}
             >
               <div className="flex flex-col items-center gap-2 pt-4">
-                <p className="text-2xl font-bold">{workout.title}</p>
+                <p className="text-2xl font-bold uppercase">{workout.title}</p>
                 <p className="rounded-xl bg-white px-3.5 py-1 font-manrope font-semibold text-green-500 shadow-md ring-1 ring-slate-200 dark:bg-slate-800/80 dark:ring-slate-700/80">
                   updated
                 </p>
               </div>
 
-              <div className="space-y-1 py-8">
-                <p className="text-lg font-semibold italic text-slate-400 dark:text-slate-300">
-                  You can now leave this page
+              <div className="space-y-8 py-16">
+                <p className="text-center text-lg font-semibold text-slate-500 dark:text-slate-200">
+                  Your workout has been updated successfully
+                </p>
+
+                <p className="italic text-slate-400 dark:text-slate-300">
+                  Feel free to leave this page
                 </p>
               </div>
             </motion.div>
