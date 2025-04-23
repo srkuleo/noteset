@@ -5,12 +5,15 @@ import { WorkoutToDoTooltip } from "@/components/Tooltips";
 import { WorkoutToDoSkeleton } from "@/components/Loading";
 import { WorkoutToDoDataFetcher } from "@/components/workout-to-do/WorkoutToDoDataFetcher";
 
+type SearchParams = Promise<{ id: string }>;
+
 export default async function WorkoutToDoPage({
   searchParams,
 }: {
-  searchParams: { id: string };
+  searchParams: SearchParams;
 }) {
-  const workoutId = Number(searchParams.id);
+  const { id } = await searchParams;
+  const workoutId = Number(id);
 
   return (
     <>

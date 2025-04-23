@@ -9,10 +9,12 @@ export const metadata: Metadata = {
   title: "Edit",
 };
 
+type SearchParams = Promise<{ id: string }>;
+
 export default async function EditWorkoutPage({
   searchParams,
 }: {
-  searchParams: { id: string };
+  searchParams: SearchParams;
 }) {
   const { user } = await getAuthSession();
 
@@ -20,7 +22,9 @@ export default async function EditWorkoutPage({
     redirect("/login");
   }
 
-  const coercedWorkoutId = Number(searchParams.id);
+  const { id } = await searchParams;
+
+  const coercedWorkoutId = Number(id);
   const workoutToEdit = await getWorkoutById(coercedWorkoutId);
 
   if (!workoutToEdit) notFound();

@@ -13,9 +13,15 @@ export const metadata: Metadata = {
   title: "Logs",
 };
 
-export const dynamic = "force-dynamic";
+type SearchParams = Promise<LogsPageSearchParams>;
 
-export default async function LogsPage({ searchParams }: LogsPageSearchParams) {
+export default async function LogsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const { searchQuery, strictMode } = await searchParams;
+
   return (
     <>
       <UserPagesSubHeadingWrapper>
@@ -23,7 +29,10 @@ export default async function LogsPage({ searchParams }: LogsPageSearchParams) {
       </UserPagesSubHeadingWrapper>
 
       <Suspense fallback={<LogsPageSkeleton />}>
-        <LogsPageDataFetcher searchParams={searchParams} />
+        <LogsPageDataFetcher
+          searchQuery={searchQuery}
+          strictMode={strictMode}
+        />
       </Suspense>
     </>
   );

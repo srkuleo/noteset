@@ -15,11 +15,15 @@ export const metadata: Metadata = {
   title: "Post workout",
 };
 
+type SearchParams = Promise<{ workoutTitle: string }>;
+
 export default async function PostWorkoutPage({
   searchParams,
 }: {
-  searchParams: { workoutTitle: string };
+  searchParams: SearchParams;
 }) {
+  const { workoutTitle } = await searchParams;
+
   return (
     <>
       <UserPagesSubHeadingWrapper>
@@ -44,7 +48,7 @@ export default async function PostWorkoutPage({
       </UserPagesSubHeadingWrapper>
 
       <Suspense fallback={<PostWorkoutPageSkeleton />}>
-        <PostWorkoutPageDataFetcher title={searchParams.workoutTitle} />
+        <PostWorkoutPageDataFetcher title={workoutTitle} />
       </Suspense>
     </>
   );

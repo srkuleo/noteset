@@ -15,15 +15,15 @@ export const metadata: Metadata = {
   title: "Home",
 };
 
-export const dynamic = "force-dynamic";
+type SearchParams = Promise<{ q: WorkoutStatusType }>;
 
 export default async function HomePage({
   searchParams,
 }: {
-  searchParams: {
-    q: WorkoutStatusType;
-  };
+  searchParams: SearchParams;
 }) {
+  const { q } = await searchParams;
+
   return (
     <>
       <UserPagesSubHeadingWrapper>
@@ -37,7 +37,7 @@ export default async function HomePage({
       </UserPagesSubHeadingWrapper>
 
       <Suspense fallback={<HomePageSkeleton />}>
-        <HomePageDataFetcher queryParam={searchParams.q} />
+        <HomePageDataFetcher queryParam={q} />
       </Suspense>
     </>
   );
