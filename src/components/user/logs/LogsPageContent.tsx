@@ -21,7 +21,7 @@ export const LogsPageContent = ({
 
   const { searchQuery, strictMode } = Object.fromEntries(
     searchParams.entries(),
-  ) as LogsPageSearchParams["searchParams"];
+  ) as LogsPageSearchParams;
 
   if (doneWorkouts.length === 0 && !searchQuery) {
     return (

@@ -7,7 +7,8 @@ import { LogsPageContent } from "./LogsPageContent";
 import type { LogsPageSearchParams } from "@/util/types";
 
 export const LogsPageDataFetcher = async ({
-  searchParams,
+  searchQuery,
+  strictMode,
 }: LogsPageSearchParams) => {
   const { user } = await getAuthSession();
 
@@ -16,16 +17,16 @@ export const LogsPageDataFetcher = async ({
   }
 
   const doneWorkouts = await getUserDoneWorkouts(
-    searchParams.searchQuery,
-    searchParams.strictMode,
+    searchQuery,
+    strictMode,
     user.preferences.logsOrder,
   );
 
   return (
     <>
-      {(doneWorkouts.length > 0 || searchParams.searchQuery) && (
+      {(doneWorkouts.length > 0 || searchQuery) && (
         <LogsPageSearchBar
-          searchQuery={searchParams.searchQuery}
+          searchQuery={searchQuery}
           logsOrderPreference={user.preferences.logsOrder}
         />
       )}

@@ -7,13 +7,13 @@ import { Spinner } from "@/components/Loading";
 import { LogsCalendarDrawer } from "./LogsCalendarDrawer";
 import { FilterLogsModal } from "./FilterLogsModal";
 
-import type { LogsOrderType } from "@/util/types";
+import type { LogsOrderType, LogsPageSearchParams } from "@/util/types";
 
 export const LogsPageSearchBar = ({
   searchQuery,
   logsOrderPreference,
 }: {
-  searchQuery: string | undefined;
+  searchQuery: LogsPageSearchParams["searchQuery"];
   logsOrderPreference: LogsOrderType;
 }) => {
   const router = useRouter();

@@ -9,7 +9,7 @@ export const SearchResultIndicator = ({
   clasName,
 }: {
   searchQuery: string;
-  strictMode: LogsPageSearchParams["searchParams"]["strictMode"];
+  strictMode: LogsPageSearchParams["strictMode"];
   clasName?: string;
 }) => {
   return (
