@@ -1,6 +1,6 @@
 import { Drawer } from "vaul";
 import { timeout, BUTTON_TIMEOUT } from "@/util/utils";
-import { DangerIcon } from "../icons/user/warning";
+import { ErrorTriangleIcon } from "../icons/user/warning";
 
 export const RemoveExerciseModal = ({
   isOpen,
@@ -34,7 +34,7 @@ export const RemoveExerciseModal = ({
         >
           <div className="flex flex-col gap-3 rounded-modal bg-white/90 pt-5 dark:bg-slate-700/70">
             <div className="mx-auto w-fit rounded-full bg-red-400 p-2 text-white shadow-sm dark:bg-red-200 dark:text-red-500">
-              {DangerIcon}
+              <ErrorTriangleIcon strokeWidth={2} className="size-5" />
             </div>
 
             <Drawer.Title className="px-2 pt-2 text-center font-nunito text-sm font-semibold leading-snug dark:text-slate-400">
