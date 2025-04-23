@@ -1,34 +1,24 @@
+"use server";
+
 import { cache } from "react";
 import { cookies } from "next/headers";
-import {
-  encodeBase32LowerCaseNoPadding,
-  encodeHexLowerCase,
-} from "@oslojs/encoding";
+import { encodeHexLowerCase } from "@oslojs/encoding";
 import { sha256 } from "@oslojs/crypto/sha2";
 import { eq, lte } from "drizzle-orm";
 import { db } from "@/db";
 import { sessions, users } from "@/db/schema";
-
-import type { Session, User } from "@/db/schema";
 import {
   getCurrentSession,
   getUserInfoWithoutPassword,
   insertSessionInDb,
 } from "@/db/query";
+import { SESSION_COOKIE_NAME } from "./utils";
 
-export const SESSION_COOKIE_NAME = "auth-session";
+import type { Session, User } from "@/db/schema";
 
 export type SessionValidationResult =
   | { session: Session; user: User }
   | { session: null; user: null };
-
-export function generateSessionToken(): string {
-  const bytes = new Uint8Array(20);
-  crypto.getRandomValues(bytes);
-  const token = encodeBase32LowerCaseNoPadding(bytes);
-
-  return token;
-}
 
 export async function createSession(
   token: string,
@@ -74,8 +64,8 @@ export async function validateSessionToken(
 
 export const getAuthSession = cache(
   async (): Promise<SessionValidationResult> => {
-    //When upgrading to Next15 await cookie() beofre modifying
-    const sessionToken = cookies().get(SESSION_COOKIE_NAME)?.value ?? null;
+    const cookieStore = await cookies();
+    const sessionToken = cookieStore.get(SESSION_COOKIE_NAME)?.value ?? null;
 
     if (sessionToken === null) {
       return { session: null, user: null };
@@ -86,10 +76,12 @@ export const getAuthSession = cache(
   },
 );
 
-export function setSessionTokenCookie(token: string, expiresAt: Date): void {
-  //When upgrading to Next15 await cookie() beofre modifying and
-  //make func async with Promise return
-  cookies().set(SESSION_COOKIE_NAME, token, {
+export async function setSessionTokenCookie(
+  token: string,
+  expiresAt: Date,
+): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.set(SESSION_COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -98,10 +90,9 @@ export function setSessionTokenCookie(token: string, expiresAt: Date): void {
   });
 }
 
-export function deleteSessionTokenCookie(): void {
-  //When upgrading to Next15 await cookie() beofre modifying and
-  //make func async with Promise return
-  cookies().set(SESSION_COOKIE_NAME, "", {
+export async function deleteSessionTokenCookie(): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.set(SESSION_COOKIE_NAME, "", {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -118,6 +109,10 @@ export async function invalidateUserSessions(userId: string): Promise<void> {
   await db.delete(sessions).where(eq(users.id, userId));
 }
 
-export async function deleteExpiredSessions(): Promise<void> {
+export async function deleteExpiredSessions(): Promise<string> {
   await db.delete(sessions).where(lte(sessions.expiresAt, new Date()));
+
+  console.log("Expired sessions removed from database");
+
+  return `Expired sessions removed from database at ${new Date()}`;
 }
