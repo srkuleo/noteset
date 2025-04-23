@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { getAuthSession } from "@/util/session";
 import { getUserWorkouts } from "@/db/query";
-
-import type { WorkoutStatusType } from "@/util/types";
 import { ArchivedWorkoutsList } from "./ArchivedWorkoutsList";
 import { CurrentWorkoutsList } from "./CurrentWorkoutsList";
+
+import type { WorkoutStatusType } from "@/util/types";
 
 export const HomePageDataFetcher = async ({
   queryParam,
