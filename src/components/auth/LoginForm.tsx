@@ -7,6 +7,7 @@ import { login } from "@/util/actions/auth";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 import { ErrorComponent } from "../ErrorComponent";
 import { AuthButton } from "../SubmitButtons";
+
 import type { PasswordInputs } from "@/util/types";
 
 export const LoginForm = () => {
@@ -32,7 +33,7 @@ export const LoginForm = () => {
           autoComplete="username"
           className={twMerge(
             "input-field",
-            "autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white w-full group-disabled:opacity-50",
+            "w-full autofill:shadow-autofill-light autofill:text-fill-slate-500 group-disabled:opacity-50 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white",
             actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
           )}
         />
@@ -41,6 +42,7 @@ export const LoginForm = () => {
           className={twMerge(
             "relative w-full rounded-xl bg-white shadow-sm ring-1 ring-slate-400/40 group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
             input.password.focus && "ring-2 ring-green-500 dark:ring-green-600",
+            actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
           )}
         >
           <input
@@ -70,10 +72,7 @@ export const LoginForm = () => {
                 };
               })
             }
-            className={twMerge(
-              "autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white w-[calc(100%-48px)] rounded-l-xl bg-transparent px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:focus:placeholder-slate-600",
-              actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
-            )}
+            className="w-[calc(100%-48px)] rounded-l-xl bg-transparent px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:placeholder-slate-600"
           />
           <button
             type="button"
