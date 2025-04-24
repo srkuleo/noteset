@@ -178,14 +178,6 @@ export const AddOrEditWorkoutTooltip = () => {
 
           <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
-              Fields with &quot;e.g.&quot; or &quot;Rep 1, Weight 1&quot;
-              don&apos;t carry any value.{" "}
-              <span className="font-bold text-slate-800 dark:text-white">
-                Those must be provided with data.
-              </span>
-            </li>
-
-            <li>
               You need to add{" "}
               <span className="font-bold uppercase text-slate-800 dark:text-white">
                 at least one exercise
