@@ -12,4 +12,4 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 - _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
 
-- _Upgrade to tailwind v4 when ready and fix eslint error, see if thhere is a better way to switch between current and archived workouts._
+- _Upgrade to tailwind v4 when ready and fix eslint error, see if there is a better way to switch between current and archived workouts. Add dropdown menu for incoming feature regarding diet._
