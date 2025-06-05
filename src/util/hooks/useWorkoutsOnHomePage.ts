@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SWIPE_AND_DRAWER_TIMEOUT, timeout } from "../utils";
 
 import type { PartialWorkoutType } from "@/db/schema";
 
@@ -19,6 +20,8 @@ export const useWorkoutsOnHomePage = (
   const [targetedWorkout, setTargetedWorkout] = useState(initTargetedWorkout);
 
   function removeWorkoutOnClient(workoutId: number) {
+    timeout(SWIPE_AND_DRAWER_TIMEOUT);
+
     const modifiedWorkouts = workoutsList.filter(
       (workout) => workout.id !== workoutId,
     );
