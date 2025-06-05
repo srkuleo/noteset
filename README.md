@@ -8,8 +8,10 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Steps until v1:
 
+- 6th of Jun - _add new feature drawer, add github channel log for version 0.9.6. Fix a bug on workout to do form regarding resetting fields after failed push attempt. Add dropdown menu for incoming feature regarding diet and put routing between archived and current workouts in there, while separating each of them to the unique routes._
+
 - _Finish logs page UI - add option to query by date using calendar drawer, pagination and pagination preferance 6,8,10,12,16,20. Finish profile page UI - add option for user to set their own pfp instead of the initials, add separate route for settings and make settings button inside ProfileButtonModal lead to it. See if possible to close swipe when swiping other sets or pressing anywhere else._
 
 - _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
 
-- _Upgrade to tailwind v4 when ready and fix eslint error, see if there is a better way to switch between current and archived workouts. Add dropdown menu for incoming feature regarding diet._
+- _Upgrade to tailwind v4 when ready._
