@@ -40,7 +40,7 @@ export const LoginForm = () => {
 
         <div
           className={twMerge(
-            "relative w-full rounded-xl bg-white shadow-sm ring-1 ring-slate-400/40 group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
+            "relative w-full rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-400/40 group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
             input.password.focus && "ring-2 ring-green-500 dark:ring-green-600",
             actionRes?.status === "error" && "ring-red-500 dark:ring-red-500",
           )}
@@ -72,7 +72,7 @@ export const LoginForm = () => {
                 };
               })
             }
-            className="w-[calc(100%-48px)] rounded-l-xl bg-transparent px-4 py-3 font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:placeholder-slate-600"
+            className="w-[calc(100%-48px)] bg-transparent font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:placeholder-slate-600"
           />
           <button
             type="button"
@@ -86,7 +86,7 @@ export const LoginForm = () => {
                 };
               })
             }
-            className="absolute inset-y-0 right-0 rounded-r-xl border-l border-slate-400/40 px-3 py-2 text-slate-400 active:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:active:bg-slate-800"
+            className="absolute inset-y-0 right-0 rounded-r-xl border-l border-slate-400/40 px-3 text-slate-400 active:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:active:bg-slate-800"
           >
             {input.password.show ? (
               <HideIcon strokeWidth={1.3} className="size-6" />
