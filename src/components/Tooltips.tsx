@@ -26,7 +26,10 @@ export const LandingPageTooltip = () => {
         Tooltip
       </button>
 
-      <TooltipDrawer closeDrawer={() => setOpen(false)}>
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
         <div className="space-y-6">
           <p className="text-lg text-slate-500 dark:text-slate-300">
             For better user experience
@@ -59,7 +62,7 @@ export const LandingPageTooltip = () => {
             </p>
           </div>
         </div>
-      </TooltipDrawer>
+      </TooltipDrawerContent>
     </Drawer.Root>
   );
 };
@@ -86,7 +89,10 @@ export const HomePageTooltip = () => {
         <InformationIcon strokeWidth={1.5} className="size-6" />
       </button>
 
-      <TooltipDrawer closeDrawer={() => setOpen(false)}>
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
         <div className="space-y-4">
           <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
             Workout statuses
@@ -143,8 +149,96 @@ export const HomePageTooltip = () => {
             </li>
           </ul>
         </div>
-      </TooltipDrawer>
+      </TooltipDrawerContent>
     </Drawer.Root>
+  );
+};
+
+export const PreviewWorkoutTooltip = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Drawer.NestedRoot
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
+      <button
+        type="button"
+        onClick={async () => {
+          await timeout(BUTTON_TIMEOUT);
+
+          setOpen(true);
+        }}
+        className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
+      >
+        <InformationIcon strokeWidth={1.5} className="size-6" />
+      </button>
+
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
+        <div className="pb-8">
+          <div className="space-y-2">
+            <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+              Workout planning
+            </p>
+
+            <ul className="list-disc space-y-4 text-pretty pb-6 pl-4 text-sm dark:text-slate-300 sm:text-base">
+              <li>
+                As a general recommendation for hypertrophy training,{" "}
+                <span className="font-bold">each workout</span> should include
+                between{" "}
+                <span className="font-bold">10 and 15 working sets</span>,
+                depending on your recovery capacity and how many exercises are
+                trained at longer lengths.
+              </li>
+
+              <li>
+                <span className="font-bold">In most cases</span>, a workout
+                should include{" "}
+                <span className="font-bold">no more than 10 exercises</span>.
+                The <span className="font-bold">recommended range</span> is
+                between <span className="font-bold">4 and 8</span> exercises,
+                depending on the type of training split you&apos;re following.
+              </li>
+
+              <li>
+                From a muscle-specific standpoint,{" "}
+                <span className="font-bold">each muscle group</span> should
+                receive between{" "}
+                <span className="font-bold">
+                  4 and 10 effective sets per week
+                </span>
+                , depending on your goals and which muscles are a priority.
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-2">
+            <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+              Colour legend
+            </p>
+
+            <ul className="list-disc space-y-4 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+              <li>
+                <span className="font-bold text-green-500">GREEN</span> -
+                bilateral set (counted as 1 working set)
+              </li>
+
+              <li>
+                <span className="font-bold text-orange-500">ORANGE</span> -
+                unilateral set (counted as 2 working sets), more
+                <span className="font-bold"> fatiguing</span>, should be
+                <span className="font-bold"> used in moderation</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </TooltipDrawerContent>
+    </Drawer.NestedRoot>
   );
 };
 
@@ -170,7 +264,10 @@ export const AddOrEditWorkoutTooltip = () => {
         <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
-      <TooltipDrawer closeDrawer={() => setOpen(false)}>
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
         <div className="space-y-4">
           <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
             Add / Edit form
@@ -227,8 +324,122 @@ export const AddOrEditWorkoutTooltip = () => {
             </li>
           </ul>
         </div>
-      </TooltipDrawer>
+      </TooltipDrawerContent>
     </Drawer.Root>
+  );
+};
+
+export const AddOrEditExerciseTooltip = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Drawer.NestedRoot
+      open={open}
+      onOpenChange={setOpen}
+      noBodyStyles
+      disablePreventScroll
+    >
+      <button
+        type="button"
+        onClick={async () => {
+          await timeout(BUTTON_TIMEOUT);
+
+          setOpen(true);
+        }}
+        className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
+      >
+        <InformationIcon strokeWidth={1.5} className="size-6" />
+      </button>
+
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
+        <div className="space-y-4">
+          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+            Form fields explanation
+          </p>
+
+          <ul className="list-disc space-y-4 text-pretty pb-6 pl-4 text-sm dark:text-slate-300 sm:text-base">
+            <li>
+              <span className="font-bold dark:text-white">NAME</span> - exercise
+              name. Must be between 2 and 30 characters long to keep it clear
+              and concise.
+            </li>
+
+            <li>
+              <span className="font-bold dark:text-white">NOTE</span> - optional
+              field, intended for storing useful information related to the
+              exercise.
+            </li>
+
+            <li>
+              <span className="font-bold dark:text-white">MOVEMENT</span> -
+              optional field. It&apos;s recommended to choose either{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                unilateral
+              </span>{" "}
+              (one side at a time) or{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                bilateral
+              </span>{" "}
+              (both sides at the same time) to ensure an accurate count of total
+              working sets per workout. This is especially useful for advanced
+              lifters aiming to better manage workout fatigue.
+            </li>
+
+            <li>
+              <span className="font-bold dark:text-white">NUMBER OF SETS</span>{" "}
+              - select how many sets you want to perform for the exercise
+              (including warm-up sets). You can choose from preset options or
+              enter your own by tapping the{" "}
+              <span className="font-bold text-blue-400 dark:text-blue-500">
+                Other
+              </span>{" "}
+              button. If entering a custom number, be sure to tap the{" "}
+              <span className="font-bold text-blue-400 dark:text-blue-500">
+                Done
+              </span>{" "}
+              button next to the input field to confirm your selection.
+            </li>
+
+            <li>
+              <span className="font-bold dark:text-white">REPS</span> - should
+              be one of these formats{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                8-10
+              </span>
+              ,{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                6
+              </span>
+              ,{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                5+2
+              </span>
+              .
+            </li>
+
+            <li>
+              <span className="font-bold dark:text-white">WEIGHTS</span> -
+              should be one of these formats{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                27,5
+              </span>
+              ,{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                10
+              </span>
+              ,{" "}
+              <span className="font-bold italic text-slate-600 dark:text-white">
+                20.5
+              </span>
+              , without adding &rdquo;kg&rdquo; or &rdquo;lbs&rdquo;.
+            </li>
+          </ul>
+        </div>
+      </TooltipDrawerContent>
+    </Drawer.NestedRoot>
   );
 };
 
@@ -254,7 +465,10 @@ export const WorkoutToDoTooltip = () => {
         <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
-      <TooltipDrawer closeDrawer={() => setOpen(false)}>
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
         <div className="space-y-4">
           <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
             Workout to do form
@@ -266,6 +480,15 @@ export const WorkoutToDoTooltip = () => {
                 You don&apos;t have to populate all the exercise fields
               </span>
               , only those that you have done.
+            </li>
+
+            <li>
+              After completing an exercise, tap
+              <span className="font-bold italic text-violet-400">
+                {" "}
+                Mark as done{" "}
+              </span>
+              to update your progress tracker in the bottom-right corner.
             </li>
 
             <li>
@@ -300,15 +523,15 @@ export const WorkoutToDoTooltip = () => {
             </li>
 
             <li>
-              When done with working out, tap{" "}
+              All done? Tap{" "}
               <span className="font-bold uppercase text-green-500 dark:text-green-600">
                 Done
               </span>{" "}
-              button to submit the form.
+              button to save your workout!
             </li>
           </ul>
         </div>
-      </TooltipDrawer>
+      </TooltipDrawerContent>
     </Drawer.Root>
   );
 };
@@ -335,7 +558,10 @@ export const PostWorkoutTooltip = () => {
         <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
-      <TooltipDrawer closeDrawer={() => setOpen(false)}>
+      <TooltipDrawerContent
+        title="Good to Know"
+        closeDrawer={() => setOpen(false)}
+      >
         <div className="space-y-4">
           <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
             Post workout page
@@ -396,25 +622,27 @@ export const PostWorkoutTooltip = () => {
             </li>
 
             <li>
-              When done with editing your next session, tap{" "}
+              All done with editing? Tap{" "}
               <span className="font-bold uppercase text-green-500 dark:text-green-600">
                 save
               </span>{" "}
-              button to save the changes.
+              button to apply all the changes.
             </li>
           </ul>
         </div>
-      </TooltipDrawer>
+      </TooltipDrawerContent>
     </Drawer.Root>
   );
 };
 
-const TooltipDrawer = ({
+const TooltipDrawerContent = ({
   children,
   closeDrawer,
+  title,
 }: {
   children: React.ReactNode;
   closeDrawer: () => void;
+  title: string;
 }) => {
   return (
     <Drawer.Portal>
@@ -422,31 +650,30 @@ const TooltipDrawer = ({
 
       <Drawer.Content
         aria-describedby={undefined}
-        className="fixed inset-x-0 bottom-0 z-[9999] select-none px-1 focus:outline-none"
+        className="fixed inset-x-0 bottom-0 z-[9999] mx-2 flex max-h-[80%] flex-col rounded-t-modal bg-white pb-8 ring-1 ring-slate-200 focus:outline-none dark:bg-slate-900 dark:ring-slate-700/70"
       >
-        <div className="rounded-t-modal bg-white pb-safe-bottom ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-700/70">
-          <div className="rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
-            <Drawer.Handle className="bg-slate-300 dark:bg-slate-500" />
-            <Drawer.Title className="px-6 pt-3 text-xl font-bold text-slate-800 dark:text-white">
-              Good to Know
-            </Drawer.Title>
-          </div>
+        <div className="rounded-t-modal bg-slate-200/55 py-3 dark:bg-slate-800">
+          <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
 
-          <div className="flex flex-col px-6 py-8 font-manrope">
-            <Drawer.Description asChild>{children}</Drawer.Description>
-
-            <button
-              onClick={async () => {
-                await timeout(BUTTON_TIMEOUT);
-
-                closeDrawer();
-              }}
-              className="rounded-lg bg-slate-800 py-2 font-bold text-white active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
-            >
-              Got it!
-            </button>
-          </div>
+          <Drawer.Title className="px-6 pt-3 text-xl font-bold text-slate-800 dark:text-white">
+            {title}
+          </Drawer.Title>
         </div>
+
+        <div className="flex flex-1 flex-col overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 pt-8 font-manrope dark:border-t-slate-700/70">
+          <Drawer.Description asChild>{children}</Drawer.Description>
+        </div>
+
+        <button
+          onClick={async () => {
+            await timeout(BUTTON_TIMEOUT);
+
+            closeDrawer();
+          }}
+          className="mx-6 mb-8 mt-4 flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
+        >
+          Got it!
+        </button>
       </Drawer.Content>
     </Drawer.Portal>
   );
