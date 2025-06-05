@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { generateRandomId } from "../utils";
 
-import type { ExerciseActionResponse, ExerciseType, SetType } from "../types";
+import type {
+  ExerciseActionResponse,
+  ExerciseType,
+  MovementType,
+  SetType,
+} from "../types";
 
 const initExerciseErrors: ExerciseActionResponse = {
   status: "unset",
@@ -28,6 +33,24 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
       return {
         ...prev,
         note: event.target.value,
+      };
+    });
+  }
+
+  function resetNoteInput() {
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        note: "",
+      };
+    });
+  }
+
+  function handleMovementTypeInput(movement: MovementType) {
+    setTempExercise((prev) => {
+      return {
+        ...prev,
+        movementType: movement,
       };
     });
   }
@@ -115,6 +138,8 @@ export const useExerciseForm = (initExercise: ExerciseType) => {
     setExerciseFormErrors,
     handleNameInput,
     handleNoteInput,
+    resetNoteInput,
+    handleMovementTypeInput,
     createSets,
     markSetAsWarmup,
     modifySets,
