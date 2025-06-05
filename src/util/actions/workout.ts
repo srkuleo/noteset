@@ -146,7 +146,7 @@ export async function editWorkout(
     console.log(error);
     return {
       status: "error",
-      message: "Failed to edit workout",
+      message: "Failed to edit a workout...",
     };
   }
 }
@@ -166,8 +166,6 @@ export async function removeWorkout(
 
     console.log("Workout deleted!");
 
-    revalidatePath("/home?q=current");
-
     return {
       status: "success",
       message: `"${workoutTitle}" workout removed`,
@@ -176,7 +174,7 @@ export async function removeWorkout(
     console.error(err);
     return {
       status: "error",
-      message: "Failed to remove workout...",
+      message: "Failed to remove a workout...",
     };
   }
 }
@@ -199,8 +197,6 @@ export async function archiveWorkout(
 
     console.log("Workout archived!");
 
-    revalidatePath("/home?q=current");
-
     return {
       status: "success-redirect",
       message: `"${workoutTitle}" workout archived`,
@@ -209,7 +205,7 @@ export async function archiveWorkout(
     console.error(err);
     return {
       status: "error",
-      message: "Failed to archive workout",
+      message: "Failed to archive a workout...",
     };
   }
 }
@@ -232,8 +228,6 @@ export async function unarchiveWorkout(
 
     console.log("Workout unarchived!");
 
-    revalidatePath("/home?q=current");
-
     return {
       status: "success-redirect",
       message: `"${workoutTitle}" workout unarchived`,
@@ -242,7 +236,7 @@ export async function unarchiveWorkout(
     console.error(err);
     return {
       status: "error",
-      message: "Failed to unarchive workout",
+      message: "Failed to unarchive a workout...",
     };
   }
 }
@@ -262,7 +256,7 @@ export async function submitDoneWorkout(
   if (!isValidWorkout.success) {
     return {
       status: "error",
-      message: "Invalid workout data",
+      message: "Invalid workout data!",
     };
   }
 
@@ -300,7 +294,7 @@ export async function submitDoneWorkout(
     console.log(error);
     return {
       status: "error",
-      message: "Failed to submit workout...",
+      message: "Failed to submit a workout...",
     };
   }
 }
@@ -321,7 +315,7 @@ export async function updateCurrentWorkout(
     return {
       status: "error",
       errors: isValidWorkout.error.flatten().fieldErrors,
-      message: "Invalid workout data",
+      message: "Invalid workout data!",
     };
   }
 
@@ -343,7 +337,7 @@ export async function updateCurrentWorkout(
     console.error(error);
     return {
       status: "error",
-      message: "Failed to update workout...",
+      message: "Failed to update a workout...",
     };
   }
 }
