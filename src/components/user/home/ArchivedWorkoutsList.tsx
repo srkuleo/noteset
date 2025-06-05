@@ -8,6 +8,7 @@ import {
   timeout,
   BUTTON_TIMEOUT,
   SWIPE_AND_DRAWER_TIMEOUT,
+  FORM_TIMEOUT,
 } from "@/util/utils";
 import { PreviewWorkoutDrawer } from "../PreviewWorkoutDrawer";
 import { RemoveWorkoutModal } from "../RemoveWorkoutModal";
@@ -92,9 +93,9 @@ const WorkoutCard = ({
   toggleModal: () => void;
   setAsTargetedWorkout: (workout: PartialWorkoutType) => void;
 }) => {
-  const { mutate: unarchiveWorkoutAction, isPending } = useMutation({
+  const { mutate: handleUnarchiving, isPending } = useMutation({
     mutationFn: async (workout: PartialWorkoutType) => {
-      await timeout(500);
+      timeout(FORM_TIMEOUT);
 
       const res = await unarchiveWorkout(workout.id, workout.title);
 
@@ -141,7 +142,7 @@ const WorkoutCard = ({
               className="px-3 py-2 ring-slate-300/80 dark:bg-slate-900 dark:ring-slate-700"
             />
 
-            <form action={() => unarchiveWorkoutAction(workout)}>
+            <form action={() => handleUnarchiving(workout)}>
               <button
                 type="submit"
                 disabled={isPending}
