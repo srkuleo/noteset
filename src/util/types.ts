@@ -78,6 +78,9 @@ const OptionalSetSchema = SetSchema.pick({
   ]),
 });
 
+const MOVEMENT_TYPE_VALUES = ["bilateral", "unilateral"] as const;
+export type MovementType = (typeof MOVEMENT_TYPE_VALUES)[number];
+
 export const ExerciseSchema = z.object({
   id: z.string(),
   name: z
@@ -85,8 +88,9 @@ export const ExerciseSchema = z.object({
     .trim()
     .min(2, { message: "Must be at least 2 characters long." })
     .max(30, { message: "Too long. Keep it less than 30 characters." }),
-  sets: z.array(SetSchema).min(1, { message: "Please add at least one set." }),
   note: z.string().trim().nullable(),
+  movementType: z.enum(MOVEMENT_TYPE_VALUES).optional(),
+  sets: z.array(SetSchema).min(1, { message: "Please add at least one set." }),
   lastUpdated: z.union([z.date(), z.string()]).nullable(),
 });
 
@@ -96,6 +100,7 @@ const ExerciseWithOptionalSetsSchema = ExerciseSchema.pick({
   id: true,
   name: true,
   note: true,
+  movementType: true,
   lastUpdated: true,
 }).extend({
   sets: z
