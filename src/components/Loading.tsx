@@ -46,7 +46,7 @@ export const HomePageSkeleton = () => {
         >
           <div className="w-3/5 space-y-2">
             <div className="h-7 w-24 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
-            <div className="h-4 w-52 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
+            <div className="h-4 w-44 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
           </div>
 
           <div className="flex flex-col items-center gap-4">
