@@ -47,6 +47,7 @@ export const EditWorkoutForm = ({
     workout,
     handleTitleInput,
     handleDescriptionInput,
+    resetDescriptionInput,
     updateExercises,
     editExercises,
     removeExercise,
@@ -66,6 +67,7 @@ export const EditWorkoutForm = ({
             <DescriptionInput
               description={workout.description}
               handleDescriptionInput={handleDescriptionInput}
+              resetDescriptionInput={resetDescriptionInput}
             />
 
             <ExercisesList
