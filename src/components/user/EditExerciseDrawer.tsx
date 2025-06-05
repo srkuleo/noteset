@@ -12,8 +12,10 @@ import {
   NoteInput,
   SelectSetsInput,
   RepsAndWeightInputs,
+  MovementTypeInput,
 } from "./ExerciseInputs";
 import { ErrorComponent } from "../ErrorComponent";
+import { AddOrEditExerciseTooltip } from "../Tooltips";
 import { ModalSubmitButton } from "../SubmitButtons";
 
 import { ExerciseSchema, type ExerciseType } from "@/util/types";
@@ -105,6 +107,8 @@ const EditExerciseForm = ({
     setExerciseFormErrors,
     handleNameInput,
     handleNoteInput,
+    resetNoteInput,
+    handleMovementTypeInput,
     createSets,
     markSetAsWarmup,
     modifySets,
@@ -132,6 +136,12 @@ const EditExerciseForm = ({
         <NoteInput
           note={tempExercise.note ?? ""}
           handleNoteInput={handleNoteInput}
+          resetNoteInput={resetNoteInput}
+        />
+
+        <MovementTypeInput
+          movementType={tempExercise.movementType}
+          handleMovementTypeInput={handleMovementTypeInput}
         />
 
         <SelectSetsInput
@@ -153,7 +163,9 @@ const EditExerciseForm = ({
         className={`${isPending && "opacity-50"} pl-1`}
       />
 
-      <div className="flex gap-2 pt-6">
+      <div className="flex gap-1 pt-6">
+        <AddOrEditExerciseTooltip />
+
         <button
           type="button"
           disabled={isPending}
@@ -162,7 +174,7 @@ const EditExerciseForm = ({
 
             closeDrawer();
           }}
-          className="rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-300/80 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 dark:active:bg-slate-300"
+          className="mr-1.5 rounded-xl bg-slate-50 px-4 text-sm font-semibold shadow-sm ring-1 ring-inset ring-slate-300/80 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50 dark:bg-white dark:text-slate-600 dark:active:bg-slate-300"
         >
           Cancel
         </button>
