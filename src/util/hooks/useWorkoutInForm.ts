@@ -38,6 +38,15 @@ export const useWorkoutInForm = (initWorkout: CreateWorkoutType) => {
     });
   }
 
+  function resetDescriptionInput() {
+    setWorkout((prev) => {
+      return {
+        ...prev,
+        description: "",
+      };
+    });
+  }
+
   function updateExercises(exercises: ExerciseType | ExerciseType[]) {
     setWorkout((prev) => {
       if (Array.isArray(exercises)) {
@@ -94,6 +103,7 @@ export const useWorkoutInForm = (initWorkout: CreateWorkoutType) => {
     workout,
     handleTitleInput,
     handleDescriptionInput,
+    resetDescriptionInput,
     updateExercises,
     editExercises,
     removeExercise,
