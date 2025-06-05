@@ -21,9 +21,6 @@ const config: Config = {
         nunito: ["var(--font-nunito)"],
         manrope: ["var(--font-manrope)"],
       },
-      gridTemplateColumns: {
-        preview: "minmax(140px, auto) max-content 200px",
-      },
       borderRadius: {
         modal: "10px",
       },
