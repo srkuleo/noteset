@@ -33,7 +33,7 @@ export default async function PostWorkoutPage({
           <PostWorkoutTooltip />
 
           <Link
-            href="/home?q=current"
+            href="/home"
             className="rounded-full p-2 transition active:scale-95 active:bg-slate-200 dark:active:bg-slate-600"
           >
             <HomeIcon

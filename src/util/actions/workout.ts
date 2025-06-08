@@ -67,7 +67,7 @@ export async function createWorkout(
 
     console.log(`${title} workout created!`);
 
-    revalidatePath("/home?q=current");
+    revalidatePath("/home");
 
     return {
       status: "success-redirect",
@@ -136,7 +136,7 @@ export async function editWorkout(
 
     console.log(`${initTitle} workout edited.`);
 
-    revalidatePath("/home?q=current");
+    revalidatePath("/home");
 
     return {
       status: "success-redirect",
@@ -267,7 +267,7 @@ export async function submitDoneWorkout(
     ...exercise,
     sets: exercise.sets.map(({ warmup, ...set }) => ({
       ...set,
-      ...(warmup !== undefined && { warmup }),
+      ...(warmup === undefined ? { warmup: false } : { warmup }),
     })),
   }));
 
@@ -327,7 +327,7 @@ export async function updateCurrentWorkout(
 
     console.log("Workout updated.");
 
-    revalidatePath("/home?q=current");
+    revalidatePath("/home");
 
     return {
       status: "success-redirect",

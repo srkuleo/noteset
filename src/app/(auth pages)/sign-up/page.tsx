@@ -13,7 +13,7 @@ export default async function SignUpPage() {
   const { user } = await getAuthSession();
 
   if (user) {
-    redirect("/home?q=current");
+    redirect("/home");
   }
 
   return (

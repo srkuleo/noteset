@@ -30,7 +30,7 @@ export const RemoveWorkoutModal = ({
 
       if (res.status === "success-redirect") {
         removeWorkoutOnClient(targetedWorkout.id);
-        showToast(res.message, "/home?q=archived", "See archive");
+        showToast(res.message, "/archived-workouts", "See archive");
       } else {
         showToast(res.message);
       }

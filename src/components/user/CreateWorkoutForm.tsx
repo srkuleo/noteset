@@ -29,7 +29,7 @@ export const CreateWorkoutForm = () => {
     onSuccess: (res) => {
       if (res.status === "success-redirect") {
         resetWorkoutForm();
-        showToast(res.message, "/home?q=current", "View workouts");
+        showToast(res.message, "/home", "View workouts");
       } else {
         showToast(res.message);
       }
