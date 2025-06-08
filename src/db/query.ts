@@ -12,15 +12,9 @@ import {
 } from "./schema";
 import { getAuthSession } from "@/util/session";
 
-import type {
-  LogsOrderType,
-  WorkoutStatusType,
-  LogsPageSearchParams,
-} from "@/util/types";
+import type { LogsOrderType, LogsPageSearchParams } from "@/util/types";
 
-export async function getUserWorkouts(
-  workoutStatus: WorkoutStatusType,
-): Promise<PartialWorkoutType[]> {
+export async function getUserCurrentWorkouts(): Promise<PartialWorkoutType[]> {
   const { user } = await getAuthSession();
 
   if (user === null) {
@@ -37,17 +31,44 @@ export async function getUserWorkouts(
         exercises: workouts.exercises,
       })
       .from(workouts)
-      .where(
-        and(eq(workouts.userId, user.id), eq(workouts.status, workoutStatus)),
-      )
+      .where(and(eq(workouts.userId, user.id), eq(workouts.status, "current")))
       .orderBy(workouts.id);
 
-    console.log("Workouts fetched.");
+    console.log("Current workouts fetched.");
 
     return userWorkouts;
   } catch (error) {
     console.error("Database error:", error);
-    throw new Error("Failed to retrive user's workouts.");
+    throw new Error("Failed to retrive user's current workouts.");
+  }
+}
+
+export async function getUserArchivedWorkouts(): Promise<PartialWorkoutType[]> {
+  const { user } = await getAuthSession();
+
+  if (user === null) {
+    unauthorized();
+  }
+
+  try {
+    const userWorkouts = await db
+      .select({
+        id: workouts.id,
+        title: workouts.title,
+        description: workouts.description,
+        status: workouts.status,
+        exercises: workouts.exercises,
+      })
+      .from(workouts)
+      .where(and(eq(workouts.userId, user.id), eq(workouts.status, "archived")))
+      .orderBy(workouts.id);
+
+    console.log("Archived workouts fetched.");
+
+    return userWorkouts;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("Failed to retrive user's archived workouts.");
   }
 }
 
