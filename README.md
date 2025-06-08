@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ## Steps until v1:
 
-- 6th of Jun - _add new feature drawer, add github channel log for version 0.9.6. Fix a bug on workout to do form regarding resetting fields after failed push attempt. Add dropdown menu for incoming feature regarding diet and put routing between archived and current workouts in there, while separating each of them to the unique routes._
+- Priority - _find a way to open patch notes drawer once for all the users. Improve the way of adding sets by adding nested drawer with option to choose whether set is warmup or working Fix a bug on workout to do form regarding resetting fields after failed push attempt._
 
 - _Finish logs page UI - add option to query by date using calendar drawer, pagination and pagination preferance 6,8,10,12,16,20. Finish profile page UI - add option for user to set their own pfp instead of the initials, add separate route for settings and make settings button inside ProfileButtonModal lead to it. See if possible to close swipe when swiping other sets or pressing anywhere else._
 
