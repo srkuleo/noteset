@@ -107,6 +107,7 @@ export const LogsPageContent = ({
               />
 
               <PreviewWorkoutDrawerWithTrigger
+                logMode
                 workout={doneWorkout}
                 className="bg-white px-2 py-1.5 ring-slate-300 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-900"
               />
