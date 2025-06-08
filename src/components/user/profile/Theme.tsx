@@ -87,7 +87,7 @@ const ChangeThemeModal = ({
       <Drawer.Portal>
         <Drawer.Overlay
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-[9999] bg-slate-700/45 backdrop-blur-sm data-[state=closed]:animate-overlay-hide data-[state=open]:animate-overlay-show dark:bg-slate-950/45"
+          className="fixed inset-0 z-[9999] bg-slate-700/45 backdrop-blur-sm dark:bg-slate-950/45"
         />
 
         <Drawer.Content
