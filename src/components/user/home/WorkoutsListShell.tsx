@@ -17,11 +17,7 @@ export const WorkoutsListShell = ({
         <div className="max-w-[80%] space-y-4 text-center">
           <h3>Nothing in archive</h3>
           <p className="font-semibold italic text-slate-400/85">
-            Tap the{" "}
-            <span className="font-bold uppercase text-slate-500 dark:text-white">
-              C
-            </span>{" "}
-            button to load current workouts
+            Seems like you have&apos;t archived any workout yet
           </p>
         </div>
       ) : (
