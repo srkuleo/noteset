@@ -21,14 +21,12 @@ import { ShowIcon } from "@/components/icons/user/preview";
 import { TrashBinIcon } from "@/components/icons/user/modify";
 
 import type { PartialWorkoutType } from "@/db/schema";
-import type { WorkoutStatusType, WorkoutSwipeActions } from "@/util/types";
+import type { WorkoutSwipeActions } from "@/util/types";
 
 export const ArchivedWorkoutsList = ({
   workouts,
-  status,
 }: {
   workouts: PartialWorkoutType[];
-  status: WorkoutStatusType;
 }) => {
   const {
     workoutsList,
@@ -58,7 +56,7 @@ export const ArchivedWorkoutsList = ({
 
       {workoutsList.length === 0 ? (
         <main className="mt-safe-top flex flex-col justify-center px-6 pb-[100px] pt-[157px]">
-          <WorkoutsListShell status={status} />
+          <WorkoutsListShell status="archived" />
         </main>
       ) : (
         <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
@@ -102,7 +100,7 @@ const WorkoutCard = ({
       if (res.status === "success-redirect") {
         removeWorkoutOnClient(workout.id);
 
-        showToast(res.message, "/home?q=current", "See current");
+        showToast(res.message, "/home", "See current");
       } else {
         showToast(res.message);
       }
