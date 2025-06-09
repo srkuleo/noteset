@@ -86,7 +86,7 @@ export const HomePageTooltip = () => {
         }}
         className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
       >
-        <InformationIcon strokeWidth={1.5} className="size-6" />
+        <InformationIcon strokeWidth={1.5} className="size-7" />
       </button>
 
       <TooltipDrawerContent
