@@ -21,14 +21,12 @@ import {
 } from "@/components/icons/user/modify";
 
 import type { PartialWorkoutType } from "@/db/schema";
-import type { WorkoutStatusType, WorkoutSwipeActions } from "@/util/types";
+import type { WorkoutSwipeActions } from "@/util/types";
 
 export const CurrentWorkoutsList = ({
   workouts,
-  status,
 }: {
   workouts: PartialWorkoutType[];
-  status: WorkoutStatusType;
 }) => {
   const {
     workoutsList,
@@ -58,7 +56,7 @@ export const CurrentWorkoutsList = ({
 
       {workoutsList.length === 0 ? (
         <main className="mt-safe-top flex flex-col justify-center px-6 pb-[100px] pt-[157px]">
-          <WorkoutsListShell status={status} />
+          <WorkoutsListShell status="current" />
         </main>
       ) : (
         <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
