@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { twMerge } from "tailwind-merge";
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { twMerge } from "tailwind-merge";
+import { UserPagesSubHeadingText } from "../UserPagesHeader";
+import { RouteIndicator } from "./RouteIndicator";
 
 export const RouteDropDownMenu = () => {
   const [open, setOpen] = useState(false);
@@ -14,20 +16,31 @@ export const RouteDropDownMenu = () => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger className="focus:outline-none">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m19.5 8.25-7.5 7.5-7.5-7.5"
-          />
-        </svg>
+        <div className="flex items-center gap-4">
+          <div className="flex flex-col items-start">
+            <UserPagesSubHeadingText
+              label="Workouts"
+              className="text-[22px] leading-none"
+            />
+
+            <RouteIndicator />
+          </div>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="m19.5 8.25-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        </div>
       </Dialog.Trigger>
 
       <Dialog.Portal>
