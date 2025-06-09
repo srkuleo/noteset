@@ -10,6 +10,7 @@ import { updateCurrentWorkout } from "@/util/actions/workout";
 import { showToast } from "../Toasts";
 import { FormatDate, FormatWorkoutDuration } from "../Formatting";
 import { ArrowRightIcon } from "../icons/arrows";
+import { TitleInput, DescriptionInput } from "./WorkoutInputs";
 import { ExercisesList } from "./ExercisesList";
 import { Spinner } from "../Loading";
 import { FormPagesFooterWrapper } from "./FormPagesFooterWrapper";
@@ -44,7 +45,7 @@ export const PostWorkoutPageContent = ({
     },
     onSuccess: (res) => {
       if (res.status === "success-redirect" && res.message) {
-        showToast(res.message, "/home?q=current", "View workouts");
+        showToast(res.message, "/home", "View workouts");
         setPageStatus("workout-updated");
       }
 
@@ -53,8 +54,15 @@ export const PostWorkoutPageContent = ({
       }
     },
   });
-  const { workout, updateExercises, editExercises, removeExercise } =
-    useWorkoutInForm(currentWorkout);
+  const {
+    workout,
+    handleTitleInput,
+    handleDescriptionInput,
+    resetDescriptionInput,
+    updateExercises,
+    editExercises,
+    removeExercise,
+  } = useWorkoutInForm(currentWorkout);
   const [pageStatus, setPageStatus] = useState<PageStatus>("initial");
 
   return (
@@ -172,8 +180,8 @@ export const PostWorkoutPageContent = ({
                 action={() => clientAction()}
                 className="pb-2 pt-4"
               >
-                <fieldset disabled={isPending} className="group">
-                  <div className="flex items-center justify-between px-2 group-disabled:pointer-events-none group-disabled:opacity-50">
+                <fieldset disabled={isPending} className="group space-y-4">
+                  <div className="flex items-center justify-between border-b px-2 pb-4 group-disabled:pointer-events-none group-disabled:opacity-50 dark:border-slate-800/80">
                     <h3 className="dark:text-slate-100">Edit mode</h3>
 
                     <button
@@ -184,6 +192,18 @@ export const PostWorkoutPageContent = ({
                       Close
                     </button>
                   </div>
+
+                  <TitleInput
+                    title={workout.title}
+                    titleError={res && res.errors?.title}
+                    handleTitleInput={handleTitleInput}
+                  />
+
+                  <DescriptionInput
+                    description={workout.description}
+                    handleDescriptionInput={handleDescriptionInput}
+                    resetDescriptionInput={resetDescriptionInput}
+                  />
 
                   <ExercisesList
                     editForm
@@ -276,6 +296,7 @@ export const PostWorkoutPageContent = ({
             <FormPagesFooterWrapper disabled={isPending}>
               <div className="flex items-center gap-3">
                 <PreviewWorkoutDrawerWithTrigger
+                  logMode
                   workout={submittedWorkout}
                   className="bg-white px-2 py-1.5 ring-slate-300 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-900"
                 />
