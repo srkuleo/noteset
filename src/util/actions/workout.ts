@@ -322,7 +322,11 @@ export async function updateCurrentWorkout(
   try {
     await db
       .update(workouts)
-      .set({ exercises: [...updatedCurrentWorkout.exercises] })
+      .set({
+        title: updatedCurrentWorkout.title,
+        description: updatedCurrentWorkout.description,
+        exercises: [...updatedCurrentWorkout.exercises],
+      })
       .where(and(eq(workouts.id, workoutId), eq(workouts.status, "current")));
 
     console.log("Workout updated.");
