@@ -163,6 +163,14 @@ export const PatchNotesDrawer = () => {
                     </span>{" "}
                     - Minor fixes related to padding and borders.
                   </li>
+
+                  <li>
+                    <span className="font-semibold text-slate-600 dark:text-white">
+                      Title and Description Input Field Bug Fix{" "}
+                    </span>{" "}
+                    - Now are properly being registered and updated after
+                    submitting a form on post-workout page.
+                  </li>
                 </ul>
               </div>
             </Drawer.Description>
