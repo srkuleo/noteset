@@ -49,7 +49,13 @@ export const CreateWorkoutForm = () => {
   return (
     <>
       <main className="mt-safe-top px-4 pb-[73px] pt-[158px]">
-        <form id="create-workout-form" action={() => clientAction(workout)}>
+        <form
+          id="create-workout-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            clientAction(workout);
+          }}
+        >
           <fieldset disabled={isPending} className="group space-y-4">
             <TitleInput
               title={workout.title}

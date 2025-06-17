@@ -56,7 +56,13 @@ export const EditWorkoutForm = ({
   return (
     <>
       <main className="mt-safe-top px-4 pb-[73px] pt-[158px]">
-        <form id="edit-workout-form" action={() => clientAction()}>
+        <form
+          id="edit-workout-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            clientAction();
+          }}
+        >
           <fieldset disabled={isPending} className="group space-y-4">
             <TitleInput
               title={workout.title}

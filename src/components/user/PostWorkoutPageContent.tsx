@@ -109,7 +109,7 @@ export const PostWorkoutPageContent = ({
                       selectedFormat={timeFormatPreference}
                     />
                   ) : (
-                    "..."
+                    <p className="italic">under 1 min</p>
                   )}
                 </div>
 
@@ -177,7 +177,10 @@ export const PostWorkoutPageContent = ({
             >
               <form
                 id="post-workout-form"
-                action={() => clientAction()}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  clientAction();
+                }}
                 className="pb-2 pt-4"
               >
                 <fieldset disabled={isPending} className="group space-y-4">
