@@ -13,8 +13,10 @@ export default async function HomePagesLayout({
       <UserPagesSubHeadingWrapper>
         <RouteDropDownMenu />
 
-        <div className="flex items-center gap-1">
+        <div className="flex">
           <HomePageTooltip />
+
+          <div className="mx-1 w-[1px] bg-slate-200 dark:bg-slate-700" />
 
           <PatchNotesDrawer />
         </div>
