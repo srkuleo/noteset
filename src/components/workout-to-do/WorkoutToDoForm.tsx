@@ -368,32 +368,33 @@ export const WorkoutToDoForm = ({
         </form>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 z-[9990] border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex items-center justify-between">
+      <footer className="fixed inset-x-0 bottom-0 z-[9990] flex flex-col gap-1 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex gap-1.5">
+          {currWorkout.exercises.map((exercise) => (
+            <div
+              key={exercise.id}
+              className={twMerge(
+                "h-2.5 w-full rounded-lg",
+                exercise.done
+                  ? "bg-green-500 dark:bg-green-600"
+                  : "bg-slate-200 dark:bg-slate-600",
+              )}
+            />
+          ))}
+        </div>
+
+        <div className="flex justify-between">
           <AddExerciseDrawer
             updateExercises={updateExercises}
-            className="rounded-full p-1.5 text-violet-500 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
+            className="ml-1.5 rounded-full p-1.5 text-violet-500 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
           />
 
-          <div className="flex items-center gap-4">
-            <div className="flex gap-1 text-sm font-bold text-slate-400 dark:text-slate-300">
-              <p>
-                {
-                  currWorkout.exercises.filter((exercise) => exercise.done)
-                    .length
-                }
-              </p>
-              <p>/</p>
-              <p>{currWorkout.exercises.length}</p>
-            </div>
-
-            <SubmitDoneWorkoutButton
-              formId="submit-done-workout"
-              pending={isPending}
-              open={openDoneModal}
-              setOpen={setOpenDoneModal}
-            />
-          </div>
+          <SubmitDoneWorkoutButton
+            formId="submit-done-workout"
+            pending={isPending}
+            open={openDoneModal}
+            setOpen={setOpenDoneModal}
+          />
         </div>
       </footer>
     </>
