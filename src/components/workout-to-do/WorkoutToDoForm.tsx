@@ -15,13 +15,13 @@ import {
 } from "@/util/utils";
 import { showToast } from "../Toasts";
 import { NoteInputField } from "./NoteInputField";
+import { SwipeAction } from "../swipe/SwipeAction";
+import { TrashBinIcon } from "../icons/user/modify";
 import { AddNewSetButton } from "./AddNewSetButton";
 import { AddExerciseDrawer } from "../user/AddExerciseDrawer";
 import { SubmitDoneWorkoutButton } from "../SubmitButtons";
 
 import type { CreateWorkoutType } from "@/util/types";
-import { SwipeAction } from "../swipe/SwipeAction";
-import { TrashBinIcon } from "../icons/user/modify";
 
 export const WorkoutToDoForm = ({
   workoutToDo,
@@ -41,7 +41,7 @@ export const WorkoutToDoForm = ({
     removeSet,
     updateExercises,
   } = useWorkoutToDo(workoutToDo);
-  const { endWorkout, calcWorkoutDuration } = useWorkoutDuration();
+  const { calcWorkoutDuration } = useWorkoutDuration();
   const { mutate: clientAction, isPending } = useMutation({
     mutationFn: async () => {
       const workoutDuration = calcWorkoutDuration();
@@ -68,7 +68,10 @@ export const WorkoutToDoForm = ({
       <main className="mt-safe-top flex flex-col px-6 pb-[73px] pt-14">
         <form
           id="submit-done-workout"
-          action={() => clientAction()}
+          onSubmit={(e) => {
+            e.preventDefault();
+            clientAction();
+          }}
           className="divide-y divide-slate-300 dark:divide-slate-800"
         >
           {currWorkout.exercises.map((exercise, exerciseIndex) => (
@@ -138,16 +141,17 @@ export const WorkoutToDoForm = ({
                               >
                                 <SwipeAction.Trigger className="flex justify-between">
                                   <input
-                                    type="text"
+                                    id={`${warmupSet.id}:rep${warmupSetIndex + 1}`}
                                     name="reps"
+                                    type="text"
                                     disabled={exercise.done}
                                     inputMode="tel"
                                     placeholder={
                                       placeholderExercises[
                                         exerciseIndex
-                                      ]?.sets.filter(
+                                      ]?.sets.find(
                                         (set) => set.id === warmupSet.id,
-                                      )[0]?.reps
+                                      )?.reps
                                     }
                                     onChange={(e) => {
                                       handleSetsInput(
@@ -157,7 +161,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 disabled:shadow-exercise-field-light dark:caret-violet-500 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:ring-violet-500 dark:disabled:shadow-exercise-field-dark",
                                       !/^\d+(?:[-+]\d+)?$/.test(
                                         warmupSet.reps,
                                       ) &&
@@ -167,16 +171,17 @@ export const WorkoutToDoForm = ({
                                   />
 
                                   <input
-                                    type="text"
+                                    id={`${warmupSet.id}:weight${warmupSetIndex + 1}`}
                                     name="weight"
+                                    type="text"
                                     disabled={exercise.done}
                                     inputMode="decimal"
                                     placeholder={
                                       placeholderExercises[
                                         exerciseIndex
-                                      ]?.sets.filter(
+                                      ]?.sets.find(
                                         (set) => set.id === warmupSet.id,
-                                      )[0]?.weight + "kg"
+                                      )?.weight + "kg"
                                     }
                                     onChange={(e) => {
                                       handleSetsInput(
@@ -186,7 +191,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 disabled:shadow-exercise-field-light dark:caret-violet-500 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:ring-violet-500 dark:disabled:shadow-exercise-field-dark",
                                       !/^\d+(,\d+|\.\d+)?$/.test(
                                         warmupSet.weight,
                                       ) &&
@@ -269,16 +274,17 @@ export const WorkoutToDoForm = ({
                               >
                                 <SwipeAction.Trigger className="flex justify-between">
                                   <input
-                                    type="text"
+                                    id={`${workingSet.id}:rep${workingSetIndex + 1}`}
                                     name="reps"
+                                    type="text"
                                     disabled={exercise.done}
                                     inputMode="tel"
                                     placeholder={
                                       placeholderExercises[
                                         exerciseIndex
-                                      ]?.sets.filter(
+                                      ]?.sets.find(
                                         (set) => set.id === workingSet.id,
-                                      )[0]?.reps
+                                      )?.reps
                                     }
                                     onChange={(e) => {
                                       handleSetsInput(
@@ -288,7 +294,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 disabled:shadow-exercise-field-light dark:caret-violet-500 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:ring-violet-500 dark:disabled:shadow-exercise-field-dark",
                                       !/^\d+(?:[-+]\d+)?$/.test(
                                         workingSet.reps,
                                       ) &&
@@ -298,16 +304,17 @@ export const WorkoutToDoForm = ({
                                   />
 
                                   <input
-                                    type="text"
+                                    id={`${workingSet.id}:weight${workingSetIndex + 1}`}
                                     name="weight"
+                                    type="text"
                                     disabled={exercise.done}
                                     inputMode="decimal"
                                     placeholder={
                                       placeholderExercises[
                                         exerciseIndex
-                                      ]?.sets.filter(
+                                      ]?.sets.find(
                                         (set) => set.id === workingSet.id,
-                                      )[0]?.weight + "kg"
+                                      )?.weight + "kg"
                                     }
                                     onChange={(e) => {
                                       handleSetsInput(
@@ -317,7 +324,7 @@ export const WorkoutToDoForm = ({
                                       );
                                     }}
                                     className={twMerge(
-                                      "input-field autofill:shadow-autofill-light dark:autofill:shadow-autofill-dark autofill:text-fill-slate-500 dark:autofill:text-fill-white disabled:shadow-exercise-field-light dark:disabled:shadow-exercise-field-dark w-[43%] py-1.5 text-center caret-violet-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 dark:caret-violet-500 dark:focus:ring-violet-500",
+                                      "input-field w-[43%] py-1.5 text-center caret-violet-500 autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:ring-violet-500 disabled:italic disabled:opacity-100 disabled:shadow-exercise-field-light dark:caret-violet-500 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:ring-violet-500 dark:disabled:shadow-exercise-field-dark",
                                       !/^\d+(,\d+|\.\d+)?$/.test(
                                         workingSet.weight,
                                       ) &&
@@ -365,7 +372,7 @@ export const WorkoutToDoForm = ({
         <div className="flex items-center justify-between">
           <AddExerciseDrawer
             updateExercises={updateExercises}
-            className="rounded-full p-1.5 text-violet-500 active:scale-95 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
+            className="rounded-full p-1.5 text-violet-500 active:bg-slate-200 dark:text-violet-400 dark:active:bg-slate-700"
           />
 
           <div className="flex items-center gap-4">
@@ -385,7 +392,6 @@ export const WorkoutToDoForm = ({
               pending={isPending}
               open={openDoneModal}
               setOpen={setOpenDoneModal}
-              endWorkout={endWorkout}
             />
           </div>
         </div>
