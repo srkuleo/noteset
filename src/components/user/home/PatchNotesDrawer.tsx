@@ -18,7 +18,7 @@ export const PatchNotesDrawer = () => {
 
           setOpen(true);
         }}
-        className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-slate-500 dark:active:bg-slate-700"
+        className="rounded-full p-1.5 text-slate-400 active:bg-slate-200 dark:text-white dark:active:bg-slate-700"
       >
         <PatchNotesIcon strokeWidth={1.5} className="size-7" />
       </button>
@@ -139,7 +139,15 @@ export const PatchNotesDrawer = () => {
                     <span className="font-semibold text-slate-600 dark:text-white">
                       Improved Error Messages{" "}
                     </span>{" "}
-                    - Minor enhancements for clarity and consistency..
+                    - Minor enhancements for clarity and consistency.
+                  </li>
+
+                  <li>
+                    <span className="font-semibold text-slate-600 dark:text-white">
+                      Overall Visual Clarity Improved{" "}
+                    </span>{" "}
+                    - Minor enhancements on forms, header buttons on home and
+                    post workout pages.
                   </li>
                 </ul>
 
@@ -170,6 +178,14 @@ export const PatchNotesDrawer = () => {
                     </span>{" "}
                     - Now are properly being registered and updated after
                     submitting a form on post-workout page.
+                  </li>
+
+                  <li>
+                    <span className="font-semibold text-slate-600 dark:text-white">
+                      Workout To Do Form Bug Fix{" "}
+                    </span>{" "}
+                    - No longer resets all the data inside form fields if
+                    workout submission results in error.
                   </li>
                 </ul>
               </div>
