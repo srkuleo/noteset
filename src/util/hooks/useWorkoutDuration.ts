@@ -1,33 +1,17 @@
 import { useState } from "react";
 
-type TimeType = { start: Date; end: Date } | { start: Date; end: null };
-
 export const useWorkoutDuration = () => {
-  const [workoutTime, setWorkoutTime] = useState<TimeType>({
-    start: new Date(),
-    end: null,
-  });
-
-  function endWorkout() {
-    setWorkoutTime((prev) => {
-      return {
-        ...prev,
-        end: new Date(),
-      };
-    });
-  }
+  const [startTime] = useState(new Date().getTime());
 
   function calcWorkoutDuration() {
-    if (workoutTime.end) {
-      const durationInMili =
-        workoutTime.end.getTime() - workoutTime.start.getTime();
-      const minutes = Math.floor(durationInMili / (1000 * 60));
+    const endTime = new Date().getTime();
 
-      return minutes;
-    }
+    const durationInMili = endTime - startTime;
 
-    return 0;
+    const minutes = Math.floor(durationInMili / 60000);
+
+    return minutes;
   }
 
-  return { endWorkout, calcWorkoutDuration };
+  return { calcWorkoutDuration };
 };
