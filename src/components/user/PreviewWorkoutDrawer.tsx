@@ -165,7 +165,7 @@ const ScrollableExerciseList = ({
   logMode?: boolean;
 }) => {
   return (
-    <div className="flex flex-1 flex-col gap-6 divide-y divide-slate-100 overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 pt-8 dark:divide-slate-700/70 dark:border-t-slate-700/70 md:justify-center">
+    <div className="flex flex-1 flex-col gap-6 divide-y divide-slate-100 overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 pt-8 dark:divide-slate-700/70 dark:border-t-slate-700/70">
       {workout.exercises.map(({ id, name, sets, note, movementType }) => {
         const isUnilateral = movementType === "unilateral";
         const workingSetsArr = sets.filter((set) => !set.warmup);
@@ -200,18 +200,13 @@ const ScrollableExerciseList = ({
 
             <div
               className={twMerge(
-                "flex divide-x divide-slate-100 overflow-y-auto overscroll-contain px-3 py-6 dark:divide-slate-700/70",
-                logMode && sets.length > 5
-                  ? "justify-normal"
-                  : "justify-center",
-                !logMode && workingSetsArr.length > 5
-                  ? "justify-normal"
-                  : "justify-center",
+                "flex divide-x divide-slate-100 overflow-y-auto overscroll-contain px-3 py-6 dark:divide-slate-700/70 min-[500px]:justify-center",
+                sets.length > 5 ? "justify-normal" : "justify-center",
               )}
             >
               {sets.length === 0 ? (
                 <p className="italic text-slate-400">Skipped</p>
-              ) : logMode ? (
+              ) : (
                 sets.map((set) => (
                   <div
                     key={set.id}
@@ -219,7 +214,7 @@ const ScrollableExerciseList = ({
                   >
                     <p
                       className={twMerge(
-                        "font-bold text-slate-500 dark:text-white",
+                        "font-bold text-slate-400 dark:text-slate-100",
                         movementType === "unilateral" &&
                           !set.warmup &&
                           "dark:text-orange-500g text-orange-500",
@@ -231,37 +226,21 @@ const ScrollableExerciseList = ({
                       {set.reps}
                     </p>
 
-                    <p className="text-slate-400 dark:text-slate-200">
-                      {set.weight}kg
-                    </p>
-                  </div>
-                ))
-              ) : (
-                workingSetsArr.map((workingSet) => (
-                  <div
-                    key={workingSet.id}
-                    className="flex min-w-fit flex-col items-center gap-1 px-3 text-sm first:pl-0 last:pr-0"
-                  >
                     <p
                       className={twMerge(
-                        "font-bold",
-                        movementType === "unilateral"
-                          ? "text-orange-500"
-                          : "text-green-500",
+                        "text-slate-400/90 dark:text-slate-300/80",
                       )}
                     >
-                      {workingSet.reps}
-                    </p>
-
-                    <p className="text-slate-400 dark:text-slate-200">
-                      {workingSet.weight}kg
+                      {set.weight}kg
                     </p>
                   </div>
                 ))
               )}
             </div>
 
-            <p className="text-center text-sm italic">{note ?? "..."}</p>
+            <p className="text-center text-sm font-semibold italic">
+              {!note || note === "" ? "..." : note}
+            </p>
           </div>
         );
       })}
