@@ -33,6 +33,7 @@ export const WorkoutToDoForm = ({
   const {
     currWorkout,
     placeholderExercises,
+    exerciseRefs,
     toggleExerciseDoneState,
     handleNoteInput,
     resetNoteInput,
@@ -65,7 +66,7 @@ export const WorkoutToDoForm = ({
 
   return (
     <>
-      <main className="mt-safe-top flex flex-col px-6 pb-[73px] pt-14">
+      <main className="mt-safe-top flex flex-col px-6 pb-[91px] pt-14">
         <form
           id="submit-done-workout"
           onSubmit={(e) => {
@@ -75,7 +76,13 @@ export const WorkoutToDoForm = ({
           className="divide-y divide-slate-300 dark:divide-slate-800"
         >
           {currWorkout.exercises.map((exercise, exerciseIndex) => (
-            <div key={exercise.id} className="flex flex-col py-6">
+            <div
+              key={exercise.id}
+              ref={(el) => {
+                exerciseRefs.current[exerciseIndex] = el;
+              }}
+              className="flex scroll-mt-[calc(56px+env(safe-area-inset-top))] flex-col py-6"
+            >
               <div className="flex items-center justify-between gap-2">
                 <p className="pb-1 text-2xl font-bold">{exercise.name}</p>
 
@@ -98,17 +105,17 @@ export const WorkoutToDoForm = ({
                 resetNoteInput={resetNoteInput}
               />
 
-              <div className="space-y-6 py-8">
+              <div className="py-6">
                 {exercise.sets.some((set) => set.warmup) && (
-                  <div>
-                    <p className="pb-3 text-center font-manrope text-xs font-semibold uppercase text-slate-500/90 dark:text-slate-300">
+                  <div className="space-y-3">
+                    <p className="text-center font-manrope text-xs font-bold uppercase text-slate-500/90 dark:text-slate-300">
                       Warmup sets
                     </p>
 
                     <AnimatePresence initial={false}>
                       {exercise.sets
                         .filter((set) => set.warmup)
-                        .map((warmupSet, warmupSetIndex, warmupSets) => (
+                        .map((warmupSet, warmupSetIndex) => (
                           <motion.div
                             key={warmupSet.id}
                             initial={{ opacity: 0, height: 0 }}
@@ -132,9 +139,7 @@ export const WorkoutToDoForm = ({
                               },
                             }}
                           >
-                            <div
-                              className={`flex justify-center ${warmupSetIndex !== warmupSets.length - 1 ? "pb-3" : "pb-0"}`}
-                            >
+                            <div className="flex justify-center">
                               <SwipeAction.Root
                                 direction={exercise.done ? "none" : "x"}
                                 className="w-4/5"
@@ -229,15 +234,15 @@ export const WorkoutToDoForm = ({
                 )}
 
                 {exercise.sets.some((set) => !set.warmup) && (
-                  <div>
-                    <p className="pb-3 text-center font-manrope text-xs font-semibold uppercase text-slate-500/90 dark:text-slate-300">
+                  <div className="space-y-3 pt-3">
+                    <p className="text-center font-manrope text-xs font-bold uppercase text-slate-500/90 dark:text-slate-300">
                       Working sets
                     </p>
 
                     <AnimatePresence initial={false}>
                       {exercise.sets
                         .filter((set) => !set.warmup)
-                        .map((workingSet, workingSetIndex, workingSets) => (
+                        .map((workingSet, workingSetIndex) => (
                           <motion.div
                             key={workingSet.id}
                             initial={{ opacity: 0, height: 0 }}
@@ -265,9 +270,7 @@ export const WorkoutToDoForm = ({
                               },
                             }}
                           >
-                            <div
-                              className={`flex justify-center ${workingSetIndex !== workingSets.length - 1 ? "pb-3" : "pb-0"}`}
-                            >
+                            <div className="flex justify-center">
                               <SwipeAction.Root
                                 direction={exercise.done ? "none" : "x"}
                                 className="w-4/5"
@@ -368,16 +371,23 @@ export const WorkoutToDoForm = ({
         </form>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 z-[9990] flex flex-col gap-1 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
+      <footer className="fixed inset-x-0 bottom-0 z-[9990] flex flex-col gap-2 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 text-end dark:border-slate-800 dark:bg-slate-900">
         <div className="flex gap-1.5">
-          {currWorkout.exercises.map((exercise) => (
-            <div
+          {currWorkout.exercises.map((exercise, btnIndex) => (
+            <button
               key={exercise.id}
+              type="button"
+              onClick={() =>
+                exerciseRefs.current[btnIndex]?.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                })
+              }
               className={twMerge(
                 "h-2.5 w-full rounded-lg",
                 exercise.done
-                  ? "bg-green-500 dark:bg-green-600"
-                  : "bg-slate-200 dark:bg-slate-600",
+                  ? "bg-green-500 active:bg-green-600 dark:bg-green-600 dark:active:bg-green-700"
+                  : "bg-slate-200 active:bg-slate-400 dark:bg-slate-700 dark:active:bg-slate-600",
               )}
             />
           ))}
