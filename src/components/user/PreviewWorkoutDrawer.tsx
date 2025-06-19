@@ -103,7 +103,7 @@ export const PreviewWorkoutDrawer = ({
 
         <Drawer.Content
           aria-describedby={undefined}
-          className="fixed inset-x-0 bottom-0 z-[9999] mx-2 flex max-h-[80%] flex-col rounded-t-modal bg-white pb-8 ring-1 ring-slate-200 focus:outline-none dark:bg-slate-900 dark:ring-slate-700/70"
+          className="fixed inset-x-0 bottom-0 z-[9999] mx-2 flex max-h-[80%] flex-col rounded-t-modal bg-white pb-6 ring-1 ring-slate-200 focus:outline-none dark:bg-slate-900 dark:ring-slate-700/70"
         >
           <div className="rounded-t-modal bg-slate-200/55 py-3 dark:bg-slate-800">
             <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
@@ -145,7 +145,7 @@ export const PreviewWorkoutDrawer = ({
 
               toggleDrawer();
             }}
-            className="mx-6 mb-8 mt-4 flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
+            className="m-6 flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
           >
             Hide
             <HideIcon strokeWidth={1.5} className="size-[22px]" />
@@ -165,13 +165,13 @@ const ScrollableExerciseList = ({
   logMode?: boolean;
 }) => {
   return (
-    <div className="flex flex-1 flex-col gap-6 divide-y divide-slate-100 overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 pt-8 dark:divide-slate-700/70 dark:border-t-slate-700/70">
+    <div className="flex flex-1 flex-col divide-y divide-slate-100 overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 dark:divide-slate-700/70 dark:border-t-slate-700/70">
       {workout.exercises.map(({ id, name, sets, note, movementType }) => {
         const isUnilateral = movementType === "unilateral";
         const workingSetsArr = sets.filter((set) => !set.warmup);
 
         return (
-          <div key={id} className="flex flex-col pt-6 first:pt-0">
+          <div key={id} className="flex flex-col py-6 last:pb-0">
             <p
               className={twMerge(
                 "text-center text-lg font-bold",
