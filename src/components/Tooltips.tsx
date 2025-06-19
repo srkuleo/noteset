@@ -93,12 +93,12 @@ export const HomePageTooltip = () => {
         title="Good to Know"
         closeDrawer={() => setOpen(false)}
       >
-        <div className="space-y-4">
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+        <div className="space-y-6">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             Workout statuses
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               <span className="font-bold uppercase text-blue-400 dark:text-blue-500">
                 current -
@@ -127,11 +127,11 @@ export const HomePageTooltip = () => {
             </li>
           </ul>
 
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             Workout swipe actions
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               Swipe from right to the left to select one of the three options:{" "}
               <span className="font-bold uppercase text-red-400 dark:text-red-500">
@@ -180,62 +180,57 @@ export const PreviewWorkoutTooltip = () => {
         title="Good to Know"
         closeDrawer={() => setOpen(false)}
       >
-        <div className="pb-8">
-          <div className="space-y-2">
-            <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
-              Workout planning
-            </p>
+        <div className="space-y-6">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
+            Workout planning
+          </p>
 
-            <ul className="list-disc space-y-4 text-pretty pb-6 pl-4 text-sm dark:text-slate-300 sm:text-base">
-              <li>
-                As a general recommendation for hypertrophy training,{" "}
-                <span className="font-bold">each workout</span> should include
-                between{" "}
-                <span className="font-bold">10 and 15 working sets</span>,
-                depending on your recovery capacity and how many exercises are
-                trained at longer lengths.
-              </li>
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+            <li>
+              As a general recommendation for hypertrophy training,{" "}
+              <span className="font-bold">each workout</span> should include
+              between <span className="font-bold">10 and 15 working sets</span>,
+              depending on your recovery capacity and how many exercises are
+              trained at longer lengths.
+            </li>
 
-              <li>
-                <span className="font-bold">In most cases</span>, a workout
-                should include{" "}
-                <span className="font-bold">no more than 10 exercises</span>.
-                The <span className="font-bold">recommended range</span> is
-                between <span className="font-bold">4 and 8</span> exercises,
-                depending on the type of training split you&apos;re following.
-              </li>
+            <li>
+              <span className="font-bold">In most cases</span>, a workout should
+              include{" "}
+              <span className="font-bold">no more than 10 exercises</span>. The{" "}
+              <span className="font-bold">recommended range</span> is between{" "}
+              <span className="font-bold">4 and 8</span> exercises, depending on
+              the type of training split you&apos;re following.
+            </li>
 
-              <li>
-                From a muscle-specific standpoint,{" "}
-                <span className="font-bold">each muscle group</span> should
-                receive between{" "}
-                <span className="font-bold">
-                  4 and 10 effective sets per week
-                </span>
-                , depending on your goals and which muscles are a priority.
-              </li>
-            </ul>
-          </div>
+            <li>
+              From a muscle-specific standpoint,{" "}
+              <span className="font-bold">each muscle group</span> should
+              receive between{" "}
+              <span className="font-bold">
+                4 and 10 effective sets per week
+              </span>
+              , depending on your goals and which muscles are a priority.
+            </li>
+          </ul>
 
-          <div className="space-y-2">
-            <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
-              Colour legend
-            </p>
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
+            Colour legend
+          </p>
 
-            <ul className="list-disc space-y-4 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
-              <li>
-                <span className="font-bold text-green-500">GREEN</span> -
-                bilateral set (counted as 1 working set)
-              </li>
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+            <li>
+              <span className="font-bold text-green-500">GREEN</span> -
+              bilateral set (counted as 1 working set)
+            </li>
 
-              <li>
-                <span className="font-bold text-orange-500">ORANGE</span> -
-                unilateral set (counted as 2 working sets), more
-                <span className="font-bold"> fatiguing</span>, should be
-                <span className="font-bold"> used in moderation</span>
-              </li>
-            </ul>
-          </div>
+            <li>
+              <span className="font-bold text-orange-500">ORANGE</span> -
+              unilateral set (counted as 2 working sets), more
+              <span className="font-bold"> fatiguing</span>, should be
+              <span className="font-bold"> used in moderation</span>
+            </li>
+          </ul>
         </div>
       </TooltipDrawerContent>
     </Drawer.NestedRoot>
@@ -268,12 +263,12 @@ export const AddOrEditWorkoutTooltip = () => {
         title="Good to Know"
         closeDrawer={() => setOpen(false)}
       >
-        <div className="space-y-4">
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+        <div className="space-y-6">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             Add / Edit form
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               You need to add{" "}
               <span className="font-bold uppercase text-slate-800 dark:text-white">
@@ -355,12 +350,12 @@ export const AddOrEditExerciseTooltip = () => {
         title="Good to Know"
         closeDrawer={() => setOpen(false)}
       >
-        <div className="space-y-4">
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+        <div className="space-y-6">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             Form fields explanation
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pb-6 pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               <span className="font-bold dark:text-white">NAME</span> - exercise
               name. Must be between 2 and 30 characters long to keep it clear
@@ -469,12 +464,12 @@ export const WorkoutToDoTooltip = () => {
         title="Good to Know"
         closeDrawer={() => setOpen(false)}
       >
-        <div className="space-y-4">
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+        <div className="space-y-6">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             Workout to do form
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               <span className="font-bold text-slate-800 dark:text-white">
                 You don&apos;t have to populate all the exercise fields
@@ -512,6 +507,18 @@ export const WorkoutToDoTooltip = () => {
               </span>{" "}
               You will be able to see the exact duration on the post-workout
               page.
+            </li>
+
+            <li>
+              Tap any{" "}
+              <span className="font-bold text-slate-800 dark:text-white">
+                rectangle
+              </span>{" "}
+              in the{" "}
+              <span className="font-bold text-slate-800 dark:text-white">
+                progression bar
+              </span>{" "}
+              to instantly scroll to the corresponding exercise.
             </li>
 
             <li>
@@ -562,12 +569,12 @@ export const PostWorkoutTooltip = () => {
         title="Good to Know"
         closeDrawer={() => setOpen(false)}
       >
-        <div className="space-y-4">
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+        <div className="space-y-6">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             Post workout page
           </p>
 
-          <ul className="list-disc space-y-4 overflow-scroll text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 overflow-scroll text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               Tap{" "}
               <span className="font-bold uppercase text-slate-800 dark:text-white">
@@ -598,11 +605,11 @@ export const PostWorkoutTooltip = () => {
             </li>
           </ul>
 
-          <p className="font-manrope text-lg font-bold text-slate-800 dark:text-white sm:text-xl">
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
             In edit mode
           </p>
 
-          <ul className="list-disc space-y-4 text-pretty pb-8 pl-4 text-sm dark:text-slate-300 sm:text-base">
+          <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
             <li>
               Tap{" "}
               <span className="font-bold uppercase text-slate-800 dark:text-white">
@@ -650,9 +657,9 @@ const TooltipDrawerContent = ({
 
       <Drawer.Content
         aria-describedby={undefined}
-        className="fixed inset-x-0 bottom-0 z-[9999] mx-2 flex max-h-[80%] flex-col rounded-t-modal bg-white pb-8 ring-1 ring-slate-200 focus:outline-none dark:bg-slate-900 dark:ring-slate-700/70"
+        className="fixed inset-x-0 bottom-0 z-[9999] mx-2 flex max-h-[80%] flex-col rounded-t-modal bg-white pb-6 ring-1 ring-slate-200 focus:outline-none dark:bg-slate-900 dark:ring-slate-700/70"
       >
-        <div className="rounded-t-modal bg-slate-200/55 py-3 dark:bg-slate-800">
+        <div className="mb-6 rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
           <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
 
           <Drawer.Title className="px-6 pt-3 text-xl font-bold text-slate-800 dark:text-white">
@@ -660,7 +667,7 @@ const TooltipDrawerContent = ({
           </Drawer.Title>
         </div>
 
-        <div className="flex flex-1 flex-col overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 pt-8 font-manrope dark:border-t-slate-700/70">
+        <div className="flex flex-1 flex-col overflow-y-auto overscroll-y-contain px-6 font-manrope">
           <Drawer.Description asChild>{children}</Drawer.Description>
         </div>
 
@@ -670,7 +677,7 @@ const TooltipDrawerContent = ({
 
             closeDrawer();
           }}
-          className="mx-6 mb-8 mt-4 flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
+          className="m-6 rounded-lg bg-slate-800 py-2 text-center font-bold text-white focus:outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
         >
           Got it!
         </button>
