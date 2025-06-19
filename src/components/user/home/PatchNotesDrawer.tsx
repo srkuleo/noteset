@@ -30,7 +30,7 @@ export const PatchNotesDrawer = () => {
           aria-describedby={undefined}
           className="fixed inset-x-0 bottom-0 z-[9999] mx-2 flex max-h-[80%] flex-col rounded-t-modal bg-white pb-8 ring-1 ring-slate-200 focus:outline-none dark:bg-slate-900 dark:ring-slate-700/70"
         >
-          <div className="rounded-t-modal bg-slate-200/55 py-3 dark:bg-slate-800">
+          <div className="mb-6 rounded-t-modal border-b border-b-slate-300/50 bg-slate-200/55 py-3 dark:border-b-slate-700/70 dark:bg-slate-800">
             <Drawer.Handle className="bg-slate-300 dark:bg-slate-600" />
 
             <div className="flex items-center justify-between px-6 pt-3">
@@ -49,18 +49,18 @@ export const PatchNotesDrawer = () => {
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 pt-8 font-manrope dark:border-t-slate-700/70">
+          <div className="flex flex-1 flex-col overflow-y-auto overscroll-y-contain px-6 font-manrope">
             <Drawer.Description asChild>
-              <div className="space-y-4 pb-4">
-                <p className="font-manrope text-lg font-bold text-slate-900 dark:text-white sm:text-xl">
+              <div className="space-y-6">
+                <p className="font-manrope text-lg font-bold leading-none text-slate-900 dark:text-white sm:text-xl">
                   Release 0.9.6
                 </p>
 
-                <p className="font-manrope font-semibold text-slate-800 dark:text-slate-100 sm:text-lg">
+                <p className="font-manrope font-semibold leading-none text-slate-800 dark:text-slate-100 sm:text-lg">
                   UI and UX improvements
                 </p>
 
-                <ul className="list-disc space-y-4 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+                <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
                   <li>
                     <span className="font-bold italic text-blue-500 dark:text-blue-400">
                       Major update
@@ -113,6 +113,19 @@ export const PatchNotesDrawer = () => {
                   </li>
 
                   <li>
+                    <span className="font-bold italic text-blue-500 dark:text-blue-400">
+                      Major update
+                    </span>{" "}
+                    -{" "}
+                    <span className="font-semibold text-slate-600 dark:text-white">
+                      Progression Bar{" "}
+                    </span>{" "}
+                    - Replaces the old exercise counter on the WorkoutToDo page
+                    with a new version where tapping any rectangle takes you to
+                    its corresponding exercise.
+                  </li>
+
+                  <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
                       Tooltip Drawers{" "}
                     </span>{" "}
@@ -151,11 +164,11 @@ export const PatchNotesDrawer = () => {
                   </li>
                 </ul>
 
-                <p className="font-manrope font-semibold text-slate-800 dark:text-slate-100 sm:text-lg">
+                <p className="font-manrope font-semibold leading-none text-slate-800 dark:text-slate-100 sm:text-lg">
                   Bug fixes
                 </p>
 
-                <ul className="list-disc space-y-4 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
+                <ul className="list-disc space-y-3 text-pretty pl-4 text-sm dark:text-slate-300 sm:text-base">
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
                       Unblocked UI After Actions{" "}
@@ -198,7 +211,7 @@ export const PatchNotesDrawer = () => {
 
               setOpen(false);
             }}
-            className="mx-6 mb-8 mt-4 flex items-center justify-center gap-1 rounded-lg bg-slate-800 py-2 font-bold text-white outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
+            className="m-6 gap-1 rounded-lg bg-slate-800 py-2 text-center font-bold text-white focus:outline-none active:bg-slate-600 dark:bg-white dark:font-extrabold dark:text-slate-800 active:dark:bg-slate-300"
           >
             Got it!
           </button>
