@@ -177,7 +177,7 @@ export const EditAndCreateWorkoutPagesSkeleton = () => {
 export const WorkoutToDoSkeleton = () => {
   return (
     <>
-      <main className="mt-safe-top flex flex-col px-6 pb-[73px] pt-14">
+      <main className="mt-safe-top flex flex-col px-6 pb-[91px] pt-14">
         <form className="divide-y divide-slate-300 dark:divide-slate-800">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="flex flex-col space-y-3 py-6 opacity-50">
@@ -210,7 +210,7 @@ export const WorkoutToDoSkeleton = () => {
         </form>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 flex items-center justify-between border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-950">
+      <footer className="fixed inset-x-0 bottom-0 flex h-[89px] items-center justify-between border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-950">
         <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
 
         <div className="h-10 w-24 animate-pulse rounded-full bg-slate-300 opacity-50 dark:bg-slate-800" />
