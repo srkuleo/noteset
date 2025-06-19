@@ -1,5 +1,5 @@
 import debounce from "lodash.debounce";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { generateRandomId } from "../utils";
 
 import type {
@@ -40,6 +40,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
       };
     }),
   });
+  const exerciseRefs = useRef<(HTMLDivElement | undefined | null)[]>([]);
 
   function toggleExerciseDoneState(exerciseId: string) {
     const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
@@ -271,6 +272,7 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
   return {
     currWorkout,
     placeholderExercises,
+    exerciseRefs,
     toggleExerciseDoneState,
     handleNoteInput,
     resetNoteInput,
