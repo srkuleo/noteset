@@ -387,7 +387,7 @@ export const WorkoutToDoForm = ({
                 "h-2.5 w-full rounded-lg",
                 exercise.done
                   ? "bg-green-500 active:bg-green-600 dark:bg-green-600 dark:active:bg-green-700"
-                  : "bg-slate-200 active:bg-slate-400 dark:bg-slate-700 dark:active:bg-slate-600",
+                  : "bg-slate-200 active:bg-slate-500 dark:bg-slate-700 dark:active:bg-slate-400",
               )}
             />
           ))}
