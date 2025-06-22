@@ -26,41 +26,44 @@ export const LandingPageTooltip = () => {
         Tooltip
       </button>
 
-      <TooltipDrawerContent
-        title="Good to Know"
-        closeDrawer={() => setOpen(false)}
-      >
+      <TooltipDrawerContent title="UX guide" closeDrawer={() => setOpen(false)}>
         <div className="space-y-6">
-          <p className="text-lg text-slate-500 dark:text-slate-300">
-            For better user experience
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
+            For the better user experience
           </p>
 
-          <div className="space-y-2 pl-4">
-            <p className="font-bold text-slate-800 dark:text-white">
-              <span className="text-xs font-semibold uppercase text-slate-400">
-                android:
+          <ul className="space-y-3 text-pretty dark:text-slate-300">
+            <li>
+              <span className="text-sm font-semibold uppercase text-green-500 dark:text-green-600">
+                andoroid:
               </span>{" "}
               install PWA
-            </p>
+            </li>
 
-            <p className="font-bold text-slate-800 dark:text-white">
-              <span className="text-xs font-semibold uppercase text-slate-400">
+            <li>
+              <span className="text-sm font-semibold uppercase dark:text-white">
                 iphone:
               </span>{" "}
-              add website to Home Screen
-            </p>
-          </div>
+              add to Home Screen
+            </li>
+          </ul>
 
-          <div className="space-y-2 pb-8">
-            <p className="text-slate-500 dark:text-slate-300">
-              You don&apos;t have to login here. Do it in the PWA.
-            </p>
+          <p className="font-manrope text-lg font-bold leading-none text-slate-800 dark:text-white sm:text-xl">
+            General guidelines
+          </p>
 
-            <p className="text-slate-500 dark:text-slate-300">
+          <ul className="list-disc space-y-3 text-pretty pl-4 dark:text-slate-300">
+            <li>
+              You don&apos;t have to login in the browser. It&apos;s better to
+              do so after creating PWA/Home Screen app.
+            </li>
+
+            <li>
+              {" "}
               Installing or adding to Home screen will save workouts page as
               startup page.
-            </p>
-          </div>
+            </li>
+          </ul>
         </div>
       </TooltipDrawerContent>
     </Drawer.Root>
