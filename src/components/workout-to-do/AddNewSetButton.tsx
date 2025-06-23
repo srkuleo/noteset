@@ -22,11 +22,9 @@ import {
 
 export const AddNewSetButton = ({
   exercise,
-
   addNewSet,
 }: {
   exercise: ExerciseToDoType;
-
   addNewSet: (
     exerciseId: string,
     setData: SetWithoutId,
@@ -145,7 +143,15 @@ const AddSetForm = ({
   });
 
   return (
-    <form id="add-new-set" action={() => clientAction()} className="p-6">
+    <form
+      id="add-new-set"
+      onSubmit={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        clientAction();
+      }}
+      className="p-6"
+    >
       <fieldset
         disabled={isPending}
         className="group flex flex-col space-y-8 overflow-hidden p-2"
@@ -481,7 +487,7 @@ const AddSetForm = ({
                   >
                     {ArrowLeftIcon}
 
-                    <p className="sr-only">Logout button</p>
+                    <p className="sr-only">Back button</p>
                   </button>
 
                   <ModalSubmitButton
