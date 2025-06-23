@@ -176,6 +176,7 @@ const ScrollableExerciseList = ({
               className={twMerge(
                 "text-center text-lg font-bold",
                 logMode && "leading-none",
+                sets.length === 0 && "text-slate-300 dark:text-slate-500",
               )}
             >
               {name}
@@ -205,7 +206,9 @@ const ScrollableExerciseList = ({
               )}
             >
               {sets.length === 0 ? (
-                <p className="italic text-slate-400">Skipped</p>
+                <p className="italic text-slate-500 dark:text-slate-300">
+                  Skipped
+                </p>
               ) : (
                 sets.map((set) => (
                   <div
@@ -238,7 +241,12 @@ const ScrollableExerciseList = ({
               )}
             </div>
 
-            <p className="text-center text-sm font-semibold italic">
+            <p
+              className={twMerge(
+                "text-center text-sm font-semibold italic",
+                sets.length === 0 && "text-slate-300 dark:text-slate-500",
+              )}
+            >
               {!note || note === "" ? "..." : note}
             </p>
           </div>
