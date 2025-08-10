@@ -58,13 +58,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${nunito.variable} ${manrope.variable} overscroll-none scroll-smooth antialiased`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
+      className={`${nunito.variable} ${manrope.variable} overscroll-none scroll-smooth antialiased`}
     >
       <body className="select-none overscroll-none bg-white font-nunito text-slate-500 dark:bg-slate-900 dark:text-white">
         <Providers>{children}</Providers>
-        <Analytics />
-        <SpeedInsights />
+        <Analytics debug={false} />
+        <SpeedInsights debug={false} />
       </body>
     </html>
   );
