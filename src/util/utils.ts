@@ -1,6 +1,7 @@
 import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding";
 
 import type { ExerciseType } from "./types";
+import type { Variants } from "framer-motion";
 
 export function generateRandomId(idLength: number): string {
   const byteLength = Math.ceil(idLength / 1.6);
@@ -57,6 +58,22 @@ export const updateInterval = (lastUpdated: Date | string | null) => {
   }
 };
 
+export const formatDate = (date: Date, withDayOfTheWeek?: boolean) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  if (withDayOfTheWeek) {
+    const dayOfTheWeek = date
+      .toLocaleString("en", { weekday: "short" })
+      .split(" ")[0];
+
+    return `${dayOfTheWeek}, ${day}-${month}-${year}`;
+  }
+
+  return `${day}-${month}-${year}`;
+};
+
 export const formatLastUpdatedDate = (date: Date | string | null) => {
   if (!date) {
     return null;
@@ -99,7 +116,7 @@ export const reorderExercises = (
   return result;
 };
 
-export const slideX = {
+export const slideX: Variants = {
   "right-hidden": {
     opacity: 0,
     x: 16,
@@ -122,7 +139,7 @@ export const slideX = {
   },
 };
 
-export const biggerSlideX = {
+export const biggerSlideX: Variants = {
   "right-hidden": {
     opacity: 0,
     x: 24,
