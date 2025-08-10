@@ -39,18 +39,18 @@ export const ProfileButtonSkeleton = () => {
 export const HomePageSkeleton = () => {
   return (
     <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
-      {[1, 2, 3, 4].map((skeleton) => (
+      {[1, 2, 3, 4, 5, 6].map((skeleton) => (
         <div
           key={skeleton}
           className="flex animate-pulse items-center justify-between rounded-xl bg-white p-6 shadow-md dark:bg-slate-800"
         >
           <div className="w-3/5 space-y-2">
             <div className="h-7 w-24 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
-            <div className="h-4 w-44 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
+            <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
           </div>
 
           <div className="flex flex-col items-center gap-4">
-            <div className="h-[30px] w-18 animate-pulse rounded-full bg-slate-200 dark:bg-slate-950/80" />
+            <div className="h-[28px] w-18 animate-pulse rounded-full bg-slate-200 dark:bg-slate-950/80" />
             <div className="h-8 w-18 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
           </div>
         </div>
@@ -71,29 +71,20 @@ export const LogsPageSkeleton = () => {
         <div className="size-10 animate-pulse rounded-2xl bg-white opacity-90 shadow-md ring-1 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700" />
       </div>
 
-      <main className="mt-safe-top space-y-6 px-6 pb-[100px] pt-[217px]">
+      <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[217px]">
         {[1, 2, 3, 4, 5, 6].map((skeleton) => (
-          <div key={skeleton} className="flex w-full gap-3">
-            <div className="animate-pulse rounded-lg border border-slate-300/80 bg-violet-400 opacity-80 shadow-md dark:border-slate-800 dark:bg-violet-500">
-              <div className="ml-1.5 flex flex-col items-center gap-2 rounded-r-[7px] bg-white p-3 dark:bg-slate-900">
-                <div className="h-4 w-8 rounded bg-slate-200 dark:bg-slate-800" />
-
-                <div className="h-4 w-16 rounded bg-slate-200 dark:bg-slate-800" />
-
-                <div className="h-4 w-12 rounded bg-slate-200 dark:bg-slate-800" />
-              </div>
+          <div
+            key={skeleton}
+            className="flex animate-pulse items-center justify-between rounded-xl bg-white p-6 shadow-md dark:bg-slate-800"
+          >
+            <div className="w-3/5 space-y-2">
+              <div className="h-7 w-24 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
+              <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
             </div>
 
-            <div className="mr-auto flex animate-pulse flex-col justify-center gap-1 opacity-80">
-              <div className="h-6 w-20 rounded bg-slate-200 dark:bg-slate-800" />
-              <div className="h-4 w-16 rounded bg-slate-200 dark:bg-slate-800" />
-              <div className="h-4 w-24 rounded bg-slate-200 dark:bg-slate-800" />
-            </div>
-
-            <div className="flex animate-pulse flex-col items-center justify-center gap-3 border-l border-green-300 pl-3 opacity-80 dark:border-green-950">
-              <div className="h-8 w-16 rounded-full bg-slate-200 dark:bg-slate-800" />
-
-              <div className="h-8 w-10 rounded-lg bg-slate-200 dark:bg-slate-800" />
+            <div className="flex flex-col items-center gap-4">
+              <div className="h-5 w-14 animate-pulse rounded-full bg-slate-200 dark:bg-slate-950/80" />
+              <div className="h-10 w-18 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
             </div>
           </div>
         ))}
@@ -179,8 +170,11 @@ export const WorkoutToDoSkeleton = () => {
     <>
       <main className="mt-safe-top flex flex-col px-6 pb-[91px] pt-14">
         <form className="divide-y divide-slate-300 dark:divide-slate-800">
-          {[...Array(3)].map((_, i) => (
-            <div key={i} className="flex flex-col space-y-3 py-6 opacity-50">
+          {[1, 2, 3, 4, 5].map((workout) => (
+            <div
+              key={workout}
+              className="flex flex-col space-y-3 py-6 opacity-50"
+            >
               <div className="h-6 w-1/2 animate-pulse rounded bg-slate-300 dark:bg-slate-800" />
 
               <div className="flex gap-2">
