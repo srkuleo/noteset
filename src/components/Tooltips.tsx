@@ -35,7 +35,7 @@ export const LandingPageTooltip = () => {
           <ul className="space-y-3 text-pretty dark:text-slate-300">
             <li>
               <span className="text-sm font-semibold uppercase text-green-500 dark:text-green-600">
-                andoroid:
+                android:
               </span>{" "}
               install PWA
             </li>
@@ -486,7 +486,7 @@ export const WorkoutToDoTooltip = () => {
                 {" "}
                 Mark as done{" "}
               </span>
-              to update your progress tracker in the bottom-right corner.
+              to update your progression bar accordingly.
             </li>
 
             <li>
