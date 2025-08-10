@@ -103,14 +103,11 @@ export const PostWorkoutPageContent = ({
                   <p className="font-manrope text-lg font-semibold italic text-slate-400 dark:text-slate-400">
                     Duration
                   </p>
-                  {submittedWorkout.duration ? (
-                    <FormatWorkoutDuration
-                      duration={submittedWorkout.duration}
-                      selectedFormat={timeFormatPreference}
-                    />
-                  ) : (
-                    <p className="italic">under 1 min</p>
-                  )}
+
+                  <FormatWorkoutDuration
+                    duration={submittedWorkout.duration}
+                    selectedFormat={timeFormatPreference}
+                  />
                 </div>
 
                 <div className="flex justify-between">
@@ -118,15 +115,11 @@ export const PostWorkoutPageContent = ({
                     Date
                   </p>
 
-                  {submittedWorkout.doneAt ? (
-                    <FormatDate
-                      date={submittedWorkout.doneAt}
-                      withDayOfTheWeek
-                      className="text-lg font-bold"
-                    />
-                  ) : (
-                    "..."
-                  )}
+                  <FormatDate
+                    date={submittedWorkout.doneAt}
+                    withDayOfTheWeek
+                    className="text-lg font-bold"
+                  />
                 </div>
               </div>
 
