@@ -1,35 +1,57 @@
+import { twMerge } from "tailwind-merge";
+
 import type { TimeFormatType } from "@/util/types";
 
 export const FormatWorkoutDuration = ({
   duration,
   selectedFormat,
+  logsMode,
 }: {
-  duration: number;
+  duration: number | null;
   selectedFormat: TimeFormatType;
+  logsMode?: boolean;
 }) => {
+  if (!duration) {
+    return (
+      <p
+        className={twMerge(
+          "italic",
+          logsMode &&
+            "pl-2 text-sm font-semibold leading-none text-slate-400/80 dark:text-slate-400/60",
+        )}
+      >
+        under 1 min
+      </p>
+    );
+  }
+
   if (selectedFormat === "Hours and minutes" || selectedFormat === "default") {
     const minutes = Math.floor(duration % 60);
     const hours = Math.floor(duration / 60);
 
-    if (hours === 0) {
-      return (
-        <p>
-          <span className="font-bold">{minutes}</span> min
-        </p>
-      );
-    }
-
     return (
-      <p>
-        <span className="font-bold">{hours}</span> h{" "}
-        <span className="font-bold">{minutes}</span> min
+      <p
+        className={twMerge(
+          "font-bold",
+          logsMode &&
+            "pl-2 text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60",
+        )}
+      >
+        {hours > 0 && `${hours} h`}
+        {minutes > 0 && ` ${minutes} min`}
       </p>
     );
   }
 
   return (
-    <p>
-      <span className="font-bold">{duration}</span> min
+    <p
+      className={twMerge(
+        "font-bold",
+        logsMode &&
+          "pl-2 text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60",
+      )}
+    >
+      {`${duration} min`}
     </p>
   );
 };
