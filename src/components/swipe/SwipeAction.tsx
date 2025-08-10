@@ -95,7 +95,10 @@ const Root = ({ className, children, direction }: SwipeActionsRootProps) => {
       value={{
         actionsWidth,
         setActionsWidth,
-        triggerRef: mergeRefs([handleRef, triggerMeasureRef]),
+        triggerRef: mergeRefs([
+          handleRef,
+          triggerMeasureRef,
+        ]) as Ref<HTMLDivElement>,
         dragProps,
         triggerHeight: triggerBounds.height,
         actionsWrapperInset,
