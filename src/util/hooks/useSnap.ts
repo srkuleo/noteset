@@ -4,7 +4,7 @@ import { type RefObject, useRef, useState } from "react";
 import type {
   BoundingBox,
   MotionProps,
-  DragHandlers,
+  DragHandler,
   SpringOptions,
   DragElastic,
 } from "framer-motion";
@@ -186,7 +186,7 @@ export const useSnap = ({
     }
   };
 
-  const onDragEndHandler: DragHandlers["onDragEnd"] = (event, info) => {
+  const onDragEndHandler: DragHandler = (event, info) => {
     onDragEnd?.(event, info);
 
     if (!ref.current) {
@@ -194,7 +194,7 @@ export const useSnap = ({
     }
 
     const points = convertSnappoints(snapPoints);
-    console.log("Converted snappoints", points);
+    // console.log("Converted snappoints", points);
     if (!points) {
       throw new Error(`snap point weren't calculated on drag start`);
     }
@@ -323,13 +323,13 @@ export const useSnap = ({
           : afterInertiaClamped.y - base.y,
     };
 
-    console.log("Snapping result", {
-      target,
-      velocity,
-      afterInertia,
-      afterInertiaClamped,
-      selectedPoint,
-    });
+    // console.log("Snapping result", {
+    //   target,
+    //   velocity,
+    //   afterInertia,
+    //   afterInertiaClamped,
+    //   selectedPoint,
+    // });
 
     if (direction === "x" || direction === "both") {
       animate(
