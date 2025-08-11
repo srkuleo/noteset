@@ -12,6 +12,7 @@ import {
   updateInterval,
 } from "@/util/utils";
 import { useExercisesList } from "@/util/hooks/useExercisesList";
+import { useCalcExercisesAndWorkingSets } from "@/util/hooks/useCalcExercisesAndWorkingSets";
 import { SwipeAction } from "../swipe/SwipeAction";
 import { EditExerciseDrawer } from "./EditExerciseDrawer";
 import { RemoveExerciseModal } from "./RemoveExerciseModal";
@@ -49,6 +50,9 @@ export const ExercisesList = ({
     toggleRemoveModal,
     keepTrackOfTheCurrExercise,
   } = useExercisesList();
+  const { totalWorkingSets } = useCalcExercisesAndWorkingSets(
+    workout.exercises,
+  );
 
   function handleSorting({ destination, source }: DropResult) {
     if (!destination) return;
@@ -85,45 +89,57 @@ export const ExercisesList = ({
       {workout.exercises.length === 0 ? (
         <ExerciseShell exercisesError={exercisesError} />
       ) : (
-        <DragDropContext
-          onDragEnd={handleSorting}
-          autoScrollerOptions={{
-            startFromPercentage: 0.35,
-            maxScrollAtPercentage: 0.1,
-            maxPixelScroll: 28,
-            ease: scrollEasing,
-            durationDampening: {
-              accelerateAt: 360,
-              stopDampeningAt: 1200,
-            },
-          }}
-        >
-          <Droppable droppableId="exercise-list" direction="vertical">
-            {(exerciseList, snapshot) => (
-              <div
-                {...exerciseList.droppableProps}
-                ref={exerciseList.innerRef}
-                className={twMerge(
-                  "space-y-4 p-4 group-disabled:opacity-50",
-                  snapshot.isDraggingOver &&
-                    "rounded-xl bg-violet-200 dark:bg-violet-950",
-                )}
-              >
-                {workout.exercises.map((exercise, index) => (
-                  <ExerciseCard
-                    key={exercise.id}
-                    exercise={exercise}
-                    exerciseIndex={index}
-                    keepTrackOfTheCurrExercise={keepTrackOfTheCurrExercise}
-                    toggleEditDrawer={toggleEditDrawer}
-                    toggleRemoveModal={toggleRemoveModal}
-                  />
-                ))}
-                {exerciseList.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <div className="group-disabled:opacity-50">
+          <div className="mx-4 mb-4 flex justify-between border-b border-slate-200 pb-2 pt-4 dark:border-slate-800">
+            <p className="pl-1 font-manrope text-sm font-semibold uppercase text-slate-600 dark:text-slate-200">
+              Exercises
+            </p>
+
+            <p className="text-sm font-semibold italic text-green-500">
+              {totalWorkingSets}
+            </p>
+          </div>
+
+          <DragDropContext
+            onDragEnd={handleSorting}
+            autoScrollerOptions={{
+              startFromPercentage: 0.4,
+              maxScrollAtPercentage: 0.3,
+              maxPixelScroll: 56,
+              ease: scrollEasing,
+              durationDampening: {
+                accelerateAt: 360,
+                stopDampeningAt: 1200,
+              },
+            }}
+          >
+            <Droppable droppableId="exercise-list" direction="vertical">
+              {(exerciseList, snapshot) => (
+                <div
+                  {...exerciseList.droppableProps}
+                  ref={exerciseList.innerRef}
+                  className={twMerge(
+                    "space-y-4 p-4 group-disabled:opacity-50",
+                    snapshot.isDraggingOver &&
+                      "rounded-xl bg-violet-200 dark:bg-violet-950",
+                  )}
+                >
+                  {workout.exercises.map((exercise, index) => (
+                    <ExerciseCard
+                      key={exercise.id}
+                      exercise={exercise}
+                      exerciseIndex={index}
+                      keepTrackOfTheCurrExercise={keepTrackOfTheCurrExercise}
+                      toggleEditDrawer={toggleEditDrawer}
+                      toggleRemoveModal={toggleRemoveModal}
+                    />
+                  ))}
+                  {exerciseList.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
       )}
     </>
   );
@@ -142,6 +158,10 @@ const ExerciseCard = ({
   toggleEditDrawer: () => void;
   toggleRemoveModal: () => void;
 }) => {
+  const workingSets =
+    exercise.sets.filter((set) => set.purpose === "working").length *
+    (exercise.movementType === "unilateral" ? 2 : 1);
+
   return (
     <Draggable index={exerciseIndex} draggableId={exercise.id}>
       {(exerciseToDrag, snapshot) => (
@@ -157,11 +177,23 @@ const ExerciseCard = ({
               <div className="flex flex-1 flex-col gap-3">
                 <p
                   className={twMerge(
-                    "pl-1 font-bold uppercase dark:text-slate-200",
+                    "font-bold uppercase dark:text-slate-200",
                     snapshot.isDragging && "text-white",
                   )}
                 >
                   {exercise.name}
+                </p>
+
+                <p
+                  className={twMerge(
+                    "-mt-3 text-sm font-semibold italic",
+                    exercise.movementType === "unilateral"
+                      ? "text-orange-500"
+                      : "text-green-500",
+                    snapshot.isDragging && "text-white",
+                  )}
+                >
+                  {`${workingSets} working set${workingSets > 0 ? "s" : ""}`}
                 </p>
 
                 <LastUpdatedDate
@@ -192,6 +224,7 @@ const ExerciseCard = ({
                 className="flex grow items-center justify-center border-b border-violet-500 px-4 text-green-500 dark:border-white dark:text-green-300"
               >
                 <EditIcon strokeWidth={1.5} className="size-6" />
+
                 <span className="sr-only">Edit exercise</span>
               </SwipeAction.Action>
 
@@ -204,6 +237,7 @@ const ExerciseCard = ({
                 className="flex grow items-center justify-center px-4 text-red-500 dark:text-red-300"
               >
                 <TrashBinIcon strokeWidth={1.5} className="size-6" />
+
                 <span className="sr-only">Remove exercise</span>
               </SwipeAction.Action>
             </SwipeAction.Actions>
@@ -243,12 +277,11 @@ const LastUpdatedDate = ({
   return (
     <p
       className={twMerge(
-        "border-t border-slate-200 pl-1 pt-3 text-xs italic text-slate-400 dark:border-slate-700 dark:text-slate-500",
-        isDragging &&
-          "border-slate-200/60 text-white dark:border-slate-300/50 dark:text-slate-100/80",
+        "text-[10px] italic text-slate-400 dark:text-slate-500",
+        isDragging && "text-white dark:text-slate-100/80",
       )}
     >
-      Last updated: {formattedDate ?? "..."}
+      {formattedDate ? `updated ${formattedDate}` : "not yet updated"}
     </p>
   );
 };
