@@ -1,24 +1,16 @@
 import Link from "next/link";
-import { twMerge } from "tailwind-merge";
 
 import type { LogsPageSearchParams } from "@/util/types";
 
-export const SearchResultIndicator = ({
+export const SearchIndicator = ({
   searchQuery,
   strictMode,
-  clasName,
 }: {
   searchQuery: string;
   strictMode: LogsPageSearchParams["strictMode"];
-  clasName?: string;
 }) => {
   return (
-    <div
-      className={twMerge(
-        "flex items-center justify-between px-4 py-1 text-center",
-        clasName,
-      )}
-    >
+    <div className="flex items-center justify-between text-center">
       <Link
         href="/logs"
         className="rounded-full bg-white p-1.5 ring-1 ring-inset ring-slate-300 active:scale-95 dark:bg-slate-800 dark:ring-slate-700"

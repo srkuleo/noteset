@@ -1,11 +1,21 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { SearchResultIndicator } from "./SearchResultIndicator";
+import { useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useWorkoutsOnLogsPage } from "@/util/hooks/useWorkoutsOnLogsPage";
+import {
+  timeout,
+  BUTTON_TIMEOUT,
+  SWIPE_AND_DRAWER_TIMEOUT,
+} from "@/util/utils";
 import { EmptyIcon } from "@/components/icons/user/warning";
-import { StatusIndicator } from "@/components/StatusIndicator";
+import { PreviewWorkoutDrawer } from "../PreviewWorkoutDrawer";
+import { RemoveWorkoutModal } from "../RemoveWorkoutModal";
 import { FormatWorkoutDuration } from "@/components/Formatting";
-import { PreviewWorkoutDrawerWithTrigger } from "../PreviewWorkoutDrawer";
+import { StatusIndicator } from "@/components/StatusIndicator";
+import { SwipeAction } from "@/components/swipe/SwipeAction";
+import { TrashBinIcon } from "@/components/icons/user/modify";
+import { ShowIcon } from "@/components/icons/user/preview";
 
 import type { WorkoutType } from "@/db/schema";
 import type { TimeFormatType, LogsPageSearchParams } from "@/util/types";
@@ -13,120 +23,189 @@ import type { TimeFormatType, LogsPageSearchParams } from "@/util/types";
 export const LogsPageContent = ({
   doneWorkouts,
   timeFormatPreference,
+  searchQuery,
 }: {
   doneWorkouts: WorkoutType[];
   timeFormatPreference: TimeFormatType;
+  searchQuery: LogsPageSearchParams["searchQuery"];
 }) => {
-  const searchParams = useSearchParams();
+  const {
+    doneWorkoutsList,
+    targetedWorkout,
+    isOpenRemoveModal,
+    isOpenPreviewDrawer,
+    setDoneWorkoutsList,
+    removeWorkoutOnClient,
+    setAsTargetedWorkout,
+    toggleModal,
+    toggleDrawer,
+  } = useWorkoutsOnLogsPage();
 
-  const { searchQuery, strictMode } = Object.fromEntries(
-    searchParams.entries(),
-  ) as LogsPageSearchParams;
-
-  if (doneWorkouts.length === 0 && !searchQuery) {
-    return (
-      <main className="mt-safe-top flex flex-col justify-center px-8 pb-36 pt-[141px]">
-        <EmptyPage
-          emptyPageText={`Seems like you don't have any completed workout yet`}
-        />
-      </main>
-    );
-  }
-
-  if (doneWorkouts.length === 0 && searchQuery) {
-    return (
-      <main className="mt-safe-top flex flex-col pb-44 pt-[217px]">
-        <SearchResultIndicator
-          searchQuery={searchQuery}
-          strictMode={strictMode}
-        />
-
-        <div className="flex grow items-center justify-center px-8">
-          <EmptyPage emptyPageText="Nothing found" />
-        </div>
-      </main>
-    );
-  }
+  useEffect(() => {
+    setDoneWorkoutsList([...doneWorkouts]);
+  }, [doneWorkouts, setDoneWorkoutsList]);
 
   return (
-    <main className="mt-safe-top space-y-4 pb-[100px] pt-[217px]">
-      {searchQuery && (
-        <SearchResultIndicator
-          searchQuery={searchQuery}
-          strictMode={strictMode}
-          clasName="mb-4"
-        />
+    <>
+      <RemoveWorkoutModal
+        targetedWorkout={targetedWorkout}
+        open={isOpenRemoveModal}
+        toggleModal={toggleModal}
+        removeWorkoutOnClient={removeWorkoutOnClient}
+      />
+
+      <PreviewWorkoutDrawer
+        logMode
+        workout={targetedWorkout}
+        open={isOpenPreviewDrawer}
+        toggleDrawer={toggleDrawer}
+      />
+
+      {doneWorkoutsList.length > 0 ? (
+        <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[217px]">
+          <AnimatePresence>
+            {doneWorkoutsList.map((doneWorkout) => (
+              <DoneWorkoutCard
+                key={doneWorkout.id}
+                doneWorkout={doneWorkout}
+                timeFormatPreference={timeFormatPreference}
+                toggleDrawer={toggleDrawer}
+                toggleModal={toggleModal}
+                setAsTargetedWorkout={setAsTargetedWorkout}
+              />
+            ))}
+          </AnimatePresence>
+        </main>
+      ) : (
+        <main className="mt-safe-top flex flex-col justify-center px-8 pb-36 pt-[141px]">
+          <EmptyPage searchQuery={searchQuery} />
+        </main>
       )}
+    </>
+  );
+};
 
-      <div className="space-y-6 px-6">
-        {doneWorkouts.map((doneWorkout) => (
-          <div key={doneWorkout.id} className="flex w-full gap-3">
-            <div className="min-w-[88px] rounded-lg border border-slate-300/80 bg-violet-400 shadow-md dark:border-slate-700 dark:bg-violet-500">
-              <div className="ml-1.5 flex flex-col items-center gap-2 rounded-r-[7px] bg-white p-3 font-manrope leading-none dark:bg-slate-800">
-                <p className="font-semibold text-slate-400">
-                  {doneWorkout.doneAt?.toLocaleString("en", {
-                    month: "short",
-                  })}
-                </p>
+const DoneWorkoutCard = ({
+  doneWorkout,
+  timeFormatPreference,
+  toggleDrawer,
+  toggleModal,
+  setAsTargetedWorkout,
+}: {
+  doneWorkout: WorkoutType;
+  timeFormatPreference: TimeFormatType;
+  toggleDrawer: () => void;
+  toggleModal: () => void;
+  setAsTargetedWorkout: (workout: WorkoutType) => void;
+}) => {
+  return (
+    <motion.div
+      layout
+      exit={{
+        x: "100%",
+        opacity: [1, 0],
+        transition: {
+          delay: 0.3,
+          duration: 0.3,
+          ease: [0.36, 0.66, 0.04, 1],
+        },
+      }}
+    >
+      <SwipeAction.Root direction="x">
+        <SwipeAction.Trigger className="flex items-center gap-2 rounded-xl border border-slate-300/80 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
+          <div className="flex-1 space-y-1">
+            <p className="text-pretty font-manrope font-bold uppercase dark:text-slate-300">
+              {doneWorkout.title}
+            </p>
 
-                <p className="font-extrabold text-slate-800 dark:text-white">
-                  {String(doneWorkout.doneAt?.getDate()).padStart(2, "0")}
-                </p>
-
-                <p className="font-bold dark:text-slate-300">
-                  {doneWorkout.doneAt?.getFullYear()}
-                </p>
-              </div>
-            </div>
-
-            <div className="mr-auto flex flex-col justify-center gap-1">
-              <p className="text-pretty font-manrope font-bold uppercase leading-none dark:text-slate-300">
-                {doneWorkout.title}
-              </p>
-
-              {doneWorkout.duration ? (
-                <FormatWorkoutDuration
-                  selectedFormat={timeFormatPreference}
-                  duration={doneWorkout.duration}
-                />
-              ) : (
-                "..."
-              )}
-
+            <div className="flex items-center gap-2 divide-x divide-slate-300 dark:divide-slate-600">
               <p className="text-sm font-semibold italic leading-none text-slate-400/80 dark:text-slate-400/60">
                 {doneWorkout.doneAt?.toLocaleString("en", {
                   weekday: "long",
                 })}
               </p>
-            </div>
 
-            <div className="flex flex-col items-center justify-center gap-3 border-l border-slate-300/80 pl-3 dark:border-slate-800/80">
-              <StatusIndicator
-                status={doneWorkout.status}
-                className="bg-white px-4 py-2 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700"
-              />
-
-              <PreviewWorkoutDrawerWithTrigger
-                logMode
-                workout={doneWorkout}
-                className="bg-white px-2 py-1.5 ring-slate-300 active:bg-slate-200 dark:bg-slate-800 dark:ring-slate-700 dark:active:bg-slate-900"
+              <FormatWorkoutDuration
+                selectedFormat={timeFormatPreference}
+                duration={doneWorkout.duration}
+                logsMode
               />
             </div>
           </div>
-        ))}
-      </div>
-    </main>
+
+          <div className="flex flex-col items-center justify-center gap-3.5 font-manrope text-sm leading-none">
+            <StatusIndicator
+              status={doneWorkout.status}
+              className="px-3 py-2 ring-slate-300/80 dark:bg-slate-900 dark:ring-slate-700"
+            />
+
+            <div className="space-y-2 text-center">
+              <p className="font-extrabold">
+                {`${doneWorkout.doneAt?.toLocaleString("en", {
+                  month: "short",
+                })}, ${String(doneWorkout.doneAt?.getDate()).padStart(2, "0")}`}
+              </p>
+
+              <p className="font-semibold text-slate-400 dark:text-slate-300">
+                {doneWorkout.doneAt?.getFullYear()}
+              </p>
+            </div>
+          </div>
+        </SwipeAction.Trigger>
+
+        <SwipeAction.Actions
+          wrapperClassName="bg-violet-100 dark:bg-violet-500 rounded-xl"
+          className="flex-col"
+        >
+          <SwipeAction.Action
+            onClick={async () => {
+              await timeout(BUTTON_TIMEOUT);
+
+              setAsTargetedWorkout(doneWorkout);
+              toggleDrawer();
+            }}
+            className="flex grow items-center justify-center border-b border-violet-500 px-4 text-violet-500 dark:border-white dark:text-white"
+          >
+            <ShowIcon strokeWidth={1.5} className="size-7" />
+
+            <p className="sr-only">Preview workout</p>
+          </SwipeAction.Action>
+
+          <SwipeAction.Action
+            onClick={async () => {
+              await timeout(SWIPE_AND_DRAWER_TIMEOUT);
+
+              setAsTargetedWorkout(doneWorkout);
+              toggleModal();
+            }}
+            className="flex grow items-center justify-center px-4 text-red-500 dark:text-white"
+          >
+            <TrashBinIcon strokeWidth={1.5} className="size-7" />
+
+            <span className="sr-only">Remove workout</span>
+          </SwipeAction.Action>
+        </SwipeAction.Actions>
+      </SwipeAction.Root>
+    </motion.div>
   );
 };
 
-const EmptyPage = ({ emptyPageText }: { emptyPageText: string }) => {
+const EmptyPage = ({
+  searchQuery,
+}: {
+  searchQuery: LogsPageSearchParams["searchQuery"];
+}) => {
   return (
     <div className="space-y-4 text-center">
       <div className="flex justify-center text-slate-400/60 dark:text-slate-700/80">
         {EmptyIcon}
       </div>
 
-      <h3>{emptyPageText}</h3>
+      <h3>
+        {searchQuery
+          ? `No results for "${searchQuery}"`
+          : `Seems like you don't have any completed workout yet`}
+      </h3>
     </div>
   );
 };

@@ -1,46 +1,35 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
-import { usePathname, useRouter } from "next/navigation";
 import { twMerge } from "tailwind-merge";
+import { useSearch } from "@/util/hooks/useSearch";
 import { Spinner } from "@/components/Loading";
 import { LogsCalendarDrawer } from "./LogsCalendarDrawer";
 import { FilterLogsModal } from "./FilterLogsModal";
 
-import type { LogsOrderType, LogsPageSearchParams } from "@/util/types";
+import type { LogsPageSearchParams, LogsOrderType } from "@/util/types";
 
-export const LogsPageSearchBar = ({
+export const Search = ({
   searchQuery,
   logsOrderPreference,
 }: {
   searchQuery: LogsPageSearchParams["searchQuery"];
   logsOrderPreference: LogsOrderType;
 }) => {
-  const router = useRouter();
-  const path = usePathname();
-  const [isPending, startTransition] = useTransition();
-  const [searchValue, setSearchValue] = useState(searchQuery || "");
-  const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    setSearchValue(searchQuery || "");
-  }, [searchQuery]);
-
-  function handleSearchValue(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchValue(e.target.value);
-  }
-
-  function handleClearSearchValue() {
-    setSearchValue("");
-
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }
+  const {
+    router,
+    path,
+    isPending,
+    searchValue,
+    isFocused,
+    inputRef,
+    startTransition,
+    handleSearchValue,
+    clearSearchValue,
+    toggleFocus,
+  } = useSearch(searchQuery);
 
   return (
-    <div className="fixed inset-x-0 top-[141px] z-[9990] mt-safe-top flex items-center gap-2 bg-slate-100/60 p-4 backdrop-blur-md dark:bg-slate-950/60">
+    <div className="flex items-center gap-2">
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -62,8 +51,8 @@ export const LogsPageSearchBar = ({
           value={searchValue}
           placeholder="Search by title..."
           aria-label="Search logs by title..."
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={toggleFocus}
+          onBlur={toggleFocus}
           onChange={handleSearchValue}
           className="w-[calc(100%-104px)] bg-transparent caret-green-500 placeholder:italic placeholder:text-slate-400 focus:outline-none focus:placeholder:text-slate-300 dark:text-white dark:caret-green-600 dark:placeholder:text-slate-500 dark:focus:placeholder:text-slate-600"
         />
@@ -72,7 +61,7 @@ export const LogsPageSearchBar = ({
           <button
             type="button"
             disabled={!searchValue}
-            onClick={handleClearSearchValue}
+            onClick={clearSearchValue}
             className={twMerge(
               "rounded-full p-1.5 active:bg-slate-200 disabled:opacity-0 dark:active:bg-slate-900",
               isPending && "pointer-events-none",
