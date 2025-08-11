@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Drawer } from "vaul";
 import { twMerge } from "tailwind-merge";
+import { useCalcExercisesAndWorkingSets } from "@/util/hooks/useCalcExercisesAndWorkingSets";
 import { BUTTON_TIMEOUT, timeout } from "@/util/utils";
 import { HideIcon, ShowIcon } from "../icons/user/preview";
 import { PreviewWorkoutTooltip } from "../Tooltips";
@@ -61,35 +62,8 @@ export const PreviewWorkoutDrawer = ({
   toggleDrawer: () => void;
   logMode?: boolean;
 }) => {
-  const [exerciseNumber, setExerciseNumber] = useState("");
-  const [workingSets, setWorkingSets] = useState("");
-
-  useEffect(() => {
-    const exerciseCount = logMode
-      ? workout.exercises.filter((exercise) => exercise.sets.length >= 1).length
-      : workout.exercises.length;
-
-    const workingSetsCount = workout.exercises.reduce(
-      (total, { sets, movementType }) => {
-        const nonWarmupSets = sets.filter((set) => !set.warmup).length;
-
-        return (
-          total +
-          (movementType === "unilateral" ? nonWarmupSets * 2 : nonWarmupSets)
-        );
-      },
-      0,
-    );
-
-    setExerciseNumber(
-      exerciseCount + (exerciseCount === 1 ? " exercise" : " exercises"),
-    );
-    setWorkingSets(
-      workingSetsCount +
-        " working " +
-        (workingSetsCount === 1 ? "set" : "sets"),
-    );
-  }, [logMode, workout]);
+  const { totalExerciseNumber, totalWorkingSets } =
+    useCalcExercisesAndWorkingSets(workout.exercises, logMode);
 
   return (
     <Drawer.Root
@@ -118,15 +92,15 @@ export const PreviewWorkoutDrawer = ({
 
                 <div
                   className={twMerge(
-                    "divide flex divide-x font-manrope text-sm font-semibold leading-none text-green-500",
+                    "divide flex divide-x font-manrope text-sm font-semibold italic leading-none text-green-500",
                     logMode
                       ? "divide-green-400 text-green-500 dark:divide-green-700"
-                      : "divide-slate-300 text-slate-400 dark:divide-slate-500 dark:text-slate-400",
+                      : "divide-slate-300 text-slate-400 dark:divide-slate-500",
                   )}
                 >
-                  <p className="pr-1.5">{exerciseNumber}</p>
+                  <p className="pr-1.5">{totalExerciseNumber}</p>
 
-                  <p className="pl-1.5">{workingSets}</p>
+                  <p className="pl-1.5">{totalWorkingSets}</p>
                 </div>
               </div>
 
@@ -161,21 +135,20 @@ const ScrollableExerciseList = ({
   logMode,
 }: {
   workout: PartialWorkoutType;
-
   logMode?: boolean;
 }) => {
   return (
     <div className="flex flex-1 flex-col divide-y divide-slate-100 overflow-y-auto overscroll-y-contain border-t border-t-slate-300/50 px-6 dark:divide-slate-700/70 dark:border-t-slate-700/70">
       {workout.exercises.map(({ id, name, sets, note, movementType }) => {
-        const isUnilateral = movementType === "unilateral";
-        const workingSetsArr = sets.filter((set) => !set.warmup);
+        const workingSets =
+          sets.filter((set) => set.purpose === "working").length *
+          (movementType === "unilateral" ? 2 : 1);
 
         return (
-          <div key={id} className="flex flex-col py-6 last:pb-0">
+          <div key={id} className="flex flex-col py-8 last:pb-2">
             <p
               className={twMerge(
-                "text-center text-lg font-bold",
-                logMode && "leading-none",
+                "text-center text-lg font-bold leading-none",
                 sets.length === 0 && "text-slate-300 dark:text-slate-500",
               )}
             >
@@ -185,17 +158,13 @@ const ScrollableExerciseList = ({
             {!logMode && (
               <p
                 className={twMerge(
-                  "text-center text-sm italic",
+                  "pt-1 text-center text-sm italic",
                   movementType === "unilateral"
                     ? "text-orange-500"
                     : "text-green-500",
                 )}
               >
-                {(isUnilateral
-                  ? workingSetsArr.length * 2
-                  : workingSetsArr.length) +
-                  " working " +
-                  (workingSetsArr.length === 1 ? "set" : "sets")}
+                {`${workingSets} working set${workingSets > 1 ? "s" : ""}`}
               </p>
             )}
 
@@ -219,10 +188,10 @@ const ScrollableExerciseList = ({
                       className={twMerge(
                         "font-bold text-slate-400 dark:text-slate-100",
                         movementType === "unilateral" &&
-                          !set.warmup &&
+                          set.purpose === "working" &&
                           "dark:text-orange-500g text-orange-500",
                         movementType === "bilateral" &&
-                          !set.warmup &&
+                          set.purpose === "working" &&
                           "text-green-500 dark:text-green-500",
                       )}
                     >
@@ -243,7 +212,7 @@ const ScrollableExerciseList = ({
 
             <p
               className={twMerge(
-                "text-center text-sm font-semibold italic",
+                "text-center text-sm font-semibold italic leading-none",
                 sets.length === 0 && "text-slate-300 dark:text-slate-500",
               )}
             >
