@@ -54,11 +54,7 @@ export const ArchivedWorkoutsList = ({
         toggleDrawer={toggleDrawer}
       />
 
-      {workoutsList.length === 0 ? (
-        <main className="mt-safe-top flex flex-col justify-center px-6 pb-[100px] pt-[157px]">
-          <WorkoutsListShell status="archived" />
-        </main>
-      ) : (
+      {workoutsList.length > 0 ? (
         <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
           <AnimatePresence>
             {workoutsList.map((workout) => (
@@ -72,6 +68,10 @@ export const ArchivedWorkoutsList = ({
               />
             ))}
           </AnimatePresence>
+        </main>
+      ) : (
+        <main className="mt-safe-top flex flex-col justify-center px-6 pb-[100px] pt-[157px]">
+          <WorkoutsListShell status="archived" />
         </main>
       )}
     </>
