@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { EmptyIcon } from "@/components/icons/user/warning";
 
 import type { WorkoutStatusType } from "@/util/types";
@@ -8,7 +9,18 @@ export const WorkoutsListShell = ({
   status: WorkoutStatusType;
 }) => {
   return (
-    <div className="flex flex-col items-center gap-8 pb-18">
+    <motion.div
+      animate={{
+        opacity: [0, 1],
+        y: [-64, 0],
+        transition: {
+          delay: 0.3,
+          duration: 0.3,
+          ease: [0.36, 0.66, 0.04, 1],
+        },
+      }}
+      className="flex flex-col items-center gap-8 pb-18"
+    >
       <div className="text-slate-400/60 dark:text-slate-700/80">
         {EmptyIcon}
       </div>
@@ -32,6 +44,6 @@ export const WorkoutsListShell = ({
           </p>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
