@@ -47,7 +47,7 @@
 @keyframes dropdown-menu-scale-up {
   from {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.92);
     transform-origin: top;
   }
   to {
@@ -65,7 +65,7 @@
   }
   to {
     opacity: 0;
-    transform: scale(0);
+    transform: scale(0.92);
     transform-origin: top;
   }
 }
