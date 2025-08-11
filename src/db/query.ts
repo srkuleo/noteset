@@ -279,7 +279,7 @@ export async function getPostWorkoutPageWorkouts(title: string): Promise<{
 
 export async function getWorkoutTitleById(
   workoutId: number,
-): Promise<{ title: string }> {
+): Promise<{ title: string } | undefined> {
   const { user } = await getAuthSession();
 
   if (user === null) {
@@ -296,10 +296,9 @@ export async function getWorkoutTitleById(
 
     if (!workoutTitle) {
       console.error("No matching title found.");
-      throw new Error("Failed to retrive selected title.");
+    } else {
+      console.log("Workout title retrived!");
     }
-
-    console.log("Workout title retrived!");
 
     return workoutTitle;
   } catch (error) {
