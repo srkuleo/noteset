@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState } from "react"
 
 export const useWorkoutDuration = () => {
-  const [startTime] = useState(new Date().getTime());
+  const [startTime] = useState(Date.now())
 
   function calcWorkoutDuration() {
-    const endTime = new Date().getTime();
+    const endTime = Date.now()
 
-    const durationInMili = endTime - startTime;
+    const durationInMili = endTime - startTime
 
-    const minutes = Math.floor(durationInMili / 60000);
+    const minutes = Math.floor(durationInMili / 60000)
 
-    return minutes;
+    return minutes
   }
 
-  return { calcWorkoutDuration };
-};
+  return { calcWorkoutDuration }
+}
