@@ -21,7 +21,7 @@ export const showToast = debounce(
 
             {path && linkText ? (
               <Link
-                href={`${path}`}
+                href={path}
                 onClick={() => toast.dismiss(t)}
                 className="text-center font-semibold text-green-500"
               >
