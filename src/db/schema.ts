@@ -1,20 +1,20 @@
 import {
-  pgTable,
+  boolean,
   index,
+  integer,
   json,
+  pgEnum,
+  pgTable,
   serial,
+  text,
   timestamp,
   varchar,
-  pgEnum,
-  boolean,
-  integer,
-  text,
-} from "drizzle-orm/pg-core";
+} from "drizzle-orm/pg-core"
 
-import type { ExerciseType, UserPreferences } from "@/util/types";
+import type { ExerciseType, UserPreferences } from "@/util/types"
 
-export const WORKOUT_STATUS_VALUES = ["current", "done", "archived"] as const;
-export const statusEnum = pgEnum("status", WORKOUT_STATUS_VALUES);
+export const WORKOUT_STATUS_VALUES = ["current", "done", "archived"] as const
+export const statusEnum = pgEnum("status", WORKOUT_STATUS_VALUES)
 
 export const users = pgTable(
   "users",
@@ -32,11 +32,8 @@ export const users = pgTable(
       .notNull(),
     preferences: json().$type<UserPreferences>().notNull(),
   },
-  (table) => [
-    index("username_index").on(table.username),
-    index("email_index").on(table.email),
-  ],
-);
+  (table) => [index("username_index").on(table.username), index("email_index").on(table.email)]
+)
 
 export const sessions = pgTable(
   "sessions",
@@ -50,8 +47,8 @@ export const sessions = pgTable(
       mode: "date",
     }).notNull(),
   },
-  (table) => [index("expires_at_index").on(table.expiresAt)],
-);
+  (table) => [index("expires_at_index").on(table.expiresAt)]
+)
 
 export const workouts = pgTable(
   "workouts",
@@ -74,15 +71,12 @@ export const workouts = pgTable(
     index("user_id_index").on(table.userId),
     index("title_index").on(table.title),
     index("status_index").on(table.status),
-  ],
-);
+  ]
+)
 
-export type User = Omit<typeof users.$inferSelect, "hashedPassword">;
-export type Session = typeof sessions.$inferSelect;
+export type User = Omit<typeof users.$inferSelect, "hashedPassword">
+export type Session = typeof sessions.$inferSelect
 
-export type WorkoutType = Omit<typeof workouts.$inferSelect, "userId">;
-export type PartialWorkoutType = Omit<WorkoutType, "duration" | "doneAt">;
-export type QueriedByIdWorkoutType = Omit<
-  WorkoutType,
-  "status" | "duration" | "doneAt"
->;
+export type WorkoutType = Omit<typeof workouts.$inferSelect, "userId">
+export type PartialWorkoutType = Omit<WorkoutType, "duration" | "doneAt">
+export type QueriedByIdWorkoutType = Omit<WorkoutType, "status" | "duration" | "doneAt">

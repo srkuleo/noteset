@@ -1,12 +1,6 @@
-import type { SolidIconProps } from "@/util/types";
+import type { SolidIconProps } from "@/util/types"
 
-export const HomeIcon = ({
-  fill,
-  stroke,
-  strokeWidth,
-  className,
-  ...rest
-}: SolidIconProps) => {
+export const HomeIcon = ({ fill, stroke, strokeWidth, className, ...rest }: SolidIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,16 +17,10 @@ export const HomeIcon = ({
         clipRule="evenodd"
       />
     </svg>
-  );
-};
+  )
+}
 
-export const LogsIcon = ({
-  fill,
-  stroke,
-  strokeWidth,
-  className,
-  ...rest
-}: SolidIconProps) => {
+export const LogsIcon = ({ fill, stroke, strokeWidth, className, ...rest }: SolidIconProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -50,5 +38,5 @@ export const LogsIcon = ({
         clipRule="evenodd"
       />
     </svg>
-  );
-};
+  )
+}

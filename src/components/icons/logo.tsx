@@ -17,12 +17,7 @@ export const Logo = (
       fill="#22C55E"
     />
     <defs>
-      <pattern
-        id="pattern0"
-        patternContentUnits="objectBoundingBox"
-        width="1"
-        height="1"
-      >
+      <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
         <use xlinkHref="#image0_4_2" transform="scale(0.00588235)" />
       </pattern>
       <image
@@ -33,4 +28,4 @@ export const Logo = (
       />
     </defs>
   </svg>
-);
+)

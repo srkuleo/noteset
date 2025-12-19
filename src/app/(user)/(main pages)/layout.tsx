@@ -1,14 +1,10 @@
-import { MainPagesFooter } from "@/components/user/MainPagesFooter";
+import { MainPagesFooter } from "@/components/user/MainPagesFooter"
 
-export default async function MainPagesLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function MainPagesLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       {children}
       <MainPagesFooter />
     </>
-  );
+  )
 }

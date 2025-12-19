@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { LandingPageTooltip } from "@/components/Tooltips";
-import { ArrowRightIcon } from "@/components/icons/arrows";
-import { LandingPageBar } from "@/components/landing/LandingPageBar";
-import { UIMessage } from "@/components/landing/UIMessage";
+import Link from "next/link"
+import { ArrowRightIcon } from "@/components/icons/arrows"
+import { LandingPageBar } from "@/components/landing/LandingPageBar"
+import { UIMessage } from "@/components/landing/UIMessage"
+import { LandingPageTooltip } from "@/components/Tooltips"
 
 export default async function LandingPage() {
   return (
@@ -23,13 +23,12 @@ export default async function LandingPage() {
 
       <main className="mt-safe-top flex px-8 pt-[81px] md:pt-[125px]">
         <div className="flex grow flex-col items-center justify-center pb-28 md:pb-36">
-          <h1 className="bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pb-6 text-7xl font-extrabold text-transparent dark:to-violet-600">
+          <h1 className="bg-gradient-to-r from-green-400 to-violet-500 bg-clip-text pb-6 font-extrabold text-7xl text-transparent dark:to-violet-600">
             Note<span className="font-bold">Set</span>
           </h1>
 
-          <h2 className="text-pretty pb-12 text-center text-lg font-semibold leading-snug text-slate-500/90 dark:text-slate-400 md:text-balance">
-            A personalized and minimalistic PWA designed to replace a notebook
-            in the gym
+          <h2 className="text-pretty pb-12 text-center font-semibold text-lg text-slate-500/90 leading-snug md:text-balance dark:text-slate-400">
+            A personalized and minimalistic PWA designed to replace a notebook in the gym
           </h2>
 
           <div className="flex justify-center gap-4">
@@ -39,7 +38,7 @@ export default async function LandingPage() {
 
             <Link
               href="/sign-up"
-              className="flex items-center gap-1 rounded-full border-l border-slate-300/70 px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-slate-50 dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
+              className="flex items-center gap-1 rounded-full border-slate-300/70 border-l px-4 py-2 font-manrope font-semibold text-slate-600 active:scale-95 active:bg-slate-50 dark:border-slate-800 dark:text-slate-300 active:dark:bg-slate-800"
             >
               Join {ArrowRightIcon}
               <p className="sr-only">Sign-up button</p>
@@ -48,5 +47,5 @@ export default async function LandingPage() {
         </div>
       </main>
     </>
-  );
+  )
 }

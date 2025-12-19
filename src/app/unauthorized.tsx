@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { LandingPageBar } from "@/components/landing/LandingPageBar";
-import { ErrorTriangleIcon } from "@/components/icons/user/warning";
+import Link from "next/link"
+import { ErrorTriangleIcon } from "@/components/icons/user/warning"
+import { LandingPageBar } from "@/components/landing/LandingPageBar"
 
 export default function UnauthorizedPage() {
   return (
@@ -17,9 +17,7 @@ export default function UnauthorizedPage() {
 
           <div className="space-y-2 pb-2 text-center">
             <h3 className="font-manrope text-slate-600">401 - Unauthorized</h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              You are not logged in
-            </p>
+            <p className="text-slate-500 text-sm dark:text-slate-400">You are not logged in</p>
           </div>
 
           <Link
@@ -31,5 +29,5 @@ export default function UnauthorizedPage() {
         </div>
       </main>
     </>
-  );
+  )
 }

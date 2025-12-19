@@ -1,13 +1,9 @@
-import { Suspense } from "react";
-import { UserPagesHeader } from "@/components/user/UserPagesHeader";
-import { ProfileButtonSkeleton } from "@/components/Loading";
-import { ProfileButton } from "@/components/user/profile/ProfileButton";
+import { Suspense } from "react"
+import { ProfileButtonSkeleton } from "@/components/Loading"
+import { ProfileButton } from "@/components/user/profile/ProfileButton"
+import { UserPagesHeader } from "@/components/user/UserPagesHeader"
 
-export default async function UserPagesLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function UserPagesLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <UserPagesHeader>
@@ -17,5 +13,5 @@ export default async function UserPagesLayout({
       </UserPagesHeader>
       {children}
     </>
-  );
+  )
 }

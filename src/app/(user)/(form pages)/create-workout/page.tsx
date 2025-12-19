@@ -1,13 +1,13 @@
-import { redirect } from "next/navigation";
-import { getAuthSession } from "@/util/session";
-import { CreateWorkoutForm } from "@/components/user/CreateWorkoutForm";
+import { redirect } from "next/navigation"
+import { CreateWorkoutForm } from "@/components/user/CreateWorkoutForm"
+import { getAuthSession } from "@/util/session"
 
 export default async function CreateWorkoutPage() {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    redirect("/login");
+    redirect("/login")
   }
 
-  return <CreateWorkoutForm />;
+  return <CreateWorkoutForm />
 }

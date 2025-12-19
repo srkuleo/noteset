@@ -1,16 +1,15 @@
-import "@/styles/globals.css";
-import { manrope, nunito } from "@/styles/fonts";
-import { Providers } from "@/context/Providers";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-
-import type { Metadata, Viewport } from "next";
+import "@/styles/globals.css"
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import type { Metadata, Viewport } from "next"
+import { Providers } from "@/context/Providers"
+import { manrope, nunito } from "@/styles/fonts"
 
 export const viewport: Viewport = {
   userScalable: false,
   initialScale: 1,
   viewportFit: "cover",
-};
+}
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.srdjanmilicevic.com"),
-  other: { ["mobile-web-app-capable"]: "yes" },
+  other: { "mobile-web-app-capable": "yes" },
   appleWebApp: {
     title: "Noteset - workout app",
     capable: true,
@@ -48,13 +47,9 @@ export const metadata: Metadata = {
       },
     ],
   },
-};
+}
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
@@ -68,5 +63,5 @@ export default function RootLayout({
         <SpeedInsights debug={false} />
       </body>
     </html>
-  );
+  )
 }

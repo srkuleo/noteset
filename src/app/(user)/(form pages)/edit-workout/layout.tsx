@@ -1,17 +1,13 @@
-import { Suspense } from "react";
+import { Suspense } from "react"
+import { BackButtonModal } from "@/components/BackButtonModal"
+import { EditAndCreateWorkoutPagesSkeleton } from "@/components/Loading"
+import { AddOrEditWorkoutTooltip } from "@/components/Tooltips"
 import {
-  UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
-} from "@/components/user/UserPagesHeader";
-import { BackButtonModal } from "@/components/BackButtonModal";
-import { AddOrEditWorkoutTooltip } from "@/components/Tooltips";
-import { EditAndCreateWorkoutPagesSkeleton } from "@/components/Loading";
+  UserPagesSubHeadingWrapper,
+} from "@/components/user/UserPagesHeader"
 
-export default async function EditWorkoutPageLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function EditWorkoutPageLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <UserPagesSubHeadingWrapper className="justify-start gap-3 px-4">
@@ -21,9 +17,7 @@ export default async function EditWorkoutPageLayout({
         <AddOrEditWorkoutTooltip />
       </UserPagesSubHeadingWrapper>
 
-      <Suspense fallback={<EditAndCreateWorkoutPagesSkeleton />}>
-        {children}
-      </Suspense>
+      <Suspense fallback={<EditAndCreateWorkoutPagesSkeleton />}>{children}</Suspense>
     </>
-  );
+  )
 }

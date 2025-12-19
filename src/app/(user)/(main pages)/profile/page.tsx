@@ -1,16 +1,15 @@
-import { Suspense } from "react";
+import type { Metadata } from "next"
+import { Suspense } from "react"
+import { ProfilePageSkeleton } from "@/components/Loading"
+import { ProfilePageContent } from "@/components/user/profile/ProfilePageContent"
 import {
-  UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
-} from "@/components/user/UserPagesHeader";
-import { ProfilePageSkeleton } from "@/components/Loading";
-import { ProfilePageContent } from "@/components/user/profile/ProfilePageContent";
-
-import type { Metadata } from "next";
+  UserPagesSubHeadingWrapper,
+} from "@/components/user/UserPagesHeader"
 
 export const metadata: Metadata = {
   title: "Profile",
-};
+}
 
 export default async function ProfilePage() {
   return (
@@ -23,5 +22,5 @@ export default async function ProfilePage() {
         <ProfilePageContent />
       </Suspense>
     </>
-  );
+  )
 }

@@ -1,27 +1,26 @@
-"use server";
+"use server"
 
-import { unauthorized } from "next/navigation";
-import { and, desc, eq, asc, ilike, like } from "drizzle-orm";
-import { db } from ".";
-import { getAuthSession } from "@/util/session";
+import { and, asc, desc, eq, ilike, like } from "drizzle-orm"
+import { unauthorized } from "next/navigation"
+import { getAuthSession } from "@/util/session"
+import type { LogsOrderType, LogsPageSearchParams } from "@/util/types"
+import { db } from "."
 import {
-  sessions,
-  users,
-  workouts,
   type PartialWorkoutType,
   type QueriedByIdWorkoutType,
   type Session,
+  sessions,
   type User,
+  users,
   type WorkoutType,
-} from "./schema";
-
-import type { LogsOrderType, LogsPageSearchParams } from "@/util/types";
+  workouts,
+} from "./schema"
 
 export async function getUserCurrentWorkouts(): Promise<PartialWorkoutType[]> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -35,26 +34,26 @@ export async function getUserCurrentWorkouts(): Promise<PartialWorkoutType[]> {
       })
       .from(workouts)
       .where(and(eq(workouts.userId, user.id), eq(workouts.status, "current")))
-      .orderBy(workouts.id);
+      .orderBy(workouts.id)
 
     if (userWorkouts.length === 0) {
-      console.log("Nothing in current workouts.");
+      console.log("Nothing in current workouts.")
     } else {
-      console.log("Current workouts fetched.");
+      console.log("Current workouts fetched.")
     }
 
-    return userWorkouts;
+    return userWorkouts
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive user's current workouts.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive user's current workouts.")
   }
 }
 
 export async function getUserArchivedWorkouts(): Promise<PartialWorkoutType[]> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -68,30 +67,30 @@ export async function getUserArchivedWorkouts(): Promise<PartialWorkoutType[]> {
       })
       .from(workouts)
       .where(and(eq(workouts.userId, user.id), eq(workouts.status, "archived")))
-      .orderBy(workouts.id);
+      .orderBy(workouts.id)
 
     if (userWorkouts.length === 0) {
-      console.log("Nothing in archive.");
+      console.log("Nothing in archive.")
     } else {
-      console.log("Archived workouts fetched.");
+      console.log("Archived workouts fetched.")
     }
 
-    return userWorkouts;
+    return userWorkouts
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive user's archived workouts.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive user's archived workouts.")
   }
 }
 
 export async function getUserDoneWorkouts(
   searchQuery: LogsPageSearchParams["searchQuery"],
   strictMode: LogsPageSearchParams["strictMode"],
-  order: LogsOrderType,
+  order: LogsOrderType
 ): Promise<WorkoutType[]> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -109,18 +108,16 @@ export async function getUserDoneWorkouts(
         .from(workouts)
         .where(and(eq(workouts.userId, user.id), eq(workouts.status, "done")))
         .orderBy(
-          order === "Newest first" || order === "default"
-            ? desc(workouts.id)
-            : asc(workouts.id),
-        );
+          order === "Newest first" || order === "default" ? desc(workouts.id) : asc(workouts.id)
+        )
 
       if (userWorkouts.length === 0) {
-        console.log("Nothing in your workout's logs.");
+        console.log("Nothing in your workout's logs.")
       } else {
-        console.log("Done workouts fetched.");
+        console.log("Done workouts fetched.")
       }
 
-      return userWorkouts;
+      return userWorkouts
     }
 
     const searchedWorkouts = await db
@@ -140,35 +137,33 @@ export async function getUserDoneWorkouts(
           eq(workouts.status, "done"),
           strictMode === "on"
             ? like(workouts.title, searchQuery)
-            : ilike(workouts.title, `%${searchQuery}%`),
-        ),
+            : ilike(workouts.title, `%${searchQuery}%`)
+        )
       )
       .orderBy(
-        order === "Newest first" || order === "default"
-          ? desc(workouts.id)
-          : asc(workouts.id),
-      );
+        order === "Newest first" || order === "default" ? desc(workouts.id) : asc(workouts.id)
+      )
 
     if (searchedWorkouts.length === 0) {
-      console.log(`Nothing matching ${searchQuery} search value.`);
+      console.log(`Nothing matching ${searchQuery} search value.`)
     } else {
-      console.log(`${searchQuery} workouts fetched.`);
+      console.log(`${searchQuery} workouts fetched.`)
     }
 
-    return searchedWorkouts;
+    return searchedWorkouts
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive user's workouts.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive user's workouts.")
   }
 }
 
 export async function getWorkoutById(
-  workoutId: number,
+  workoutId: number
 ): Promise<QueriedByIdWorkoutType | undefined> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -180,28 +175,28 @@ export async function getWorkoutById(
         description: true,
         exercises: true,
       },
-    });
+    })
 
     if (!workout) {
-      console.error("No matching workout found.");
+      console.error("No matching workout found.")
     } else {
-      console.log("Workout retrived.");
+      console.log("Workout retrived.")
     }
 
-    return workout;
+    return workout
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive selected workout.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive selected workout.")
   }
 }
 
 export async function getWorkoutByIdWithoutId(
-  workoutId: number,
+  workoutId: number
 ): Promise<Omit<QueriedByIdWorkoutType, "id"> | undefined> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -212,29 +207,29 @@ export async function getWorkoutByIdWithoutId(
         description: true,
         exercises: true,
       },
-    });
+    })
 
     if (!workout) {
-      console.error("No matching workout found.");
+      console.error("No matching workout found.")
     } else {
-      console.log("Workout retrived.");
+      console.log("Workout retrived.")
     }
 
-    return workout;
+    return workout
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive selected workout.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive selected workout.")
   }
 }
 
 export async function getPostWorkoutPageWorkouts(title: string): Promise<{
-  lastSubmittedWorkout: WorkoutType | undefined;
-  currentWorkout: QueriedByIdWorkoutType | undefined;
+  lastSubmittedWorkout: WorkoutType | undefined
+  currentWorkout: QueriedByIdWorkoutType | undefined
 }> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -242,19 +237,19 @@ export async function getPostWorkoutPageWorkouts(title: string): Promise<{
       where: and(
         eq(workouts.userId, user.id),
         eq(workouts.title, title),
-        eq(workouts.status, "done"),
+        eq(workouts.status, "done")
       ),
       orderBy: (workouts, { desc }) => desc(workouts.id),
       columns: {
         userId: false,
       },
-    });
+    })
 
     const currentWorkout = await db.query.workouts.findFirst({
       where: and(
         eq(workouts.userId, user.id),
         eq(workouts.title, title),
-        eq(workouts.status, "current"),
+        eq(workouts.status, "current")
       ),
       columns: {
         id: true,
@@ -262,28 +257,28 @@ export async function getPostWorkoutPageWorkouts(title: string): Promise<{
         description: true,
         exercises: true,
       },
-    });
+    })
 
     if (!lastSubmittedWorkout || !currentWorkout) {
-      console.error("Something is missing...");
+      console.error("Something is missing...")
     } else {
-      console.log("Both workouts retrived.");
+      console.log("Both workouts retrived.")
     }
 
-    return { lastSubmittedWorkout, currentWorkout };
+    return { lastSubmittedWorkout, currentWorkout }
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive selected workouts.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive selected workouts.")
   }
 }
 
 export async function getWorkoutTitleById(
-  workoutId: number,
+  workoutId: number
 ): Promise<{ title: string } | undefined> {
-  const { user } = await getAuthSession();
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    unauthorized();
+    unauthorized()
   }
 
   try {
@@ -292,44 +287,40 @@ export async function getWorkoutTitleById(
       columns: {
         title: true,
       },
-    });
+    })
 
     if (!workoutTitle) {
-      console.error("No matching title found.");
+      console.error("No matching title found.")
     } else {
-      console.log("Workout title retrived!");
+      console.log("Workout title retrived!")
     }
 
-    return workoutTitle;
+    return workoutTitle
   } catch (error) {
-    console.error("Database error:", error);
-    throw new Error("Failed to retrive selected workout.");
+    console.error("Database error:", error)
+    throw new Error("Failed to retrive selected workout.")
   }
 }
 
 export async function insertSessionInDb(session: Session): Promise<void> {
-  await db.insert(sessions).values(session);
+  await db.insert(sessions).values(session)
 }
 
-export async function getCurrentSession(
-  sessionId: string,
-): Promise<Session | undefined> {
+export async function getCurrentSession(sessionId: string): Promise<Session | undefined> {
   const currSession = await db.query.sessions.findFirst({
     where: eq(sessions.id, sessionId),
-  });
+  })
 
-  return currSession;
+  return currSession
 }
 
-export async function getUserInfoWithoutPassword(
-  session: Session,
-): Promise<User | undefined> {
+export async function getUserInfoWithoutPassword(session: Session): Promise<User | undefined> {
   const userInfo = await db.query.users.findFirst({
     where: eq(users.id, session.userId),
     columns: {
       hashedPassword: false,
     },
-  });
+  })
 
-  return userInfo;
+  return userInfo
 }

@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from "zod"
 
 const envVariablesSchema = z.object({
-  DATABASE_URL: z.string().url(),
-});
+  DATABASE_URL: z.url(),
+})
 
 declare global {
   namespace NodeJS {
@@ -12,11 +12,11 @@ declare global {
 }
 
 const checkEvn = () => {
-  const envCheck = envVariablesSchema.safeParse(process.env);
+  const envCheck = envVariablesSchema.safeParse(process.env)
 
   if (!envCheck.success) {
-    throw new Error("Env variable is missing.");
+    throw new Error("Env variable is missing.")
   }
-};
+}
 
-export default checkEvn;
+export default checkEvn

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { LandingPageBar } from "@/components/landing/LandingPageBar";
-import { SadIcon } from "@/components/icons/user/warning";
+import Link from "next/link"
+import { SadIcon } from "@/components/icons/user/warning"
+import { LandingPageBar } from "@/components/landing/LandingPageBar"
 
 export default function NotFound() {
   return (
@@ -14,12 +14,8 @@ export default function NotFound() {
           <div className="text-slate-400/70 dark:text-slate-700">{SadIcon}</div>
 
           <div className="space-y-2 pb-2 text-center">
-            <h3 className="font-manrope text-slate-600">
-              404 - Page not found
-            </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              Invalid URL
-            </p>
+            <h3 className="font-manrope text-slate-600">404 - Page not found</h3>
+            <p className="text-slate-500 text-sm dark:text-slate-400">Invalid URL</p>
           </div>
 
           <Link
@@ -31,5 +27,5 @@ export default function NotFound() {
         </div>
       </main>
     </>
-  );
+  )
 }

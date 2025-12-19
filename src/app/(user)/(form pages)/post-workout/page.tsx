@@ -1,28 +1,23 @@
-import Link from "next/link";
-import { Suspense } from "react";
+import type { Metadata } from "next"
+import Link from "next/link"
+import { Suspense } from "react"
+import { HomeIcon } from "@/components/icons/user/navbar"
+import { PostWorkoutPageSkeleton } from "@/components/Loading"
+import { PostWorkoutTooltip } from "@/components/Tooltips"
+import { PostWorkoutPageDataFetcher } from "@/components/user/PostWorkoutPageDataFetcher"
 import {
-  UserPagesSubHeadingWrapper,
   UserPagesSubHeadingText,
-} from "@/components/user/UserPagesHeader";
-import { PostWorkoutTooltip } from "@/components/Tooltips";
-import { HomeIcon } from "@/components/icons/user/navbar";
-import { PostWorkoutPageSkeleton } from "@/components/Loading";
-import { PostWorkoutPageDataFetcher } from "@/components/user/PostWorkoutPageDataFetcher";
-
-import type { Metadata } from "next";
+  UserPagesSubHeadingWrapper,
+} from "@/components/user/UserPagesHeader"
 
 export const metadata: Metadata = {
   title: "Post workout",
-};
+}
 
-type SearchParams = Promise<{ workoutTitle: string }>;
+type SearchParams = Promise<{ workoutTitle: string }>
 
-export default async function PostWorkoutPage({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  const { workoutTitle } = await searchParams;
+export default async function PostWorkoutPage({ searchParams }: { searchParams: SearchParams }) {
+  const { workoutTitle } = await searchParams
 
   return (
     <>
@@ -38,12 +33,7 @@ export default async function PostWorkoutPage({
             href="/home"
             className="rounded-full p-1.5 text-slate-400 transition active:scale-95 active:bg-slate-200 dark:text-white dark:active:bg-slate-600"
           >
-            <HomeIcon
-              fill="currentColor"
-              stroke="none"
-              strokeWidth={0}
-              className="size-7"
-            />
+            <HomeIcon fill="currentColor" stroke="none" strokeWidth={0} className="size-7" />
             <p className="sr-only">Go to Home page</p>
           </Link>
         </div>
@@ -53,5 +43,5 @@ export default async function PostWorkoutPage({
         <PostWorkoutPageDataFetcher title={workoutTitle} />
       </Suspense>
     </>
-  );
+  )
 }
