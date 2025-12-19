@@ -50,6 +50,9 @@
       "bracketSpacing": true
     }
   },
+  "css": {
+    "parser": { "tailwindDirectives": true }
+  },
   "html": { "formatter": { "selfCloseVoidElements": "always" } },
   "assist": {
     "enabled": true,
