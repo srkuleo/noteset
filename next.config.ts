@@ -1,13 +1,13 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   experimental: {
     authInterrupts: true,
     browserDebugInfoInTerminal: true,
-    devtoolNewPanelUI: true,
     clientSegmentCache: true,
   },
+  typedRoutes: true,
   turbopack: {},
-};
+}
 
-export default nextConfig;
+export default nextConfig

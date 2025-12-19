@@ -1,13 +1,9 @@
-import plugin from "tailwindcss/plugin";
-
-import type { Config } from "tailwindcss";
+import type { Config } from "tailwindcss"
+import plugin from "tailwindcss/plugin"
 
 const config: Config = {
   darkMode: "class",
-  content: [
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
   prefix: "",
   theme: {
     extend: {
@@ -37,12 +33,10 @@ const config: Config = {
       },
       animation: {
         "overlay-show": "overlay-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-        "overlay-hide":
-          "overlay-hide 200ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
-        "dropdown-menu-scale-up":
-          "dropdown-menu-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
+        "overlay-hide": "overlay-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+        "dropdown-menu-scale-up": "dropdown-menu-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
         "dropdown-menu-scale-down":
-          "dropdown-menu-scale-down 200ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
+          "dropdown-menu-scale-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
 
         // Currently not used
         // "modal-slide-up":
@@ -59,7 +53,7 @@ const config: Config = {
   plugins: [
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require("tailwindcss-text-fill"),
-    plugin(function ({ addUtilities }) {
+    plugin(({ addUtilities }) => {
       const scrollbarUtils = {
         ".no-scrollbar::-webkit-scrollbar": {
           display: "none",
@@ -69,11 +63,11 @@ const config: Config = {
           "-ms-overflow-style": "none",
           "scrollbar-width": "none",
         },
-      };
+      }
 
-      addUtilities(scrollbarUtils);
+      addUtilities(scrollbarUtils)
     }),
   ],
-};
+}
 
-export default config;
+export default config
