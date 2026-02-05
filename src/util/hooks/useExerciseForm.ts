@@ -1,147 +1,174 @@
-import { useState } from "react";
-import { generateRandomId } from "../utils";
-
+import { useState } from "react"
+import z from "zod"
 import type {
+  CreateExerciseFormType,
   ExerciseActionResponse,
+  ExerciseError,
   ExerciseType,
-  MovementType,
+  LimbInvolvement,
   SetType,
-} from "../types";
+  UpdateSetsAction,
+  UseExerciseFormReturn,
+} from "../types"
+import { generateRandomId, insertSet } from "../utils"
 
-const initExerciseErrors: ExerciseActionResponse = {
-  status: "unset",
+const INIT_EXERCISE: CreateExerciseFormType = {
+  limbInvolvement: undefined,
+  name: "",
+  note: "",
+  sets: [],
+}
+
+const INIT_EXERCISE_ERRORS: ExerciseActionResponse = {
   errors: {},
-  message: "",
-};
+}
 
-export const useExerciseForm = (initExercise: ExerciseType) => {
-  const [tempExercise, setTempExercise] = useState(initExercise);
-  const [exerciseFormErrors, setExerciseFormErrors] =
-    useState(initExerciseErrors);
+export function useExerciseForm(): UseExerciseFormReturn<CreateExerciseFormType>
+export function useExerciseForm(initExercise?: ExerciseType): UseExerciseFormReturn<ExerciseType>
+
+export function useExerciseForm(initExercise?: ExerciseType) {
+  const [tempExercise, setTempExercise] = useState<ExerciseType | CreateExerciseFormType>(
+    initExercise ?? INIT_EXERCISE
+  )
+  const [exerciseFormErrors, setExerciseFormErrors] = useState(INIT_EXERCISE_ERRORS)
 
   function handleNameInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        name: event.target.value,
-      };
-    });
+    setTempExercise((prev) => ({
+      ...prev,
+      name: event.target.value,
+    }))
+  }
+
+  function resetNameInput() {
+    setTempExercise((prev) => ({
+      ...prev,
+      name: INIT_EXERCISE.name,
+    }))
   }
 
   function handleNoteInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        note: event.target.value,
-      };
-    });
+    setTempExercise((prev) => ({
+      ...prev,
+      note: event.target.value,
+    }))
   }
 
   function resetNoteInput() {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        note: "",
-      };
-    });
+    setTempExercise((prev) => ({
+      ...prev,
+      note: INIT_EXERCISE.note,
+    }))
   }
 
-  function handleMovementTypeInput(movement: MovementType) {
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        movementType: movement,
-      };
-    });
+  function handleLimbInvolvementInput(value: LimbInvolvement) {
+    setTempExercise((prev) => ({
+      ...prev,
+      limbInvolvement: value,
+    }))
   }
 
-  function createSets(newSetCount: number) {
-    const currSets = tempExercise.sets;
+  function updateSets(action: UpdateSetsAction) {
+    switch (action.type) {
+      case "create": {
+        const { index, purpose, reps, weight } = action.set
 
-    if (newSetCount > currSets.length) {
-      const modifiedSets = [
-        ...currSets,
-        ...Array(newSetCount - currSets.length)
-          .fill(null)
-          .map(
-            (): SetType => ({
-              id: generateRandomId(10),
-              reps: "",
-              weight: "",
-              warmup: false,
-            }),
+        const newSet: SetType = {
+          id: generateRandomId(10),
+          purpose,
+          reps,
+          weight,
+        }
+
+        setTempExercise((prev) => ({
+          ...prev,
+          sets: insertSet(prev.sets, newSet, index),
+        }))
+
+        const setsError = exerciseFormErrors.errors?.sets
+
+        if (setsError?.length) {
+          resetSetsError()
+        }
+
+        return
+      }
+
+      case "edit": {
+        setTempExercise((prev) => ({
+          ...prev,
+          sets: prev.sets.map((set) =>
+            set.id === action.setId
+              ? {
+                  ...set,
+                  [action.event.target.name]: action.event.target.value,
+                }
+              : set
           ),
-      ];
+        }))
 
-      setTempExercise((prev) => {
-        return {
-          ...prev,
-          sets: modifiedSets,
-        };
-      });
-    } else if (newSetCount < currSets.length) {
-      const modifiedSets = currSets.slice(0, newSetCount);
+        return
+      }
 
-      setTempExercise((prev) => {
-        return {
+      case "remove": {
+        setTempExercise((prev) => ({
           ...prev,
-          sets: modifiedSets,
-        };
-      });
-    }
+          sets: prev.sets.filter((set) => set.id !== action.setId),
+        }))
 
-    if (
-      exerciseFormErrors.errors?.sets &&
-      exerciseFormErrors.errors.sets.length > 0
-    ) {
-      setExerciseFormErrors((prev) => {
-        return {
-          ...prev,
-          errors: {
-            ...prev.errors,
-            sets: undefined,
-          },
-        };
-      });
+        return
+      }
     }
   }
 
-  function markSetAsWarmup(setId: string) {
-    const modifiedSets = tempExercise.sets.map((set) =>
-      set.id === setId ? { ...set, warmup: !set.warmup } : set,
-    );
+  function handleExerciseErrors(error: ExerciseError) {
+    const { properties: fields } = z.treeifyError(error)
 
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        sets: modifiedSets,
-      };
-    });
+    let repsError: string | undefined, weightError: string | undefined
+
+    const setItems = fields?.sets?.items
+
+    if (setItems?.length) {
+      repsError = setItems.find((item) => item?.properties?.reps?.errors?.[0])?.properties?.reps
+        ?.errors?.[0]
+
+      weightError = setItems.find((item) => item?.properties?.weight?.errors?.[0])?.properties
+        ?.weight?.errors?.[0]
+    }
+
+    setExerciseFormErrors({
+      errors: {
+        name: fields?.name?.errors,
+        sets: fields?.sets?.errors,
+        reps: repsError ? [repsError] : undefined,
+        weight: weightError ? [weightError] : undefined,
+      },
+    })
   }
 
-  function modifySets(e: React.ChangeEvent<HTMLInputElement>, setId: string) {
-    const modifiedSets = tempExercise.sets.map((set) =>
-      set.id === setId ? { ...set, [e.target.name]: e.target.value } : set,
-    );
+  function resetExerciseErrors() {
+    setExerciseFormErrors(INIT_EXERCISE_ERRORS)
+  }
 
-    setTempExercise((prev) => {
-      return {
-        ...prev,
-        sets: modifiedSets,
-      };
-    });
+  function resetSetsError() {
+    setExerciseFormErrors((prev) => ({
+      ...prev,
+      errors: {
+        ...prev.errors,
+        sets: undefined,
+      },
+    }))
   }
 
   return {
     tempExercise,
     exerciseFormErrors,
-    setExerciseFormErrors,
     handleNameInput,
+    resetNameInput,
     handleNoteInput,
     resetNoteInput,
-    handleMovementTypeInput,
-    createSets,
-    markSetAsWarmup,
-    modifySets,
-  };
-};
+    handleLimbInvolvementInput,
+    updateSets,
+    handleExerciseErrors,
+    resetExerciseErrors,
+  }
+}
