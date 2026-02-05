@@ -6,14 +6,20 @@
 
 Since I am also interested in mobile dev, I might even make a proper app using React Native instead of Next.js PWA. Going deeper and making the web app more complex has exposed quite a few shortcomings of PWAs.
 
-## Steps until v1:
+### Steps until v1:
 
-- Priority: Sets Drawer - _Improve UI and make modal scrollable on the y axis. Add error handling inside drawer. Implement tempSets for rendering ui inside the drawer. Sets.length > 0 drawer contains plus buton instead of partial new set form. Move conditional logic inside drawer for rendering modify button with sets or add sets button. Remodel adding set drawer on workout to do page to reflect the new adding sets design. Move diet and profile pages to the bottom navbar and change home page to workouts with new icon. Move patch notes next to the github icon. Revamp workouts dropdown to be tab oriented._
+- WorkoutToDoPage - _UI overhaul. Remodel adding exercise set and adding new exercise on workout to do page to reflect the new adding set design. Add targetedSet and nextSessionSet option for easier tracking, no longer need to note every set for the future reference._
 
-- _Finish logs page UI - add option to query by date using calendar drawer, pagination and pagination preferance 6,8,10,12,16,20. Add logs tooltip. Add option to select more workouts and delete them all at once._
+- Logs page UI/UX - _Add option to query by date using calendar drawer, pagination and pagination preferance 6,8,10,12,16,20. Add logs tooltip. Add option to select more workouts and delete them all at once on current, archived and logs pages._
 
-- _Finish profile page UI - add option for user to set their own pfp instead of the initials, add separate route for settings and make settings button inside ProfileButtonModal lead to it. See if possible to close swipe when swiping other sets or pressing anywhere else._
+- Profile page UI - _Add option for user to set their own pfp instead of the initials, add separate route for settings and make settings button inside ProfileButtonModal lead to it._
 
-- _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture. Add gradient on landing page and make small svg "note your sets". Add option in user preference for padding bottom on navbars._
+- _Add email verification and option to get email from profile page, password reset option, option to delete profile with cascading, uploading profile picture, rate limiting._
 
-- _Upgrade to tailwind v4 when ready. Persist form data from workout to do page inside local storage as backup when app crashes while doing a workout. Later on add cron job that removes all workouts older than 1 year if storage becomes the problem._
+---
+
+### Future
+
+- _Upgrade to tailwind v4 when ready._ 
+
+- _Persist form data from workout to do page inside local storage as backup when app crashes while doing a workout. Later on add cron job that removes all workouts older than 1 year if storage becomes the problem. Implement diet page._
