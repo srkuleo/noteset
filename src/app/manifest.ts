@@ -6,8 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Noteset - personalized workout tracker",
     display: "standalone",
     orientation: "portrait-primary",
-    id: "/home",
-    start_url: "/home",
+    id: "/current",
+    start_url: "/current",
     scope: "/",
     display_override: ["standalone", "minimal-ui", "window-controls-overlay"],
     //still waiting for the option to put prefer color schema
