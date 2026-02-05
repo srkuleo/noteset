@@ -1,22 +1,18 @@
-import { notFound, redirect } from "next/navigation";
-import { getAuthSession } from "@/util/session";
-import { getWorkoutByIdWithoutId } from "@/db/query";
-import { WorkoutToDoForm } from "./WorkoutToDoForm";
+import { notFound, redirect } from "next/navigation"
+import { getCurrentWorkoutById } from "@/db/query"
+import { getAuthSession } from "@/util/session"
+import { WorkoutToDoForm } from "./WorkoutToDoForm"
 
-export const WorkoutToDoDataFetcher = async ({
-  workoutId,
-}: {
-  workoutId: number;
-}) => {
-  const { user } = await getAuthSession();
+export const WorkoutToDoDataFetcher = async ({ workoutId }: { workoutId: number }) => {
+  const { user } = await getAuthSession()
 
   if (user === null) {
-    redirect("/login");
+    redirect("/login")
   }
 
-  const workoutToDo = await getWorkoutByIdWithoutId(workoutId);
+  const workoutToDo = await getCurrentWorkoutById(workoutId)
 
-  if (!workoutToDo) notFound();
+  if (!workoutToDo) notFound()
 
-  return <WorkoutToDoForm workoutToDo={workoutToDo} />;
-};
+  return <WorkoutToDoForm workoutToDo={workoutToDo} />
+}

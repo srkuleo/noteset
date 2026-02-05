@@ -1,17 +1,25 @@
-"use client";
+"use client"
 
-import { useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { twMerge } from "tailwind-merge";
-import { signUp } from "@/util/actions/auth";
-import { showToast } from "../Toasts";
-import { HideIcon, ShowIcon } from "../icons/user/preview";
-import { ErrorComponent } from "../ErrorComponent";
-import { AuthButton } from "../SubmitButtons";
-
-import type { PasswordInputs } from "@/util/types";
+import { useMutation } from "@tanstack/react-query"
+import { useRef, useState } from "react"
+import { twMerge } from "tailwind-merge"
+import { signUp } from "@/util/actions/auth"
+import type { PasswordInputs } from "@/util/types"
+import { AuthButton } from "../CustomButtons"
+import { ErrorComponent } from "../ErrorComponent"
+import { HideIcon, ShowIcon } from "../icons/user/preview"
+import { showToast } from "../Toasts"
 
 export const SignUpForm = () => {
+  const [inputs, setInputs] = useState<PasswordInputs>({
+    password: { show: false, focus: false },
+    confirmPassword: {
+      show: false,
+      focus: false,
+    },
+  })
+  const formRef = useRef<HTMLFormElement>(null)
+
   const {
     data: actionRes,
     mutate: clientAction,
@@ -19,23 +27,23 @@ export const SignUpForm = () => {
   } = useMutation({
     mutationFn: signUp,
     onSuccess: (actionRes) => {
-      if (actionRes.message && actionRes.status === "success-redirect") {
-        showToast(actionRes.message, "/login", "Log in");
-        formRef.current?.reset();
+      if (actionRes.status === "success-redirect") {
+        showToast(actionRes.message, "/login", "Log in")
+        formRef.current?.reset()
       }
     },
-  });
-  const [inputs, setInputs] = useState<PasswordInputs>({
-    password: { show: false, focus: false },
-    confirmPassword: {
-      show: false,
-      focus: false,
-    },
-  });
-  const formRef = useRef<HTMLFormElement>(null);
+  })
 
   return (
-    <form ref={formRef} action={clientAction} className="flex flex-col">
+    <form
+      ref={formRef}
+      onSubmit={(e) => {
+        e.preventDefault()
+        const formData = new FormData(e.currentTarget)
+        clientAction(formData)
+      }}
+      className="flex flex-col"
+    >
       <fieldset disabled={isPending} className="group space-y-4">
         <input
           id="username"
@@ -46,18 +54,11 @@ export const SignUpForm = () => {
           required
           className={twMerge(
             "input-field",
-            "w-full autofill:shadow-autofill-light autofill:text-fill-slate-500 group-disabled:opacity-50 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white",
-            actionRes &&
-              actionRes.errors?.username &&
-              "ring-red-500 dark:ring-red-500",
+            "w-full autofill:text-fill-slate-500 autofill:shadow-autofill-light group-disabled:opacity-50 dark:autofill:text-fill-white dark:autofill:shadow-autofill-dark",
+            actionRes?.errors?.username && "ring-red-500 dark:ring-red-500"
           )}
         />
-        {actionRes && (
-          <ErrorComponent
-            errorArr={actionRes.errors?.username}
-            className="pl-1"
-          />
-        )}
+        <ErrorComponent errorArr={actionRes?.errors?.username} className="pl-1" />
 
         <input
           id="email"
@@ -68,24 +69,17 @@ export const SignUpForm = () => {
           required
           className={twMerge(
             "input-field",
-            "w-full autofill:shadow-autofill-light autofill:text-fill-slate-500 group-disabled:opacity-50 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white",
-            actionRes &&
-              actionRes.errors?.email &&
-              "ring-red-500 dark:ring-red-500",
+            "w-full autofill:text-fill-slate-500 autofill:shadow-autofill-light group-disabled:opacity-50 dark:autofill:text-fill-white dark:autofill:shadow-autofill-dark",
+            actionRes?.errors?.email && "ring-red-500 dark:ring-red-500"
           )}
         />
-        {actionRes && (
-          <ErrorComponent errorArr={actionRes.errors?.email} className="pl-1" />
-        )}
+        <ErrorComponent errorArr={actionRes?.errors?.email} className="pl-1" />
 
         <div
           className={twMerge(
-            "relative w-full rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-400/40 group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
-            inputs.password.focus &&
-              "ring-2 ring-green-500 dark:ring-green-600",
-            actionRes &&
-              actionRes.errors?.password &&
-              "ring-red-500 dark:ring-red-500",
+            "relative w-full rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-400/40 ring-inset group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
+            inputs.password.focus && "ring-2 ring-green-500 dark:ring-green-600",
+            actionRes?.errors?.password && "ring-red-500 dark:ring-red-500"
           )}
         >
           <input
@@ -103,7 +97,7 @@ export const SignUpForm = () => {
                     ...prev.password,
                     focus: true,
                   },
-                };
+                }
               })
             }
             onBlur={() =>
@@ -114,10 +108,10 @@ export const SignUpForm = () => {
                     ...prev.password,
                     focus: false,
                   },
-                };
+                }
               })
             }
-            className="w-[calc(100%-48px)] bg-transparent font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:placeholder-slate-600"
+            className="block w-[calc(100%-40px)] bg-transparent font-semibold text-[16px] leading-5 placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-[14px] placeholder:italic autofill:text-fill-slate-500 autofill:shadow-autofill-light focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:focus:placeholder-slate-600 dark:autofill:text-fill-white dark:autofill:shadow-autofill-dark"
           />
           <button
             type="button"
@@ -129,10 +123,10 @@ export const SignUpForm = () => {
                     ...prev.password,
                     show: !prev.password.show,
                   },
-                };
+                }
               })
             }
-            className="absolute inset-y-0 right-0 rounded-r-xl border-l border-slate-400/40 px-3 text-slate-400 active:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:active:bg-slate-800"
+            className="absolute inset-y-0 right-0 px-4 text-slate-400 active:scale-95 active:text-slate-300 dark:text-slate-300 dark:active:text-slate-500"
           >
             {inputs.password.show ? (
               <HideIcon strokeWidth={1.3} className="size-6" />
@@ -141,21 +135,13 @@ export const SignUpForm = () => {
             )}
           </button>
         </div>
-        {actionRes && (
-          <ErrorComponent
-            errorArr={actionRes.errors?.password}
-            className="pl-1"
-          />
-        )}
+        <ErrorComponent errorArr={actionRes?.errors?.password} className="pl-1" />
 
         <div
           className={twMerge(
-            "relative w-full rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-400/40 group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
-            inputs.confirmPassword.focus &&
-              "ring-2 ring-green-500 dark:ring-green-600",
-            actionRes &&
-              actionRes.errors?.confirmPassword &&
-              "ring-red-500 dark:ring-red-500",
+            "relative w-full rounded-xl bg-white px-4 py-3 shadow-sm ring-1 ring-slate-400/40 ring-inset group-disabled:opacity-50 dark:bg-slate-900 dark:ring-slate-700",
+            inputs.confirmPassword.focus && "ring-2 ring-green-500 dark:ring-green-600",
+            actionRes?.errors?.confirmPassword && "ring-red-500 dark:ring-red-500"
           )}
         >
           <input
@@ -173,7 +159,7 @@ export const SignUpForm = () => {
                     ...prev.confirmPassword,
                     focus: true,
                   },
-                };
+                }
               })
             }
             onBlur={() =>
@@ -184,10 +170,10 @@ export const SignUpForm = () => {
                     ...prev.confirmPassword,
                     focus: false,
                   },
-                };
+                }
               })
             }
-            className="w-[calc(100%-48px)] bg-transparent font-semibold leading-none placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-sm placeholder:italic autofill:shadow-autofill-light autofill:text-fill-slate-500 focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:autofill:shadow-autofill-dark dark:autofill:text-fill-white dark:focus:placeholder-slate-600"
+            className="block w-[calc(100%-40px)] bg-transparent font-semibold text-[16px] leading-5 placeholder-slate-400/80 caret-green-500 outline-none placeholder:text-[14px] placeholder:italic autofill:text-fill-slate-500 autofill:shadow-autofill-light focus:placeholder-slate-300 dark:placeholder-slate-500 dark:caret-green-600 dark:focus:placeholder-slate-600 dark:autofill:text-fill-white dark:autofill:shadow-autofill-dark"
           />
           <button
             type="button"
@@ -199,10 +185,10 @@ export const SignUpForm = () => {
                     ...prev.confirmPassword,
                     show: !prev.confirmPassword.show,
                   },
-                };
+                }
               })
             }
-            className="absolute inset-y-0 right-0 rounded-r-xl border-l border-slate-400/40 px-3 text-slate-400 active:bg-slate-100 dark:border-slate-700 dark:text-slate-300 dark:active:bg-slate-800"
+            className="absolute inset-y-0 right-0 px-4 text-slate-400 active:scale-95 active:text-slate-300 dark:text-slate-300 dark:active:text-slate-500"
           >
             {inputs.confirmPassword.show ? (
               <HideIcon strokeWidth={1.3} className="size-6" />
@@ -211,23 +197,12 @@ export const SignUpForm = () => {
             )}
           </button>
         </div>
-        {actionRes && (
-          <ErrorComponent
-            errorArr={actionRes.errors?.confirmPassword}
-            className="pl-1"
-          />
-        )}
+        <ErrorComponent errorArr={actionRes?.errors?.confirmPassword} className="pl-1" />
 
-        {actionRes && actionRes.status === "error" && (
-          <ErrorComponent message={actionRes.message} />
-        )}
+        {actionRes?.status === "error" && <ErrorComponent message={actionRes.message} />}
       </fieldset>
 
-      <AuthButton
-        pending={isPending}
-        label="Sign Up"
-        loading="Creating profile..."
-      />
+      <AuthButton pending={isPending} label="Sign Up" loading="Creating profile..." />
     </form>
-  );
-};
+  )
+}

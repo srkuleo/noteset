@@ -1,6 +1,5 @@
-import { ThemeIcon } from "./icons/theme";
-import { TimeIcon } from "./icons/user/profile/time";
-import { AddIcon } from "./icons/user/modify";
+import { ThemeIcon } from "./icons/theme"
+import { TimeIcon } from "./icons/user/profile/time"
 
 export const Spinner = ({ className }: { className: string }) => {
   return (
@@ -15,30 +14,39 @@ export const Spinner = ({ className }: { className: string }) => {
         fill="#212121"
       />
     </svg>
-  );
-};
+  )
+}
 
-export const LoadingDataSpinner = ({ message }: { message: string }) => {
+export const DataLoadingSpinner = ({ message }: { message: string }) => {
   return (
-    <div className="flex grow flex-col items-center justify-center gap-2 pb-28 md:pb-36">
+    <div className="absolute inset-x-0 top-[calc(50%-64px)] flex flex-col items-center gap-2">
       <Spinner className="size-8 animate-spin text-slate-300 dark:text-slate-500" />
 
-      <p className="italic text-slate-500 dark:text-slate-200">{message}</p>
+      <p className="text-slate-500 italic dark:text-slate-200">{message}</p>
     </div>
-  );
-};
+  )
+}
+
+export const FormPendingSpinner = () => {
+  return (
+    <div className="fixed z-[999] flex items-center justify-center group-enabled:opacity-0 group-disabled:inset-0">
+      <Spinner className="size-8 animate-spin text-slate-300 dark:text-slate-500" />
+    </div>
+  )
+}
 
 export const ProfileButtonSkeleton = () => {
   return (
-    <div className="animate-pulse pr-1">
-      <div className="size-9 rounded-full bg-slate-200 dark:bg-slate-700" />
+    <div className="flex size-12 animate-pulse flex-col items-center justify-evenly">
+      <div className="size-7 rounded-full bg-slate-200 dark:bg-slate-700" />
+      <div className="h-3 w-8 rounded-full bg-slate-200 dark:bg-slate-700" />
     </div>
-  );
-};
+  )
+}
 
-export const HomePageSkeleton = () => {
+export const WorkoutsPageSkeleton = () => {
   return (
-    <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[157px]">
+    <main className="mt-safe-top space-y-4 px-6 pt-[158px] pb-[97px]">
       {[1, 2, 3, 4, 5, 6].map((skeleton) => (
         <div
           key={skeleton}
@@ -49,21 +57,25 @@ export const HomePageSkeleton = () => {
             <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
           </div>
 
-          <div className="flex flex-col items-center gap-4">
-            <div className="h-[28px] w-18 animate-pulse rounded-full bg-slate-200 dark:bg-slate-950/80" />
-            <div className="h-8 w-18 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="h-[28px] w-20 animate-pulse rounded-full bg-slate-200 dark:bg-slate-950/80" />
+
+            <div className="flex gap-1.5">
+              <div className="size-10 animate-pulse rounded-lg+ bg-slate-200 dark:bg-slate-950/80" />
+              <div className="size-10 animate-pulse rounded-lg+ bg-slate-200 dark:bg-slate-950/80" />
+            </div>
           </div>
         </div>
       ))}
     </main>
-  );
-};
+  )
+}
 
 export const LogsPageSkeleton = () => {
   return (
     <>
       <div className="fixed inset-x-0 top-[141px] z-[9990] mt-safe-top flex items-center gap-2 bg-slate-100/60 p-4 backdrop-blur-md dark:bg-slate-950/80">
-        <div className="flex grow animate-pulse justify-end gap-1 rounded-full bg-white py-1 pl-3.5 pr-1.5 opacity-80 shadow-md ring-1 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700">
+        <div className="flex grow animate-pulse justify-end gap-1 rounded-full bg-white py-1 pr-1.5 pl-3.5 opacity-80 shadow-md ring-1 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700">
           <div className="h-[36px] w-[68px] animate-pulse rounded-full bg-slate-500 text-white opacity-70 dark:bg-slate-950" />
         </div>
 
@@ -71,7 +83,7 @@ export const LogsPageSkeleton = () => {
         <div className="size-10 animate-pulse rounded-2xl bg-white opacity-90 shadow-md ring-1 ring-slate-300 dark:bg-slate-800 dark:ring-slate-700" />
       </div>
 
-      <main className="mt-safe-top space-y-4 px-6 pb-[100px] pt-[217px]">
+      <main className="mt-safe-top space-y-4 px-6 pt-[217px] pb-[100px]">
         {[1, 2, 3, 4, 5, 6].map((skeleton) => (
           <div
             key={skeleton}
@@ -82,7 +94,7 @@ export const LogsPageSkeleton = () => {
               <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-950/50" />
             </div>
 
-            <div className="flex flex-col items-center gap-4">
+            <div className="flex flex-col items-center gap-3.5">
               <div className="h-5 w-14 animate-pulse rounded-full bg-slate-200 dark:bg-slate-950/80" />
               <div className="h-10 w-18 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-950/80" />
             </div>
@@ -90,12 +102,12 @@ export const LogsPageSkeleton = () => {
         ))}
       </main>
     </>
-  );
-};
+  )
+}
 
 export const ProfilePageSkeleton = () => {
   return (
-    <main className="mt-safe-top space-y-8 pb-[100px] pt-[142px]">
+    <main className="mt-safe-top space-y-8 pt-[142px] pb-[100px]">
       <div className="flex h-11 animate-pulse justify-center gap-2 bg-amber-400 py-2 dark:bg-amber-600" />
 
       <div className="space-y-8 px-6">
@@ -110,17 +122,17 @@ export const ProfilePageSkeleton = () => {
         </div>
       </div>
 
-      <div className="mx-6 space-y-4 border-y border-slate-300 py-8 dark:border-slate-700">
+      <div className="mx-6 space-y-4 border-slate-300 border-y py-8 dark:border-slate-700">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <p className="font-manrope text-xl font-bold">Theme</p>
+            <p className="font-bold font-manrope text-xl">Theme</p>
             {ThemeIcon}
           </div>
 
           <div className="flex items-center justify-between">
             <div className="h-6 w-20 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800/80" />
 
-            <div className="px-3 py-1.5 text-sm font-semibold text-violet-500 active:scale-95 active:text-violet-300 dark:text-violet-400 dark:active:text-violet-600">
+            <div className="px-3 py-1.5 font-semibold text-sm text-violet-500 active:scale-95 active:text-violet-300 dark:text-violet-400 dark:active:text-violet-600">
               Change
             </div>
           </div>
@@ -128,53 +140,74 @@ export const ProfilePageSkeleton = () => {
 
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <p className="font-manrope text-xl font-bold">Time Format</p>
+            <p className="font-bold font-manrope text-xl">Time Format</p>
             {TimeIcon}
           </div>
 
           <div className="flex items-center justify-between">
             <div className="h-6 w-32 animate-pulse rounded-md bg-slate-200 dark:bg-slate-800/80" />
 
-            <div className="px-3 py-1.5 text-sm font-semibold text-violet-500 active:scale-95 active:text-violet-300 dark:text-violet-400 dark:active:text-violet-600">
+            <div className="px-3 py-1.5 font-semibold text-sm text-violet-500 active:scale-95 active:text-violet-300 dark:text-violet-400 dark:active:text-violet-600">
               Change
             </div>
           </div>
         </div>
       </div>
     </main>
-  );
-};
+  )
+}
 
 export const EditAndCreateWorkoutPagesSkeleton = () => {
   return (
-    <main className="relative mt-safe-top px-8 py-4 pb-[89px] pt-[158px]">
-      <div className="absolute inset-x-0 top-[calc(50%-64px)]">
-        <LoadingDataSpinner message="Fetching workout... Please wait" />
-      </div>
+    <main className="mt-safe-top pt-[142px] pb-[73px]">
+      <div className="space-y-4 p-8">
+        <div className="space-y-2 px-4">
+          <div className="h-4 w-16 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-900" />
+          <div className="h-12 w-full animate-pulse rounded-xl bg-slate-200 dark:bg-slate-900" />
+        </div>
 
-      <footer className="fixed inset-x-0 bottom-0 border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex justify-between">
-          <div className="p-1.5 text-violet-500 dark:text-violet-400">
-            <AddIcon strokeWidth={2} className="size-7" />
+        <div className="space-y-2 px-4">
+          <div className="h-4 w-32 animate-pulse rounded-lg bg-slate-200 dark:bg-slate-900" />
+          <div className="h-12 w-full animate-pulse rounded-xl bg-slate-200 dark:bg-slate-900" />
+        </div>
+
+        <div className="flex items-center justify-between p-4">
+          <div className="space-y-2">
+            <div className="h-4 w-28 animate-pulse rounded-sm bg-slate-200 dark:bg-slate-900" />
+            <div className="flex gap-2">
+              <div className="h-7 w-[74px] animate-pulse rounded-lg+ bg-slate-200 dark:bg-slate-900" />
+              <div className="h-5 w-[1px] animate-pulse bg-slate-200 dark:bg-slate-900" />
+              <div className="h-7 w-24 animate-pulse rounded-lg+ bg-slate-200 dark:bg-slate-900" />
+            </div>
           </div>
 
+          <div className="size-11 animate-pulse rounded-full bg-slate-200 dark:bg-slate-900" />
+        </div>
+
+        {[1, 2, 3].map((_, index) => (
+          <div
+            key={index}
+            className="h-[119px] w-full animate-pulse rounded-lg bg-slate-200 dark:bg-slate-900"
+          />
+        ))}
+      </div>
+
+      <footer className="fixed inset-x-0 bottom-0 border-slate-300/80 border-t bg-white px-6 pt-2 pb-6 dark:border-slate-800 dark:bg-slate-900">
+        <div className="flex justify-end">
           <div className="h-10 w-20 animate-pulse rounded-lg bg-slate-100 dark:bg-slate-800" />
         </div>
       </footer>
     </main>
-  );
-};
+  )
+}
 
 export const WorkoutToDoSkeleton = () => {
   return (
     <>
-      <main className="mt-safe-top flex flex-col px-6 pb-[91px] pt-14">
+      <main className="mt-safe-top flex flex-col px-6 pt-14 pb-[91px]">
         <form className="divide-y divide-slate-300 dark:divide-slate-800">
           {[1, 2, 3, 4, 5].map((workout) => (
-            <div
-              key={workout}
-              className="flex flex-col space-y-3 py-6 opacity-50"
-            >
+            <div key={workout} className="flex flex-col space-y-3 py-6 opacity-50">
               <div className="h-6 w-1/2 animate-pulse rounded bg-slate-300 dark:bg-slate-800" />
 
               <div className="flex gap-2">
@@ -204,26 +237,26 @@ export const WorkoutToDoSkeleton = () => {
         </form>
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 flex h-[89px] items-center justify-between border-t border-slate-300/80 bg-white px-6 pb-6 pt-2 dark:border-slate-800 dark:bg-slate-950">
+      <footer className="fixed inset-x-0 bottom-0 flex h-[89px] items-center justify-between border-slate-300/80 border-t bg-white px-6 pt-2 pb-6 dark:border-slate-800 dark:bg-slate-950">
         <div className="h-10 w-10 animate-pulse rounded-full bg-slate-300 dark:bg-slate-800" />
 
         <div className="h-10 w-24 animate-pulse rounded-full bg-slate-300 opacity-50 dark:bg-slate-800" />
       </footer>
     </>
-  );
-};
+  )
+}
 
 export const PostWorkoutPageSkeleton = () => {
   return (
-    <main className="mt-safe-top px-6 pb-[89px] pt-[158px]">
+    <main className="mt-safe-top px-6 pt-[158px] pb-[89px]">
       <div className="flex flex-col items-center gap-2 pt-4">
         <div className="h-8 w-36 animate-pulse rounded-xl bg-white dark:bg-slate-800/30" />
         <div className="h-8 w-28 animate-pulse rounded-xl bg-white opacity-30 shadow-md ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700/80" />
       </div>
 
-      <div className="space-y-1 border-b border-slate-300/30 py-8 dark:border-slate-800/50">
+      <div className="space-y-1 border-slate-300/30 border-b py-8 dark:border-slate-800/50">
         <div className="flex items-center justify-between">
-          <p className="font-manrope text-lg font-semibold italic text-slate-400 dark:text-slate-400">
+          <p className="font-manrope font-semibold text-lg text-slate-400 italic dark:text-slate-400">
             Duration
           </p>
 
@@ -231,7 +264,7 @@ export const PostWorkoutPageSkeleton = () => {
         </div>
 
         <div className="flex items-center justify-between">
-          <p className="font-manrope text-lg font-semibold italic text-slate-400 dark:text-slate-400">
+          <p className="font-manrope font-semibold text-lg text-slate-400 italic dark:text-slate-400">
             Date
           </p>
 
@@ -239,7 +272,7 @@ export const PostWorkoutPageSkeleton = () => {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-2 px-4 pb-6 pt-8">
+      <div className="flex flex-col items-center gap-2 px-4 pt-8 pb-6">
         <div className="h-6 w-48 animate-pulse rounded-xl bg-white dark:bg-slate-800/30" />
         <div className="h-6 w-28 animate-pulse rounded-xl bg-white dark:bg-slate-800/30" />
       </div>
@@ -249,8 +282,8 @@ export const PostWorkoutPageSkeleton = () => {
 
         <div className="w-[1px] bg-slate-300/30 dark:bg-slate-800/50" />
 
-        <div className="h-10 w-28 animate-pulse rounded-full border-l border-slate-400/40 bg-white opacity-20 shadow-md dark:border-slate-600 dark:bg-slate-800" />
+        <div className="h-10 w-28 animate-pulse rounded-full border-slate-400/40 border-l bg-white opacity-20 shadow-md dark:border-slate-600 dark:bg-slate-800" />
       </div>
     </main>
-  );
-};
+  )
+}
