@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { notFound, redirect } from "next/navigation"
-import { EditWorkoutForm } from "@/components/user/EditWorkoutForm"
-import { getWorkoutById } from "@/db/query"
+import { EditWorkoutForm } from "@/components/user/form_pages/EditWorkoutForm"
+import { getCurrentWorkoutById } from "@/db/query"
 import { getAuthSession } from "@/util/session"
 
 export const metadata: Metadata = {
@@ -19,10 +19,10 @@ export default async function EditWorkoutPage({ searchParams }: { searchParams: 
 
   const { id } = await searchParams
 
-  const coercedWorkoutId = Number(id)
-  const workoutToEdit = await getWorkoutById(coercedWorkoutId)
+  const workoutToEditId = Number(id)
+  const workoutToEdit = await getCurrentWorkoutById(workoutToEditId)
 
   if (!workoutToEdit) notFound()
 
-  return <EditWorkoutForm workoutToEdit={workoutToEdit} />
+  return <EditWorkoutForm workoutToEdit={workoutToEdit} workoutToEditId={workoutToEditId} />
 }
