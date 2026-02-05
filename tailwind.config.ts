@@ -18,7 +18,8 @@ const config: Config = {
         manrope: ["var(--font-manrope)"],
       },
       borderRadius: {
-        modal: "10px",
+        "lg+": "10px",
+        "4xl": "28px",
       },
       backdropBlur: {
         xs: "2px",
@@ -30,23 +31,6 @@ const config: Config = {
         "safe-right": "env(safe-area-inset-right)",
         18: "4.5rem",
         38: "9.5rem",
-      },
-      animation: {
-        "overlay-show": "overlay-show 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-        "overlay-hide": "overlay-hide 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
-        "dropdown-menu-scale-up": "dropdown-menu-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-        "dropdown-menu-scale-down":
-          "dropdown-menu-scale-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
-
-        // Currently not used
-        // "modal-slide-up":
-        //   "modal-slide-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-        // "modal-slide-down":
-        //   "modal-slide-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
-        // "modal-scale-up":
-        //   "modal-scale-up 400ms cubic-bezier(0.36, 0.66, 0.04, 1)",
-        // "modal-scale-down":
-        //   "modal-scale-down 300ms cubic-bezier(0.36, 0.66, 0.04, 1) 50ms",
       },
     },
   },
