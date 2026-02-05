@@ -1,6 +1,7 @@
 import { Suspense } from "react"
 import { BackButtonModal } from "@/components/BackButtonModal"
 import { WorkoutToDoSkeleton } from "@/components/Loading"
+import { ThemeButtonDevMode } from "@/components/ThemeButtonDevMode"
 import { WorkoutToDoTooltip } from "@/components/Tooltips"
 import { WorkoutToDoDataFetcher } from "@/components/workout-to-do/WorkoutToDoDataFetcher"
 import { WorkoutToDoTitle } from "@/components/workout-to-do/WorkoutToDoTitle"
@@ -24,6 +25,8 @@ export default async function WorkoutToDoPage({ searchParams }: { searchParams: 
               <WorkoutToDoTitle workoutId={workoutId} />
             </Suspense>
           </div>
+
+          {process.env.NODE_ENV === "development" && <ThemeButtonDevMode />}
 
           <WorkoutToDoTooltip />
         </div>

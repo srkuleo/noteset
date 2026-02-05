@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { ProfilePageSkeleton } from "@/components/Loading"
-import { ProfilePageContent } from "@/components/user/profile/ProfilePageContent"
+import { ProfilePageContent } from "@/components/user/main_pages/profile/ProfilePageContent"
 import {
   UserPagesSubHeadingText,
   UserPagesSubHeadingWrapper,

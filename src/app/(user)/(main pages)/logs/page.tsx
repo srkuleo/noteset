@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { LogsPageSkeleton } from "@/components/Loading"
-import { LogsPageDataFetcher } from "@/components/user/logs/LogsPageDataFetcher"
+import { LogsPageDataFetcher } from "@/components/user/main_pages/logs/LogsPageDataFetcher"
 import {
   UserPagesSubHeadingText,
   UserPagesSubHeadingWrapper,
