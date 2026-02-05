@@ -1,112 +1,97 @@
-import { useState } from "react";
-import type { CreateWorkoutType, ExerciseType } from "../types";
+import { useState } from "react"
+import type { CurrentWorkoutForFormsType } from "@/db/schema"
+import type { ExerciseType, UpdateExercisesAction } from "../types"
+import { generateRandomId } from "../utils"
 
-/* 
-Contains:
-
-- workout state (data passed to server action)
-- resetForm function (resets form fields if res.status is successful on workout creation)
-- five handler functions for creating, editing or removing existing exercise inside a workout and 
-handling title and description input
-
-*/
-
-export const emptyWorkout: CreateWorkoutType = {
+export const INIT_WORKOUT: CurrentWorkoutForFormsType = {
   title: "",
   description: "",
   exercises: [],
-};
+}
 
-export const useWorkoutInForm = (initWorkout: CreateWorkoutType) => {
-  const [workout, setWorkout] = useState(initWorkout);
+export const useWorkoutInForm = (initWorkout?: CurrentWorkoutForFormsType) => {
+  const [workout, setWorkout] = useState(initWorkout ?? INIT_WORKOUT)
 
   function handleTitleInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        title: event.target.value,
-      };
-    });
+    setWorkout((prev) => ({
+      ...prev,
+      title: event.target.value,
+    }))
+  }
+
+  function resetTitleInput() {
+    setWorkout((prev) => ({
+      ...prev,
+      title: INIT_WORKOUT.title,
+    }))
   }
 
   function handleDescriptionInput(event: React.ChangeEvent<HTMLInputElement>) {
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        description: event.target.value,
-      };
-    });
+    setWorkout((prev) => ({
+      ...prev,
+      description: event.target.value,
+    }))
   }
 
   function resetDescriptionInput() {
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        description: "",
-      };
-    });
+    setWorkout((prev) => ({
+      ...prev,
+      description: INIT_WORKOUT.description,
+    }))
   }
 
-  function updateExercises(exercises: ExerciseType | ExerciseType[]) {
+  function updateExercises(action: UpdateExercisesAction) {
     setWorkout((prev) => {
-      if (Array.isArray(exercises)) {
-        return {
-          ...prev,
-          exercises: [...exercises],
-        };
-      } else {
-        const newExercise = exercises;
+      switch (action.type) {
+        case "reorder":
+          return {
+            ...prev,
+            exercises: [...action.exercises],
+          }
 
-        return {
-          ...prev,
-          exercises: [...prev.exercises, newExercise],
-        };
+        case "edit":
+          return {
+            ...prev,
+            exercises: prev.exercises.map((exercise) =>
+              exercise.id === action.exercise.id
+                ? { ...action.exercise, lastUpdateTimestamp: Date.now() }
+                : exercise
+            ),
+          }
+
+        case "remove":
+          return {
+            ...prev,
+            exercises: prev.exercises.filter((exercise) => exercise.id !== action.exerciseId),
+          }
+
+        case "create": {
+          const completeExercise: ExerciseType = {
+            ...action.exercise,
+            id: generateRandomId(10),
+            lastUpdateTimestamp: Date.now(),
+          }
+
+          return {
+            ...prev,
+            exercises: [...prev.exercises, completeExercise],
+          }
+        }
       }
-    });
-  }
-
-  function editExercises(editedExercise: ExerciseType) {
-    const modifiedExercises = workout.exercises.map((exercise) => {
-      if (exercise.id === editedExercise.id) {
-        return editedExercise;
-      } else {
-        return exercise;
-      }
-    });
-
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: modifiedExercises,
-      };
-    });
-  }
-
-  function removeExercise(id: string) {
-    const modifiedExercises = workout.exercises.filter(
-      (exercise) => exercise.id !== id,
-    );
-
-    setWorkout((prev) => {
-      return {
-        ...prev,
-        exercises: modifiedExercises,
-      };
-    });
+    })
   }
 
   function resetWorkoutForm() {
-    setWorkout(initWorkout);
+    setWorkout(INIT_WORKOUT)
   }
 
   return {
     workout,
     handleTitleInput,
+    resetTitleInput,
     handleDescriptionInput,
     resetDescriptionInput,
     updateExercises,
-    editExercises,
-    removeExercise,
     resetWorkoutForm,
-  };
-};
+  }
+}
