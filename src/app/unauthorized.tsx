@@ -1,6 +1,6 @@
 import Link from "next/link"
+import { LandingPageBar } from "@/components/auth/layout/LandingPageBar"
 import { ErrorTriangleIcon } from "@/components/icons/user/warning"
-import { LandingPageBar } from "@/components/landing/LandingPageBar"
 
 export default function UnauthorizedPage() {
   return (
