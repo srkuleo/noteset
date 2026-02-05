@@ -7,28 +7,38 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "moduleDetection": "force",
-
     "strict": true,
     "noUncheckedIndexedAccess": true,
-
     "moduleResolution": "bundler",
     "module": "ESNext",
     "noEmit": true,
     "isolatedModules": true,
     "incremental": true,
-
-    "lib": ["dom", "dom.iterable", "ES2023"],
-    "jsx": "preserve",
-
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2023"
+    ],
+    "jsx": "react-jsx",
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
