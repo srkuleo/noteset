@@ -6,17 +6,17 @@ import { getAuthSession } from "@/util/session"
 import type { LogsOrderType, LogsPageSearchParams } from "@/util/types"
 import { db } from "."
 import {
-  type PartialWorkoutType,
-  type QueriedByIdWorkoutType,
+  type CurrentWorkoutForFormsType,
+  type CurrentWorkoutType,
+  type DoneWorkoutType,
   type Session,
   sessions,
   type User,
   users,
-  type WorkoutType,
   workouts,
 } from "./schema"
 
-export async function getUserCurrentWorkouts(): Promise<PartialWorkoutType[]> {
+export async function getUserCurrentWorkouts(): Promise<CurrentWorkoutType[]> {
   const { user } = await getAuthSession()
 
   if (user === null) {
@@ -49,7 +49,7 @@ export async function getUserCurrentWorkouts(): Promise<PartialWorkoutType[]> {
   }
 }
 
-export async function getUserArchivedWorkouts(): Promise<PartialWorkoutType[]> {
+export async function getUserArchivedWorkouts(): Promise<CurrentWorkoutType[]> {
   const { user } = await getAuthSession()
 
   if (user === null) {
@@ -86,7 +86,7 @@ export async function getUserDoneWorkouts(
   searchQuery: LogsPageSearchParams["searchQuery"],
   strictMode: LogsPageSearchParams["strictMode"],
   order: LogsOrderType
-): Promise<WorkoutType[]> {
+): Promise<DoneWorkoutType[]> {
   const { user } = await getAuthSession()
 
   if (user === null) {
@@ -99,7 +99,6 @@ export async function getUserDoneWorkouts(
         .select({
           id: workouts.id,
           title: workouts.title,
-          description: workouts.description,
           exercises: workouts.exercises,
           status: workouts.status,
           doneAt: workouts.doneAt,
@@ -124,7 +123,6 @@ export async function getUserDoneWorkouts(
       .select({
         id: workouts.id,
         title: workouts.title,
-        description: workouts.description,
         exercises: workouts.exercises,
         status: workouts.status,
         doneAt: workouts.doneAt,
@@ -157,42 +155,9 @@ export async function getUserDoneWorkouts(
   }
 }
 
-export async function getWorkoutById(
+export async function getCurrentWorkoutById(
   workoutId: number
-): Promise<QueriedByIdWorkoutType | undefined> {
-  const { user } = await getAuthSession()
-
-  if (user === null) {
-    unauthorized()
-  }
-
-  try {
-    const workout = await db.query.workouts.findFirst({
-      where: and(eq(workouts.userId, user.id), eq(workouts.id, workoutId)),
-      columns: {
-        id: true,
-        title: true,
-        description: true,
-        exercises: true,
-      },
-    })
-
-    if (!workout) {
-      console.error("No matching workout found.")
-    } else {
-      console.log("Workout retrived.")
-    }
-
-    return workout
-  } catch (error) {
-    console.error("Database error:", error)
-    throw new Error("Failed to retrive selected workout.")
-  }
-}
-
-export async function getWorkoutByIdWithoutId(
-  workoutId: number
-): Promise<Omit<QueriedByIdWorkoutType, "id"> | undefined> {
+): Promise<CurrentWorkoutForFormsType | undefined> {
   const { user } = await getAuthSession()
 
   if (user === null) {
@@ -223,8 +188,8 @@ export async function getWorkoutByIdWithoutId(
 }
 
 export async function getPostWorkoutPageWorkouts(title: string): Promise<{
-  lastSubmittedWorkout: WorkoutType | undefined
-  currentWorkout: QueriedByIdWorkoutType | undefined
+  lastDoneWorkout: Omit<DoneWorkoutType, "id"> | undefined
+  currentWorkout: Omit<CurrentWorkoutType, "status"> | undefined
 }> {
   const { user } = await getAuthSession()
 
@@ -233,7 +198,7 @@ export async function getPostWorkoutPageWorkouts(title: string): Promise<{
   }
 
   try {
-    const lastSubmittedWorkout = await db.query.workouts.findFirst({
+    const lastDoneWorkout = await db.query.workouts.findFirst({
       where: and(
         eq(workouts.userId, user.id),
         eq(workouts.title, title),
@@ -241,7 +206,11 @@ export async function getPostWorkoutPageWorkouts(title: string): Promise<{
       ),
       orderBy: (workouts, { desc }) => desc(workouts.id),
       columns: {
-        userId: false,
+        title: true,
+        status: true,
+        exercises: true,
+        doneAt: true,
+        duration: true,
       },
     })
 
@@ -259,13 +228,13 @@ export async function getPostWorkoutPageWorkouts(title: string): Promise<{
       },
     })
 
-    if (!lastSubmittedWorkout || !currentWorkout) {
+    if (!lastDoneWorkout || !currentWorkout) {
       console.error("Something is missing...")
     } else {
       console.log("Both workouts retrived.")
     }
 
-    return { lastSubmittedWorkout, currentWorkout }
+    return { lastDoneWorkout, currentWorkout }
   } catch (error) {
     console.error("Database error:", error)
     throw new Error("Failed to retrive selected workouts.")
