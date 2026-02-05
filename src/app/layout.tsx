@@ -52,9 +52,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
+      suppressHydrationWarning
       lang="en"
       data-scroll-behavior="smooth"
-      suppressHydrationWarning
       className={`${nunito.variable} ${manrope.variable} overscroll-none scroll-smooth antialiased`}
     >
       <body className="select-none overscroll-none bg-white font-nunito text-slate-500 dark:bg-slate-900 dark:text-white">
