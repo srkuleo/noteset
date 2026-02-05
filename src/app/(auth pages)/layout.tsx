@@ -1,9 +1,7 @@
 import { Suspense } from "react"
-import { LoadingDataSpinner } from "@/components/Loading"
-import { LandingPageBar } from "@/components/landing/LandingPageBar"
-import { UIMessage } from "@/components/landing/UIMessage"
-
-export const dynamic = "force-dynamic"
+import { LandingPageBar } from "@/components/auth/layout/LandingPageBar"
+import { UIMessage } from "@/components/auth/layout/UIMessage"
+import { DataLoadingSpinner } from "@/components/Loading"
 
 export default async function AuthPagesLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,10 +12,12 @@ export default async function AuthPagesLayout({ children }: { children: React.Re
         <UIMessage />
       </div>
 
-      <main className="mt-safe-top flex px-8 pt-[81px] md:pt-[125px]">
-        <Suspense fallback={<LoadingDataSpinner message="Verifying session... Please wait" />}>
-          {children}
-        </Suspense>
+      <main className="mt-safe-top flex flex-col px-16 pt-32 sm:px-[150px] md:px-[200px] md:pt-48 lg:px-[300px] xl:px-[450px] 2xl:px-[550px]">
+        <div className="w-full">
+          <Suspense fallback={<DataLoadingSpinner message="Verifying session... Please wait" />}>
+            {children}
+          </Suspense>
+        </div>
       </main>
     </>
   )
