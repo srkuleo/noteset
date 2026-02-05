@@ -1,32 +1,33 @@
-import { useTransition, useState, useRef, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import type { Route } from "next"
+import { usePathname, useRouter } from "next/navigation"
+import { useEffect, useRef, useState, useTransition } from "react"
 
 export const useSearch = (searchQuery: string | undefined) => {
-  const router = useRouter();
-  const path = usePathname();
-  const [isPending, startTransition] = useTransition();
-  const [searchValue, setSearchValue] = useState(searchQuery || "");
-  const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter()
+  const path = usePathname() as Route
+  const [isPending, startTransition] = useTransition()
+  const [searchValue, setSearchValue] = useState(searchQuery || "")
+  const [isFocused, setIsFocused] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setSearchValue(searchQuery || "");
-  }, [searchQuery]);
+    setSearchValue(searchQuery || "")
+  }, [searchQuery])
 
   function handleSearchValue(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchValue(e.target.value);
+    setSearchValue(e.target.value)
   }
 
   function clearSearchValue() {
-    setSearchValue("");
+    setSearchValue("")
 
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
   }
 
   function toggleFocus() {
-    setIsFocused(!isFocused);
+    setIsFocused(!isFocused)
   }
 
   return {
@@ -40,5 +41,5 @@ export const useSearch = (searchQuery: string | undefined) => {
     handleSearchValue,
     clearSearchValue,
     toggleFocus,
-  };
-};
+  }
+}
