@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import { useTransition } from "react"
+import { LandingPageBar } from "@/components/auth/layout/LandingPageBar"
 import { SadIcon } from "@/components/icons/user/warning"
-import { LandingPageBar } from "@/components/landing/LandingPageBar"
 
 export default function ErrorPage({ reset }: { reset: () => void }) {
   const [isPending, startTransition] = useTransition()

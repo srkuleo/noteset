@@ -1,6 +1,6 @@
 import Link from "next/link"
+import { LandingPageBar } from "@/components/auth/layout/LandingPageBar"
 import { SadIcon } from "@/components/icons/user/warning"
-import { LandingPageBar } from "@/components/landing/LandingPageBar"
 
 export default function NotFound() {
   return (
@@ -19,10 +19,10 @@ export default function NotFound() {
           </div>
 
           <Link
-            href="/home"
+            href="/current"
             className="rounded-lg bg-violet-500 px-4 py-2 font-semibold text-white shadow-sm transition active:scale-90 active:bg-violet-400 dark:bg-violet-600 dark:active:bg-violet-800"
           >
-            Go to Home page
+            See workouts
           </Link>
         </div>
       </main>
