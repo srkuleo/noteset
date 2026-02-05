@@ -3,6 +3,7 @@ import {
   index,
   integer,
   json,
+  jsonb,
   pgEnum,
   pgTable,
   serial,
@@ -15,6 +16,7 @@ import type { ExerciseType, UserPreferences } from "@/util/types"
 
 export const WORKOUT_STATUS_VALUES = ["current", "done", "archived"] as const
 export const statusEnum = pgEnum("status", WORKOUT_STATUS_VALUES)
+export type WorkoutStatusType = (typeof WORKOUT_STATUS_VALUES)[number]
 
 export const users = pgTable(
   "users",
@@ -56,7 +58,7 @@ export const workouts = pgTable(
     id: serial().primaryKey(),
     title: varchar({ length: 30 }).notNull(),
     description: text(),
-    exercises: json().$type<ExerciseType[]>().notNull(),
+    exercises: jsonb().$type<ExerciseType[]>().notNull(),
     status: statusEnum().default("current").notNull(),
     userId: varchar({ length: 255 })
       .notNull()
@@ -78,5 +80,7 @@ export type User = Omit<typeof users.$inferSelect, "hashedPassword">
 export type Session = typeof sessions.$inferSelect
 
 export type WorkoutType = Omit<typeof workouts.$inferSelect, "userId">
-export type PartialWorkoutType = Omit<WorkoutType, "duration" | "doneAt">
-export type QueriedByIdWorkoutType = Omit<WorkoutType, "status" | "duration" | "doneAt">
+export type CurrentWorkoutType = Omit<WorkoutType, "duration" | "doneAt">
+export type CurrentWorkoutForFormsType = Omit<CurrentWorkoutType, "status" | "id">
+export type DoneWorkoutType = Omit<WorkoutType, "description">
+export type WorkoutToRemoveType = Pick<WorkoutType, "id" | "title" | "status">
