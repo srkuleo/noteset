@@ -1,38 +1,54 @@
-import { z } from "zod";
-import { WORKOUT_STATUS_VALUES } from "@/db/schema";
-
-import type { ComponentProps } from "react";
+import type { ComponentProps } from "react"
+import { z } from "zod"
+import { WORKOUT_STATUS_VALUES } from "@/db/schema"
 
 export type ActionResponse = {
-  status: "success" | "success-redirect" | "error" | "unset";
-  message: string;
-};
+  status: "success" | "success-redirect" | "error" | "unset"
+  message: string
+}
 
-export type ExerciseActionResponse = ActionResponse & {
+export type SetActionResponse = {
   errors?: {
-    name?: string[] | undefined;
-    sets?: string[] | undefined;
-    note?: string[] | undefined;
-  };
-};
+    reps?: string[] | undefined
+    weight?: string[] | undefined
+    index?: string[] | undefined
+  }
+}
+
+export type ExerciseActionResponse = {
+  errors?: {
+    name?: string[] | undefined
+    sets?: string[] | undefined
+    reps?: string[] | undefined
+    weight?: string[] | undefined
+  }
+}
 
 export type WorkoutActionResponse = ActionResponse & {
   errors?: {
-    title?: string[];
-    exercises?: string[];
-  };
-};
+    title?: string[]
+    exercises?: string[]
+  }
+}
 
 export type AuthActionResponse = ActionResponse & {
   errors?: {
-    username?: string[];
-    email?: string[];
-    password?: string[];
-    confirmPassword?: string[];
-  };
-};
+    username?: string[]
+    email?: string[]
+    password?: string[]
+    confirmPassword?: string[]
+  }
+}
 
 //Exercise types and schemas
+const SET_PURPOSE_VALUE = ["warmup", "working", "none"] as const
+export type SetPurpose = (typeof SET_PURPOSE_VALUE)[number]
+
+type PurposeButtons = { value: Exclude<SetPurpose, "none">; label: "Warm-up" | "Working" }
+export const purposeButtons: PurposeButtons[] = [
+  { value: "warmup", label: "Warm-up" },
+  { value: "working", label: "Working" },
+]
 
 export const SetSchema = z.object({
   id: z.string(),
@@ -40,30 +56,33 @@ export const SetSchema = z.object({
     .string()
     .trim()
     .regex(/^\d+(?:[-+]\d+)?$/, {
-      message: "Reps must be number or range.",
+      error: "Reps must be number or range.",
     }),
   weight: z
     .string()
     .trim()
     .regex(/^\d+(,\d+|\.\d+)?$/, {
-      message: "Weight must be whole or decimal number.",
+      error: "Weight must be whole or decimal number.",
     }),
-  warmup: z.boolean().optional(),
-});
+  purpose: z.enum(SET_PURPOSE_VALUE),
+})
+export type SetType = z.infer<typeof SetSchema>
 
-export type SetType = z.infer<typeof SetSchema>;
-export type SetWithoutId = Omit<SetType, "id">;
+export const SetWithIndexPropSchema = SetSchema.omit({ id: true }).extend({
+  index: z.number().min(0, { error: "Please, select set placement..." }),
+})
+export type SetWithIndexProp = z.infer<typeof SetWithIndexPropSchema>
 
 const OptionalSetSchema = SetSchema.pick({
   id: true,
-  warmup: true,
+  purpose: true,
 }).extend({
   reps: z.union([
     z
       .string()
       .trim()
       .regex(/^\d+(?:[-+]\d+)?$/, {
-        message: "Reps must be a number or range.",
+        error: "Reps must be a number or range.",
       }),
     z.literal(""),
   ]),
@@ -72,44 +91,62 @@ const OptionalSetSchema = SetSchema.pick({
       .string()
       .trim()
       .regex(/^\d+(,\d+|\.\d+)?$/, {
-        message: "Weight must be a whole or decimal number.",
+        error: "Weight must be a whole or decimal number.",
       }),
     z.literal(""),
   ]),
-});
+})
 
-const MOVEMENT_TYPE_VALUES = ["bilateral", "unilateral"] as const;
-export type MovementType = (typeof MOVEMENT_TYPE_VALUES)[number];
+const LIMB_INVOLVEMENT_VALUES = ["bilateral", "unilateral"] as const
+export type LimbInvolvement = (typeof LIMB_INVOLVEMENT_VALUES)[number]
+
+type LimbInvolementButtons = { value: LimbInvolvement; label: "Unilateral" | "Bilateral" }
+export const limbInvolementButtons: LimbInvolementButtons[] = [
+  { value: "unilateral", label: "Unilateral" },
+  { value: "bilateral", label: "Bilateral" },
+]
 
 export const ExerciseSchema = z.object({
   id: z.string(),
   name: z
     .string()
     .trim()
-    .min(2, { message: "Must be at least 2 characters long." })
-    .max(30, { message: "Too long. Keep it less than 30 characters." }),
-  note: z.string().trim().nullable(),
-  movementType: z.enum(MOVEMENT_TYPE_VALUES).optional(),
-  sets: z.array(SetSchema).min(1, { message: "Please add at least one set." }),
-  lastUpdated: z.union([z.date(), z.string()]).nullable(),
-});
+    .min(2, { error: "Must be at least 2 characters long." })
+    .max(30, { error: "Too long. Keep it less than 30 characters." }),
+  note: z.string().trim(),
+  limbInvolvement: z.enum(LIMB_INVOLVEMENT_VALUES).optional(),
+  sets: z.array(SetSchema).min(1, { error: "Please add at least one set." }),
+  lastUpdateTimestamp: z.number(),
+})
+export type ExerciseType = z.infer<typeof ExerciseSchema>
 
-export type ExerciseType = z.infer<typeof ExerciseSchema>;
+export const CreateExerciseFormSchema = ExerciseSchema.pick({
+  name: true,
+  note: true,
+  limbInvolvement: true,
+  sets: true,
+})
+export type CreateExerciseFormType = z.infer<typeof CreateExerciseFormSchema>
 
-const ExerciseWithOptionalSetsSchema = ExerciseSchema.pick({
+const ExerciseWithOptionalSetsClientSchema = ExerciseSchema.pick({
   id: true,
   name: true,
   note: true,
-  movementType: true,
-  lastUpdated: true,
+  limbInvolvement: true,
+  lastUpdateTimestamp: true,
 }).extend({
+  sets: z.array(OptionalSetSchema),
+  done: z.boolean(),
+})
+
+const ExerciseWithOptionalSetsServerSchema = ExerciseWithOptionalSetsClientSchema.extend({
   sets: z
     .array(OptionalSetSchema)
-    .transform((sets) => sets.filter((set) => set.reps)),
-  done: z.boolean().optional(),
-});
+    .transform((sets) => sets.filter((set) => set.reps !== "" && set.weight !== "")),
+}).transform(({ done, ...exercise }) => exercise)
 
-export type ExerciseToDoType = z.infer<typeof ExerciseWithOptionalSetsSchema>;
+export type ExerciseToDoClientType = z.infer<typeof ExerciseWithOptionalSetsClientSchema>
+export type ExerciseToRemoveType = Pick<ExerciseType, "id" | "name">
 
 //Workout types and schemas
 
@@ -118,34 +155,36 @@ export const WorkoutSchema = z.object({
   title: z
     .string()
     .trim()
-    .min(2, { message: "Must be at least 2 characters long." })
-    .max(30, { message: "Too long. Keep it less than 30 characters." }),
+    .min(2, { error: "Must be at least 2 characters long." })
+    .max(30, { error: "Too long. Keep it less than 30 characters." }),
   description: z.string().trim().nullable(),
-  exercises: z
-    .array(ExerciseSchema)
-    .min(1, { message: "Please add at least one exercise." }),
+  exercises: z.array(ExerciseSchema).min(1, { error: "Please add at least one exercise." }),
   status: z.enum(WORKOUT_STATUS_VALUES),
   userId: z.string(),
   doneAt: z.date().nullable(),
   duration: z.number().nullable(),
-});
+})
 
 export const CreateWorkoutSchema = WorkoutSchema.pick({
   title: true,
   description: true,
   exercises: true,
-});
+})
 
-export type CreateWorkoutType = z.infer<typeof CreateWorkoutSchema>;
-
-export const WorkoutToDoSchema = WorkoutSchema.pick({
+const WorkoutToDoClientSchema = CreateWorkoutSchema.pick({
   title: true,
   description: true,
 }).extend({
-  exercises: z.array(ExerciseWithOptionalSetsSchema),
-});
+  exercises: z.array(ExerciseWithOptionalSetsClientSchema),
+})
+export type WorkoutToDoClientType = z.infer<typeof WorkoutToDoClientSchema>
 
-export type WorkoutToDoType = z.infer<typeof WorkoutToDoSchema>;
+export const WorkoutToDoServerSchema = CreateWorkoutSchema.pick({
+  title: true,
+  description: true,
+}).extend({
+  exercises: z.array(ExerciseWithOptionalSetsServerSchema),
+})
 
 //Auth types and schemas
 
@@ -154,41 +193,41 @@ export const signUpSchema = z
     username: z
       .string()
       .trim()
-      .min(3, { message: "Must contain at least 3 characters." })
-      .max(32, { message: "Must be within 3 and 32 characters long." }),
-    email: z.string().trim().email({ message: "Not a valid email address." }),
+      .min(3, { error: "Must contain at least 3 characters." })
+      .max(32, { error: "Must be within 3 and 32 characters long." }),
+    email: z.email({ error: "Not a valid email address." }).trim(),
     password: z.string().superRefine((password, context) => {
       if (password.length < 8 && !/[0-9]/.test(password)) {
         context.addIssue({
-          code: z.ZodIssueCode.too_small,
+          code: "too_small",
           minimum: 8,
-          type: "string",
+          origin: "string",
           inclusive: true,
           message: "Must contain at least 8 characters and 1 number.",
-        });
+        })
 
-        return;
+        return
       }
 
       if (password.length < 8) {
         context.addIssue({
-          code: z.ZodIssueCode.too_small,
+          code: "too_small",
           minimum: 8,
-          type: "string",
+          origin: "string",
           inclusive: true,
           message: "Must contain at least 8 characters.",
-        });
+        })
 
-        return;
+        return
       }
 
       if (!/[0-9]/.test(password)) {
         context.addIssue({
-          code: z.ZodIssueCode.custom,
+          code: "custom",
           message: "Must contain at least one number.",
-        });
+        })
 
-        return;
+        return
       }
     }),
     confirmPassword: z.string(),
@@ -199,91 +238,124 @@ export const signUpSchema = z
         code: "custom",
         message: "Passwords do not match.",
         path: ["confirmPassword"],
-      });
+      })
     }
-  });
+  })
 
 export const loginSchema = z.object({
   identifier: z
     .string()
     .trim()
-    .min(3, { message: "Invalid username or email." })
-    .max(32, { message: "Invalid username or email." })
+    .min(3, { error: "Invalid username or email." })
+    .max(32, { error: "Invalid username or email." })
     .refine(
       (value) => {
-        const isUsername = /^[a-zA-Z0-9_]{3,32}$/.test(value);
-        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-        return isUsername || isEmail;
+        const isUsername = /^[a-zA-Z0-9_]{3,32}$/.test(value)
+        const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+        return isUsername || isEmail
       },
       {
-        message: "Must be a valid username or email.",
-      },
+        error: "Must be a valid username or email.",
+      }
     ),
   password: z.string().superRefine((password, context) => {
     if (password.length < 8 || !/[0-9]/.test(password)) {
       context.addIssue({
-        code: z.ZodIssueCode.custom,
+        code: "custom",
         message: "Invalid password.",
-      });
+      })
     }
   }),
-});
+})
 
 //Util types
 
 export type PasswordInputs = {
   password: {
-    show: boolean;
-    focus: boolean;
-  };
+    show: boolean
+    focus: boolean
+  }
   confirmPassword: {
-    show: boolean;
-    focus: boolean;
-  };
-};
+    show: boolean
+    focus: boolean
+  }
+}
 
 export interface GeneralIconProps extends ComponentProps<"svg"> {
-  className: string;
-  strokeWidth: number;
+  className: string
+  strokeWidth: number
 }
 
 export interface SolidIconProps extends GeneralIconProps {
-  fill: string;
-  stroke: string;
+  fill: string
+  stroke: string
 }
 
-export const TIME_FORMAT_VALUES = [
-  "default",
-  "Hours and minutes",
-  "Minutes only",
-] as const;
+export const TIME_FORMAT_VALUES = ["default", "Hours and minutes", "Minutes only"] as const
 
-export type TimeFormatType = (typeof TIME_FORMAT_VALUES)[number];
+export type TimeFormatType = (typeof TIME_FORMAT_VALUES)[number]
 
-export const LOGS_ORDER_VALUES = [
-  "default",
-  "Newest first",
-  "Newest last",
-] as const;
+export const LOGS_ORDER_VALUES = ["default", "Newest first", "Newest last"] as const
 
-export type LogsOrderType = (typeof LOGS_ORDER_VALUES)[number];
+export type LogsOrderType = (typeof LOGS_ORDER_VALUES)[number]
 
 export type UserPreferences = {
-  timeFormat: TimeFormatType;
-  logsOrder: LogsOrderType;
-};
+  timeFormat: TimeFormatType
+  logsOrder: LogsOrderType
+}
 
 export type LogsPageSearchParams = {
-  searchQuery: string | undefined;
-  strictMode: "on" | undefined;
-};
+  searchQuery: string | undefined
+  strictMode: "on" | undefined
+}
 
-export type WorkoutStatusType = (typeof WORKOUT_STATUS_VALUES)[number];
+export type ExerciseError = z.ZodError<{
+  name: string
+  note: string | null
+  sets: {
+    id: string
+    reps: string
+    weight: string
+    purpose: "warmup" | "working" | "none"
+  }[]
+  limbInvolvement?: "bilateral" | "unilateral" | undefined
+}>
 
-export type WorkoutSwipeActions = {
-  openPreviewDrawer: () => void;
-  openRemoveModal: () => void;
-  workoutToEditId: number;
-  workoutToPreview: () => void;
-  workoutToRemove: () => void;
-};
+export type UseExerciseFormReturn<TExercise> = {
+  tempExercise: TExercise
+  exerciseFormErrors: ExerciseActionResponse
+  handleNameInput: (event: React.ChangeEvent<HTMLInputElement>) => void
+  resetNameInput: () => void
+  handleNoteInput: (event: React.ChangeEvent<HTMLInputElement>) => void
+  resetNoteInput: () => void
+  handleLimbInvolvementInput: (value: LimbInvolvement) => void
+  updateSets: (action: UpdateSetsAction) => void
+  handleExerciseErrors: (error: ExerciseError) => void
+  resetExerciseErrors: () => void
+}
+
+export type UpdateExercisesAction =
+  | { type: "reorder"; exercises: ExerciseType[] }
+  | { type: "edit"; exercise: ExerciseType }
+  | { type: "create"; exercise: CreateExerciseFormType }
+  | { type: "remove"; exerciseId: string }
+
+export type ExercisesListProps = {
+  exercises: ExerciseType[]
+  exercisesError: string[] | undefined
+  updateExercises: (action: UpdateExercisesAction) => void
+}
+
+export type UpdateSetsAction =
+  | { type: "create"; set: SetWithIndexProp }
+  | { type: "remove"; setId: string }
+  | { type: "edit"; event: React.ChangeEvent<HTMLInputElement>; setId: string }
+
+export type SetsSectionProps = {
+  sets: SetType[]
+  limbInvolvement: LimbInvolvement | undefined
+  setsError: string[] | undefined
+  repsError: string[] | undefined
+  weightError: string[] | undefined
+  updateSets: (action: UpdateSetsAction) => void
+}
