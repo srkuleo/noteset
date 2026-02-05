@@ -1,105 +1,95 @@
-import debounce from "lodash.debounce";
-import { useRef, useState } from "react";
-import { generateRandomId } from "../utils";
-
+import debounce from "lodash.debounce"
+import { useRef, useState } from "react"
+import type { CurrentWorkoutForFormsType } from "@/db/schema"
 import type {
-  CreateWorkoutType,
-  WorkoutToDoType,
-  ExerciseToDoType,
-  SetWithoutId,
-  SetType,
+  ExerciseToDoClientType,
   ExerciseType,
-} from "../types";
+  SetType,
+  SetWithIndexProp,
+  WorkoutToDoClientType,
+} from "../types"
+import { generateRandomId } from "../utils"
 
 /* 
 Contains:
 
-- currWorkout and placeholderExercises state which are needed to properly render input field
+- workout and placeholderExercises state which are needed to properly render input field
 - bunch of handlers which are used to apply logic (adding and remove sets, adding new exercise, 
 editing note, handling sets inputs, toggle done state on exercise etc.)
 
 */
 
-export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
-  const [placeholderExercises, setPlaceholderExercises] = useState(
-    initWorkout.exercises,
-  );
-  const [currWorkout, setCurrWorkout] = useState<WorkoutToDoType>({
+export const useWorkoutToDo = (initWorkout: CurrentWorkoutForFormsType) => {
+  const [placeholderExercises, setPlaceholderExercises] = useState(initWorkout.exercises)
+  const [workout, setWorkout] = useState<WorkoutToDoClientType>({
     title: initWorkout.title,
     description: initWorkout.description,
-    exercises: initWorkout.exercises.map((exercise): ExerciseToDoType => {
+    exercises: initWorkout.exercises.map((exercise): ExerciseToDoClientType => {
       return {
         ...exercise,
         sets: exercise.sets.map((set) => ({
           id: set.id,
-          warmup: set.warmup,
+          purpose: set.purpose,
           reps: "",
           weight: "",
         })),
         done: false,
-      };
+      }
     }),
-  });
-  const exerciseRefs = useRef<(HTMLDivElement | undefined | null)[]>([]);
+  })
+  const exerciseRefs = useRef<(HTMLDivElement | undefined | null)[]>([])
 
   function toggleExerciseDoneState(exerciseId: string) {
-    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+    const modifiedCurrExercises = workout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
             done: !exercise.done,
           }
-        : exercise,
-    );
+        : exercise
+    )
 
-    setCurrWorkout((prev) => {
+    setWorkout((prev) => {
       return {
         ...prev,
         exercises: modifiedCurrExercises,
-      };
-    });
+      }
+    })
   }
 
-  function handleNoteInput(
-    event: React.ChangeEvent<HTMLTextAreaElement>,
-    exerciseId: string,
-  ) {
-    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+  function handleNoteInput(event: React.ChangeEvent<HTMLInputElement>, exerciseId: string) {
+    const modifiedCurrExercises = workout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
             note: event.target.value,
           }
-        : exercise,
-    );
+        : exercise
+    )
 
-    setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedCurrExercises };
-    });
+    setWorkout((prev) => {
+      return { ...prev, exercises: modifiedCurrExercises }
+    })
   }
 
   function resetNoteInput(exerciseId: string) {
-    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+    const modifiedCurrExercises = workout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
             note: "",
           }
-        : exercise,
-    );
+        : exercise
+    )
 
-    setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedCurrExercises };
-    });
+    setWorkout((prev) => {
+      return { ...prev, exercises: modifiedCurrExercises }
+    })
   }
 
   const handleSetsInput = debounce(
-    (
-      e: React.ChangeEvent<HTMLInputElement>,
-      exerciseId: string,
-      setId: string,
-    ) => {
-      const modifiedExercises = currWorkout.exercises.map((exercise) =>
+    (e: React.ChangeEvent<HTMLInputElement>, exerciseId: string, setId: string) => {
+      const modifiedExercises = workout.exercises.map((exercise) =>
         exercise.id === exerciseId
           ? {
               ...exercise,
@@ -109,99 +99,91 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
                       ...set,
                       [e.target.name]: e.target.value,
                     }
-                  : set,
+                  : set
               ),
             }
-          : exercise,
-      );
+          : exercise
+      )
 
-      setCurrWorkout((prev) => {
-        return { ...prev, exercises: modifiedExercises };
-      });
+      setWorkout((prev) => {
+        return { ...prev, exercises: modifiedExercises }
+      })
     },
-    200,
-  );
+    200
+  )
 
-  function addNewSet(
-    exerciseId: string,
-    setData: SetWithoutId,
-    setIndex: number,
-  ) {
+  function addNewSet(exerciseId: string, { purpose, index, reps, weight }: SetWithIndexProp) {
     const newSet: SetType = {
       id: generateRandomId(10),
-      reps: setData.reps,
-      weight: setData.weight,
-      warmup: setData.warmup,
-    };
-
-    const newSetWithoutValues = { ...newSet, reps: "", weight: "" };
-
-    const exerciseToModify = currWorkout.exercises.find(
-      (exercise) => exercise.id === exerciseId,
-    );
-
-    const placeholderExerciseToModify = placeholderExercises.find(
-      (exercise) => exercise.id === exerciseId,
-    );
-
-    if (!exerciseToModify || !placeholderExerciseToModify) return;
-
-    const warmupSets = exerciseToModify.sets.filter((set) => set.warmup);
-    const workingSets = exerciseToModify.sets.filter((set) => !set.warmup);
-
-    const placeholderWarmupSets = placeholderExerciseToModify.sets.filter(
-      (set) => set.warmup,
-    );
-    const placeholderWorkingSets = placeholderExerciseToModify.sets.filter(
-      (set) => !set.warmup,
-    );
-
-    let modifiedWarmupSets = warmupSets;
-    let modifiedWorkingSets = workingSets;
-
-    let modifiedPlaceholderWarmupSets = placeholderWarmupSets;
-    let modifiedPlaceholderWorkingSets = placeholderWorkingSets;
-
-    if (newSet.warmup) {
-      modifiedWarmupSets = [
-        ...warmupSets.slice(0, setIndex),
-        newSetWithoutValues,
-        ...warmupSets.slice(setIndex),
-      ];
-
-      modifiedPlaceholderWarmupSets = [
-        ...placeholderWarmupSets.slice(0, setIndex),
-        newSet,
-        ...placeholderWarmupSets.slice(setIndex),
-      ];
-    } else {
-      modifiedWorkingSets = [
-        ...workingSets.slice(0, setIndex),
-        newSetWithoutValues,
-        ...workingSets.slice(setIndex),
-      ];
-
-      modifiedPlaceholderWorkingSets = [
-        ...placeholderWorkingSets.slice(0, setIndex),
-        newSet,
-        ...placeholderWorkingSets.slice(setIndex),
-      ];
+      purpose,
+      reps,
+      weight,
     }
 
-    const updatedSets = [...modifiedWarmupSets, ...modifiedWorkingSets];
-    const updatedPlaceholderSets = [
-      ...modifiedPlaceholderWarmupSets,
-      ...modifiedPlaceholderWorkingSets,
-    ];
+    const newSetWithoutValues = { ...newSet, reps: "", weight: "" }
 
-    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+    const exerciseToModify = workout.exercises.find((exercise) => exercise.id === exerciseId)
+
+    const placeholderExerciseToModify = placeholderExercises.find(
+      (exercise) => exercise.id === exerciseId
+    )
+
+    if (!exerciseToModify || !placeholderExerciseToModify) return
+
+    const warmupSets = exerciseToModify.sets.filter((set) => set.purpose === "warmup")
+    const workingSets = exerciseToModify.sets.filter((set) => set.purpose === "working")
+
+    const placeholderWarmupSets = placeholderExerciseToModify.sets.filter(
+      (set) => set.purpose === "warmup"
+    )
+    const placeholderWorkingSets = placeholderExerciseToModify.sets.filter(
+      (set) => set.purpose === "working"
+    )
+
+    let modifiedWarmupSets: SetType[], modifiedWorkingSets: SetType[]
+    let modifiedPlaceholderWarmupSets: SetType[], modifiedPlaceholderWorkingSets: SetType[]
+    let updatedSets: SetType[], updatedPlaceholderSets: SetType[]
+
+    if (newSet.purpose === "warmup") {
+      modifiedWarmupSets = [
+        ...warmupSets.slice(0, index),
+        newSetWithoutValues,
+        ...warmupSets.slice(index),
+      ]
+
+      modifiedPlaceholderWarmupSets = [
+        ...placeholderWarmupSets.slice(0, index),
+        newSet,
+        ...placeholderWarmupSets.slice(index),
+      ]
+
+      updatedSets = [...modifiedWarmupSets, ...workingSets]
+      updatedPlaceholderSets = [...modifiedPlaceholderWarmupSets, ...placeholderWorkingSets]
+    } else {
+      modifiedWorkingSets = [
+        ...workingSets.slice(0, index),
+        newSetWithoutValues,
+        ...workingSets.slice(index),
+      ]
+
+      modifiedPlaceholderWorkingSets = [
+        ...placeholderWorkingSets.slice(0, index),
+        newSet,
+        ...placeholderWorkingSets.slice(index),
+      ]
+
+      updatedSets = [...warmupSets, ...modifiedWorkingSets]
+      updatedPlaceholderSets = [...placeholderWarmupSets, ...modifiedPlaceholderWorkingSets]
+    }
+
+    const modifiedCurrExercises = workout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
             sets: updatedSets,
           }
-        : exercise,
-    );
+        : exercise
+    )
 
     const modifiedPlaceholderExercises = placeholderExercises.map((exercise) =>
       exercise.id === exerciseId
@@ -209,68 +191,68 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
             ...exercise,
             sets: updatedPlaceholderSets,
           }
-        : exercise,
-    );
+        : exercise
+    )
 
-    setCurrWorkout((prev) => {
-      return { ...prev, exercises: modifiedCurrExercises };
-    });
+    setWorkout((prev) => {
+      return { ...prev, exercises: modifiedCurrExercises }
+    })
 
-    setPlaceholderExercises(modifiedPlaceholderExercises);
+    setPlaceholderExercises(modifiedPlaceholderExercises)
   }
 
   function removeSet(exerciseId: string, setId: string) {
-    const modifiedCurrExercises = currWorkout.exercises.map((exercise) =>
+    const modifiedCurrExercises = workout.exercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
             sets: exercise.sets.filter((set) => set.id !== setId),
           }
-        : exercise,
-    );
+        : exercise
+    )
 
     const modifiedPlaceholderExercises = placeholderExercises.map((exercise) =>
       exercise.id === exerciseId
         ? {
             ...exercise,
-
             sets: exercise.sets.filter((set) => set.id !== setId),
           }
-        : exercise,
-    );
+        : exercise
+    )
 
-    setCurrWorkout((prev) => {
+    setWorkout((prev) => {
       return {
         ...prev,
         exercises: modifiedCurrExercises,
-      };
-    });
+      }
+    })
 
-    setPlaceholderExercises(modifiedPlaceholderExercises);
+    setPlaceholderExercises(modifiedPlaceholderExercises)
   }
 
   function updateExercises(newExercise: ExerciseType) {
-    const newExerciseForCurrWorkout: ExerciseType = {
+    const newExerciseForCurrWorkout: ExerciseToDoClientType = {
       ...newExercise,
+      done: false,
       sets: newExercise.sets.map((set) => {
-        return { id: set.id, warmup: set.warmup, reps: "", weight: "" };
+        return { id: set.id, purpose: set.purpose, reps: "", weight: "" }
       }),
-    };
+    }
 
-    setCurrWorkout((prev) => {
+    setWorkout((prev) => {
       return {
         ...prev,
         exercises: [...prev.exercises, newExerciseForCurrWorkout],
-      };
-    });
+      }
+    })
 
     setPlaceholderExercises((prev) => {
-      return [...prev, newExercise];
-    });
+      return [...prev, newExercise]
+    })
   }
 
   return {
-    currWorkout,
+    workout,
     placeholderExercises,
     exerciseRefs,
     toggleExerciseDoneState,
@@ -280,5 +262,5 @@ export const useWorkoutToDo = (initWorkout: CreateWorkoutType) => {
     addNewSet,
     removeSet,
     updateExercises,
-  };
-};
+  }
+}
