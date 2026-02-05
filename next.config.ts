@@ -4,7 +4,6 @@ const nextConfig: NextConfig = {
   experimental: {
     authInterrupts: true,
     browserDebugInfoInTerminal: true,
-    clientSegmentCache: true,
   },
   typedRoutes: true,
   turbopack: {},
