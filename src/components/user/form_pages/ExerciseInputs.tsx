@@ -147,7 +147,9 @@ export const NoteInput = ({
           )}
         />
         {note && isFocused && (
-          <div className="absolute inset-y-0 right-0 flex items-center px-4">
+          <div
+            className={twMerge("absolute inset-y-0 right-0 flex items-center", withLabel && "px-4")}
+          >
             <ClearInputButton
               srOnlyDescription="Clear note input"
               strokeWidth={3}
