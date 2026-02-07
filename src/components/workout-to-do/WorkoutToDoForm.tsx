@@ -90,7 +90,7 @@ export const WorkoutToDoForm = ({ workoutToDo }: { workoutToDo: CurrentWorkoutFo
                 resetNoteInput={() => resetNoteInput(exercise.id)}
                 className="border-b-2 border-b-slate-100 py-2 dark:border-slate-950"
                 focusedWrapperClassName="border-b-green-500 dark:border-b-green-600"
-                focusedInputClassName="w-[calc(100%-52px)]"
+                focusedInputClassName="w-[calc(100%-30px)]"
               />
 
               <div className="py-6">
