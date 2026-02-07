@@ -18,7 +18,7 @@ export default async function LoginPage() {
 
   return (
     <>
-      <h1 className="bg-gradient-to-r from-0% from-green-200 via-25% via-green-400 to-100% to-violet-600 bg-clip-text text-center font-extrabold text-[60px] text-transparent leading-none dark:from-green-300 dark:via-green-500 dark:to-violet-600">
+      <h1 className="mx-auto w-fit bg-gradient-to-r from-0% from-green-400 via-30% via-green-500 to-100% to-violet-500 bg-clip-text font-extrabold text-[60px] text-transparent leading-none dark:from-green-400 dark:via-green-600 dark:to-violet-500">
         Note<span className="font-bold">Set</span>
       </h1>
 
