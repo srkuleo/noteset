@@ -2,7 +2,6 @@ import {
   boolean,
   index,
   integer,
-  json,
   jsonb,
   pgEnum,
   pgTable,
@@ -32,7 +31,7 @@ export const users = pgTable(
     })
       .defaultNow()
       .notNull(),
-    preferences: json().$type<UserPreferences>().notNull(),
+    preferences: jsonb().$type<UserPreferences>().notNull(),
   },
   (table) => [index("username_index").on(table.username), index("email_index").on(table.email)]
 )
