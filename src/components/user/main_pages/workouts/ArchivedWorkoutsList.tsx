@@ -106,7 +106,7 @@ const WorkoutCard = ({
             </p>
 
             <p className="text-pretty font-semibold text-slate-400/80 text-sm italic leading-none dark:text-slate-400/60">
-              {workout.description ? workout.description : "Description not provided"}
+              {workout.description || "Description not provided"}
             </p>
           </div>
 
