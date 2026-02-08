@@ -19,34 +19,6 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.srdjanmilicevic.com"),
-  other: { "apple-mobile-web-app-capable": "yes" },
-  appleWebApp: {
-    title: "Noteset - workout app",
-    capable: true,
-    statusBarStyle: "black-translucent",
-    startupImage: [
-      {
-        url: "/apple-splash-1170-2532.jpeg",
-        media:
-          "(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-      },
-      {
-        url: "/apple-splash-dark-1170-2532.jpeg",
-        media:
-          "(prefers-color-scheme: dark) and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-      },
-      {
-        url: "/apple-splash-1290-2796.jpeg",
-        media:
-          "(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-      },
-      {
-        url: "/apple-splash-dark-1290-2796.jpeg",
-        media:
-          "(prefers-color-scheme: dark) and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)",
-      },
-    ],
-  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
