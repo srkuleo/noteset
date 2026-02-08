@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import type { Metadata, Viewport } from "next"
 import { Providers } from "@/context/Providers"
 import { manrope, nunito } from "@/styles/fonts"
+import { generateStartupImages } from "@/util/utils"
 
 export const viewport: Viewport = {
   userScalable: false,
@@ -19,6 +20,13 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.srdjanmilicevic.com"),
+  other: { "apple-mobile-web-app-capable": "yes" },
+  appleWebApp: {
+    title: "Noteset - workout app",
+    capable: true,
+    statusBarStyle: "black-translucent",
+    startupImage: generateStartupImages(),
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
