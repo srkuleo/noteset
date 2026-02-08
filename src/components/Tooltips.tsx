@@ -527,7 +527,9 @@ export const PostWorkoutTooltip = () => {
 
             <li>
               Tap{" "}
-              <span className="font-bold text-slate-800 uppercase dark:text-white">Yes, edit</span>{" "}
+              <span className="font-bold text-green-500 uppercase dark:text-green-500">
+                Yes, edit
+              </span>{" "}
               button to enter edit mode. There, you can view your next workout session, compare it
               to the last one and make any necessary changes accordingly.
             </li>
