@@ -53,7 +53,7 @@ export const PatchNotesDrawer = () => {
             <Drawer.Description asChild>
               <div className="space-y-6">
                 <p className="font-bold text-lg text-slate-900 leading-none sm:text-xl dark:text-white">
-                  Release 0.9.6
+                  Release 0.9.7
                 </p>
 
                 <p className="font-semibold text-slate-800 leading-none sm:text-lg dark:text-slate-100">
@@ -63,97 +63,57 @@ export const PatchNotesDrawer = () => {
                 <ul className="list-disc space-y-3 text-pretty pl-4 text-sm sm:text-base dark:text-slate-300">
                   <li>
                     <span className="font-bold text-blue-500 italic dark:text-blue-400">
-                      Major update
-                    </span>{" "}
-                    -{" "}
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      New form field: Movement Type.{" "}
-                    </span>{" "}
-                    Now you can choose between unilateral or bilateral to better calculate working
-                    sets and manage fatigue for each exercise.
-                  </li>
-
-                  <li>
-                    <span className="font-bold text-blue-500 italic dark:text-blue-400">
-                      Major update
-                    </span>{" "}
-                    -{" "}
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Preview Workout Drawer Rewamp.{" "}
+                      Modernized new look for creating/editing exercise
                     </span>
-                    Redesigned for a cleaner, easier-to-navigate experience. Includes a tooltip
-                    (info icon) with workout planning tips and a color legend.
                   </li>
 
                   <li>
                     <span className="font-bold text-blue-500 italic dark:text-blue-400">
-                      Major update
+                      Option to remove workout from the logs
                     </span>{" "}
-                    -{" "}
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Patch Notes Drawer.{" "}
-                    </span>
-                    Quickly view all new features and fixes added to the Noteset app.
+                    - On the Logs page, you can swipe any workout to remove it, allowing users to
+                    get rid of accidentally pushed workouts or old/irrelevant workouts. Later will
+                    add option to bulk delete more workouts via select option.
                   </li>
 
                   <li>
                     <span className="font-bold text-blue-500 italic dark:text-blue-400">
-                      Major update
+                      Easier to add sets inside exercise forms
                     </span>{" "}
-                    -{" "}
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Updated Workout Switching.{" "}
-                    </span>{" "}
-                    Switched from a toggle to a dropdown menu for navigating between current and
-                    archived workouts. Also introduces a new &quot;Diet&quot; page (work in
-                    progress) and a route indicator for better page distinction.
+                    - Now you can choose where to put each set without having to delete previous
+                    ones. Also added option to remove each set manually.
                   </li>
 
                   <li>
                     <span className="font-bold text-blue-500 italic dark:text-blue-400">
-                      Major update
+                      Exercise and Set indicators
                     </span>{" "}
-                    -{" "}
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Progression Bar{" "}
+                    - New visual feature showing total number of exercises and sets per
+                    workout/exercise.
+                  </li>
+
+                  <li>
+                    <span className="font-bold text-blue-500 italic dark:text-blue-400">
+                      Tab system for Current/Archived workouts
                     </span>{" "}
-                    - Replaces the old exercise counter on the WorkoutToDo page with a new version
-                    where tapping any rectangle takes you to its corresponding exercise.
+                    - Now separated into two different pages, acting as tabs. Diet page (coming
+                    soon) moved to the footer with other icons.
                   </li>
 
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
-                      Tooltip Drawers{" "}
+                      Quick Delete for all form fields
                     </span>{" "}
-                    - Now scale up to 80% of the screen and become scrollable for easier reading.
+                    - Instantly remove any input from form fields using an &quot;x&quot; button in
+                    the workout/exercise forms.
                   </li>
 
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
-                      Improved Password Fields{" "}
+                      Overall visual clarity improved
                     </span>{" "}
-                    - More consistent and polished look on both signup and login pages.
-                  </li>
-                  <li>
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Quick Delete for Notes{" "}
-                    </span>{" "}
-                    - Instantly remove workout descriptions and exercise notes using an
-                    &quot;x&quot; button in the create/edit forms.
-                  </li>
-
-                  <li>
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Improved Error Messages{" "}
-                    </span>{" "}
-                    - Minor enhancements for clarity and consistency.
-                  </li>
-
-                  <li>
-                    <span className="font-semibold text-slate-600 dark:text-white">
-                      Overall Visual Clarity Improved{" "}
-                    </span>{" "}
-                    - Minor enhancements on forms, header buttons on home and post workout pages.
+                    - Shadows, borders consistency, workout card size and swipe visuals across all
+                    pages and many more.
                   </li>
                 </ul>
 
@@ -164,33 +124,36 @@ export const PatchNotesDrawer = () => {
                 <ul className="list-disc space-y-3 text-pretty pl-4 text-sm sm:text-base dark:text-slate-300">
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
-                      Unblocked UI After Actions{" "}
+                      Splash screen images loading properly
                     </span>{" "}
-                    - Remove workout drawer buttons on home and archived workout pages no longer
-                    freeze after deleting or archiving a workout.
+                    - Now all the major apple devices are supported and splash screen loads.{" "}
+                    <span className="font-semibold text-slate-600 dark:text-white">
+                      Recommended to delete Safari cache and reinstall app on the Home Screen.
+                    </span>
                   </li>
 
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
-                      Password Input Bug Fixes{" "}
+                      User theme preference resolving properly
                     </span>{" "}
-                    - Minor fixes related to padding and borders.
+                    - Now resolves "system" theme as either "dark" or "light" for consistent styling
+                    of footer buttons.
                   </li>
 
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
-                      Title and Description Input Field Bug Fix{" "}
+                      Animation inconsistency{" "}
                     </span>{" "}
-                    - Now are properly being registered and updated after submitting a form on
-                    post-workout page.
+                    - Now properly renders footer on the post-workout page alongside edit form.
                   </li>
 
                   <li>
                     <span className="font-semibold text-slate-600 dark:text-white">
-                      Workout To Do Form Bug Fix{" "}
+                      All exercises without sets properly shown as skipped{" "}
                     </span>{" "}
-                    - No longer resets all the data inside form fields if workout submission results
-                    in error.
+                    - No longer throws error on the older workouts where if there was no sets in an
+                    exercise, sets property would default to null breaking .length check on each
+                    exercise.
                   </li>
                 </ul>
               </div>
