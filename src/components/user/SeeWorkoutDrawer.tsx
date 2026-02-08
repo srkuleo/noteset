@@ -18,10 +18,12 @@ export const SeeWorkoutDrawer = ({
   workout,
   className,
   logMode,
+  strokeWidth,
 }: {
   workout: SeeWorkoutType
   className?: string
   logMode?: boolean
+  strokeWidth?: number
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -33,12 +35,12 @@ export const SeeWorkoutDrawer = ({
           await timeout(BUTTON_TIMEOUT)
           setOpen(true)
         }}
-        className={twMerge(
-          "rounded-lg+ p-2 text-slate-400 shadow-md ring-1 ring-slate-300/80 ring-inset active:scale-95 active:bg-slate-200 dark:bg-slate-700 dark:text-white dark:ring-slate-600 dark:active:bg-slate-800",
-          className
-        )}
+        className={
+          className ??
+          "rounded-lg+ p-2 text-slate-400 shadow-md ring-1 ring-slate-300/80 ring-inset active:scale-95 active:bg-slate-200 dark:bg-slate-700 dark:text-white dark:ring-slate-600 dark:active:bg-slate-800"
+        }
       >
-        <ShowIcon strokeWidth={1.5} className="size-6" />
+        <ShowIcon strokeWidth={strokeWidth ?? 1.5} className="size-6" />
         <p className="sr-only">See workout</p>
       </button>
 
