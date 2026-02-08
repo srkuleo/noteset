@@ -35,11 +35,11 @@ export const ProfileButtonModal = ({
 
           setOpen(true)
         }}
-        className="flex size-12 flex-col items-center justify-evenly rounded-full transition active:scale-95 active:bg-slate-200 dark:active:bg-slate-700"
+        className="flex size-12 flex-col items-center justify-evenly rounded-full active:scale-95 active:bg-slate-200 dark:active:bg-slate-700"
       >
         <div
           className={twMerge(
-            "flex size-7 items-center justify-center rounded-full bg-white shadow-md transition active:scale-95 dark:bg-slate-700",
+            "flex size-7 items-center justify-center rounded-full bg-white shadow-md active:scale-95 dark:bg-slate-700",
             path === "/profile"
               ? "ring-2 ring-green-500 dark:ring-green-500"
               : "ring-1 ring-slate-300 dark:ring-slate-500"
