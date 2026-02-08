@@ -12,9 +12,10 @@ import { DietIcon, DumbbellIcon, LogsIcon } from "@/components/icons/user/navbar
 
 export const MainPagesFooter = ({ children }: { children: React.ReactNode }) => {
   const [pageLoaded, setPageLoaded] = useState(false)
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
   const path = usePathname() as Route
 
+  console.log(resolvedTheme)
   useEffect(() => {
     setPageLoaded(true)
   }, [])
@@ -36,11 +37,9 @@ export const MainPagesFooter = ({ children }: { children: React.ReactNode }) => 
           <DumbbellIcon
             fill={path === "/current" || path === "/archived" ? "currentColor" : "transparent"}
             stroke={
-              (path === "/current" || path === "/archived") && theme === "dark"
+              (path === "/current" || path === "/archived") && resolvedTheme === "dark"
                 ? "white"
-                : (path === "/current" || path === "/archived") && theme === "light"
-                  ? "currentColor"
-                  : "currentColor"
+                : "currentColor"
             }
             strokeWidth={1}
             className="size-7"
