@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "A minimalistic workout tracking PWA aimed to replace conventional usage of a notebook in the gym.",
   metadataBase: new URL("https://noteset.srdjanmilicevic.com"),
-  other: { "mobile-web-app-capable": "yes" },
+  other: { "apple-mobile-web-app-capable": "yes" },
   appleWebApp: {
     title: "Noteset - workout app",
     capable: true,
