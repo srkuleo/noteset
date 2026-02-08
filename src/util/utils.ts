@@ -1,6 +1,44 @@
 import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding"
 import type { Variants } from "framer-motion"
+import type { Metadata } from "next"
 import type { ExerciseType, SetType } from "./types"
+
+type AppleWebDev = Exclude<NonNullable<Metadata["appleWebApp"]>, boolean>
+type AppleDeviceSize = {
+  width: number
+  height: number
+  ratio: number
+}
+
+const APPLE_DEVICE_SIZE: AppleDeviceSize[] = [
+  { width: 440, height: 956, ratio: 3 },
+  { width: 430, height: 932, ratio: 3 },
+  { width: 402, height: 874, ratio: 3 },
+  { width: 393, height: 852, ratio: 3 },
+  { width: 390, height: 844, ratio: 3 },
+  { width: 1024, height: 1366, ratio: 2 },
+  { width: 834, height: 1194, ratio: 2 },
+  { width: 820, height: 1180, ratio: 2 },
+  { width: 810, height: 1080, ratio: 2 },
+]
+
+export function generateStartupImages(): AppleWebDev["startupImage"] {
+  return APPLE_DEVICE_SIZE.flatMap(({ width, height, ratio }) => {
+    const baseMedia = `(device-width: ${width}px) and (device-height: ${height}px) and (-webkit-device-pixel-ratio: ${ratio}) and (orientation: portrait)`
+    const file = `${width * ratio}-${height * ratio}`
+
+    return [
+      {
+        url: `/apple-splash-${file}.jpeg`,
+        media: baseMedia,
+      },
+      {
+        url: `/apple-splash-dark-${file}.jpeg`,
+        media: `(prefers-color-scheme: dark) and ${baseMedia}`,
+      },
+    ]
+  })
+}
 
 export function generateRandomId(idLength: number): string {
   const byteLength = Math.ceil(idLength / 1.6)
