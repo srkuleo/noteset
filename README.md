@@ -8,7 +8,7 @@ Since I am also interested in mobile dev, I might even make a proper app using R
 
 ### Steps until v1:
 
-- WorkoutToDoPage - _UI overhaul. Remodel adding exercise set and adding new exercise on workout to do page to reflect the new adding set design. Add targetedSet and nextSessionSet option for easier tracking, no longer need to note every set for the future reference._
+- WorkoutToDoPage - _UI overhaul. Remodel adding exercise set and adding new exercise on workout to do page to reflect the new adding set design. Add targetedSet and nextSessionSet option for easier tracking, no longer need to note every set for the future reference. Different way of rendering sets, add case for purpose set to none on workout to do page (backward compatibility)._
 
 - Logs page UI/UX - _Add option to query by date using calendar drawer, pagination and pagination preferance 6,8,10,12,16,20. Add logs tooltip. Add option to select more workouts and delete them all at once on current, archived and logs pages._
 
