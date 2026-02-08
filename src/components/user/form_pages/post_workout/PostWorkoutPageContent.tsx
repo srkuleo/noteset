@@ -14,7 +14,7 @@ import { FormPendingSpinner } from "../../../Loading"
 import { showToast } from "../../../Toasts"
 import { FormatDate, FormatWorkoutDuration } from "../../Formatting"
 import { type PageStatus, PostWorkoutPageStatusIndicator } from "../../Indicators"
-import { SeeWorkoutDrawer, type SeeWorkoutType } from "../../SeeWorkoutDrawer"
+import { SeeWorkoutDrawer } from "../../SeeWorkoutDrawer"
 import { ExercisesList } from "../ExercisesList"
 import { FormPagesFooterWrapper } from "../FormPagesFooterWrapper"
 import { DescriptionInput, TitleInput } from "../WorkoutInputs"
@@ -134,11 +134,6 @@ export const PostWorkoutPageContent = ({
               >
                 <fieldset disabled={isPending} className="group space-y-4 py-8">
                   <EditModeHeader
-                    doneWorkout={{
-                      title: doneWorkout.title,
-                      exercises: doneWorkout.exercises,
-                      status: doneWorkout.status,
-                    }}
                     closeEditMode={async () => {
                       await timeout(BUTTON_TIMEOUT)
                       setPageStatus("initial")
@@ -196,7 +191,18 @@ export const PostWorkoutPageContent = ({
       <AnimatePresence>
         {pageStatus === "editing-workout" && (
           <AnimatedFooter key="edit-mode-footer">
-            <FormPagesFooterWrapper disabled={isPending} className="flex justify-end">
+            <FormPagesFooterWrapper disabled={isPending} className="flex justify-between">
+              <SeeWorkoutDrawer
+                logMode
+                strokeWidth={1.8}
+                workout={{
+                  title: doneWorkout.title,
+                  exercises: doneWorkout.exercises,
+                  status: doneWorkout.status,
+                }}
+                className="rounded-full p-2 active:scale-95 active:bg-slate-200 active:text-white dark:active:bg-slate-700 dark:active:text-slate-400"
+              />
+
               <FormSubmitFooterButton
                 form="post-workout-form"
                 pending={isPending}
@@ -211,32 +217,18 @@ export const PostWorkoutPageContent = ({
   )
 }
 
-const EditModeHeader = ({
-  doneWorkout,
-  closeEditMode,
-}: {
-  doneWorkout: SeeWorkoutType
-  closeEditMode: () => void
-}) => {
+const EditModeHeader = ({ closeEditMode }: { closeEditMode: () => void }) => {
   return (
     <div className="flex items-center justify-between pb-4 group-disabled:pointer-events-none group-disabled:opacity-50">
       <h3 className="italic dark:text-slate-100">Edit mode</h3>
 
-      <div className="flex items-center gap-2">
-        <SeeWorkoutDrawer
-          logMode
-          workout={doneWorkout}
-          className="bg-white text-slate-500 ring-slate-300 dark:bg-slate-800 dark:active:bg-slate-700"
-        />
-
-        <XButton
-          srOnlyDescription="Close edit mode"
-          strokeWidth={3}
-          svgSize="size-4"
-          onClick={closeEditMode}
-          className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-300 ring-inset active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:shadow-slate-900/80 dark:ring-slate-600 dark:active:bg-slate-700"
-        />
-      </div>
+      <XButton
+        srOnlyDescription="Close edit mode"
+        strokeWidth={3}
+        svgSize="size-4"
+        onClick={closeEditMode}
+        className="rounded-full bg-white p-2 shadow-md ring-1 ring-slate-300 ring-inset active:scale-95 active:bg-slate-200 dark:bg-slate-800 dark:shadow-slate-900/80 dark:ring-slate-600 dark:active:bg-slate-700"
+      />
     </div>
   )
 }
@@ -284,7 +276,7 @@ const AnimatedFooter = ({ children }: { children: React.ReactNode }) => {
         zIndex: 20,
         transition: {
           duration: 0.4,
-          delay: 0.1,
+          delay: 0.4,
           ease: [0.36, 0.66, 0.04, 1],
         },
       }}
