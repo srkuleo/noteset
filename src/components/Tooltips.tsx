@@ -452,16 +452,6 @@ export const WorkoutToDoTooltip = () => {
             </li>
 
             <li>
-              Swipe any set from right to the left to{" "}
-              <span className="font-bold text-red-500 uppercase">remove</span> it.
-            </li>
-
-            <li>
-              <span className="font-bold text-slate-800 uppercase dark:text-white">Add set</span>{" "}
-              button allows you to add an additional warmup or working set to the selected exercise.
-            </li>
-
-            <li>
               Workout duration is being{" "}
               <span className="font-bold text-slate-800 dark:text-white">
                 tracked in the background.
@@ -476,15 +466,9 @@ export const WorkoutToDoTooltip = () => {
             </li>
 
             <li>
-              Tap{" "}
-              <span className="font-bold text-violet-500 uppercase dark:text-violet-400">plus</span>{" "}
-              button to add a new exercise.
-            </li>
-
-            <li>
               All done? Tap{" "}
               <span className="font-bold text-green-500 uppercase dark:text-green-600">Done</span>{" "}
-              button to save your workout!
+              button to submit your workout!
             </li>
           </ul>
         </div>
@@ -540,6 +524,28 @@ export const PostWorkoutTooltip = () => {
               button to see all your previously{" "}
               <span className="font-bold text-green-500 uppercase">done</span> workouts including
               the latest one.
+            </li>
+          </ul>
+
+          <p className="font-bold font-manrope text-lg text-slate-800 leading-none sm:text-xl dark:text-white">
+            In Edit mode
+          </p>
+
+          <ul className="list-disc space-y-3 overflow-y-auto text-pretty pl-4 text-sm sm:text-base dark:text-slate-300">
+            <li>
+              Tap <span className="font-bold text-slate-800 uppercase dark:text-white">x</span>{" "}
+              button to exit <span className="font-bold text-green-500 uppercase">edit mode</span>.
+            </li>
+
+            <li>
+              Tap <span className="font-bold text-slate-800 uppercase dark:text-white">eye</span>{" "}
+              button to see submitted workout.
+            </li>
+
+            <li>
+              All done with editing? Tap{" "}
+              <span className="font-bold text-green-500 uppercase dark:text-green-600">save</span>{" "}
+              button to update your next session.
             </li>
           </ul>
         </div>
