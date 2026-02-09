@@ -19,12 +19,11 @@ export const useUserWorkouts = <T extends WorkoutToRemoveType>({
   const [openModal, setOpenModal] = useState(false)
 
   useEffect(() => {
-    console.log("Effect run!")
     setWorkouts(workoutsFromServer)
   }, [workoutsFromServer])
 
-  function removeWorkoutOnClient(workoutId: number) {
-    timeout(SWIPE_AND_DRAWER_TIMEOUT)
+  async function removeWorkoutOnClient(workoutId: number) {
+    await timeout(SWIPE_AND_DRAWER_TIMEOUT)
 
     setWorkouts((prev) => prev.filter((workout) => workout.id !== workoutId))
   }

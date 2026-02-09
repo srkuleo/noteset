@@ -15,7 +15,6 @@ export const MainPagesFooter = ({ children }: { children: React.ReactNode }) => 
   const { resolvedTheme } = useTheme()
   const path = usePathname() as Route
 
-  console.log(resolvedTheme)
   useEffect(() => {
     setPageLoaded(true)
   }, [])
