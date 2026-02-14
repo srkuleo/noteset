@@ -26,7 +26,7 @@
     "@vercel/speed-insights": "1.3.1",
     "bcrypt": "6.0.0",
     "drizzle-orm": "0.45.1",
-    "framer-motion": "12.31.0",
+    "framer-motion": "12.31.3",
     "lodash.debounce": "4.0.8",
     "next": "16.1.6",
     "next-themes": "0.4.6",
@@ -43,17 +43,17 @@
     "@biomejs/biome": "^2.3.14",
     "@types/bcrypt": "6.0.0",
     "@types/lodash.debounce": "4.0.9",
-    "@types/node": "22.19.8",
-    "@types/react": "19.2.11",
+    "@types/node": "22.19.10",
+    "@types/react": "19.2.13",
     "@types/react-dom": "19.2.3",
     "autoprefixer": "^10.4.24",
-    "drizzle-kit": "^0.31.8",
+    "drizzle-kit": "^0.31.9",
     "postcss": "^8.5.6",
     "tailwindcss": "3.4.19",
     "tailwindcss-text-fill": "^0.2.0",
     "typescript": "5.9.3"
   },
   "overrides": {
-    "esbuild": "0.27.2"
+    "esbuild": "0.27.3"
   }
 }
