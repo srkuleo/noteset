@@ -2,7 +2,7 @@ import { redirect } from "next/navigation"
 import { getUserDoneWorkouts } from "@/db/query"
 import { getAuthSession } from "@/util/session"
 import type { LogsPageSearchParams } from "@/util/types"
-import { LogsPageContent } from "./LogsPageContent"
+import { DoneWorkoutsList } from "./DoneWorkoutsList"
 import { LogsPageNavBar } from "./LogsPageNavBar"
 
 export const LogsPageDataFetcher = async ({ searchQuery, strictMode }: LogsPageSearchParams) => {
@@ -28,7 +28,7 @@ export const LogsPageDataFetcher = async ({ searchQuery, strictMode }: LogsPageS
         />
       )}
 
-      <LogsPageContent
+      <DoneWorkoutsList
         doneWorkouts={doneWorkouts}
         timeFormatPreference={user.preferences.timeFormat}
         searchQuery={searchQuery}
