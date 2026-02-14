@@ -17,9 +17,9 @@ export const ArrowDoubleRightIcon = () => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      strokeWidth={1.5}
+      strokeWidth={2}
       stroke="currentColor"
-      className="size-6"
+      className="size-5"
     >
       <path
         strokeLinecap="round"
