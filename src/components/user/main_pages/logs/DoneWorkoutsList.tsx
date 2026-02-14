@@ -13,7 +13,7 @@ import { SWIPE_AND_DRAWER_TIMEOUT, timeout } from "@/util/utils"
 import { SeeWorkoutDrawer } from "../../SeeWorkoutDrawer"
 import { RemoveWorkoutModal } from "../RemoveWorkoutModal"
 
-export const LogsPageContent = ({
+export const DoneWorkoutsList = ({
   doneWorkouts,
   timeFormatPreference,
   searchQuery,
@@ -88,27 +88,48 @@ const DoneWorkoutCard = ({
       }}
     >
       <SwipeAction.Root direction="x">
-        <SwipeAction.Trigger className="flex items-center gap-2 rounded-xl bg-white p-6 ring-1 ring-slate-300 ring-inset dark:bg-slate-800 dark:ring-slate-700">
-          <div className="flex-1">
-            <p className="text-pretty font-bold font-manrope uppercase dark:text-slate-300">
-              {doneWorkout.title}
-            </p>
-
-            <div className="flex items-center gap-2 divide-x divide-slate-300 dark:divide-slate-600">
-              <p className="font-manrope font-semibold text-[14px] text-slate-400/80 leading-[14px] dark:text-slate-400/60">
-                {doneWorkout.doneAt?.toLocaleString("en", {
-                  weekday: "long",
-                })}
+        <SwipeAction.Trigger className="flex flex-col rounded-xl bg-white shadow-md ring-1 ring-slate-300 ring-inset dark:bg-slate-800 dark:ring-slate-700">
+          <div className="flex items-center gap-2 p-6">
+            <div className="w-[calc(100%-71px)] space-y-1">
+              <p className="text-pretty font-bold font-manrope uppercase dark:text-slate-300">
+                {doneWorkout.title}
               </p>
 
-              <FormatWorkoutDuration
-                duration={doneWorkout.duration}
-                selectedFormat={timeFormatPreference}
-                className="pl-2 font-manrope font-semibold text-[14px] text-slate-400/80 leading-[14px] dark:text-slate-400/60"
-              />
+              <div className="flex items-center gap-2 divide-x divide-slate-300 dark:divide-slate-600">
+                <p className="font-manrope font-semibold text-[14px] text-slate-400/80 leading-[14px] dark:text-slate-400/60">
+                  {doneWorkout.doneAt?.toLocaleString("en", {
+                    weekday: "long",
+                  })}
+                </p>
+
+                <FormatWorkoutDuration
+                  duration={doneWorkout.duration}
+                  selectedFormat={timeFormatPreference}
+                  className="pl-2 font-manrope font-semibold text-[14px] text-slate-400/80 leading-[14px] dark:text-slate-400/60"
+                />
+              </div>
             </div>
 
-            <p className="space-x-1 pt-3 font-bold text-[14px] italic leading-[14px] dark:text-slate-400">
+            <WorkoutStatusIndicator
+              status={doneWorkout.status}
+              className="px-3.5 py-2 ring-slate-300/80 dark:bg-slate-900 dark:ring-slate-700"
+            />
+          </div>
+
+          <div className="flex divide-x divide-slate-300 rounded-b-xl bg-slate-100 ring-1 ring-slate-300 ring-inset dark:divide-slate-700 dark:bg-slate-900 dark:ring-slate-700">
+            <SeeWorkoutDrawer
+              logMode
+              buttonWithText
+              workout={{
+                title: doneWorkout.title,
+                exercises: doneWorkout.exercises,
+                status: doneWorkout.status,
+              }}
+              className="flex flex-1 items-center justify-center gap-1 rounded-bl-xl py-3 active:text-slate-900 dark:active:text-slate-400"
+              svgClassName="size-5"
+            />
+
+            <p className="flex items-center gap-1 px-6 font-extrabold font-manrope text-green-500 text-xs italic dark:text-green-600">
               <span>{String(doneWorkout.doneAt?.getDate()).padStart(2, "0")}</span>
               <span>
                 {doneWorkout.doneAt?.toLocaleString("en", {
@@ -117,22 +138,6 @@ const DoneWorkoutCard = ({
               </span>
               <span>{doneWorkout.doneAt?.getFullYear()}</span>
             </p>
-          </div>
-
-          <div className="flex flex-col items-center gap-1.5">
-            <WorkoutStatusIndicator
-              status={doneWorkout.status}
-              className="px-3 py-2 ring-slate-300/80 dark:bg-slate-900 dark:ring-slate-700"
-            />
-
-            <SeeWorkoutDrawer
-              logMode
-              workout={{
-                title: doneWorkout.title,
-                exercises: doneWorkout.exercises,
-                status: doneWorkout.status,
-              }}
-            />
           </div>
         </SwipeAction.Trigger>
 
