@@ -22,7 +22,7 @@ export const WorkoutsNavBar = () => {
           href={routes.href}
           className={twMerge(
             "relative rounded-full px-6 py-2 font-bold font-manrope",
-            routes.href === "/current" && "text-blue-500 dark:text-blue-400",
+            routes.href === "/current" && "text-blue-400 dark:text-blue-500",
             routes.href === "/archived" && "text-slate-500 dark:text-slate-400"
           )}
         >
