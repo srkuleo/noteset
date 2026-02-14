@@ -201,6 +201,7 @@ export const PostWorkoutPageContent = ({
                   status: doneWorkout.status,
                 }}
                 className="rounded-full p-2 active:scale-95 active:bg-slate-200 active:text-white dark:active:bg-slate-700 dark:active:text-slate-400"
+                svgClassName="size-6"
               />
 
               <FormSubmitFooterButton

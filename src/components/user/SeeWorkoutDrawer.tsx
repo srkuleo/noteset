@@ -17,13 +17,17 @@ export type SeeWorkoutType = Pick<CurrentWorkoutType, "title" | "exercises" | "s
 export const SeeWorkoutDrawer = ({
   workout,
   className,
+  svgClassName,
   logMode,
   strokeWidth,
+  buttonWithText,
 }: {
   workout: SeeWorkoutType
-  className?: string
+  className: string
+  svgClassName: string
   logMode?: boolean
   strokeWidth?: number
+  buttonWithText?: boolean
 }) => {
   const [open, setOpen] = useState(false)
 
@@ -35,13 +39,12 @@ export const SeeWorkoutDrawer = ({
           await timeout(BUTTON_TIMEOUT)
           setOpen(true)
         }}
-        className={
-          className ??
-          "rounded-lg+ p-2 text-slate-400 shadow-md ring-1 ring-slate-300/80 ring-inset active:scale-95 active:bg-slate-200 dark:bg-slate-700 dark:text-white dark:ring-slate-600 dark:active:bg-slate-800"
-        }
+        className={className}
       >
-        <ShowIcon strokeWidth={strokeWidth ?? 1.5} className="size-6" />
-        <p className="sr-only">See workout</p>
+        <ShowIcon strokeWidth={strokeWidth ?? 1.5} className={svgClassName} />
+        <p className={buttonWithText ? "font-manrope font-semibold text-xs italic" : "sr-only"}>
+          See workout
+        </p>
       </button>
 
       <Drawer.Portal>
