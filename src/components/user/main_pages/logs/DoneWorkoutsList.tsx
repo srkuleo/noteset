@@ -96,7 +96,7 @@ const DoneWorkoutCard = ({
               </p>
 
               <div className="flex items-center gap-2 divide-x divide-slate-300 dark:divide-slate-600">
-                <p className="font-manrope font-semibold text-[14px] text-slate-400/80 leading-[14px] dark:text-slate-400/60">
+                <p className="font-manrope font-semibold text-[14px] text-slate-400/80 italic leading-[14px] dark:text-slate-400/60">
                   {doneWorkout.doneAt?.toLocaleString("en", {
                     weekday: "long",
                   })}
@@ -105,7 +105,7 @@ const DoneWorkoutCard = ({
                 <FormatWorkoutDuration
                   duration={doneWorkout.duration}
                   selectedFormat={timeFormatPreference}
-                  className="pl-2 font-manrope font-semibold text-[14px] text-slate-400/80 leading-[14px] dark:text-slate-400/60"
+                  className="pl-2 font-manrope font-semibold text-[14px] text-slate-400/80 italic leading-[14px] dark:text-slate-400/60"
                 />
               </div>
             </div>
