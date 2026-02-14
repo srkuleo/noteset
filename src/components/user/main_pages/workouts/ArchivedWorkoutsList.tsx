@@ -99,49 +99,56 @@ const WorkoutCard = ({
       }}
     >
       <SwipeAction.Root direction="x">
-        <SwipeAction.Trigger className="flex items-center justify-between rounded-xl bg-white p-6 shadow-md ring-1 ring-slate-300 ring-inset dark:bg-slate-800 dark:ring-slate-700">
-          <div className="w-3/5 space-y-1">
-            <p className="text-pretty font-bold font-manrope text-lg uppercase dark:text-slate-300">
-              {workout.title}
-            </p>
+        <SwipeAction.Trigger className="flex flex-col rounded-xl bg-white shadow-md ring-1 ring-slate-300 ring-inset dark:bg-slate-800 dark:ring-slate-700">
+          <div className="flex items-center gap-2 p-6">
+            <div className="w-[calc(100%-90px)] space-y-1">
+              <p className="text-pretty font-bold font-manrope uppercase dark:text-slate-300">
+                {workout.title}
+              </p>
 
-            <p className="text-pretty font-semibold text-slate-400/80 text-sm italic leading-none dark:text-slate-400/60">
-              {workout.description || "Description not provided"}
-            </p>
-          </div>
+              <p className="text-pretty font-semibold text-slate-400/80 text-sm italic leading-none dark:text-slate-400/60">
+                {workout.description || "Description not provided"}
+              </p>
+            </div>
 
-          <div className="flex flex-col items-center gap-1.5">
             <WorkoutStatusIndicator
               status={workout.status}
               className="px-3.5 py-2 ring-slate-300/80 dark:bg-slate-900 dark:ring-slate-700"
             />
+          </div>
 
-            <div className="flex gap-1.5">
-              <SeeWorkoutDrawer
-                workout={{
-                  title: workout.title,
-                  exercises: workout.exercises,
-                  status: workout.status,
-                }}
-              />
+          <div className="flex divide-x divide-slate-300 rounded-b-xl bg-slate-100 ring-1 ring-slate-300 ring-inset dark:divide-slate-700 dark:bg-slate-900 dark:ring-slate-700">
+            <SeeWorkoutDrawer
+              buttonWithText
+              workout={{
+                title: workout.title,
+                exercises: workout.exercises,
+                status: workout.status,
+              }}
+              className="flex flex-1 items-center justify-center gap-1 rounded-bl-xl py-3 active:text-slate-900 dark:active:text-slate-400"
+              svgClassName="size-5"
+            />
 
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  handleUnarchiving({ id: workout.id, title: workout.title, action: "unarchive" })
-                }}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault()
+                handleUnarchiving({ id: workout.id, title: workout.title, action: "unarchive" })
+              }}
+              className="flex-1"
+            >
+              <button
+                type="submit"
+                disabled={isPending}
+                className="group flex w-full items-center justify-center gap-1 rounded-br-xl py-3 text-blue-400 active:text-blue-600 disabled:pointer-events-none disabled:opacity-50 dark:text-blue-500 dark:active:text-blue-300"
               >
-                <button
-                  type="submit"
-                  disabled={isPending}
-                  className="group flex justify-center rounded-lg bg-gradient-to-r from-blue-400 to-blue-500 p-2 font-bold text-white shadow-md active:scale-95 active:from-blue-300 active:to-blue-400 disabled:pointer-events-none disabled:opacity-50 dark:from-blue-500 dark:to-blue-600 dark:active:from-blue-700 dark:active:to-blue-800"
-                >
-                  <Spinner className="absolute size-6 animate-spin text-white group-enabled:opacity-0" />
-                  <UnarchiveIcon strokeWidth={1.5} className="size-6 group-disabled:opacity-0" />
-                  <span className="sr-only">Unarchive {workout.title} workout</span>
-                </button>
-              </form>
-            </div>
+                <Spinner className="absolute size-6 animate-spin group-enabled:opacity-0" />
+
+                <p className="font-extrabold font-manrope text-xs italic group-disabled:opacity-0">
+                  Unarchive
+                </p>
+                <UnarchiveIcon strokeWidth={2} className="size-5 group-disabled:opacity-0" />
+              </button>
+            </form>
           </div>
         </SwipeAction.Trigger>
 

@@ -81,42 +81,44 @@ const WorkoutCard = ({
       }}
     >
       <SwipeAction.Root direction="x">
-        <SwipeAction.Trigger className="flex items-center justify-between rounded-xl bg-white p-6 shadow-md ring-1 ring-slate-300 ring-inset dark:bg-slate-800 dark:ring-slate-700">
-          <div className="w-3/5 space-y-1">
-            <p className="text-pretty font-bold font-manrope uppercase dark:text-slate-300">
-              {workout.title}
-            </p>
+        <SwipeAction.Trigger className="flex flex-col rounded-xl bg-white shadow-md ring-1 ring-slate-300 ring-inset dark:bg-slate-800 dark:ring-slate-700">
+          <div className="flex items-center gap-2 p-6">
+            <div className="w-[calc(100%-86px)] space-y-1">
+              <p className="text-pretty font-bold font-manrope uppercase dark:text-slate-300">
+                {workout.title}
+              </p>
 
-            <p className="text-pretty font-semibold text-slate-400/80 text-sm italic leading-none dark:text-slate-400/60">
-              {workout.description || "Description not provided"}
-            </p>
-          </div>
+              <p className="text-pretty font-semibold text-slate-400/80 text-sm italic leading-none dark:text-slate-400/60">
+                {workout.description || "Description not provided"}
+              </p>
+            </div>
 
-          <div className="flex flex-col items-center gap-1.5">
             <WorkoutStatusIndicator
               status={workout.status}
               className="px-3.5 py-2 ring-slate-300/80 dark:bg-slate-900 dark:ring-slate-700"
             />
+          </div>
 
-            <div className="flex gap-1.5">
-              <SeeWorkoutDrawer
-                workout={{
-                  title: workout.title,
-                  exercises: workout.exercises,
-                  status: workout.status,
-                }}
-              />
+          <div className="flex divide-x divide-slate-300 rounded-b-xl bg-slate-100 ring-1 ring-slate-300 ring-inset dark:divide-slate-700 dark:bg-slate-900 dark:ring-slate-700">
+            <SeeWorkoutDrawer
+              buttonWithText
+              workout={{
+                title: workout.title,
+                exercises: workout.exercises,
+                status: workout.status,
+              }}
+              className="flex flex-1 items-center justify-center gap-1 rounded-bl-xl py-3 active:text-slate-900 dark:active:text-slate-400"
+              svgClassName="size-5"
+            />
 
-              <Link
-                href={`/workout-to-do?id=${workout.id}`}
-                scroll={false}
-                className="flex rounded-lg+ bg-gradient-to-r from-violet-400 to-violet-500 p-2 text-white shadow-md active:scale-95 active:from-violet-300 active:to-violet-400 dark:from-violet-500 dark:to-violet-600 dark:active:from-violet-700 dark:active:to-violet-800"
-              >
-                <ArrowDoubleRightIcon />
-
-                <p className="sr-only">Start {workout.title} workout</p>
-              </Link>
-            </div>
+            <Link
+              href={`/workout-to-do?id=${workout.id}`}
+              scroll={false}
+              className="flex flex-1 items-center justify-center gap-1 rounded-br-xl py-3 text-blue-400 active:text-blue-600 dark:text-blue-500 dark:active:text-blue-300"
+            >
+              <p className="font-extrabold font-manrope text-xs italic">Start workout</p>
+              <ArrowDoubleRightIcon />
+            </Link>
           </div>
         </SwipeAction.Trigger>
 
