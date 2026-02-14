@@ -112,30 +112,30 @@ export const WorkoutsPageTooltip = () => {
 
           <ul className="list-disc space-y-3 text-pretty pl-4 text-sm sm:text-base dark:text-slate-300">
             <li>
-              <span className="font-bold">Tap</span> the top-right paper button to read the patch
-              notes.
+              <span className="font-bold">Tap</span> the top-right{" "}
+              <span className="font-bold uppercase">paper</span> button to read the patch notes.
             </li>
 
             <li>
               <span className="font-bold">Tap</span> the{" "}
-              <span className="font-bold uppercase">eye button</span> to see the intended workout in
-              either current or archived list.
+              <span className="font-bold uppercase">see workout</span> button to inspect intended
+              workout in either current or archived list.
             </li>
 
             <li>
-              <span className="font-bold">Tap</span> the right{" "}
-              <span className="font-bold text-violet-500 uppercase dark:text-violet-400">
-                arrow button
+              <span className="font-bold">Tap</span> the{" "}
+              <span className="font-bold text-blue-400 uppercase dark:text-blue-500">
+                start workout
               </span>{" "}
-              to initate the workout.
+              button to initate the workout.
             </li>
 
             <li>
               On archived page, <span className="font-bold">tap</span> the{" "}
-              <span className="font-bold text-blue-500 uppercase dark:text-blue-400">
-                unarchive button
+              <span className="font-bold text-blue-400 uppercase dark:text-blue-500">
+                unarchive
               </span>{" "}
-              to return the selected workout to the current list.
+              button to return the selected workout to the current list.
             </li>
 
             <li>
